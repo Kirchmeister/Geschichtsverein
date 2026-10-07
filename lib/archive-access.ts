@@ -1,3 +1,4 @@
+import {requireInstalled} from './archive-installation';
 import {env} from 'cloudflare:workers';
 import {authenticatedIdentity} from '@/lib/archive-identity';
 import {archiveDb} from '@/lib/archive-db';
@@ -18,5 +19,5 @@ export async function archiveAccess(req:Request){
  return {identity,canPreview,actualRole,role:(canPreview&&requested?requested:actualRole) as PreviewRole};
 }
 export class AccessError extends Error {constructor(message:string,public status=403){super(message)}}
-export async function requireArchiveAction(req:Request,action?:ArchiveAction){const access=await archiveAccess(req);if(!access)throw new AccessError('Bitte die Website direkt öffnen und anmelden.',401);if(access.role==='public'||action&&!canArchive(access.role,action))throw new AccessError('Diese Aktion ist in der gewählten Rolle nicht erlaubt.',403);return access}
+export async function requireArchiveAction(req:Request,action?:ArchiveAction){await requireInstalled();const access=await archiveAccess(req);if(!access)throw new AccessError('Bitte die Website direkt öffnen und anmelden.',401);if(access.role==='public'||action&&!canArchive(access.role,action))throw new AccessError('Diese Aktion ist in der gewählten Rolle nicht erlaubt.',403);return access}
 export function accessResponse(e:unknown){return e instanceof AccessError?Response.json({error:e.message},{status:e.status}):null}

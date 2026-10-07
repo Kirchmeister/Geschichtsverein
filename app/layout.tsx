@@ -1,3 +1,4 @@
 import type {Metadata} from "next";import "./globals.css";
-export const metadata:Metadata={title:"Geschichte Bruchköbels – Digitale Heimatforschung",description:"Ein Projekt des Geschichtsvereins Bruchköbel zur quellenkritischen Dokumentation der Geschichte Bruchköbels. Private Arbeitsversion.",robots:{index:false,follow:false},icons:{icon:"/favicon.svg"}};
-export default function Layout({children}:{children:React.ReactNode}){return <html lang="de"><body>{children}</body></html>}
+import {InstallationGate} from '@/components/archive/installation';
+export const metadata:Metadata={title:"Digitales Geschichtsarchiv",description:"Digitales Vereinsarchiv für Geschichte, Quellen und Erinnerungen.",robots:{index:false,follow:false},icons:{icon:"/favicon.svg"}};
+export default function Layout({children}:{children:React.ReactNode}){return <html lang="de"><body><InstallationGate>{children}</InstallationGate></body></html>}

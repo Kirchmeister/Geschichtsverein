@@ -53,3 +53,6 @@ wrangler.local.json
 /uploads/
 *.sqlite*
 *.db
+
+/.restore-test-*/
+/archive-import*/

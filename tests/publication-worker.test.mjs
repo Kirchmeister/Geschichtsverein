@@ -4,7 +4,7 @@ import {readFileSync,readdirSync} from 'node:fs';
 import {resolve} from 'node:path';
 const require=createRequire(import.meta.url);
 const {Miniflare}=require(require.resolve('miniflare',{paths:[require.resolve('wrangler')]}));
-const mf=new Miniflare({modules:[{type:'ESModule',path:resolve('dist/server/index.js')},...readdirSync('dist/server',{recursive:true}).filter(p=>p.endsWith('.js')&&p!=='index.js').map(p=>({type:'ESModule',path:resolve('dist/server',p)}))],modulesRoot:resolve('dist/server'),modulesRules:[{type:'ESModule',include:['**/*.js','**/*.mjs'],fallthrough:true}],compatibilityDate:'2026-05-15',compatibilityFlags:['nodejs_compat'],bindings:{ARCHIVE_BOOTSTRAP_ADMIN_EMAIL:'admin@example.test'},d1Databases:['DB'],r2Buckets:['BUCKET']});
+const mf=new Miniflare({modules:[{type:'ESModule',path:resolve('dist/server/index.js')},...readdirSync('dist/server',{recursive:true}).filter(p=>p.endsWith('.js')&&p!=='index.js').map(p=>({type:'ESModule',path:resolve('dist/server',p)}))],modulesRoot:resolve('dist/server'),modulesRules:[{type:'ESModule',include:['**/*.js','**/*.mjs'],fallthrough:true}],compatibilityDate:'2026-05-15',compatibilityFlags:['nodejs_compat'],bindings:{ARCHIVE_BOOTSTRAP_ADMIN_EMAIL:'admin@example.test',ARCHIVE_INITIAL_PLACE:'Testort',ARCHIVE_INITIAL_ASSOCIATION:'Testverein'},d1Databases:['DB'],r2Buckets:['BUCKET']});
 const owner={'oai-authenticated-user-id':'owner-subject','oai-authenticated-user-email':'admin@example.test','oai-authenticated-user-full-name':encodeURIComponent('Test Admin'),'oai-authenticated-user-full-name-encoding':'percent-encoded-utf-8'};
 const outsider={'oai-authenticated-user-id':'other-subject','oai-authenticated-user-email':'other@example.test'};
 const roleHeaders=role=>({...owner,...(role?{'x-archive-preview-role':role}:{})});
@@ -15,7 +15,7 @@ try {
  assert.equal((await json('/api/session')).canPreview,true);
  const signedOther=await mf.dispatchFetch('https://archive.test/api/session',{headers:outsider});assert.equal((await signedOther.json()).canPreview,false);
  const bucket=await mf.getR2Bucket('BUCKET'),audioKey=crypto.randomUUID(),hiddenKey=crypto.randomUUID();await bucket.put(audioKey,new Uint8Array(1000),{httpMetadata:{contentType:'audio/mpeg'},customMetadata:{name:'Erinnerung.mp3'}});await bucket.put(hiddenKey,'private',{httpMetadata:{contentType:'application/pdf'}});
- let entry={id:crypto.randomUUID(),title:'Testbeitrag',category:'Ereignis',period:'1900',start:'',end:'',place:'Bruchköbel',description:'Sichtbare Beschreibung',sources:'Beleg',interpretation:'GEHEIME_NOTIZ',uncertainty:'PRIVATE_FRAGE',rights:'Rechte',tags:'',status:'Offen',files:[{key:audioKey,name:'Erinnerung.mp3',type:'audio/mpeg'},{key:hiddenKey,name:'Privates.pdf',type:'application/pdf'}]};
+ let entry={id:crypto.randomUUID(),title:'Testbeitrag',category:'Ereignis',period:'1900',start:'',end:'',place:'Beispielort',description:'Sichtbare Beschreibung',sources:'Beleg',interpretation:'GEHEIME_NOTIZ',uncertainty:'PRIVATE_FRAGE',rights:'Rechte',tags:'',status:'Offen',files:[{key:audioKey,name:'Erinnerung.mp3',type:'audio/mpeg'},{key:hiddenKey,name:'Privates.pdf',type:'application/pdf'}]};
  entry=await json('/api/entries',{role:'user',method:'POST',body:entry});
  let meta=(await json('/api/publication?id='+entry.id,{role:'user'}))[0];assert.equal(meta.status,'draft');assert.ok(meta.currentVersion);
  let review={id:entry.id,updated:entry.updated,version:meta.currentVersion};

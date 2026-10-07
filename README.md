@@ -1,6 +1,19 @@
-# Stadtgeschichte Bruchköbel
+# Digitales Geschichtsarchiv
 
-Digitales Arbeitsarchiv des Geschichtsvereins Bruchköbel: historische Beiträge, Quellen, Medien, Artefakte und Aufbewahrungsorte. Besucher sehen eine kuratierte öffentliche Zeitleiste; freigegebene Beiträge sind auch über dauerhafte Referenzlinks und QR-Codes erreichbar.
+Konfigurierbares Arbeitsarchiv für Geschichtsvereine: historische Beiträge, Quellen, Medien, Artefakte und Aufbewahrungsorte. Besucher sehen eine kuratierte öffentliche Zeitleiste; freigegebene Beiträge sind auch über dauerhafte Referenzlinks und QR-Codes erreichbar.
+
+## Ersteinrichtung und Backup-Import
+
+Eine neue Installation startet leer und verlangt Ort und Vereinsname. Die Hosting-Domain kann übersprungen werden. Alternativ lässt sich eine exportierte Sicherung aus Sites oder einer anderen Instanz zuerst offline in einen getrennten Bestand importieren.
+
+```sh
+node scripts/restore-backup.mjs --backup /pfad/archiv.tar --inspect
+node scripts/restore-backup.mjs --backup /pfad/archiv.tar --target /pfad/neuer-bestand
+```
+
+Vorhandene Zielordner werden nicht überschrieben. Zugangspasswörter werden entfernt, automatische Aufgaben pausiert und importierte Anmeldeidentitäten deaktiviert. Der neue Admin bestätigt die Einrichtung. Die bestehende Sites-Installation erhält ihre Daten und ihre vorbelegte Konfiguration.
+
+Die vollständige Anleitung, Laufzeitpfade und Grenzen stehen in [docs/installation.md](docs/installation.md). Der Import funktioniert mit der aktuellen Worker-/D1-/R2-Laufzeit; der Linux-Produktionsadapter mit echter Anmeldung ist weiter separat vorzubereiten.
 
 ## Funktionen
 
@@ -84,7 +97,7 @@ Nextcloud und Taler bleiben getrennte Dienste. Erst nach vorbereitetem Adapter, 
 
 GitHub enthält nur Quellcode, Schema-Migrationen und Dokumentation. Archivbeiträge, Nutzerkonten, Kommentare, Statistiken, Uploads und Sicherungsarchive sind Laufzeitdaten und werden nicht synchronisiert. Dasselbe gilt für SMTP-/WebDAV-Zugangsdaten und Produktionsschlüssel. Die Anwendungssicherung bleibt unabhängig von GitHub erforderlich.
 
-Bei einem Umzug IDs, Referenzen, Versionsdaten, Beschreibungstags/-links und QR-Druckhistorie erhalten. Sicherungen enthalten Daten und Dateien; deren Wiederherstellung zuerst in einer getrennten Testumgebung prüfen. Verbindungspasswörter werden nicht im Sicherungsexport mitgegeben und müssen neu gesetzt werden.
+Bei einem Umzug IDs, Referenzen, Versionsdaten, Beschreibungstags/-links und QR-Druckhistorie erhalten. Sicherungen enthalten Daten und Dateien; das Offline-Importwerkzeug überprüft und importiert sie in eine getrennte, neue Ablage. Wiederherstellung zuerst in einer Testumgebung prüfen. Verbindungspasswörter werden nicht im Sicherungsexport mitgegeben und müssen neu gesetzt werden.
 
 ## Zusammenarbeit und Synchronisierung
 
