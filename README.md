@@ -45,7 +45,7 @@ Technische Angaben zur Entwicklungs- und Testumgebung stehen in [docs/developmen
 
 Der Archivtitel wird aus dem Ortsnamen vorgeschlagen (z. B. „Geschichte Rodenbachs“). Unter **Einstellungen → Archiv- & Vereinsname** kann der Administrator den vollständigen Titel ändern oder zur automatischen Bezeichnung zurückkehren. Diese Einstellung gehört zur Datensicherung und verändert keine Beitragstexte oder URLs.
 
-Alle Einstellungsbereiche sind standardmäßig eingeklappt, einschließlich Hosting-Adresse für QR-Codes, Backups, Nextcloud / WebDAV, E-Mail / SMTP und Einladungseinstellungen. Aktuelle Werte erscheinen in den Kopfzeilen; Eingaben bleiben beim Einklappen erhalten.
+Alle Einstellungsbereiche sind standardmäßig eingeklappt, einschließlich Hosting-Adresse für QR-Codes, Backups, Nextcloud / WebDAV und E-Mail / SMTP. Einladungseinstellungen stehen ganz unten im gemeinsamen Bereich „Benutzer & Einladungen“. Aktuelle Werte erscheinen in den Kopfzeilen; Eingaben bleiben beim Einklappen erhalten.
 
 Unten in der Seitenleiste öffnet der angemeldete Name die zugeordneten Berechtigungen. Die Linux-Version bietet dort **Abmelden**. Die kompakte Profilvorschau ist nur für tatsächliche Administratoren verfügbar und ändert ihre zugeordnete Rolle nicht. Auf Mobilgeräten schließt die Navigation nach Auswahl eines Menüpunktes automatisch.
 
@@ -76,3 +76,5 @@ Die Update-Benachrichtigung verwendet die Ergebnisse des **eingerichteten sicher
 ### Texte des öffentlichen Profils
 
 Unter **Einstellungen → Öffentliches Profil** kann der Admin die Überschrift und den Beschreibungstext über der öffentlichen Zeitleiste ändern. Der Bereich ist zunächst eingeklappt. Leere Felder verwenden die bisherigen Standardtexte mit dem konfigurierten Orts- und Vereinsnamen; „Standardtexte verwenden“ setzt beide Felder zurück und wird erst mit „Änderungen speichern“ wirksam. Zeilenumbrüche bleiben erhalten. Webadressen mit https://, http:// oder www. werden im Beschreibungstext anklickbar und öffnen einen neuen Tab. HTML wird als einfacher Text behandelt. Die Texte werden mit dem Archiv gesichert und beim portablen Import wiederhergestellt.
+
+Die Benutzerübersicht zeigt den letzten erfolgreichen Linux-Login je Konto. Registrierung mit anschließender Anmeldung zählt ebenfalls; fehlgeschlagene Versuche und reine Passkey-Bestätigungen ändern den Zeitpunkt nicht. Bei bestehenden Konten ohne erfassten Zeitpunkt steht „Noch nicht erfasst“, bis sie sich erneut anmelden. Die Rolle bleibt über das persönliche Kontomenü einsehbar. In der geschlossenen Kopfzeile „Archiv- & Vereinsname“ werden die Namen nicht mehr angezeigt.

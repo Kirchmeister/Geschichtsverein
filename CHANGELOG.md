@@ -4,6 +4,12 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.8.0] – 2026-10-07
+
+- Startseite ohne „Sechs Zugänge zur Stadtgeschichte“ und „ARBEITSSTAND · IM AUFBAU“; persönliche Begrüßung ohne Rollen-Zeile. Rolle bleibt im Kontomenü sichtbar.
+- Einladungseinstellungen stehen ganz unten im gemeinsam einklappbaren Bereich „Benutzer & Einladungen“. Archiv- und Vereinsname entfallen aus der geschlossenen Kopfzeile.
+- Benutzerübersicht zeigt den letzten erfolgreichen Login. Frühere, nicht erfasste Anmeldungen werden nicht nachträglich geschätzt; additive Linux-Metadatentabelle, keine Änderung von Archivschema oder portablem Backupformat.
+
 ## [0.7.0] – 2026-10-07
 
 - Überschrift und Einführungstext des öffentlichen Profils lassen sich im eingeklappten Einstellungsbereich „Öffentliches Profil“ durch Admins bearbeiten und auf die dynamischen Standardtexte zurücksetzen.
