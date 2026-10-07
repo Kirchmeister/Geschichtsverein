@@ -1,5 +1,9 @@
 # Änderungen
 
+## [0.10.1]
+
+- Vollständige CSS-Datei im GitHub-Repository wiederhergestellt; Übertragung anhand der Git-Blob-Prüfsummen verifiziert.
+
 ## [0.10.0]
 
 - Kompakte QR-Erreichbarkeitsanzeige auf Mobiltelefonen; Details aufklappbar.
