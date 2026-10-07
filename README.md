@@ -128,4 +128,6 @@ git worktree add --detach ../geschichtsarchiv-v0.1.0 v0.1.0
 
 In diesem Verzeichnis die Installationsanleitung verwenden, eigene Laufzeitdaten konfigurieren und nur eine Sicherungskopie importieren. Kein gemeinsames Datenverzeichnis mit der laufenden Instanz verwenden. Ein Code-Downgrade stellt keine Datenbank zurück; bei späteren Migrationen sind die Versionshinweise und ein kompatibles Backup erforderlich. Sicherungen mit neuerem Schema werden vom Importer abgelehnt.
 
+Der Abschnitt **Farben & Design** startet eingeklappt und lässt sich über die Überschrift oder den Pfeil mit Maus oder Tastatur öffnen und schließen. Eine noch nicht gespeicherte Farbauswahl bleibt beim Einklappen erhalten.
+
 Unter **Einstellungen → Farben & Design** kann ausschließlich der Admin zwischen Salbeigrün (bisheriges Design), Küstenblau, Petrol & Sand, Pflaume & Creme, Weinrot & Porzellan und Ocker & Schiefer wählen. Erst **Farbvorlage übernehmen** speichert die Auswahl für alle Profile dieser Instanz. Sie wird mitgesichert; sensible Verbindungsdaten sind über die Design-API nicht lesbar. Andere bereits geöffnete Tabs aktualisieren ihre Farben beim erneuten Aktivieren. QR-Codes bleiben schwarz auf weiß.

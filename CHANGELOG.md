@@ -4,6 +4,11 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.2.1] – 2026-10-07
+
+- „Farben & Design“ in den Einstellungen ist zunächst eingeklappt. Überschrift und Pfeil öffnen/schließen die Farbvorlagen auch per Tastatur.
+- Ungespeicherte Farbauswahl bleibt beim Einklappen erhalten. Keine Datenbankmigration; Schema 15 und Backupformat 2 bleiben unverändert.
+
 ## [0.2.0] – 2026-10-07
 
 - Sechs instanzweite Farbvorlagen in den Admin-Einstellungen; Salbeigrün bleibt der Standard.
