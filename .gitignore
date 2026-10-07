@@ -56,3 +56,6 @@ wrangler.local.json
 
 /.restore-test-*/
 /archive-import*/
+
+/.update-test-*/
+/updater-state/

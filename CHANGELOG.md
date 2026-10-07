@@ -4,6 +4,15 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.3.0] – 2026-10-07
+
+- Server-Update-Dienst: stabile Release-Suche, Skip und manuelle Wiederanzeige; ausschließlich Admin startet Updates.
+- Getrennte Release-Vorbereitung, vollständiger Daten-/Datei-/Konfigurations-/Code-Snapshot, Prüfsummen und verpflichtende Probe-Wiederherstellung vor Migrationen.
+- Automatischer Rückweg bei Fehlern und Wiederaufnahme einer unterbrochenen Wiederherstellung; beschädigte Sicherungen blockieren weitere Updates.
+- Hosting-Unterschiede sind sichtbar. Linux ignoriert OAI-Identitätsheader und benötigt eine gültige signierte Server-Sitzung. Der Einladungs-/Passkey-Login und der produktive Linux-Treiber sind weiterhin nicht freigegeben.
+- Backup-Metadaten enthalten zusätzlich den Code-Commit. Schema 15 und Backupformat 2 bleiben kompatibel; keine Migration erforderlich.
+- Entwicklung auf `development`; `main` und bisherige Vorab-Releases bleiben unverändert. README auf Vereinsbetrieb ausgerichtet, Testumgebung in `docs/`.
+
 ## [0.2.1] – 2026-10-07
 
 - „Farben & Design“ in den Einstellungen ist zunächst eingeklappt. Überschrift und Pfeil öffnen/schließen die Farbvorlagen auch per Tastatur.

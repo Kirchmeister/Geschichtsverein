@@ -1,7 +1,12 @@
+import {env} from 'cloudflare:workers';
+import {serverSessionIdentity} from './archive-server-session';
 import {archiveDb} from '@/lib/archive-db';
 /** Sites dispatch supplies these headers; replace only this adapter on migration.
  * Never accept identities from the request JSON or a name input. */
 export function authenticatedIdentity(req:Request){
+ const runtime=env as unknown as {ARCHIVE_HOSTING_RUNTIME?:string,ARCHIVE_SESSION_KEY?:string};
+ if(runtime.ARCHIVE_HOSTING_RUNTIME==='linux')return serverSessionIdentity(req,runtime.ARCHIVE_SESSION_KEY);
+
  const subject=req.headers.get('oai-authenticated-user-id'),email=req.headers.get('oai-authenticated-user-email');
  if(!subject||!email)return null;
  let name:string|null=null;
