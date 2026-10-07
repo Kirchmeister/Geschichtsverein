@@ -4,6 +4,10 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.5.1] – 2026-10-07
+
+- Hosting-Adresse für QR-Codes, Backups, Nextcloud / WebDAV, E-Mail / SMTP und Einladungseinstellungen verwenden dieselbe standardmäßig eingeklappte Darstellung wie die übrigen Einstellungen. Eingaben bleiben beim Einklappen erhalten.
+
 ## [0.5.0] – 2026-10-07
 
 - Linux: SMTP-Prüfung sendet eine Testmail an eine wählbare Zieladresse und zeigt das Ergebnis direkt im Abschnitt. TLS/STARTTLS mit Zertifikatsprüfung sind verpflichtend.
