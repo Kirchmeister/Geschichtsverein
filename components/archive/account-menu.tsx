@@ -1,4 +1,5 @@
  'use client';
+import {PasskeySettings} from './passkeys';
 import {useState,type ReactNode} from 'react';
 import {UserRound,LogOut,ChevronUp} from 'lucide-react';
 import {archiveRequest,type PreviewRole} from '@/lib/archive-api';
@@ -20,5 +21,5 @@ export function SidebarAccount({session,onOpen}:{session:ArchiveSession|null,onO
  const {isMobile,setOpenMobile}=useSidebar();return <AccountControls session={session} onOpen={()=>{if(isMobile)setOpenMobile(false);onOpen()}}/>;
 }
 export function AccountPermissions({session,previewRole,open,onOpenChange}:{session:ArchiveSession|null,previewRole:PreviewRole,open:boolean,onOpenChange:(open:boolean)=>void}){
- return <Dialog open={open} onOpenChange={onOpenChange}><DialogContent className="account-permissions"><DialogTitle>{session?.name||'Ihr Konto'}</DialogTitle><DialogDescription>Zugeordnete Rolle: {session?roleLabel(session.role):'Wird geladen …'}</DialogDescription>{session&&<><h3>Ihre Berechtigungen</h3><ul>{sessionPermissions(session.role).map(p=><li key={p}>{p}</li>)}</ul>{session.canPreview&&session.role!==previewRole&&<p className="account-preview-note">Aktuelle Profilvorschau: <strong>{roleLabel(previewRole)}</strong>. Ihre zugeordnete Rolle bleibt {roleLabel(session.role)}; die Vorschau verwendet die Berechtigungen der gewählten Ansicht.</p>}</>}</DialogContent></Dialog>;
+ return <Dialog open={open} onOpenChange={onOpenChange}><DialogContent className="account-permissions"><DialogTitle>{session?.name||'Ihr Konto'}</DialogTitle><DialogDescription>Zugeordnete Rolle: {session?roleLabel(session.role):'Wird geladen …'}</DialogDescription>{session&&<><h3>Ihre Berechtigungen</h3><ul>{sessionPermissions(session.role).map(p=><li key={p}>{p}</li>)}</ul>{session.canPreview&&session.role!==previewRole&&<p className="account-preview-note">Aktuelle Profilvorschau: <strong>{roleLabel(previewRole)}</strong>. Ihre zugeordnete Rolle bleibt {roleLabel(session.role)}; die Vorschau verwendet die Berechtigungen der gewählten Ansicht.</p>}{session.canLogout&&<PasskeySettings/>}</>}</DialogContent></Dialog>;
 }

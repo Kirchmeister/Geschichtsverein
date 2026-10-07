@@ -16,6 +16,21 @@ try{
  const login=await service.loginOptions();assert.ok(await service.login(login.challenge,assertion(login.options,k)));await assert.rejects(()=>service.login(login.challenge,assertion(login.options,k,2)));
  const wrong=service.invite({email:'user@example.test',name:'Test User',role:'user'}),options=await service.registrationOptions(wrong);await assert.rejects(()=>service.register(options.challenge,credential(options.options,'https://attacker.test').response));assert.equal(service.accounts().length,1);
  const secondOptions=await service.registrationOptions(wrong),k2=credential(secondOptions.options);await service.register(secondOptions.challenge,k2.response);const accounts=service.accounts(),admin=accounts.find(a=>a.role==='admin'),user=accounts.find(a=>a.role==='user');service.edit(user.id,'manager',false,admin.id);assert.equal(service.accounts().find(a=>a.id===user.id).role,'manager');service.edit(user.id,'manager',true,admin.id);const blocked=await service.loginOptions();await assert.rejects(()=>service.login(blocked.challenge,assertion(blocked.options,k2)));assert.throws(()=>service.edit(admin.id,'user',true,admin.id));
+
+ service.edit(user.id,'manager',false,admin.id);
+ assert.equal(service.accounts().find(a=>a.id===admin.id).passkeyCount,1);
+ assert.throws(()=>service.passkeyRename(user.id,k.id,'Not mine'));
+ let counter=1;
+ async function proof(actor=admin.id,existing=k){const o=await service.passkeyAuthOptions(actor);return (await service.passkeyAuthVerify(actor,o.challenge,assertion(o.options,existing,++counter))).proof}
+ const bound=await proof();await assert.rejects(()=>service.passkeyAddOptions(user.id,bound));
+ const add=await service.passkeyAddOptions(admin.id,bound);assert.equal(add.options.user.id,registration.options.user.id);assert.ok(add.options.excludeCredentials.some(c=>c.id===k.id));await assert.rejects(()=>service.passkeyAddOptions(admin.id,bound));
+ const extraKey=credential(add.options);await service.passkeyAdd(admin.id,add.challenge,extraKey.response,'Mobiltelefon');assert.equal(service.passkeys(admin.id).length,2);await assert.rejects(()=>service.passkeyAdd(admin.id,add.challenge,extraKey.response,'Replay'));
+ assert.equal(service.passkeyRename(admin.id,extraKey.id,'Privates Telefon').find(x=>x.id===extraKey.id).name,'Privates Telefon');assert.equal(service.passkeys(user.id).length,1);
+ const ownLogin=await service.loginOptions();assert.ok(await service.login(ownLogin.challenge,assertion(ownLogin.options,extraKey)));
+ const bad=await service.passkeyAddOptions(admin.id,await proof());await assert.rejects(()=>service.passkeyAdd(admin.id,bad.challenge,credential(bad.options,'https://attacker.test').response,'Wrong origin'));
+ await service.passkeyRemove(admin.id,extraKey.id,await proof());assert.equal(service.passkeys(admin.id).length,1);await assert.rejects(async()=>service.passkeyRemove(admin.id,k.id,await proof()),/letzte Passkey/);
+ const check=await service.passkeyAuthOptions(admin.id);await assert.rejects(()=>service.passkeyAuthVerify(user.id,check.challenge,assertion(check.options,k,++counter)));await service.passkeyAuthVerify(admin.id,check.challenge,assertion(check.options,k,++counter));
+ assert.equal(service.accounts().find(a=>a.id===admin.id).passkeyCount,1);assert.ok(service.passkeys(admin.id)[0].lastUsed);assert.equal(service.passkeys(admin.id)[0].public_key,undefined);
  const before=db.prepare('SELECT count(*) AS n FROM archive_users').get().n;await assert.rejects(()=>storage.batch([storage.prepare("INSERT INTO archive_settings(key,data,updated,updated_by) VALUES('rollback-test','{}','now','test')"),storage.prepare('INSERT INTO nonexistent_table VALUES(1)')]));assert.equal(db.prepare("SELECT key FROM archive_settings WHERE key='rollback-test'").get(),undefined);assert.equal(db.prepare('SELECT count(*) AS n FROM archive_users').get().n,before);
  console.log('PASS: SQLite migrations/atomic rollback, file storage/ranges/pagination, real signed WebAuthn registration/login, origin verification, single-use challenges/invites, roles and disabled accounts.');
 }finally{storage.close();await fs.rm(root,{recursive:true,force:true})}

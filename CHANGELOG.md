@@ -4,6 +4,13 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.5.0] – 2026-10-07
+
+- Linux: SMTP-Prüfung sendet eine Testmail an eine wählbare Zieladresse und zeigt das Ergebnis direkt im Abschnitt. TLS/STARTTLS mit Zertifikatsprüfung sind verpflichtend.
+- Einladungen können optional per E-Mail versendet werden; bei einem Versandfehler bleibt der erstellte Link verfügbar.
+- Mehrere eigene Passkeys hinzufügen, benennen und entfernen; Hinzufügen und Entfernen erfordern eine erneute Passkey-Bestätigung. Der letzte Schlüssel ist geschützt. Konten zeigen die Anzahl der Passkeys, ohne eine irreführende Null als Status.
+- Bestehende Authentifizierungsdaten bleiben erhalten; ergänzende Linux-Tabellen speichern nur Schlüsselmetadaten. Archivschema 15 und Backupformat 2 bleiben unverändert.
+
 ## [0.4.6] – 2026-10-07
 
 - Unter „Archiv- & Vereinsname“ können Administratoren auch den bei der Einrichtung vergebenen Vereinsnamen ändern.
