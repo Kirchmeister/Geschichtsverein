@@ -4,6 +4,11 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.4.4] – 2026-10-07
+
+- Archivname, Hosting, Updates, Benutzer und Design erhalten einheitliche einklappbare Einstellungen mit einzelnen Trennlinien.
+- Klar beschriftete Felder, kompakte Benutzerzeilen und mobile Anordnung; Archivname speichert mit direkter Rückmeldung ohne Seitenneuladen.
+
 ## [0.4.3] – 2026-10-07
 
 - Automatischer deutscher Archivtitel mit Genitiv-s und „von“-Form bei s-Laut-Endungen.
