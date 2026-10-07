@@ -1,6 +1,6 @@
 import {env} from '@/lib/runtime-env';
 import {archiveDb} from './archive-db';
-export type ArchiveInstallation={place:string,association:string,completed:boolean,restored?:boolean,sourceCreated?:string};
+export type ArchiveInstallation={place:string,association:string,title?:string,completed:boolean,restored?:boolean,sourceCreated?:string};
 export async function installation():Promise<ArchiveInstallation>{
  const row=await archiveDb().prepare("SELECT data FROM archive_settings WHERE key='installation'").first<{data:string}>();
  if(row)return JSON.parse(row.data);

@@ -4,6 +4,11 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.4.3] – 2026-10-07
+
+- Automatischer deutscher Archivtitel mit Genitiv-s und „von“-Form bei s-Laut-Endungen.
+- Admins können den vollständigen Titel unter Einstellungen → Archivname ändern oder auf automatisch zurücksetzen. Titel wird gesichert; Bestände und QR-Adressen bleiben erhalten.
+
 ## [0.4.2] – 2026-10-07
 
 - Container startet den erzeugten Standalone-Server statt `next start`; dadurch wird der tatsächliche Build-Pfad verwendet.
