@@ -1,0 +1,91 @@
+# Stadtgeschichte Bruchköbel
+
+Digitales Arbeitsarchiv des Geschichtsvereins Bruchköbel: historische Beiträge, Quellen, Medien, Artefakte und Aufbewahrungsorte. Besucher sehen eine kuratierte öffentliche Zeitleiste; freigegebene Beiträge sind auch über dauerhafte Referenzlinks und QR-Codes erreichbar.
+
+## Funktionen
+
+- Rollen Admin, Verwalter und Nutzer sowie öffentliche Ansicht
+- Veröffentlichung mit Prüfung, Rücknahme und geplanten Zeitleisten-Auswahlen
+- Personen- und Familientags sowie Verknüpfungen innerhalb von Beschreibungstexten
+- Versionsvergleich und Wiederherstellung einzelner Felder
+- Moderierte Kommentare und Antworten
+- QR-Druck mit Hosting-Adresse und Druckhistorie
+- Aggregierte Zugriffsstatistik ohne Besuchernamen oder Nutzer-IDs
+- Manuelle Sicherungen und vorbereitete tägliche Nextcloud-/WebDAV-Sicherung
+
+## Technik und Voraussetzungen
+
+React und TypeScript, Vinext/Vite; der derzeitige Server läuft als Cloudflare Worker mit D1 (SQLite) und R2 für Dateien. Node.js ab 22.13.0, Git und die in `package.json` festgelegte pnpm-Version werden benötigt. Die Bindings heißen `DB` und `BUCKET`.
+
+## Lokal installieren
+
+```sh
+git clone https://github.com/Kirchmeister/Geschichtsverein.git
+cd Geschichtsverein
+corepack enable
+corepack pnpm install --frozen-lockfile
+corepack pnpm dev
+```
+
+Das private Repository benötigt GitHub-Zugriff. Ein frischer Checkout verwendet automatisch das portable Entwicklungsprofil. Der Entwicklungsserver läuft standardmäßig unter `http://localhost:5173` und bietet ausschließlich lokal simulierte Anmeldung. Produktionsidentitäten dürfen nicht durch diese Simulation ersetzt werden.
+
+Für lokale D1-Migrationen eine **lokale** Wrangler-Konfiguration `wrangler.local.json` erstellen:
+
+```json
+{
+  "name": "stadtgeschichte-local",
+  "compatibility_date": "2026-10-01",
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "site-creator-d1",
+    "database_id": "00000000-0000-4000-8000-000000000000",
+    "migrations_dir": "drizzle"
+  }]
+}
+```
+
+Den Entwicklungsserver stoppen und anschließend ausführen:
+
+```sh
+corepack pnpm exec wrangler d1 migrations apply site-creator-d1 --local --config wrangler.local.json --persist-to .wrangler/state
+```
+
+Diese Konfiguration enthält keine Produktionsdatenbank. Lokale Daten liegen unter `.wrangler/` und gehören nicht ins Repository. Die Persistenzpfade des verwendeten Vite-/Wrangler-Profils müssen übereinstimmen; bei einer abweichenden lokalen Konfiguration den Pfad entsprechend anpassen.
+
+## Laufzeitkonfiguration
+
+Für lokale Tests kann eine ignorierte `.dev.vars` verwendet werden:
+
+```text
+ARCHIVE_BOOTSTRAP_ADMIN_EMAIL=seedy@sites.test
+ARCHIVE_SETTINGS_KEY=<zufälliger geheimer Schlüssel>
+```
+
+Die Bootstrap-Adresse bestimmt den initialen Admin und muss zur authentifizierten Identität passen. In Produktion als geschützte Laufzeitvariable setzen. `ARCHIVE_SETTINGS_KEY` wird für verschlüsselte Verbindungseinstellungen benötigt; Der Schlüssel besteht aus 64 hexadezimalen Zeichen (32 Zufallsbytes); Details siehe `lib/archive-system-settings.ts`. Bestehende Schlüssel bei einem Umzug erhalten, sonst lassen sich gespeicherte Zugangsdaten nicht entschlüsseln. Keine echten Werte in Git eintragen.
+
+## Prüfen und bauen
+
+```sh
+corepack pnpm exec tsc --noEmit
+corepack pnpm build
+```
+
+`tests/` enthält ergänzende Prüfscripte; einige benötigen einen gestarteten lokalen Worker und passende Testkonfiguration. Ein Build allein prüft keine produktiven Zugangsdaten oder externen Dienste.
+
+## Veröffentlichung und Linux-Umzug
+
+Die bestehende Sites-Umgebung wird über den Sites-Publishing-Workflow veröffentlicht. `.openai/hosting.json` beschreibt die Bindings und die bestehende Site; die Projektkennung ist keine Zugangsdatenfreigabe. Ein GitHub-Commit veröffentlicht die Anwendung nicht automatisch.
+
+**Der aktuelle Stand ist noch kein direkt installierbares Docker-/Apache-Paket.** Für den geplanten Linux-Betrieb müssen Worker-Bindings/D1/R2, Identitätsprüfung und Anmeldung an die Zielumgebung angepasst werden. Insbesondere darf ein eigener Server die `oai-authenticated-*`-Header nicht ungeprüft von Browsern übernehmen. Einladungen und Passkeys benötigen dort eine echte Authentifizierung. SMTP-Verbindungen müssen ebenfalls zur Ziel-Laufzeit passen.
+
+Nextcloud und Taler bleiben getrennte Dienste. Erst nach vorbereitetem Adapter, separater Datenbank/Dateiablage, geprüfter Sicherungswiederherstellung und einem isolierten Testbetrieb wird die neue Domain auf die Anwendung umgestellt. Die Anleitung wird mit der Umsetzung um konkrete Installations- und Aktualisierungsbefehle erweitert.
+
+## Daten und Sicherungen
+
+GitHub enthält nur Quellcode, Schema-Migrationen und Dokumentation. Archivbeiträge, Nutzerkonten, Kommentare, Statistiken, Uploads und Sicherungsarchive sind Laufzeitdaten und werden nicht synchronisiert. Dasselbe gilt für SMTP-/WebDAV-Zugangsdaten und Produktionsschlüssel. Die Anwendungssicherung bleibt unabhängig von GitHub erforderlich.
+
+Bei einem Umzug IDs, Referenzen, Versionsdaten, Beschreibungstags/-links und QR-Druckhistorie erhalten. Sicherungen enthalten Daten und Dateien; deren Wiederherstellung zuerst in einer getrennten Testumgebung prüfen. Verbindungspasswörter werden nicht im Sicherungsexport mitgegeben und müssen neu gesetzt werden.
+
+## Zusammenarbeit und Synchronisierung
+
+Nach jeder beauftragten Codeänderung werden die geprüfte Sites-Version und ein entsprechender GitHub-Commit bereitgestellt. Beide Ziele sind unabhängige Veröffentlichungen; Fehler oder abweichende Stände werden gemeldet. Änderungen am GitHub-Repository vor einer Synchronisierung prüfen und erhalten; keine fremden Änderungen überschreiben. Die README bei Änderungen an Installation, Konfiguration und Betrieb mitpflegen.
