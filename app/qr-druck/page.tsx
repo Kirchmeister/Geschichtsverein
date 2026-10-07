@@ -1,0 +1,9 @@
+'use client';
+import {useEffect,useState} from 'react';
+import QRCode from 'qrcode';
+import {archiveRequest} from '@/lib/archive-api';
+export default function QRPrintPage(){const [labels,setLabels]=useState<any[]>([]),[error,setError]=useState(''),[ready,setReady]=useState(false);
+ useEffect(()=>{let active=true;const id=new URLSearchParams(window.location.search).get('auftrag');if(!id){setError('Keine Druckansicht ausgewählt.');return}archiveRequest('/api/qr?id='+encodeURIComponent(id)).then(async d=>{const result=await Promise.all(d.labels.map(async(label:any)=>({...label,image:await QRCode.toDataURL(label.url,{errorCorrectionLevel:'M',margin:4,width:400})})));if(active){setLabels(result);setReady(true)}}).catch(e=>{if(active)setError(e.message)});return()=>{active=false}},[]);
+ const pages=Array.from({length:Math.ceil(labels.length/24)},(_,i)=>labels.slice(i*24,(i+1)*24));
+ return <main className="qr-print-view"><header className="qr-print-toolbar"><h1>QR-Druckansicht</h1><p>A4 · 24 Etiketten je Seite · 100 % / tatsächliche Größe · Browser-Kopf- und Fußzeilen ausschalten.</p><p>Nach dem Drucken bitte im ursprünglichen Fenster mit Ja oder Nein bestätigen.</p>{labels.some(l=>!l.published)&&<p>Einige Beiträge sind noch nicht öffentlich freigegeben. Ihre Links werden erst nach der Freigabe öffentlich sichtbar.</p>}<button className="primary" disabled={!ready} onClick={()=>window.print()}>Drucken</button></header>{error&&<p className="error" role="alert">{error}</p>}{!ready&&!error&&<p role="status">QR-Codes werden erstellt …</p>}{pages.map((page,i)=><div className="qr-print-sheet" key={i}>{page.map(label=><article className="qr-label" key={label.entryId}><img src={label.image} alt={'QR-Code für '+label.title}/><strong>{label.title}</strong><span>{label.reference}</span><small className="qr-label-domain">{new URL(label.url).host}</small></article>)}</div>)}</main>
+}

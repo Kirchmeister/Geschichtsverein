@@ -1,0 +1,6 @@
+import {archiveDb} from '@/lib/archive-db';
+import {requireArchiveAction,accessResponse} from '@/lib/archive-access';
+import {resolveArchiveActor} from '@/lib/archive-identity';
+import {timelineRevision,saveTimelineSelection} from '@/lib/archive-timeline-selections';
+import {sameOrigin} from '@/lib/archive-comments';
+export async function POST(req:Request){try{if(!sameOrigin(req))return Response.json({error:'Bitte die Website direkt öffnen.'},{status:403});await requireArchiveAction(req,'edit');const d=await req.json() as any;if(typeof d.id!=='string'||typeof d.visible!=='boolean')return Response.json({error:'Bitte einen Beitrag auswählen.'},{status:400});const entry=await archiveDb().prepare('SELECT id FROM entries WHERE id=? AND deleted=0').bind(d.id).first();if(!entry)return Response.json({error:'Beitrag nicht gefunden.'},{status:404});const actor=await resolveArchiveActor(req);await saveTimelineSelection({add:d.visible?[d.id]:[],remove:d.visible?[]:[d.id],baseRevision:await timelineRevision(),label:'Einzelauswahl geändert',actorName:actor!.name});return Response.json({timelineVisible:d.visible})}catch(e){return accessResponse(e)||Response.json({error:'Die Auswahl konnte nicht gespeichert werden.'},{status:503})}}

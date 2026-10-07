@@ -1,0 +1,1 @@
+ALTER TABLE `entries` ADD `timeline_visible` integer DEFAULT 1 NOT NULL;

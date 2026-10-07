@@ -1,0 +1,11 @@
+ 'use client';
+import {useEffect,useState,useRef} from 'react';
+import {CheckCircle2,AlertTriangle,RefreshCw} from 'lucide-react';
+import {archiveRequest} from '@/lib/archive-api';
+export function QRAccessAlerts({onOpen}:{onOpen:(id:string)=>void}){
+ const [items,setItems]=useState<any[]>([]),[error,setError]=useState(''),[checked,setChecked]=useState<Date|null>(null),[busy,setBusy]=useState(false);const loading=useRef(false);
+ async function load(){if(loading.current)return;loading.current=true;setBusy(true);try{setItems(await archiveRequest('/api/qr-access-alerts'));setError('');setChecked(new Date())}catch(e:any){setError(e.message)}finally{loading.current=false;setBusy(false)}}
+ useEffect(()=>{load();const timer=setInterval(load,60000);return()=>clearInterval(timer)},[]);
+ const warning=items.length>0;const Icon=warning||error?AlertTriangle:CheckCircle2;
+ return <section className={'qr-health '+(error?'qr-health-error':warning?'qr-health-warning':'qr-health-ok')} aria-label="QR-Code-Erreichbarkeit"><div className="qr-health-header"><div><h2>QR-Code-Erreichbarkeit</h2><p className="qr-health-status" role="status"><Icon size={20} aria-hidden="true"/><span>{error?'Prüfung derzeit nicht möglich':!checked?'Hinweise werden geprüft …':warning?items.length+' '+(items.length===1?'Beitrag über QR-Code nicht erreichbar':'Beiträge über QR-Code nicht erreichbar'):'Keine fehlgeschlagenen QR-Aufrufe gemeldet.'}</span></p><small>{checked?'Zuletzt geprüft: '+checked.toLocaleTimeString('de-DE',{timeZone:'Europe/Berlin',hour:'2-digit',minute:'2-digit'})+' Uhr':'Noch kein Prüfergebnis'} · automatische Prüfung jede Minute</small></div><button type="button" className="qr-health-refresh" disabled={busy} onClick={load}><RefreshCw size={16} aria-hidden="true"/>{busy?'Wird geprüft …':'Aktualisieren'}</button></div>{error&&<p className="error" role="alert">{error}</p>}{warning&&<div className="qr-health-items"><p>Bitte die betroffenen Beiträge prüfen und gegebenenfalls erneut freigeben. Nach Freigabe verschwindet der Hinweis.</p>{items.map(e=><button className="qr-health-entry" key={e.id} onClick={()=>onOpen(e.id)}><span><strong>{e.title}</strong> <small>{e.reference}</small></span><small>{e.attempts} fehlgeschlagene Aufrufe · zuletzt {new Date(e.lastSeen).toLocaleString('de-DE')}</small><span>Eintrag prüfen →</span></button>)}</div>}</section>
+}

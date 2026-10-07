@@ -1,0 +1,1 @@
+CREATE INDEX `idx_entry_versions_date` ON `entry_versions` (`created`,`version`);

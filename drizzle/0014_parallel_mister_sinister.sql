@@ -1,0 +1,1 @@
+ALTER TABLE `public_page_views` ADD `authenticated_views` integer DEFAULT 0 NOT NULL;

@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {test} from 'node:test';
+import ts from 'typescript';
+import {readFileSync} from 'node:fs';
+const js=ts.transpileModule(readFileSync('lib/archive-api.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText;
+const {readArchiveResponse}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+test('successful save response is retained',async()=>assert.deepEqual(await readArchiveResponse(Response.json({id:'test'})),{id:'test'}));
+test('HTML never leaks a JSON parser exception',async()=>{for(const status of [200,502,503])await assert.rejects(readArchiveResponse(new Response('<!DOCTYPE html><html>gateway</html>',{status,headers:{'Content-Type':'text/html'}})),/keine gültige Speicherantwort/)});
+test('expired access gives a recovery instruction',async()=>{for(const status of [401,403])await assert.rejects(readArchiveResponse(new Response('login',{status})),/erneut bestätigt/)});
+test('validation errors remain readable',async()=>assert.rejects(readArchiveResponse(Response.json({error:'Zeitraum prüfen'},{status:400})),/Zeitraum prüfen/));
+test('truncated JSON keeps input recovery instruction',async()=>assert.rejects(readArchiveResponse(new Response('{',{headers:{'Content-Type':'application/json'}})),/Eingaben bleiben erhalten/));

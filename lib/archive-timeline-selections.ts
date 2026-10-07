@@ -1,0 +1,15 @@
+import {archiveDb} from '@/lib/archive-db';
+import {AccessError} from '@/lib/archive-access';
+export async function timelineRevision(){const db=archiveDb();await db.prepare("INSERT OR IGNORE INTO timeline_control(id,revision) VALUES('main','initial')").run();return (await db.prepare("SELECT revision FROM timeline_control WHERE id='main'").first<{revision:string}>())!.revision}
+export async function saveTimelineSelection({add,remove,baseRevision,label,actorName,automatic}:{add:string[],remove:string[],baseRevision:string,label:string,actorName:string,automatic?:{revision:string,nextRun:string,result:string,now:string}}){
+ const db=archiveDb(),token=crypto.randomUUID(),now=new Date().toISOString();const gate="EXISTS(SELECT 1 FROM timeline_control WHERE id='main' AND revision=?)";
+ const results=await db.batch([
+ automatic?db.prepare("UPDATE timeline_control SET revision=? WHERE id='main' AND revision=? AND EXISTS(SELECT 1 FROM timeline_rotation WHERE id='main' AND revision=? AND enabled=1 AND next_run<=?)").bind(token,baseRevision,automatic.revision,automatic.now):db.prepare("UPDATE timeline_control SET revision=? WHERE id='main' AND revision=?").bind(token,baseRevision),
+ db.prepare(`INSERT OR IGNORE INTO timeline_selections(id,label,created,actor_name,count) SELECT ?,'Ausgangsauswahl',?,?,(SELECT count(*) FROM entries WHERE deleted=0 AND timeline_visible=1) WHERE ${gate}`).bind(baseRevision,new Date(Date.parse(now)-1).toISOString(),actorName,token),
+ db.prepare(`INSERT OR IGNORE INTO timeline_selection_members(snapshot_id,entry_id) SELECT ?,id FROM entries WHERE deleted=0 AND timeline_visible=1 AND ${gate} AND NOT EXISTS(SELECT 1 FROM timeline_selection_members WHERE snapshot_id=?)`).bind(baseRevision,token,baseRevision),
+ db.prepare(`UPDATE entries SET timeline_visible=CASE WHEN id IN (SELECT value FROM json_each(?)) THEN 1 ELSE 0 END WHERE deleted=0 AND (id IN (SELECT value FROM json_each(?)) OR id IN (SELECT value FROM json_each(?))) AND ${gate}`).bind(JSON.stringify(add),JSON.stringify(add),JSON.stringify(remove),token),
+ db.prepare(`INSERT INTO timeline_selections(id,label,created,actor_name,count) SELECT ?,?,?,?,(SELECT count(*) FROM entries WHERE deleted=0 AND timeline_visible=1) WHERE ${gate}`).bind(token,label,now,actorName,token),
+ db.prepare(`INSERT INTO timeline_selection_members(snapshot_id,entry_id) SELECT ?,id FROM entries WHERE deleted=0 AND timeline_visible=1 AND ${gate}`).bind(token,token),
+ automatic?db.prepare(`UPDATE timeline_rotation SET revision=?,next_run=?,last_run=?,last_result=?,updated=? WHERE id='main' AND ${gate}`).bind(crypto.randomUUID(),automatic.nextRun,automatic.now,automatic.result,now,token):db.prepare(`UPDATE timeline_rotation SET revision=?,enabled=0,last_result='Automatisch pausiert: Die Auswahl wurde manuell verändert oder wiederhergestellt.',updated=? WHERE id='main' AND enabled=1 AND ${gate}`).bind(crypto.randomUUID(),now,token)
+ ]);if(!results[0].meta.changes)throw new AccessError('Die Auswahl wurde inzwischen geändert. Ihr Entwurf bleibt erhalten. Bitte den aktuellen Stand neu laden, bevor Sie erneut übernehmen.',409);return token;
+}

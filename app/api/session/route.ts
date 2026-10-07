@@ -1,0 +1,2 @@
+import {archiveAccess,accessResponse} from '@/lib/archive-access';
+export async function GET(req:Request){try{const a=await archiveAccess(req);if(!a)return Response.json({name:null,role:'public',canPreview:false},{headers:{'Cache-Control':'no-store'}});return Response.json({name:a.identity.name,role:a.actualRole,canPreview:a.canPreview},{headers:{'Cache-Control':'no-store'}})}catch(e){return accessResponse(e)||Response.json({error:'Rolle konnte nicht geladen werden.'},{status:503})}}
