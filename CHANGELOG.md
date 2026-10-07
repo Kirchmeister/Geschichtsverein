@@ -4,6 +4,13 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.8.1] – 2026-10-07
+
+- Persönliche Push-Einstellungen: aufklappbare Anleitung mit Auswahl für iPhone und Android im bestehenden Kontodesign. Auf mobilen Geräten außerhalb der Web-App zunächst geöffnet; beide Anleitungen bleiben auf allen Geräten erreichbar.
+- Erläutert Installation, erneute Anmeldung, Aktivierung und blockierte Mitteilungen. iPhone benötigt eine Home-Bildschirm-Web-App, Android kann Push auch direkt im unterstützten Browser nutzen.
+- Keine Änderungen an Datenbank, Backupformat oder Push-Berechtigungen.
+
+
 ## [0.8.0] – 2026-10-07
 
 - Startseite ohne „Sechs Zugänge zur Stadtgeschichte“ und „ARBEITSSTAND · IM AUFBAU“; persönliche Begrüßung ohne Rollen-Zeile. Rolle bleibt im Kontomenü sichtbar.
