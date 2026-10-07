@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {createECDH,randomBytes} from 'node:crypto';
+import {sqliteBinding} from '../server/linux-storage.mjs';
+import {initializeAuth} from '../server/auth-service.mjs';
+import {initializePush,pushService} from '../server/push-service.mjs';
+import {messageService} from '../server/message-service.mjs';
+const root=await fs.mkdtemp(path.resolve('.update-test-messages-')),storage=sqliteBinding(path.join(root,'archive.sqlite'),path.resolve('drizzle')),db=storage.database;
+try{
+ initializeAuth(db);for(const role of ['admin','manager','user']){db.prepare('INSERT INTO linux_accounts VALUES(?,?,?,0)').run(role,role+'@example.test',role);db.prepare('INSERT INTO archive_users(id,identity_provider,identity_subject,display_name,created,role) VALUES(?,?,?,?,?,?)').run(role,'linux',role,role,'now',role)}initializePush(db);
+ const delivered=[],push=pushService(db,{origin:'https://archive.example.test',send:async(s,p)=>delivered.push({endpoint:s.endpoint,payload:JSON.parse(p)})}),service=messageService(db);
+ for(const role of ['admin','manager','user']){const k=createECDH('prime256v1');k.generateKeys();push.subscribe(role,{endpoint:'https://fcm.googleapis.com/fcm/send/'+role,keys:{p256dh:k.getPublicKey().toString('base64url'),auth:randomBytes(16).toString('base64url')}});assert.equal(push.settings(role).preferences.message,true);push.configure(role,true,push.settings(role).preferences)}
+ const first=service.send('user',{subject:'Private title',body:'Secret message',recipients:['manager'],sender_id:'admin'});
+ assert.equal(service.count('user'),0);assert.equal(service.count('manager'),1);assert.equal(service.count('admin'),0);assert.equal(service.list('admin').length,0);assert.throws(()=>service.detail('admin',first.threadId));assert.throws(()=>service.read('admin',first.threadId,first.messageId));assert.throws(()=>service.send('admin',{threadId:first.threadId,body:'intrusion'}));assert.equal(service.detail('manager',first.threadId).messages[0].sender_id,'user');assert.equal(service.detail('manager',first.threadId).messages[0].body,'Secret message');
+ push.scan();push.scan();assert.equal((await push.deliver()).sent,1);assert.match(delivered[0].endpoint,/manager$/);assert.ok(!JSON.stringify(delivered[0].payload).includes('Secret'));assert.ok(!JSON.stringify(delivered[0].payload).includes('Private title'));assert.equal(delivered[0].payload.url,'/?ansicht=nachrichten&unterhaltung='+first.threadId);
+ const second=service.send('user',{threadId:first.threadId,body:'Another message'});service.read('manager',first.threadId,first.messageId);assert.equal(service.count('manager'),1);assert.throws(()=>service.read('manager',first.threadId,9999));service.read('manager',first.threadId,second.messageId);assert.equal(service.count('manager'),0);service.read('manager',first.threadId,first.messageId);assert.equal(service.count('manager'),0);push.scan();assert.equal((await push.deliver()).sent,0);
+ service.send('manager',{threadId:first.threadId,body:'Reply'});assert.equal(service.count('user'),1);assert.equal(service.count('manager'),0);assert.throws(()=>service.send('manager',{threadId:first.threadId,body:'change',recipients:['admin']}));
+ const group=service.send('user',{subject:'Group',body:'Together',all:true});assert.equal(service.detail('manager',group.threadId).members.length,3);assert.equal(service.list('admin').length,1);assert.throws(()=>service.send('user',{subject:'Unauthorized announcement',body:'No',all:true,announcement:true}));
+ const announcement=service.send('admin',{subject:'Notice',body:'Admin notice',all:true,announcement:true});assert.equal(service.detail('user',announcement.threadId).announcement,1);assert.throws(()=>service.send('user',{threadId:announcement.threadId,body:'Reply all'}));
+ assert.throws(()=>service.send('user',{subject:'Bad',body:'Text',recipients:['missing']}));assert.throws(()=>service.send('user',{subject:'Bad',body:'x'.repeat(4001),all:true}));assert.throws(()=>service.send('user',{subject:'Bad',body:' ',all:true}));
+ db.prepare("UPDATE linux_accounts SET disabled=1 WHERE id='manager'").run();assert.equal(service.recipients('user').length,1);assert.throws(()=>service.count('manager'));assert.throws(()=>service.send('user',{subject:'Disabled',body:'Text',recipients:['manager']}));
+ push.scan();await push.deliver();assert.ok(delivered.slice(1).every(x=>!x.endpoint.endsWith('/manager')));
+ const many=service.send('admin',{subject:'Pagination',body:'Start',recipients:['user']});for(let i=0;i<105;i++)service.send('admin',{threadId:many.threadId,body:'Part '+i});const latest=service.detail('user',many.threadId);assert.equal(latest.messages.length,100);assert.equal(latest.hasOlder,true);const older=service.detail('user',many.threadId,latest.messages[0].id);assert.equal(older.messages.length,6);assert.equal(older.hasOlder,false);
+ console.log('PASS: private membership, no admin bypass, actor spoof prevention, group/all recipient snapshots, admin announcements, unread/read race, bounds, pagination, disabled accounts and targeted deduplicated private Push.');
+}finally{storage.close();await fs.rm(root,{recursive:true,force:true})}

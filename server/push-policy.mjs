@@ -1,4 +1,5 @@
 export const pushTopics=[
+ {id:'message',label:'Neue interne Nachricht',detail:'Wenn Ihnen eine Nachricht oder eine Mitteilung an alle zugestellt wird.',roles:['user','manager','admin'],default:true},
  {id:'qr',label:'QR-Codes nicht erreichbar',detail:'Nur wenn erstmals ein Problem besteht oder wieder alle Probleme behoben sind.',roles:['user','manager','admin'],default:true},
  {id:'comment',label:'Neue Kommentaranfrage',roles:['manager','admin'],default:true},
  {id:'publication',label:'Neuer Eintrag zur Genehmigung',roles:['manager','admin'],default:true},

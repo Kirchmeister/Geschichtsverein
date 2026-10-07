@@ -4,6 +4,13 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.9.0] – 2026-10-07
+
+- Interne Nachrichten für Linux-Konten: Einzel- und Gruppenunterhaltungen, Nachrichten an alle aktiven Konten, Admin-Mitteilungen, Antworten und Ungelesen-Zähler unter Startseite. Nur Beteiligte haben Zugriff.
+- Push-Thema „Neue interne Nachricht“ für alle internen Rollen standardmäßig ausgewählt. Zustellung ausschließlich an aktive Empfänger, ohne Text/Betreff/Namen; Klick öffnet die Unterhaltung.
+- Additive Migration 16 und portable Sicherung der Nachrichten. Alte Sicherungen weiterhin importierbar; importierte Konten bleiben deaktiviert, Nachrichten werden keinem neuen Konto automatisch zugeordnet.
+- Offene QR-Fehlerhinweise als späterer Arbeitspunkt dokumentiert.
+
 ## [0.8.1] – 2026-10-07
 
 - Persönliche Push-Einstellungen: aufklappbare Anleitung mit Auswahl für iPhone und Android im bestehenden Kontodesign. Auf mobilen Geräten außerhalb der Web-App zunächst geöffnet; beide Anleitungen bleiben auf allen Geräten erreichbar.
