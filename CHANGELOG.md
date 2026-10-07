@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.10.0]
+
+- Kompakte QR-Erreichbarkeitsanzeige auf Mobiltelefonen; Details aufklappbar.
+- Einstellungseinleitung entfernt.
+- Docker-Treiber für beaufsichtigte Onlineupdates mit Wartungsmodus, Schema-/Dateiprüfung und geprüftem Rückweg. Betreiber-Einrichtung und isolierter Docker-Test sind vor Aktivierung erforderlich.
+
 Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht verschoben. Versionen vor dem produktiven Serverbetrieb sind als Vorabversion gekennzeichnet.
 
 ## [Unreleased]
