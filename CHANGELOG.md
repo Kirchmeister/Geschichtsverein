@@ -4,6 +4,11 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.4.6] – 2026-10-07
+
+- Unter „Archiv- & Vereinsname“ können Administratoren auch den bei der Einrichtung vergebenen Vereinsnamen ändern.
+- Änderungen aktualisieren die Oberflächenbezeichnungen und werden mitgesichert; Ort, Domain und historische Texte bleiben erhalten.
+
 ## [0.4.5] – 2026-10-07
 
 - Kontoanzeige mit Name und Berechtigungsdialog ersetzt den privaten Sidebar-Hinweis; Linux-Abmeldung steht direkt darunter.
