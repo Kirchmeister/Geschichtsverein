@@ -4,6 +4,11 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.4.1] – 2026-10-07
+
+- Docker kopiert die pnpm-Workspace-Konfiguration vor der unveränderlichen Installation mit. Damit stimmen Overrides und freigegebene Abhängigkeits-Builds mit dem Lockfile überein.
+- Bestehende lokale Konfiguration und Datenablage bleiben erhalten; keine Änderung am Archivschema oder Backupformat.
+
 ## [0.4.0] – 2026-10-07
 
 - Separate Linux-Laufzeit mit SQLite und lokalem Objektspeicher; Sites bleibt auf seinen bisherigen Bindings.

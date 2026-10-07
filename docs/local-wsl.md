@@ -29,6 +29,8 @@ docker compose up -d --build
 docker compose ps
 ```
 
+Falls eine frühere Version beim `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH` abgebrochen ist, mit `git pull --ff-only` aktualisieren und `docker compose up -d --build` erneut ausführen. Die bereits erzeugte Konfiguration nicht neu erzeugen; das Lockfile bleibt verbindlich.
+
 Der erste Build benötigt Zeit und lädt Abhängigkeiten herunter. Ein dauerhaft laufender Container ist normal. Nach dem Build unter http://localhost:8080 öffnen. Die Daten bleiben im benannten Docker-Volume `archive-data`; `docker compose down` entfernt sie nicht. **`docker compose down -v` löscht dagegen die Daten** und ist für normale Neustarts ungeeignet.
 
 ## 3. Ersten Administrator einladen
