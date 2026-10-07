@@ -1,3 +1,4 @@
+export const dynamic='force-dynamic';
 import type {Metadata} from "next";import "./globals.css";
 import {DesignSync} from '@/components/archive/design';
 import {archiveDesign} from '@/lib/archive-design';

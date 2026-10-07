@@ -1,0 +1,18 @@
+services:
+  archive:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:3000"
+    volumes:
+      - archive-data:/data
+      - ./linux-config:/config:ro
+    environment:
+      ARCHIVE_CONFIG_FILE: /config/app.env
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+volumes:
+  archive-data:

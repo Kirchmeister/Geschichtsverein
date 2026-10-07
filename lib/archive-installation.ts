@@ -1,4 +1,4 @@
-import {env} from 'cloudflare:workers';
+import {env} from '@/lib/runtime-env';
 import {archiveDb} from './archive-db';
 export type ArchiveInstallation={place:string,association:string,completed:boolean,restored?:boolean,sourceCreated?:string};
 export async function installation():Promise<ArchiveInstallation>{

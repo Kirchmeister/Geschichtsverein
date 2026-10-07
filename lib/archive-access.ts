@@ -1,5 +1,5 @@
 import {requireInstalled} from './archive-installation';
-import {env} from 'cloudflare:workers';
+import {env} from '@/lib/runtime-env';
 import {authenticatedIdentity} from '@/lib/archive-identity';
 import {archiveDb} from '@/lib/archive-db';
 import {canArchive,type ArchiveAction,type ArchiveRole} from '@/lib/archive-permissions';
@@ -9,8 +9,11 @@ export type PreviewRole=ArchiveRole|'public';
 function bootstrapAdminEmail(){return String((env as unknown as {ARCHIVE_BOOTSTRAP_ADMIN_EMAIL?:string}).ARCHIVE_BOOTSTRAP_ADMIN_EMAIL||'').trim().toLowerCase();}
 export async function archiveAccess(req:Request){
  const identity=authenticatedIdentity(req);if(!identity)return null;
- const isBootstrapAdmin=identity.email.toLowerCase()===bootstrapAdminEmail();
+ const linux=(env as any).ARCHIVE_HOSTING_RUNTIME==='linux';
+ if(linux&&!await archiveDb().prepare('SELECT id FROM linux_accounts WHERE id=? AND disabled=0').bind(identity.subject).first())return null;
+ const isBootstrapAdmin=!linux&&identity.email.toLowerCase()===bootstrapAdminEmail();
  const stored=await archiveDb().prepare('SELECT role FROM archive_users WHERE identity_provider=? AND identity_subject=?').bind(identity.provider,identity.subject).first<{role:ArchiveRole}>();
+ if(linux&&!stored)return null;
  const actualRole:ArchiveRole=isBootstrapAdmin?'admin':stored?.role||'user';
  const canPreview=actualRole==='admin';
  const requested=req.headers.get('x-archive-preview-role');

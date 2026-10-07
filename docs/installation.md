@@ -64,3 +64,15 @@ Importierte Anmeldeidentitäten werden deaktiviert und Rollen auf Nutzer gesetzt
 Zeitleistenrotation und tägliche WebDAV-Sicherung werden deaktiviert. SMTP-/WebDAV-Passwörter werden entfernt. Die ursprünglichen Sicherungshistorieneinträge bleiben als importierte Historie erhalten; deren Sicherungsdateien werden nicht rekursiv mitkopiert. Vor Inbetriebnahme Verbindungen neu testen und Aufgaben bewusst aktivieren.
 
 Vor einer Domainumschaltung Dateien öffnen, mindestens einen öffentlichen Direktlink, Versionen, Kommentare, QR-Druckansichten und einen neuen Backup-Export prüfen. Nextcloud und Taler bleiben dabei unverändert in ihren separaten Diensten.
+
+## Linux-Datenablage (SQLite / Dateien)
+
+Für die neue Linux-Laufzeit zusätzlich `--linux` angeben:
+
+```bash
+node scripts/restore-backup.mjs --backup /pfad/sicherung.tar --target /pfad/neue-datenablage --linux
+```
+
+Das Ziel darf nicht existieren. Nach Integritäts- und Beziehungsprüfung entstehen `archive.sqlite` und `bucket/`. Die geprüfte Ablage statt des leeren Docker-Volumes als `/data` einhängen; der Container-Benutzer (UID 1000) benötigt Zugriff. Nicht in ein bereits laufendes Volume hinein kopieren. Immer zunächst eine getrennte Testinstanz starten. Das Docker-Image enthält ebenfalls das Importwerkzeug; ein separates leeres Zielverzeichnis einhängen und mit `docker compose run --rm archive node scripts/restore-backup.mjs ... --linux` offline importieren.
+
+Portable Exporte enthalten Archivdaten und Urheberzuordnungen, aber keine Linux-Passkey-Schlüssel, Anmelde-Challenges oder Einladungsgeheimnisse. Nach Import einen neuen Administrator einrichten. Rohsicherungen für Updates müssen die gesamte Datenablage einschließlich Linux-Anmeldetabellen und die Konfigurationsschlüssel umfassen. Die bisherige Sites-Importmethode ohne `--linux` bleibt erhalten. Alle Pläne sind beim Import pausiert; Verbindungspasswörter müssen neu angegeben werden.

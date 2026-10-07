@@ -1,0 +1,15 @@
+services:
+  proxy:
+    image: caddy:2.10.2
+    restart: unless-stopped
+    ports:
+      - "8443:443"
+    volumes:
+      - ./deploy/Caddyfile.local:/etc/caddy/Caddyfile:ro
+      - local-caddy-data:/data
+      - local-caddy-config:/config
+    depends_on:
+      - archive
+volumes:
+  local-caddy-data:
+  local-caddy-config:

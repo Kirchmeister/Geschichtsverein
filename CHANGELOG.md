@@ -4,6 +4,16 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.4.0] – 2026-10-07
+
+- Separate Linux-Laufzeit mit SQLite und lokalem Objektspeicher; Sites bleibt auf seinen bisherigen Bindings.
+- Echte Passkey-Registrierung/Anmeldung, einmalige Einladungen und adminseitige Rollen-/Kontosperren. Linux lehnt OAI-Identitätsheader ab.
+- Docker-/WSL-Testinstallation mit Ersteinrichtung, eigener Geheimniskonfiguration und optionalem internem HTTPS für Mobiltests.
+- Portable Backup-Wiederherstellung direkt in die Linux-Ablage; Archivdaten werden nicht in GitHub übernommen.
+- Linux-Hintergrundläufe benötigen einen Service-Schlüssel. Native und Sites-Build werden getrennt geprüft.
+- Keine Änderung des Archivschemas (15) oder des Backupformats (2). Neue Anmeldetabellen sind Linux-intern und werden bei portablem Import neu eingerichtet; vollständige Rohsicherungen müssen sie enthalten.
+- Noch Entwicklungsstand: Docker-/physische Passkey-Bedienung vor Ort prüfen; SMTP-Versand, Geräteverlust-Wiederherstellung und Container-Update-Treiber noch nicht produktiv freigegeben.
+
 ## [0.3.0] – 2026-10-07
 
 - Server-Update-Dienst: stabile Release-Suche, Skip und manuelle Wiederanzeige; ausschließlich Admin startet Updates.

@@ -1,5 +1,5 @@
 import {installation} from './archive-installation';
-import {env} from 'cloudflare:workers';
+import {env} from '@/lib/runtime-env';
 import {archiveDb} from './archive-db';
 export const defaultSystemSettings={domain:'',webdav:{url:'',folder:'Geschichtsarchiv-Sicherungen',username:'',password:'',daily:false,hour:3,retention:14,tested:null as string|null},smtp:{host:'',port:587,tls:'starttls',username:'',password:'',from:'',sender:'Geschichtsverein'},invitations:{expiryDays:7,defaultRole:'user'}};
 export async function systemSettings(){const r=await archiveDb().prepare("SELECT data FROM archive_settings WHERE key='system_settings'").first<{data:string}>();if(r)return JSON.parse(r.data);const s=structuredClone(defaultSystemSettings);s.smtp.sender=(await installation()).association||s.smtp.sender;return s}

@@ -87,3 +87,5 @@ Das Ausstellen dieser Sitzung nach echter Passkey-Prüfung ist noch nicht freige
 ## Prüfungen
 
 `node tests/update-engine.test.mjs` prüft Skip/manuelle Wiederanzeige, stabile Releases, vollständige Snapshot-/Probeprüfung, gescheiterte Migration, Gesundheitsfehler, gescheiterte Probeprüfung, Neustart-Wiederherstellung und beschädigte Sicherungen. Der Agent/Servertreiber muss vor Aktivierung zusätzlich auf einer isolierten echten Linux-Instanz getestet werden. Ein Modultest ersetzt keinen Test des späteren systemd-/Login-/Speicheradapters.
+
+Der Docker-Testbetrieb aus `docs/local-wsl.md` aktiviert keinen Update-Treiber. SQLite-/Dateiadapter und Passkey-Anmeldung sind verfügbar, die beaufsichtigte Container-Updateintegration bleibt separat. In dieser Testinstanz werden daher keine Updates autonom installiert.

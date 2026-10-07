@@ -4,13 +4,19 @@ Ein konfigurierbares Archiv für Geschichtsvereine: Beiträge, Quellen, Medien, 
 
 ## Stand und Installation
 
-Dieses Projekt befindet sich in der Entwicklung. **Die vollständige Linux-Installation einschließlich eigener Benutzeranmeldung ist noch nicht freigegeben.** Bitte noch nicht als produktives Vereinsarchiv installieren.
+Dieses Projekt befindet sich in der Entwicklung. **Eine Linux-Testinstallation mit SQLite, lokalen Dateien und echter Passkey-Anmeldung ist verfügbar.** Die Produktionsfreigabe steht weiterhin aus. Bitte zunächst mit einer getrennten Testinstanz arbeiten.
 
 - `development`: laufende Entwicklung und Tests.
 - `main`: bisheriger Ausgangsstand; künftig ausdrücklich freigegebene Versionen.
 - Veröffentlichte Versionsstände und Migrationshinweise: [Releases](https://github.com/Kirchmeister/Geschichtsverein/releases) und [CHANGELOG.md](CHANGELOG.md).
 
-Die spätere Installation führt durch Ort, Vereinsname, Hosting-Adresse und den ersten Administrator. Sie kann leer beginnen oder einen geprüften Backup-Bestand übernehmen. Vorhandene Datenablagen werden nicht überschrieben.
+Die Installation führt durch Ort, Vereinsname, Hosting-Adresse und den ersten Administrator. Sie kann leer beginnen oder einen geprüften Backup-Bestand übernehmen. Vorhandene Datenablagen werden nicht überschrieben.
+
+## Lokal installieren und testen
+
+[Windows 11 / WSL 2 / Docker: Schritt für Schritt](docs/local-wsl.md). Der Docker-Start bindet die App standardmäßig nur an `127.0.0.1:8080`. Ein einmaliger Konsolenbefehl lädt den ersten Administrator ein; anschließend erfolgen weitere Einladungen und Rollenzuweisungen in den Einstellungen. Es werden keine Archivdaten aus dem Repository geladen.
+
+Für einen Backup-Import vor dem ersten Start: [Installation und Wiederherstellung](docs/installation.md). Passkeys benötigen eine stabile Anmeldeadresse; mobil ist vertrauenswürdiges HTTPS erforderlich. Automatische SMTP-Einladungen und ein produktiver Update-Treiber sind noch nicht freigegeben.
 
 ## Funktionen
 

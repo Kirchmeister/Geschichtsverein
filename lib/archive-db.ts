@@ -1,2 +1,2 @@
-import { env } from "cloudflare:workers";
+import { env } from "@/lib/runtime-env";
 export function archiveDb(){ const db=(env as unknown as {DB:D1Database}).DB; if(!db) throw new Error("Database unavailable"); return db; }

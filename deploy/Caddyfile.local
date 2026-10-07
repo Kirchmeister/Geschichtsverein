@@ -1,0 +1,4 @@
+https://archiv.home.arpa {
+    tls internal
+    reverse_proxy archive:3000
+}

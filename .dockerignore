@@ -1,0 +1,15 @@
+.git
+.next
+dist
+node_modules
+.wrangler
+.sites-runtime
+.env*
+linux-config
+*.tar
+*.tar.gz
+*.log
+*.sqlite*
+.update-test-*
+
+.next-linux
