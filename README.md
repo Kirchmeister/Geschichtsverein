@@ -102,3 +102,30 @@ Bei einem Umzug IDs, Referenzen, Versionsdaten, Beschreibungstags/-links und QR-
 ## Zusammenarbeit und Synchronisierung
 
 Nach jeder beauftragten Codeänderung werden die geprüfte Sites-Version und ein entsprechender GitHub-Commit bereitgestellt. Beide Ziele sind unabhängige Veröffentlichungen; Fehler oder abweichende Stände werden gemeldet. Änderungen am GitHub-Repository vor einer Synchronisierung prüfen und erhalten; keine fremden Änderungen überschreiben. Die README bei Änderungen an Installation, Konfiguration und Betrieb mitpflegen.
+
+## Versionen und Farbvorlagen
+
+`version.json` führt Softwareversion, Datenbankschema-Version und Backupformat-Version. Die Softwareversion steht auch in `package.json` und im Admin-Menü **Einstellungen**. `CHANGELOG.md` beschreibt Änderungen und Migrationshinweise.
+
+Nach dem Push auf `main` erstellt der GitHub-Workflow **Versioned releases** einen festen Tag und ein Release zur Versionsnummer. Bereits veröffentlichte Tags/Releases werden nicht umgebogen. Der bisherige Stand ist `v0.1.0`; die erste Version mit Farbvorlagen ist `v0.2.0`. Beide sind Vorabversionen, solange der produktive Linux-Betrieb noch nicht fertiggestellt ist. GitHub Actions muss für das Repository aktiviert sein; der Workflow verwendet ausschließlich dessen kurzlebiges `GITHUB_TOKEN` mit `contents: write`.
+
+Version anheben:
+
+```sh
+node scripts/bump-version.mjs patch   # Fehlerkorrektur
+# minor für neue Funktionen; major für inkompatible Änderungen
+node scripts/check-version.mjs
+```
+
+Danach Änderungsnotizen ausfüllen, angemessen prüfen/builden, committen und veröffentlichen. Neue Migrationen erhöhen zusätzlich die Datenbankschema-Version; ein inkompatibles Backupformat erhält eine eigene neue Formatversion und einen passenden Importer. Bei Vorabversionen können auch Minor-Versionen Änderungen enthalten, die eine Migration erfordern; maßgeblich sind die Release-Hinweise.
+
+Eine ältere Version **auf einer getrennten Testinstanz** ausprobieren:
+
+```sh
+git fetch --tags
+git worktree add --detach ../geschichtsarchiv-v0.1.0 v0.1.0
+```
+
+In diesem Verzeichnis die Installationsanleitung verwenden, eigene Laufzeitdaten konfigurieren und nur eine Sicherungskopie importieren. Kein gemeinsames Datenverzeichnis mit der laufenden Instanz verwenden. Ein Code-Downgrade stellt keine Datenbank zurück; bei späteren Migrationen sind die Versionshinweise und ein kompatibles Backup erforderlich. Sicherungen mit neuerem Schema werden vom Importer abgelehnt.
+
+Unter **Einstellungen → Farben & Design** kann ausschließlich der Admin zwischen Salbeigrün (bisheriges Design), Küstenblau, Petrol & Sand, Pflaume & Creme, Weinrot & Porzellan und Ocker & Schiefer wählen. Erst **Farbvorlage übernehmen** speichert die Auswahl für alle Profile dieser Instanz. Sie wird mitgesichert; sensible Verbindungsdaten sind über die Design-API nicht lesbar. Andere bereits geöffnete Tabs aktualisieren ihre Farben beim erneuten Aktivieren. QR-Codes bleiben schwarz auf weiß.

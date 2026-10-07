@@ -8,3 +8,5 @@ Dieses Projekt wird in der bestehenden Sites-Umgebung und im privaten Repository
 - README bei Änderungen an Einrichtung, Konfiguration und Betrieb aktualisieren.
 - Prüfergebnis, Sites-Link und GitHub-Commit melden; Teilerfolge klar benennen.
 - Linux-Umzug ist noch separat vorzubereiten. Nextcloud und Taler dürfen nicht beeinträchtigt werden.
+
+- Nach jedem abgeschlossenen Änderungsumfang eine passende Major-/Minor-/Patch-Version vergeben, `version.json` und `package.json` synchron halten und `CHANGELOG.md` aktualisieren. `node scripts/check-version.mjs` vor Veröffentlichung ausführen. Bestehende Release-Tags nie verschieben oder überschreiben. Code-Downgrades nur in getrennten Testinstanzen; Migrationshinweise dokumentieren.

@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const version=JSON.parse(fs.readFileSync('version.json','utf8')),pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
+assert.match(version.version,/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/);
+assert.equal(pkg.version,version.version,'package.json and version.json must match');
+assert.equal(version.databaseSchemaVersion,fs.readdirSync('drizzle').filter(f=>f.endsWith('.sql')).length,'Increment the schema version when adding migrations');
+assert.equal(version.backupFormatVersion,2);
+assert.equal(typeof version.prerelease,'boolean');
+assert.ok(fs.readFileSync('CHANGELOG.md','utf8').includes('## ['+version.version+']'),'Add release notes to CHANGELOG.md');
+console.log('Version '+version.version+' · schema '+version.databaseSchemaVersion+' · backup '+version.backupFormatVersion+' verified.');

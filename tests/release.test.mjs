@@ -1,0 +1,8 @@
+import assert from 'node:assert/strict';
+import {publishReleases} from '../scripts/github-release.mjs';
+const calls=[],sha='b'.repeat(40),baseline={version:'0.1.0',sha:'a'.repeat(40)},version={version:'0.2.0',prerelease:true},changelog='## [0.2.0]\nNew release\n\n## [0.1.0]\nBaseline';
+const request=async(url,options)=>{calls.push({url,options});return options.method==='POST'?Response.json({html_url:'https://github.com/test/archive/releases/tag/'+JSON.parse(options.body).tag_name},{status:201}):new Response(null,{status:404})};
+await publishReleases({repository:'test/archive',sha,token:'test-token',baseline,version,changelog,request});const posts=calls.filter(c=>c.options.method==='POST').map(c=>JSON.parse(c.options.body));assert.equal(posts.length,2);assert.equal(posts[0].target_commitish,baseline.sha);assert.equal(posts[1].target_commitish,sha);assert.equal(posts[1].tag_name,'v0.2.0');assert.equal(posts[1].prerelease,true);assert.match(posts[1].body,/New release/);assert.doesNotMatch(posts[1].body,/Baseline/);
+let writes=0;await publishReleases({repository:'test/archive',sha,token:'test-token',baseline,version,changelog,request:async(url,o)=>{if(o.method==='POST')writes++;return Response.json({tag_name:'existing'});}});assert.equal(writes,0);
+await assert.rejects(()=>publishReleases({repository:'test/archive',sha,token:'test-token',baseline,version,changelog,request:async url=>url.includes('/releases/')?new Response(null,{status:404}):Response.json({object:{sha:'c'.repeat(40)}})}),/another commit/);
+console.log('PASS: pinned baseline/current release targets, notes, existing-release preservation and conflicting-tag rejection.');
