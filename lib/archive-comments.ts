@@ -1,3 +1,4 @@
+import {archiveRequestOrigin} from '@/lib/archive-request-origin';
 import {archiveDb} from '@/lib/archive-db';
 import {archiveAccess,AccessError} from '@/lib/archive-access';
 export type CommentMode='open'|'closed'|'hidden';
@@ -8,4 +9,4 @@ export async function commentEntry(req:Request,id:string){
  if(!row||(!access||access.role==='public')&&!(row.publication_status==='approved'&&row.approved_version&&row.approved_by&&row.approved_at))throw new AccessError('Dieser Beitrag ist nicht verfügbar.',404);
  return access;
 }
-export function sameOrigin(req:Request){return req.headers.get('origin')===new URL(req.url).origin||!req.headers.get('origin')}
+export function sameOrigin(req:Request){return req.headers.get('origin')===archiveRequestOrigin(req)||!req.headers.get('origin')}

@@ -60,6 +60,8 @@ Eine getrennte Testinstanz ist für den Mobiltest am einfachsten:
 
 Eine bereits auf localhost eingerichtete Instanz nicht durch Umschreiben der Anmeldeadresse umstellen. Für einen weiteren, leeren Test stattdessen einen anderen Compose-Projektnamen (`-p archiv-mobil`) sowie eine eigene Konfigurationsablage/Portbelegung verwenden. Den vorhandenen Datenstand bewahren.
 
+Bei einem früheren Startfehler „production build in .next“ auf mindestens 0.4.2 aktualisieren (`git pull --ff-only`) und erneut bauen. Der Container startet den erzeugten Standalone-Server und verwendet dessen gespeicherte Build-Konfiguration. Konfiguration und Datenvolume bleiben erhalten.
+
 ## Diagnose
 
 ```bash

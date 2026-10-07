@@ -1,10 +1,11 @@
+import {archiveRequestOrigin} from '@/lib/archive-request-origin';
 import {archiveDb} from '@/lib/archive-db';
 import {requireArchiveAction,accessResponse} from '@/lib/archive-access';
 import {resolveArchiveActor} from '@/lib/archive-identity';
 const currentVersion="(SELECT max(v.version) FROM entry_versions v WHERE v.entry_id=e.id AND v.action='Gespeichert' AND json_extract(v.data,'$.updated')=e.updated)";
 export async function GET(req:Request){try{await requireArchiveAction(req);const id=new URL(req.url).searchParams.get('id');const rows=await archiveDb().prepare(`SELECT e.id,e.updated,e.data,e.publication_status AS status,e.timeline_visible AS timelineVisible,e.requested_version AS requestedVersion,e.requested_at AS requestedAt,u.display_name AS requestedBy,${currentVersion} AS currentVersion FROM entries e LEFT JOIN archive_users u ON u.id=e.requested_by WHERE e.deleted=0 ${id?'AND e.id=?':"AND e.publication_status='pending'"} ORDER BY e.requested_at DESC`).bind(...(id?[id]:[])).all();return Response.json(rows.results.map((r:any)=>({...r,data:JSON.parse(r.data)})),{headers:{'Cache-Control':'no-store'}})}catch(e){return accessResponse(e)||Response.json({error:'Veröffentlichungsanfragen konnten nicht geladen werden.'},{status:503})}}
 export async function POST(req:Request){try{
- if(req.headers.get('origin')&&req.headers.get('origin')!==new URL(req.url).origin)return Response.json({error:'Bitte die Website direkt öffnen.'},{status:403});
+ if(req.headers.get('origin')&&req.headers.get('origin')!==archiveRequestOrigin(req))return Response.json({error:'Bitte die Website direkt öffnen.'},{status:403});
  const d=await req.json() as any;if(!['request','approve','reject','withdraw','cancel'].includes(d.action)||typeof d.id!=='string'||typeof d.updated!=='string'||!Number.isSafeInteger(d.version)||d.version<1)return Response.json({error:'Bitte einen gespeicherten Eintrag auswählen.'},{status:400});
  await requireArchiveAction(req,['request','withdraw','cancel'].includes(d.action)?'edit':'approve');const actor=await resolveArchiveActor(req),db=archiveDb(),token=crypto.randomUUID(),now=new Date().toISOString();
  const condition="id=? AND updated=? AND deleted=0 AND EXISTS(SELECT 1 FROM entry_versions v WHERE v.entry_id=entries.id AND v.version=? AND v.action='Gespeichert' AND json_extract(v.data,'$.updated')=entries.updated)";

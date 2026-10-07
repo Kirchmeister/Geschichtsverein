@@ -4,6 +4,13 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.4.2] – 2026-10-07
+
+- Container startet den erzeugten Standalone-Server statt `next start`; dadurch wird der tatsächliche Build-Pfad verwendet.
+- Linux verwendet die fest konfigurierte externe Anmeldeadresse für Origin-Prüfungen und QR-Fallback-Links hinter Portweiterleitungen/Proxys. Eingehende Host-Header werden dafür nicht vertraut.
+- Explizite Bindung an alle Container-Schnittstellen für Docker-Portweiterleitung und localhost-Healthcheck.
+- Startprüfung der gepackten Laufzeit einschließlich Konfigurationsleser, Datenbank, Rollen und Sicherungen. Bestehende Konfiguration/Daten bleiben erhalten.
+
 ## [0.4.1] – 2026-10-07
 
 - Docker kopiert die pnpm-Workspace-Konfiguration vor der unveränderlichen Installation mit. Damit stimmen Overrides und freigegebene Abhängigkeits-Builds mit dem Lockfile überein.
