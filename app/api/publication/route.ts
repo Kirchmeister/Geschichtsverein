@@ -1,3 +1,4 @@
+import {scanPush} from '@/lib/archive-push';
 import {archiveRequestOrigin} from '@/lib/archive-request-origin';
 import {archiveDb} from '@/lib/archive-db';
 import {requireArchiveAction,accessResponse} from '@/lib/archive-access';
@@ -16,4 +17,4 @@ export async function POST(req:Request){try{
  const action=d.action==='withdraw'?'Veröffentlichung zurückgenommen':d.action==='cancel'?'Veröffentlichungsanfrage zurückgezogen':d.action==='request'?'Veröffentlichung angefragt':d.action==='approve'?'Veröffentlichung genehmigt':'Veröffentlichung abgelehnt';
  const r=await db.batch([statement,db.prepare('INSERT INTO entry_versions(entry_id,data,created,action,actor_id,actor_name) SELECT id,data,?,?,?,? FROM entries WHERE id=? AND review_token=?').bind(now,action,actor!.id,actor!.name,d.id,token),...(d.action==='approve'?[db.prepare("DELETE FROM qr_access_alerts WHERE entry_id=? AND EXISTS(SELECT 1 FROM entries WHERE id=? AND review_token=? AND publication_status='approved')").bind(d.id,d.id,token)]:[])]);
  if(!r[0].meta.changes)return Response.json({error:'Der Eintrag oder die Anfrage wurde inzwischen geändert. Bitte neu laden und die aktuelle Version prüfen.'},{status:409});return Response.json({id:d.id,status:['withdraw','cancel'].includes(d.action)?'draft':d.action==='request'?'pending':d.action==='approve'?'approved':'rejected'});
- }catch(e){const denied=accessResponse(e);if(denied)return denied;console.error(e);return Response.json({error:'Die Veröffentlichung konnte nicht geändert werden.'},{status:503})}}
+ }catch(e){const denied=accessResponse(e);if(denied)return denied;console.error(e);return Response.json({error:'Die Veröffentlichung konnte nicht geändert werden.'},{status:503})}finally{await scanPush()}}

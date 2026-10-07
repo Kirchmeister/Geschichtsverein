@@ -4,6 +4,14 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.6.0] – 2026-10-07
+
+- Persönliche Web-Push-Benachrichtigungen auf Linux mit rollenabhängigen Ereignissen und vereinbarten Vorauswahlen. Browserfreigabe und separate Geräteregistrierung sind erforderlich.
+- QR-Hinweise melden ausschließlich den Wechsel zwischen vorhandenen und behobenen Problemen; keine Nachricht pro QR-Code oder fehlgeschlagenem Aufruf.
+- Dauerhafte Versandwarteschlange mit Rollenprüfung, Wiederholungen und Entfernung abgelaufener Registrierungen. Neue Einladungsregistrierungen, Kommentare, Veröffentlichungsanfragen, Backupfehler und vom eingerichteten Updater gemeldete neue Releases werden erfasst.
+- Kontomenü erhält kompakte Kopfzeile und getrennte Register für Berechtigungen, Benachrichtigungen und Passkeys.
+- Additive Linux-Tabellen für Geräte, persönliche Auswahl, VAPID-Schlüssel und Versandstatus. Archivschema und portables Backupformat bleiben unverändert; Push-Geräte werden bei einem portablen Import neu registriert.
+
 ## [0.5.1] – 2026-10-07
 
 - Hosting-Adresse für QR-Codes, Backups, Nextcloud / WebDAV, E-Mail / SMTP und Einladungseinstellungen verwenden dieselbe standardmäßig eingeklappte Darstellung wie die übrigen Einstellungen. Eingaben bleiben beim Einklappen erhalten.

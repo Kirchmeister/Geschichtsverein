@@ -1,3 +1,4 @@
+import {scanPush} from '@/lib/archive-push';
 import {archiveDb} from '@/lib/archive-db';
 import {commentMode,commentEntry,sameOrigin} from '@/lib/archive-comments';
 import {accessResponse} from '@/lib/archive-access';
@@ -15,4 +16,4 @@ export async function POST(req:Request){try{
  const db=archiveDb();if(d.parentId){const parent=await db.prepare("SELECT id FROM archive_comments WHERE id=? AND entry_id=? AND status='approved'").bind(d.parentId,d.entryId).first();if(!parent)return Response.json({error:'Auf diesen Kommentar kann derzeit nicht geantwortet werden.'},{status:409})}
  await db.prepare("INSERT INTO archive_comments(id,entry_id,parent_id,author_id,author_name,body,status,created) SELECT ?,?,?,?,?,?,'pending',? WHERE COALESCE((SELECT json_extract(data,'$') FROM archive_settings WHERE key='comments_mode'),'open')='open' AND (SELECT count(*) FROM archive_comments WHERE entry_id=? AND status='pending')<200").bind(crypto.randomUUID(),d.entryId,d.parentId||null,actor?.id||null,name,body,new Date().toISOString(),d.entryId).run().then(r=>{if(!r.meta.changes)throw Error('queue-full')});
  return Response.json({message:'Vielen Dank! Ihr Kommentar wird geprüft und erscheint nach der Freigabe durch den Administrator.'},{status:201});
- }catch(e){return accessResponse(e)||Response.json({error:'Der Kommentar konnte gerade nicht gespeichert werden. Bitte später erneut versuchen. Ihre Eingaben bleiben erhalten.'},{status:503})}}
+ }catch(e){return accessResponse(e)||Response.json({error:'Der Kommentar konnte gerade nicht gespeichert werden. Bitte später erneut versuchen. Ihre Eingaben bleiben erhalten.'},{status:503})}finally{await scanPush()}}
