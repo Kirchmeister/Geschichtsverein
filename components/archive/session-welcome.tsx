@@ -6,5 +6,6 @@ export function greetingAt(date:Date){const hour=Number(new Intl.DateTimeFormat(
 export function SessionWelcome({session,role}:{session:ArchiveSession|null,role:PreviewRole}){
  const [greeting,setGreeting]=useState('Willkommen');
  useEffect(()=>{const update=()=>setGreeting(greetingAt(new Date()));update();const timer=setInterval(update,60000);return()=>clearInterval(timer)},[]);
+ if(!session?.name||role==='public')return null;
  return <section className="session-welcome" aria-label="Begrüßung"><h2>{greeting}{session?.name?`, ${session.name}`:''}!</h2></section>
 }

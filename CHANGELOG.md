@@ -4,6 +4,11 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.9.1] – 2026-10-07
+
+- Öffentlicher Einstieg ohne persönliche Begrüßung und ohne lose Anmeldung oben. Die öffentliche Zeitleiste erhält eine klare Überschrift; der dezente Passkey-Button steht darunter links und startet die Anmeldung direkt.
+- Auch `/anmelden` zeigt ohne Einladung oder geschützten Nachrichten-Rücksprung zunächst die öffentliche Zeitleiste. Einladungen und Rückkehr zu privaten Unterhaltungen bleiben erhalten. Keine Schema- oder Datenänderung.
+
 ## [0.9.0] – 2026-10-07
 
 - Interne Nachrichten für Linux-Konten: Einzel- und Gruppenunterhaltungen, Nachrichten an alle aktiven Konten, Admin-Mitteilungen, Antworten und Ungelesen-Zähler unter Startseite. Nur Beteiligte haben Zugriff.
