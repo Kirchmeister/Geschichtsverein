@@ -4,6 +4,12 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.7.0] – 2026-10-07
+
+- Überschrift und Einführungstext des öffentlichen Profils lassen sich im eingeklappten Einstellungsbereich „Öffentliches Profil“ durch Admins bearbeiten und auf die dynamischen Standardtexte zurücksetzen.
+- Webadressen im Beschreibungstext werden als sichere Links in einem neuen Tab geöffnet; Zeilenumbrüche bleiben erhalten. Mehr Abstand zwischen Überschrift und Einführung.
+- Speicherung in den bestehenden Archiveinstellungen, inklusive portabler Sicherung und Wiederherstellung; keine Änderung von Archivdaten oder Schema.
+
 ## [0.6.0] – 2026-10-07
 
 - Persönliche Web-Push-Benachrichtigungen auf Linux mit rollenabhängigen Ereignissen und vereinbarten Vorauswahlen. Browserfreigabe und separate Geräteregistrierung sind erforderlich.
