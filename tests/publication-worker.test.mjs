@@ -12,7 +12,7 @@ const call=(path,{role='admin',method='GET',body,headers={}}={})=>mf.dispatchFet
 const json=async(path,opts)=>{const r=await call(path,opts);assert.equal(r.status,200,await r.clone().text());return r.json()};
 try {
  const db=await mf.getD1Database('DB');for(const path of readdirSync('drizzle').filter(p=>p.endsWith('.sql')).sort())for(const sql of readFileSync('drizzle/'+path,'utf8').split('--> statement-breakpoint'))if(sql.trim())await db.prepare(sql).run();
- assert.equal((await json('/api/session')).canPreview,true);
+ assert.equal((await json('/api/session')).canPreview,true);assert.equal((await json('/api/session')).canLogout,false);assert.equal((await json('/api/session',{role:'user'})).role,'admin');
  const signedOther=await mf.dispatchFetch('https://archive.test/api/session',{headers:outsider});assert.equal((await signedOther.json()).canPreview,false);
  const bucket=await mf.getR2Bucket('BUCKET'),audioKey=crypto.randomUUID(),hiddenKey=crypto.randomUUID();await bucket.put(audioKey,new Uint8Array(1000),{httpMetadata:{contentType:'audio/mpeg'},customMetadata:{name:'Erinnerung.mp3'}});await bucket.put(hiddenKey,'private',{httpMetadata:{contentType:'application/pdf'}});
  let entry={id:crypto.randomUUID(),title:'Testbeitrag',category:'Ereignis',period:'1900',start:'',end:'',place:'Beispielort',description:'Sichtbare Beschreibung',sources:'Beleg',interpretation:'GEHEIME_NOTIZ',uncertainty:'PRIVATE_FRAGE',rights:'Rechte',tags:'',status:'Offen',files:[{key:audioKey,name:'Erinnerung.mp3',type:'audio/mpeg'},{key:hiddenKey,name:'Privates.pdf',type:'application/pdf'}]};

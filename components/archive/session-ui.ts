@@ -1,0 +1,6 @@
+import {canArchive,type ArchiveAction} from '@/lib/archive-permissions';
+import type {PreviewRole} from '@/lib/archive-api';
+export type ArchiveSession={name:string|null,role:PreviewRole,canPreview:boolean,canLogout?:boolean};
+export function roleLabel(role:PreviewRole){return role==='admin'?'Administrator':role==='manager'?'Verwalter':role==='user'?'Nutzer':'Öffentliches Profil'}
+const permissionLabels:Partial<Record<ArchiveAction,string>>={create:'Beiträge anlegen',edit:'Beiträge bearbeiten',approve:'Veröffentlichungen genehmigen',delete:'Beiträge löschen und wiederherstellen',moderateComments:'Kommentare moderieren',qrSingle:'Einzelne QR-Codes erstellen',qrBulk:'QR-Sammeldruck',manageTimeline:'Öffentliche Zeitleiste verwalten',managePublicFields:'Öffentliche Felder festlegen',readStatistics:'Statistiken ansehen',manageSettings:'Einstellungen und Sicherungen verwalten'};
+export function sessionPermissions(role:PreviewRole){if(role==='public')return ['Freigegebene Beiträge lesen','Moderierte Kommentare einreichen'];return ['Interne Beiträge und Dateien ansehen',...Object.entries(permissionLabels).filter(([action])=>canArchive(role,action as ArchiveAction)).map(([,label])=>label as string),...(role==='admin'?['Benutzer einladen und Rollen verwalten','Profilvorschau verwenden']:[])];}

@@ -4,6 +4,12 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.4.5] – 2026-10-07
+
+- Kontoanzeige mit Name und Berechtigungsdialog ersetzt den privaten Sidebar-Hinweis; Linux-Abmeldung steht direkt darunter.
+- Begrüßung zeigt die tatsächliche zugeordnete Rolle; Admin-Profilvorschau wird zum kompakten Balken.
+- Mobile Sidebar schließt nach Menüauswahl einschließlich Einstellungen und erneut gewähltem Menüpunkt.
+
 ## [0.4.4] – 2026-10-07
 
 - Archivname, Hosting, Updates, Benutzer und Design erhalten einheitliche einklappbare Einstellungen mit einzelnen Trennlinien.
