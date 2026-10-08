@@ -7,7 +7,7 @@ Ein konfigurierbares Archiv für Geschichtsvereine: Beiträge, Quellen, Medien, 
 Dieses Projekt befindet sich in der Entwicklung. **Eine Linux-Testinstallation mit SQLite, lokalen Dateien und echter Passkey-Anmeldung ist verfügbar.** Die Produktionsfreigabe steht weiterhin aus. Bitte zunächst mit einer getrennten Testinstanz arbeiten.
 
 - `development`: laufende Entwicklung und Tests.
-- `main`: bisheriger Ausgangsstand; künftig ausdrücklich freigegebene Versionen.
+- `main`: ausdrücklich freigegebene Versionen. Neue Änderungen bleiben bis zur Freigabe auf `development`.
 - Veröffentlichte Versionsstände und Migrationshinweise: [Releases](https://github.com/Kirchmeister/Geschichtsverein/releases) und [CHANGELOG.md](CHANGELOG.md).
 
 Die Installation führt durch Ort, Vereinsname, Hosting-Adresse und den ersten Administrator. Sie kann leer beginnen oder einen geprüften Backup-Bestand übernehmen. Vorhandene Datenablagen werden nicht überschrieben.
