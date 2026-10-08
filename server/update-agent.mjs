@@ -5,12 +5,12 @@ import http from 'node:http';
 import {spawn,execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import {UpdateEngine} from './update-engine.mjs';
+import {acquireUpdateLock} from './update-lock.mjs';
 const exec=promisify(execFile),configFile=process.env.ARCHIVE_UPDATER_CONFIG||'/etc/geschichtsarchiv/updater.json',configStat=await fs.stat(configFile);if(configStat.mode&0o077)throw Error('Updater-Konfiguration muss ausschließlich für ihren Eigentümer lesbar sein (0600).');const cfg=JSON.parse(await fs.readFile(configFile,'utf8'));
 if(!path.resolve(configFile).startsWith(path.resolve(cfg.configRoot)+path.sep))throw Error('Updater-Konfiguration muss in der gesicherten Konfigurationsablage liegen.');
 if(!/^[a-f0-9]{64}$/.test(cfg.secret)||!/^\w[\w.-]*\/[\w.-]+$/.test(cfg.repository)||!path.isAbsolute(cfg.driver)||!Number.isInteger(cfg.port)||cfg.port<1024||cfg.port>65535)throw Error('Ungültige Updater-Konfiguration.');
 await fs.mkdir(cfg.root,{recursive:true,mode:0o700});
-// Only one agent may own recovery and switches. A stale PID is checked, never blindly replaced.
-const lock=path.join(cfg.root,'agent.pid');try{const pid=Number(await fs.readFile(lock,'utf8'));if(pid>0){try{process.kill(pid,0);throw Error('Ein Updater läuft bereits.')}catch(e){if(e.code!=='ESRCH')throw e;await fs.unlink(lock)}}}catch(e){if(e.code!=='ENOENT')throw e}const handle=await fs.open(lock,'wx',0o600);await handle.writeFile(String(process.pid));await handle.close();
+await acquireUpdateLock(cfg.root);
 const headers={Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2026-03-10',...(cfg.githubToken?{Authorization:'Bearer '+cfg.githubToken}:{})};
 async function listReleases(){const result=[];for(let page=1;page<=10;page++){const r=await fetch('https://api.github.com/repos/'+cfg.repository+'/releases?per_page=100&page='+page,{headers,signal:AbortSignal.timeout(20000)});if(!r.ok)throw Error('GitHub-Prüfung fehlgeschlagen (HTTP '+r.status+').');const rows=await r.json();if(!Array.isArray(rows))throw Error('Ungültige Release-Antwort.');for(const v of rows)result.push({tag:v.tag_name,name:String(v.name||v.tag_name).slice(0,200),notes:String(v.body||'').slice(0,20000),url:v.html_url,prerelease:v.prerelease,draft:v.draft});if(rows.length<100)break}return result;}
 async function runDriver(action,code,dataRoot=cfg.dataRoot,configRoot=cfg.configRoot){try{await exec(cfg.driver,[action,code,dataRoot,configRoot],{timeout:900000,maxBuffer:1024*1024})}catch{throw Error('Serverprüfung „'+action+'“ fehlgeschlagen.')}}

@@ -1,5 +1,9 @@
 # Änderungen
 
+## [0.10.2]
+
+- Updater verwendet eine Kernel-Dateisperre statt einer PID-Datei; Containerneustarts blockieren den Dienst nicht und parallele Agenten bleiben gesperrt.
+
 ## [0.10.1]
 
 - Vollständige CSS-Datei im GitHub-Repository wiederhergestellt; Übertragung anhand der Git-Blob-Prüfsummen verifiziert.
