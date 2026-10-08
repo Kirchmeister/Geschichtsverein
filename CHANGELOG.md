@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.10.3]
+
+- Begrüßung nur auf der internen Startseite unter Vereins- und Archivnamen.
+- Vereinsname behält die eingegebene Schreibweise.
+- QR-Erreichbarkeitsanzeige weiter verdichtet, mit kompakter mobiler Darstellung.
+
 ## [0.10.2]
 
 - Updater verwendet eine Kernel-Dateisperre statt einer PID-Datei; Containerneustarts blockieren den Dienst nicht und parallele Agenten bleiben gesperrt.

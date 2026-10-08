@@ -18,6 +18,8 @@ Die Installation führt durch Ort, Vereinsname, Hosting-Adresse und den ersten A
 
 Für einen Backup-Import vor dem ersten Start: [Installation und Wiederherstellung](docs/installation.md). Passkeys benötigen eine stabile Anmeldeadresse; mobil ist vertrauenswürdiges HTTPS erforderlich. SMTP-Testmails und optionale Einladungsmails stehen auf Linux zur Verfügung. Ein Docker-Update-Treiber mit einer neustartfesten Dienstsperre ist implementiert; seine Einrichtung und die erforderlichen isolierten Serverprüfungen beschreibt [Serverupdates](docs/server-updates.md). Die bestehende Installation wird nicht automatisch umgestellt.
 
+Die interne Startseite begrüßt angemeldete Personen unter Archiv- und Vereinsnamen. Die eingegebene Schreibweise des Vereins bleibt erhalten; QR-Erreichbarkeitsmeldungen sind für Mobiltelefone kompakt dargestellt.
+
 ## Funktionen
 
 - Admin, Verwalter und Nutzer sowie öffentliche Ansicht
