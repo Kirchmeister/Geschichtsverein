@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.16.0]
+
+- Interne Eintrags-Leseansicht im Pop-up vereinheitlichen: gerahmter Kopf mit Metadaten, abgestimmte Karten für Texte, Medien, QR-Code, Veröffentlichung und Kommentare.
+- Zurückhaltende grüne/helle Hintergründe, konsistente Abstände, responsive Dateien und klarer Kommentarstatus. Bestehende Funktionen bleiben erhalten; öffentliche Kommentare und Bearbeitungsformular unverändert.
+
 ## [0.15.2]
 
 - Vollständigen Archivnamen im öffentlichen Profil in der gespeicherten Schreibweise anzeigen; lange Namen auch mobil umbrechen.
