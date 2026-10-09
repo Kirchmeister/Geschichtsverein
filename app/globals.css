@@ -404,3 +404,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .publication-open-requests{margin-bottom:24px;padding:18px;border:1px solid var(--border,#dce3d9);border-radius:14px;background:var(--surface,#fafbf8)}
 .publication-open-requests h2{font-size:17px;margin:0}.publication-open-requests h2 span{font-size:13px;border-radius:20px;padding:3px 8px;background:#e6eddf;color:#34563c}
 .publication-open-requests header p{font-size:13px;color:#64715f;margin:8px 0 12px}.publication-open-requests a{display:grid;gap:5px;padding:12px 0;border-top:1px solid #dde3d9;text-decoration:none;color:inherit}.publication-open-requests small{color:#64715f}.publication-open-requests a>span{font-size:13px;color:#34563c}.publication-open-requests a:focus-visible{outline:2px solid #34563c;outline-offset:3px}
+
+.system-settings>h1{margin-bottom:36px}
+.settings-connection-status{display:inline-block;padding:5px 10px;border-radius:20px;background:var(--muted);color:var(--muted-foreground);font-size:12px;line-height:1.4}
+.update-source-entry{display:flex;justify-content:flex-end;margin-top:28px;padding-top:16px;border-top:1px solid var(--border)}
+.system-settings .settings-panel button.update-source-trigger:not(.primary):not(.theme-preset){font-size:12px;min-height:36px;padding:7px 12px;color:var(--muted-foreground)}
+.update-source-dialog>button:not([data-slot=dialog-close]),.update-source-dialog .comment-actions>button{padding:9px 13px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--foreground);font-size:13px}.update-source-dialog .comment-actions>.primary{background:var(--primary);color:var(--primary-foreground)}
+.update-source-dialog button:disabled{opacity:.5;cursor:not-allowed}
+@media(max-width:650px){.system-settings>h1{margin-bottom:28px}}

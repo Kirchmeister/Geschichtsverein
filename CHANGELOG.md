@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.15.1]
+
+- Einstellungen: mehr Abstand zur Überschrift, Benutzer & Einladungen an zweiter Stelle, Backups vor Updates am Ende; Hosting-Funktionsübersicht entfernen.
+- WebDAV- und SMTP-Einrichtungsstatus in eingeklappten Bereichen anzeigen. Erfolgreichen SMTP-Test speichern und bei Konfigurationsänderungen zurücksetzen.
+- Update-Quelle über einen kleinen Button am Ende des Update-Bereichs in einem Pop-up öffnen; Sicherheitsprüfung und Warnung beibehalten.
+
 ## [0.15.0]
 
 - Offene Veröffentlichungsanfragen in Nachrichten unabhängig vom Lesestand anzeigen; einmalige interne Erinnerung nach drei Tagen an aktive Genehmigungsberechtigte. Vorhandene Nachrichten-Push-Einstellung gilt.
