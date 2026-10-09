@@ -1,0 +1,4 @@
+.repositoryNote { margin: 28px 0 0; padding: 0 0 24px; color: #6b7280; font-size: 13px; line-height: 1.65; overflow-wrap: anywhere; }
+.repositoryNote a { color: inherit; text-decoration: underline; text-decoration-color: #c4c8ce; text-underline-offset: 3px; }
+.repositoryNote a:hover { color: #4b5563; text-decoration-color: currentColor; }
+.repositoryNote a:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; border-radius: 2px; }

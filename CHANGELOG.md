@@ -42,6 +42,10 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.13.1] – 2026-10-09
+
+- Dezenter grauer Hinweis auf Projekt und Quellcode im GitHub-Repository am Ende der öffentlichen Profilseite; öffnet in einem neuen Tab. Keine Datenmigration.
+
 ## [0.13.0] – 2026-10-09
 
 - Update-Statusfenster mit automatisch aktualisierten Phasen, Laufzeit, aufklappbarem Zeitprotokoll und Wiederverbindung nach Serverneustart. Vorherige Vorgänge werden getrennt angezeigt.

@@ -101,3 +101,5 @@ Auf Linux können interne Konten beim Schreiben einen Beitrag nach Titel oder ID
 Bei einem GitHub-Zertifikatsfehler im Online-Update-Dienst ist dessen Image ab 0.12.1 mit installiertem CA-Zertifikatspaket neu zu bauen. Die Reparatur erfordert kein App- oder Datenbankupdate. Siehe [Serverupdates](docs/server-updates.md).
 
 Die Rotationsplanung erlaubt minutengenaue Starttermine (Europe/Berlin); auf Linux prüft der Archivprozess den Plan jede Minute. Die Schaltflächen „In 2 Minuten“ und „In 5 Minuten“ tragen Testtermine ein, die erst nach „Zeitplan speichern“ wirksam werden. Updates zeigen ein schließbares Fortschrittsfenster mit Phasen und Zeitprotokoll. Einzelne Download-/Build-Phasen setzen den Update-Dienst ab 0.13.0 voraus.
+
+Die öffentliche Profilseite verlinkt am Seitenende dezent auf das GitHub-Projekt und seinen Quellcode.
