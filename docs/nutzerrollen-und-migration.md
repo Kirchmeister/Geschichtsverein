@@ -13,7 +13,7 @@ Die Vorschau verändert keine Nutzeridentitäten oder gespeicherten Rollen. Bear
 | Nutzer | Ja | Nein | Nein | Nein |
 | Öffentliche Ansicht | Nein | Nein | Nein | Nein |
 
-Einladungen und Rollenverwaltung sind weiterhin für den Serverumzug vorbereitet, noch nicht als Benutzerfunktionen aktiviert. Admins können die öffentliche Feldauswahl speichern. Nutzer und Verwalter können die Veröffentlichung eines gespeicherten Eintrags anfragen. Alle Genehmigungen und Ablehnungen sind ausschließlich Admins vorbehalten; die ursprüngliche Planung wurde entsprechend geändert.
+Einladungen und Rollenverwaltung sind weiterhin für den Serverumzug vorbereitet, noch nicht als Benutzerfunktionen aktiviert. Admins können die öffentliche Feldauswahl speichern. Nutzer und Verwalter können die Veröffentlichung eines gespeicherten Eintrags anfragen. Admins und Verwalter können Veröffentlichungsanfragen genehmigen oder ablehnen. Neue Anfragen erreichen auf Linux alle aktiven Konten mit diesen Rollen als automatische interne Mitteilung mit Beitragslink. Die vorhandene Genehmigung im Beitrag bleibt maßgeblich; ein eigener Freigabe-Push entfällt.
 
 ## Veröffentlichungsablauf
 

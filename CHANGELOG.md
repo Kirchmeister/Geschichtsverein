@@ -42,6 +42,12 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.14.0] – 2026-10-09
+
+- Neue Veröffentlichungsanfragen erzeugen auf Linux automatisch eine interne Mitteilung mit Beitragslink für alle aktiven Admins und Verwalter, atomar mit der Anfrage gespeichert.
+- Genehmigungen erfolgen weiter im Beitrag; automatische Mitteilungen erhalten keine zusätzlichen Genehmigungsbuttons. Die Startseitenübersicht bleibt ergänzend erhalten.
+- Separaten Veröffentlichungs-Push entfernt; Benachrichtigung ausschließlich über die vorhandene Einstellung „Neue interne Nachricht“. Alte ausstehende Veröffentlichungs-Pushs werden verworfen. Keine Datenmigration und kein nachträglicher Nachrichtenversand für frühere Anfragen.
+
 ## [0.13.1] – 2026-10-09
 
 - Dezenter grauer Hinweis auf Projekt und Quellcode im GitHub-Repository am Ende der öffentlichen Profilseite; öffnet in einem neuen Tab. Keine Datenmigration.
