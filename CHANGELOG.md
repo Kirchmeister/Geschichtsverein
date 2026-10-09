@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.17.0]
+- Nachrichten: Datenschutzhinweis zu Speicherung, HTTPS, fehlender Ende-zu-Ende-Verschlüsselung, externen Sicherungen und Push ohne Nachrichtentext.
+- Alle internen Rollen können Unterhaltungen mit Bestätigung nur für sich löschen. Neue Antworten machen sie wieder sichtbar; gleichzeitig eingehende Nachrichten bleiben ungelesen.
+- Offene Veröffentlichungsanfragen und der dauerhafte Versandnachweis für einmalige Erinnerungen bleiben unabhängig erhalten.
+- Datenbankschema 18 ergänzt ausschließlich einen persönlichen Ausblendungsstand; bestehende Nachrichten werden nicht entfernt. Alte Sicherungen bleiben importierbar; neue Sicherungen benötigen Schema 18 oder neuer.
+
 ## [0.16.1]
 - Linux: WebDAV-Dateistreams werden mit der erforderlichen Duplex-Option hochgeladen; Übertragung und Prüfsummenprüfung bleiben erhalten.
 - Nextcloud-Einrichtung mit lokalem Speichern, Fehlermeldungen und klarer Reihenfolge; automatische Sicherungen erst nach erfolgreicher Prüfung.

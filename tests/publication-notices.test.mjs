@@ -31,10 +31,12 @@ try{
  db.prepare("UPDATE entries SET requested_at='2026-10-09T17:00:00Z' WHERE id='entry'").run();
  assert.equal(service.openRequests('admin').length,1);assert.equal(service.openRequests('user').length,0);
  const current=service.list('admin')[0];service.read('admin',current.id,service.detail('admin',current.id).messages.at(-1).id);assert.equal(service.openRequests('admin').length,1);
+ service.hide('admin',current.id,service.detail('admin',current.id).messages.at(-1).id);assert.equal(service.openRequests('admin').length,1);
  assert.equal(remindPublicationRequests(db,'2026-10-12T16:59:59Z'),0);
  assert.equal(remindPublicationRequests(db,'2026-10-12T17:00:00Z'),1);
  assert.equal(service.detail('admin','publication-reminder-after-import').notification,true);
  assert.equal(db.prepare("SELECT count(*) AS n FROM archive_message_members WHERE thread_id='publication-reminder-after-import' AND account_id IN ('user','manager','disabled')").get().n,0);
+ service.hide('admin','publication-reminder-after-import',service.detail('admin','publication-reminder-after-import').messages.at(-1).id);assert.equal(service.openRequests('admin').length,1);
  assert.equal(remindPublicationRequests(db,'2026-10-20T17:00:00Z'),0);
  db.prepare("UPDATE entries SET publication_status='approved' WHERE id='entry'").run();assert.equal(service.openRequests('admin').length,0);assert.equal(remindPublicationRequests(db,'2026-10-20T17:00:00Z'),0);
  db.prepare("UPDATE entries SET publication_status='draft' WHERE id='entry'").run();await request('new-cycle');db.prepare("UPDATE entries SET requested_at='2026-10-09T17:00:00Z',deleted=1 WHERE id='entry'").run();assert.equal(remindPublicationRequests(db,'2026-10-20T17:00:00Z'),0);

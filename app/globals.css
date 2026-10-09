@@ -449,3 +449,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .backup-summary-warning{display:inline-block;color:var(--foreground);background:color-mix(in srgb,var(--card) 80%,#e2a52b 20%);border:1px solid #b77d19;border-radius:6px;padding:6px 10px;font-weight:650;line-height:1.5}
 .webdav-setup-steps{display:flex;flex-wrap:wrap;gap:8px 28px;padding-left:20px;margin-bottom:18px;font-size:14px;line-height:1.7}
 .settings-grid label small{font-size:12px;line-height:1.5;color:var(--muted-foreground)}
+
+/* Personal message deletion and readable privacy notice. */
+.messages-privacy{display:flex;align-items:flex-start;gap:12px;margin:20px 0 28px;padding:16px 18px;border:1px solid var(--border);border-radius:10px;background:var(--archive-tone-fafcf8);font-size:13px;line-height:1.65;color:var(--muted-foreground)}
+.messages-privacy>svg{flex-shrink:0;margin-top:2px}.messages-privacy strong{color:var(--foreground);font-size:14px}.messages-privacy p{margin-top:7px}
+.message-list-item{display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}.message-list-item .message-list-row{flex:1;min-width:0;border-bottom:0}
+.message-delete-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:44px;height:44px;border-radius:8px;color:var(--muted-foreground)}.message-delete-icon:hover{background:var(--archive-tone-eef1e9);color:var(--foreground)}
+.message-thread-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.message-thread-heading .account-secondary{font-size:12px}.message-delete-dialog{max-width:520px}.message-delete-dialog .messages-actions{justify-content:flex-end;margin-top:10px}
+@media(max-width:650px){.messages-privacy{padding:14px;gap:9px}.message-list-item{gap:2px}.message-thread-heading{align-items:flex-start}.message-delete-dialog .messages-actions{flex-wrap:wrap}}
