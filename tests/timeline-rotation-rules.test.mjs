@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import ts from 'typescript';
+const source=fs.readFileSync('lib/archive-timeline-rotation-rules.ts','utf8');
+const exports={};vm.runInNewContext(ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,{exports,require:()=>({}),Intl,Date,Set,Number,Math,Error});
+const {validFirstLocal,localToUtc,nextRotation,berlinLocal}=exports;
+assert.equal(validFirstLocal('2026-10-09T17:22'),true);
+assert.equal(validFirstLocal('2026-10-09T17:00'),true);
+for(const value of ['2026-02-30T17:22','2026-10-09T24:01','2026-10-09T17:60','2026-10-09T17:2','2026-10-09T17:22:00'])assert.equal(validFirstLocal(value),false,value);
+assert.equal(localToUtc('2026-10-09T17:22'),'2026-10-09T15:22:00.000Z');
+assert.equal(berlinLocal(new Date(nextRotation('2026-10-09T17:22','weekly',new Date('2026-10-09T15:22:00Z')))),'2026-10-16T17:22');
+assert.equal(berlinLocal(new Date(nextRotation('2026-01-31T17:22','monthly',new Date('2026-01-31T16:22:00Z')))),'2026-02-28T17:22');
+assert.equal(nextRotation('2026-10-23T17:22','weekly',new Date('2026-10-23T15:22:00Z')),'2026-10-30T16:22:00.000Z');
+assert.equal(berlinLocal(new Date(localToUtc('2026-03-29T02:22'))),'2026-03-29T03:22');
+assert.equal(localToUtc('2026-10-25T02:22'),'2026-10-25T00:22:00.000Z');
+console.log('PASS: minute input validation, weekly/monthly recurrence, month-end, summer/winter time and DST gap/overlap.');

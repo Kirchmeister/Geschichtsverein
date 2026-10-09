@@ -120,3 +120,9 @@ Der Wechsel installiert nichts, verändert keine Archivdaten und wird in der ges
 ## Zertifikatsfehler beim Laden von GitHub
 
 Bei `server certificate verification failed. CAfile: none` fehlt im bisherigen Update-Image das CA-Zertifikatspaket. Ab 0.12.1 installiert `Dockerfile.updater` ausdrücklich `ca-certificates` und prüft das Zertifikatsbündel beim Build. Nur das Update-Image neu bauen; `docker compose up` ist für diese Reparatur nicht erforderlich. Vor dem Austausch des laufenden Dienstes den GitHub-Zugriff mit `git ls-remote` im neuen Image testen. Bestehende Konfiguration, Mounts, Name, Hostnetzwerk und Neustartrichtlinie des Dienstes erhalten. TLS-Zertifikatsprüfung bleibt eingeschaltet. Die Archiv-App und ihre Daten werden dabei nicht aktualisiert.
+
+## Fortschritt ab 0.13.0
+
+Beim Start öffnet sich ein Statusfenster. Download, Build, geprüfte Sicherung, Installation und Funktionsprüfung werden getrennt angezeigt. „Details anzeigen“ enthält feste, zeitgestempelte Phasenmeldungen; rohe Prozessausgaben und Zugangsdaten werden nicht übernommen. Das Fenster kann geschlossen und über „Fortschritt anzeigen“ wieder geöffnet werden. Nach Seitenneuladen wird ein laufender Vorgang erneut erkannt. Während kurzer Nichterreichbarkeit bleibt der letzte Status sichtbar und die Oberfläche prüft die Verbindung erneut. Frühere Vorgänge stehen getrennt darunter.
+
+Oberfläche und Update-Dienst müssen für die zusätzlichen Phasen beide aktualisiert sein. Bei älteren Diensten zeigt die neue Oberfläche die vorhandenen groberen Phasen und weist auf das fehlende Detailprotokoll hin. Einen aktiven Update-Dienst niemals während einer laufenden Installation ersetzen. Die Versionsnummer des Dienst-Images ist unabhängig von der installierten Archivversion.

@@ -42,6 +42,12 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [Unreleased]
 
+## [0.13.0] – 2026-10-09
+
+- Update-Statusfenster mit automatisch aktualisierten Phasen, Laufzeit, aufklappbarem Zeitprotokoll und Wiederverbindung nach Serverneustart. Vorherige Vorgänge werden getrennt angezeigt.
+- Rotationsplanung als kompakte Karte mit minutengenauem HH:MM-Feld, Aktivierung, Zeitplanzusammenfassung und Testterminen in zwei/fünf Minuten. Monatliche Wiederholung erhält die Minuten.
+- Keine Datenmigration. Ausführliche Update-Phasen benötigen auch den Update-Dienst dieser Version; Main bleibt unverändert.
+
 ## [0.9.1] – 2026-10-07
 
 - Öffentlicher Einstieg ohne persönliche Begrüßung und ohne lose Anmeldung oben. Die öffentliche Zeitleiste erhält eine klare Überschrift; der dezente Passkey-Button steht darunter links und startet die Anmeldung direkt.
