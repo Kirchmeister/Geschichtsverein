@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.12.1]
+
+- CA-Zertifikatspaket ausdrücklich im separaten Update-Container installieren und das Zertifikatsbündel beim Build prüfen. Behebt GitHub-Downloads mit „server certificate verification failed. CAfile: none“.
+- Nur den Update-Dienst neu bauen und nach erfolgreichem GitHub-Zugriffstest austauschen; kein App- oder Datenbankupdate für diese Reparatur erforderlich.
+
 ## [0.12.0]
 
 - Interne Nachrichten mit dauerhafter Beitragsreferenz, Titel-/ID-Suche und internem Beitragslink.
