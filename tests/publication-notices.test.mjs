@@ -5,7 +5,7 @@ import {createECDH,randomBytes} from 'node:crypto';
 import {sqliteBinding} from '../server/linux-storage.mjs';
 import {initializeAuth} from '../server/auth-service.mjs';
 import {messageService} from '../server/message-service.mjs';
-import {publicationNoticeStatements} from '../server/publication-notices.mjs';
+import {publicationNoticeStatements,remindPublicationRequests} from '../server/publication-notices.mjs';
 import {initializePush,pushService} from '../server/push-service.mjs';
 const root=await fs.mkdtemp(path.resolve('.update-test-publication-notices-')),storage=sqliteBinding(path.join(root,'archive.sqlite'),path.resolve('drizzle')),db=storage.database;
 try{
@@ -27,6 +27,18 @@ try{
  db.prepare("INSERT INTO linux_push_queue(id,subscription_id,topic,payload,created) VALUES('legacy','missing','publication','{}',0)").run();initializePush(db);assert.equal(db.prepare("SELECT count(*) AS n FROM linux_push_queue WHERE topic='publication'").get().n,0);
  // Backup import rewrites identity providers; keep the existing technical identity by ID.
  db.prepare("UPDATE archive_users SET identity_provider='imported:system' WHERE id='system-publication-notices'").run();db.prepare("UPDATE entries SET publication_status='draft' WHERE id='entry'").run();await request('after-import');assert.equal(service.count('admin'),4);
+ // Reading never decides a request; the open list is independent of inbox membership.
+ db.prepare("UPDATE entries SET requested_at='2026-10-09T17:00:00Z' WHERE id='entry'").run();
+ assert.equal(service.openRequests('admin').length,1);assert.equal(service.openRequests('user').length,0);
+ const current=service.list('admin')[0];service.read('admin',current.id,service.detail('admin',current.id).messages.at(-1).id);assert.equal(service.openRequests('admin').length,1);
+ assert.equal(remindPublicationRequests(db,'2026-10-12T16:59:59Z'),0);
+ assert.equal(remindPublicationRequests(db,'2026-10-12T17:00:00Z'),1);
+ assert.equal(service.detail('admin','publication-reminder-after-import').notification,true);
+ assert.equal(db.prepare("SELECT count(*) AS n FROM archive_message_members WHERE thread_id='publication-reminder-after-import' AND account_id IN ('user','manager','disabled')").get().n,0);
+ assert.equal(remindPublicationRequests(db,'2026-10-20T17:00:00Z'),0);
+ db.prepare("UPDATE entries SET publication_status='approved' WHERE id='entry'").run();assert.equal(service.openRequests('admin').length,0);assert.equal(remindPublicationRequests(db,'2026-10-20T17:00:00Z'),0);
+ db.prepare("UPDATE entries SET publication_status='draft' WHERE id='entry'").run();await request('new-cycle');db.prepare("UPDATE entries SET requested_at='2026-10-09T17:00:00Z',deleted=1 WHERE id='entry'").run();assert.equal(remindPublicationRequests(db,'2026-10-20T17:00:00Z'),0);
+ db.prepare("UPDATE entries SET deleted=0 WHERE id='entry'").run();assert.equal(remindPublicationRequests(db,'2026-10-20T17:00:00Z'),1);
  assert.equal(db.prepare('PRAGMA foreign_key_check').all().length,0);
  console.log('PASS: all active reviewers, no ordinary/disabled users, linked entry, existing approval only, message preference controls push, duplicate/stale requests, atomic failure, re-request and revoked roles, retired push queue.');
 }finally{storage.close();await fs.rm(root,{recursive:true,force:true})}

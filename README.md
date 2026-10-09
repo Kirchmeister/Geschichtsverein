@@ -105,3 +105,8 @@ Die Rotationsplanung erlaubt minutengenaue Starttermine (Europe/Berlin); auf Lin
 Die öffentliche Profilseite verlinkt am Seitenende dezent auf das GitHub-Projekt und seinen Quellcode.
 
 Neue Veröffentlichungsanfragen informieren auf Linux alle aktiven Admins und Verwalter automatisch über eine interne Nachricht mit Beitragslink. Die Freigabe erfolgt weiterhin im Beitrag. Push nutzt ausschließlich die Einstellung „Neue interne Nachricht“; ein separater Freigabe-Push entfällt. Die Startseite zeigt offene Anfragen weiterhin als ergänzende Übersicht. Frühere Anfragen werden beim Update nicht nachträglich als Nachrichten versendet.
+
+### Offene Veröffentlichungsanfragen
+Admin und Verwalter sehen unter Nachrichten alle offenen Anfragen unabhängig vom Lesestand. Nach drei Tagen erstellt der Linux-Hintergrunddienst einmalig eine interne Erinnerung für die aktuell berechtigten aktiven Konten. Nachrichten-Push gilt auch hierfür; es gibt keinen zusätzlichen Genehmigungsprozess. Entscheidung, Rücknahme, Löschung oder eine Bearbeitung, die die Anfrage aufhebt, beendet die Erinnerung. Der laufende Linux-Container prüft jede Minute; bei Stillstand wird nach dem Neustart nachgeholt. Auch vor dem Update angelegte offene Anfragen werden berücksichtigt.
+
+Das Archivsymbol ist im Web-App-Manifest und als Apple-Touch-Icon eingebunden. Bereits installierte Web-Apps aktualisieren ihre Symbole je nach Betriebssystem verzögert; gegebenenfalls den Home-Bildschirm-Eintrag entfernen und erneut hinzufügen.

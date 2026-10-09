@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.15.0]
+
+- Offene Veröffentlichungsanfragen in Nachrichten unabhängig vom Lesestand anzeigen; einmalige interne Erinnerung nach drei Tagen an aktive Genehmigungsberechtigte. Vorhandene Nachrichten-Push-Einstellung gilt.
+- Archivsymbol für Android-Web-App, iPhone-Home-Bildschirm und Browser übernehmen.
+
 ## [0.12.1]
 
 - CA-Zertifikatspaket ausdrücklich im separaten Update-Container installieren und das Zertifikatsbündel beim Build prüfen. Behebt GitHub-Downloads mit „server certificate verification failed. CAfile: none“.
