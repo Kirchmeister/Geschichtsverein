@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.17.1]
+- Veröffentlichungsanfragen zeigen die anfragende Person deutlich in der offenen Aufgabenliste, Nachrichtenübersicht und Unterhaltung.
+- Neue automatische Mitteilungen und Erinnerungen enthalten den Namen als gespeicherten Nachrichtenbestandteil. Bestehende Mitteilungen lösen den Namen anhand derselben Anfrage auf, soweit er noch ermittelbar ist.
+- Keine Änderung an Genehmigung, persönlichem Löschen oder einmaligen Erinnerungen; Schema 18 bleibt unverändert.
+
 ## [0.17.0]
 - Nachrichten: Datenschutzhinweis zu Speicherung, HTTPS, fehlender Ende-zu-Ende-Verschlüsselung, externen Sicherungen und Push ohne Nachrichtentext.
 - Alle internen Rollen können Unterhaltungen mit Bestätigung nur für sich löschen. Neue Antworten machen sie wieder sichtbar; gleichzeitig eingehende Nachrichten bleiben ungelesen.

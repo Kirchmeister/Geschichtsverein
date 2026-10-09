@@ -457,3 +457,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .message-delete-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:44px;height:44px;border-radius:8px;color:var(--muted-foreground)}.message-delete-icon:hover{background:var(--archive-tone-eef1e9);color:var(--foreground)}
 .message-thread-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.message-thread-heading .account-secondary{font-size:12px}.message-delete-dialog{max-width:520px}.message-delete-dialog .messages-actions{justify-content:flex-end;margin-top:10px}
 @media(max-width:650px){.messages-privacy{padding:14px;gap:9px}.message-list-item{gap:2px}.message-thread-heading{align-items:flex-start}.message-delete-dialog .messages-actions{flex-wrap:wrap}}
+
+/* Requester names remain visible independently of the shortened message preview. */
+.message-requester{display:block;font-size:14px;line-height:1.5;color:var(--foreground);white-space:normal;overflow-wrap:anywhere;margin:6px 0}
+.message-requester strong{font-size:inherit;font-weight:650}.message-list-row .message-requester{white-space:normal;overflow:visible;text-overflow:clip}
