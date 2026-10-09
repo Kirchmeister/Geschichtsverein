@@ -1,0 +1,42 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {repositoryName,checkContract,checkLocalRelease,createSourceManager,SOURCE_CONFIRMATION} from '../server/update-source.mjs';
+const contract=JSON.parse(await fs.readFile('docs/update-contract.json','utf8'));
+const current={databaseSchemaVersion:16,backupFormatVersion:2},version={...current,version:'1.0.0',prerelease:false},pkg={version:'1.0.0'};
+assert.equal(repositoryName('https://github.com/Example/Archive.git'),'Example/Archive');
+for(const value of ['https://evil.invalid/a/b','https://github.com/a/b/extra','a/b?x=1','a/..','../b'])assert.throws(()=>repositoryName(value));
+checkContract(contract,version,pkg,current,'v1.0.0');
+assert.throws(()=>checkContract({...contract,projectId:'wrong'},version,pkg,current,'v1.0.0'));
+assert.throws(()=>checkContract(contract,{...version,databaseSchemaVersion:15},pkg,current,'v1.0.0'));
+assert.throws(()=>checkContract(contract,version,{version:'2.0.0'},current,'v1.0.0'));
+assert.throws(()=>checkContract({...contract,backupFormatVersion:3},version,pkg,current,'v1.0.0'));
+const root=await fs.mkdtemp(path.resolve('.update-source-test-'));
+try{
+ const configFile=path.join(root,'updater.json'),cfg={repository:'Example/Original',secret:'private-test-value'};
+ await fs.writeFile(configFile,JSON.stringify(cfg),{mode:0o600});
+ const engine={busy:false,state:{skipped:['v1.0.0'],releases:[{tag:'v1.0.0'}],history:[]},current:async()=>current,persist:async()=>{},status:async()=>({enabled:true})};
+ let parent='Example/Original',project=contract,sha='a'.repeat(40),tag='v1.0.0';let seen=[];
+ const fetcher=async(url,options)=>{assert.equal(options.redirect,'error');seen.push(url);let result;
+  if(url.endsWith('/forks?per_page=100&sort=newest'))result=[{full_name:'Example/Fork'}];
+  else if(url.endsWith('/releases/latest'))result={tag_name:tag,draft:false,prerelease:false};
+  else if(url.includes('/commits/'))result={sha};
+  else if(url.includes('/contents/')){assert.ok(url.endsWith('?ref='+sha));const name=url.split('/contents/')[1].split('?')[0];const data=name==='docs/update-contract.json'?project:name==='version.json'?version:name==='package.json'?pkg:'project code';const content=Buffer.from(typeof data==='string'?data:JSON.stringify(data)).toString('base64');result={type:'file',encoding:'base64',size:content.length,content};}
+  else result={fork:true,parent:{full_name:parent},source:{full_name:'Example/Original'},full_name:'Example/Fork'};
+  return {ok:true,text:async()=>JSON.stringify(result)};
+ };
+ const manager=createSourceManager({cfg,configFile,engine,headers:{},fetcher});await manager.reconcile();assert.equal(manager.info().repository,'Example/Original');assert.equal((await manager.forks()).forks.length,1);
+ parent='Example/Intermediate';await assert.rejects(manager.inspect('Example/Fork'),/direkter Fork/);parent='Example/Original';
+ project={...contract,projectId:'other'};await assert.rejects(manager.inspect('Example/Fork'),/Projektkennung/);project=contract;
+ const proof=await manager.inspect('Example/Fork');await assert.rejects(manager.change({token:proof.token,confirmation:'yes'}),/exakt/);assert.equal(cfg.repository,'Example/Original');
+ sha='b'.repeat(40);await assert.rejects(manager.change({token:proof.token,confirmation:SOURCE_CONFIRMATION}),/geändert/);assert.equal(JSON.parse(await fs.readFile(configFile)).repository,'Example/Original');sha='a'.repeat(40);
+ engine.busy=true;await assert.rejects(manager.change({token:proof.token,confirmation:SOURCE_CONFIRMATION}),/gesperrt/);engine.busy=false;
+ await manager.change({token:proof.token,confirmation:SOURCE_CONFIRMATION,actor:'admin'});
+ assert.equal(cfg.repository,'Example/Fork');assert.equal(engine.state.skipped.length,0);assert.deepEqual(engine.state.skippedByRepository['Example/Original'],['v1.0.0']);assert.equal(engine.state.releases.length,0);assert.equal(cfg.requireProjectContract,true);
+ const stored=JSON.parse(await fs.readFile(configFile));assert.equal(stored.secret,'private-test-value');assert.equal(stored.sourceHistory[0].from,'Example/Original');assert.equal((await fs.stat(configFile)).mode&0o777,0o600);assert.ok(!JSON.stringify(manager.info()).includes('private-test-value'));
+ await assert.rejects(manager.change({token:proof.token,confirmation:SOURCE_CONFIRMATION}),/abgelaufen/);
+ parent='Example/Original';await assert.rejects(manager.inspect('Other/Fork'),/direkter Fork/);
+ engine.state.sourceRepository='Example/Original';engine.state.releases=[{}];await manager.reconcile();assert.equal(engine.state.releases.length,0);
+ await assert.rejects(checkLocalRelease(root,current,'v1.0.0'));
+ console.log('PASS: normalization, direct parent (not network source), project/schema/version, immutable release proof, confirmation, busy lock, atomic protected config, isolated skips, replay and restart reconciliation.');
+}finally{await fs.rm(root,{recursive:true,force:true})}

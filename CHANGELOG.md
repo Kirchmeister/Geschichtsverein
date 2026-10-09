@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.11.0]
+
+- Admin-Quellenwechsel innerhalb der Update-Einstellungen: direkte Fork-Herkunft, Projektvertrag und Release-Kompatibilität prüfen; Warnungsdialog mit exaktem Bestätigungstext.
+- Quellenwechsel ohne Installation, protokolliert und mit getrennten übersprungenen Versionen. Nach dem Wechsel Projektvertrag auch vor jedem Release-Build prüfen.
+- Neuer Update-Dienst erforderlich; bestehende Quellen bleiben unverändert. Keine Schema- oder Archivdatenänderung.
+
 ## [0.10.3]
 
 - Begrüßung nur auf der internen Startseite unter Vereins- und Archivnamen.
