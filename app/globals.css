@@ -442,3 +442,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .entry-reader-actions{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:20px 0 0;border-top:1px solid var(--border)}
 .entry-reader-actions .audio-actions{margin:0;gap:12px}.entry-reader-actions>.primary{margin:0;font-size:14px;border-radius:7px}
 @media(max-width:650px){.editor.entry-reader{padding:18px;gap:16px}.entry-reader-heading{padding:20px 16px}.entry-reader-heading [data-slot=dialog-title]{font-size:24px}.entry-reader-metadata{grid-template-columns:1fr;gap:12px}.editor.entry-reader .detail>section{padding:18px 16px}.entry-reader-actions{align-items:stretch}.entry-reader-actions>.primary{width:100%}.editor.entry-reader .entry-comments .comment-form{padding:14px}.editor.entry-reader .entry-comments .comment-replies{margin-left:0;padding-left:10px}}
+
+/* Release 0.16.1: quiet settings controls and visible backup health. */
+.settings-panel>summary>svg{margin-left:auto}
+.settings-save{background:color-mix(in srgb,var(--archive-tone-fafcf8) 92%,var(--foreground) 8%);padding:18px 16px;border-radius:8px 8px 0 0}
+.backup-summary-warning{display:inline-block;color:var(--foreground);background:color-mix(in srgb,var(--card) 80%,#e2a52b 20%);border:1px solid #b77d19;border-radius:6px;padding:6px 10px;font-weight:650;line-height:1.5}
+.webdav-setup-steps{display:flex;flex-wrap:wrap;gap:8px 28px;padding-left:20px;margin-bottom:18px;font-size:14px;line-height:1.7}
+.settings-grid label small{font-size:12px;line-height:1.5;color:var(--muted-foreground)}

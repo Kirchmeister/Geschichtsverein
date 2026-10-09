@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import ts from 'typescript';
+const js=ts.transpileModule(readFileSync('lib/backup-summary.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText;
+const {backupSummary}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+const now=Date.parse('2026-10-09T19:00:00Z'),day=86400000;
+const backup={status:'complete',created:new Date(now-14*day).toISOString(),applicationVersion:'0.16.0'};
+assert.equal(backupSummary([],now).warning,true);
+assert.equal(backupSummary([{...backup,status:'error'}],now).warning,true);
+assert.equal(backupSummary([backup],now).warning,false);
+assert.equal(backupSummary([backup],now+1).warning,true);
+const latest={...backup,finished:new Date(now-day).toISOString()};
+assert.equal(backupSummary([backup,latest,{...backup,status:'error',created:new Date(now).toISOString()}],now).warning,false);
+assert.match(backupSummary([latest],now).label,/Version 0.16.0/);
+assert.match(backupSummary([{...latest,applicationVersion:null}],now).label,/Version nicht erfasst/);
+console.log('PASS: successful backups only, completion date, 14-day boundary, latest success and unknown legacy version.');

@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.16.1]
+- Linux: WebDAV-Dateistreams werden mit der erforderlichen Duplex-Option hochgeladen; Übertragung und Prüfsummenprüfung bleiben erhalten.
+- Nextcloud-Einrichtung mit lokalem Speichern, Fehlermeldungen und klarer Reihenfolge; automatische Sicherungen erst nach erfolgreicher Prüfung.
+- Einstellungen nur mit Aufklapppfeil; Speicherleiste dezent dunkler im gewählten Farbschema.
+- Backup-Überschrift zeigt Version und Datum der letzten erfolgreichen Sicherung und warnt nach 14 Tagen oder bei fehlender Sicherung.
+
 ## [0.16.0]
 
 - Interne Eintrags-Leseansicht im Pop-up vereinheitlichen: gerahmter Kopf mit Metadaten, abgestimmte Karten für Texte, Medien, QR-Code, Veröffentlichung und Kommentare.
