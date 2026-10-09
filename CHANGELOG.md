@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.12.0]
+
+- Interne Nachrichten mit dauerhafter Beitragsreferenz, Titel-/ID-Suche und internem Beitragslink.
+- Aus Freigabeanfragen direkt schreiben, Antragsteller vorauswählen und bestehende Unterhaltung derselben Beteiligten zur Anfrage wiederverwenden.
+- Genehmigen/Ablehnen unten im Gespräch nur bei offener Anfrage und für Admin/Verwalter; Anfragekennung schützt vor zwischenzeitlich ersetzten Anfragen.
+- Additive Migration 17; Beitragsreferenzen werden mit gesichert und wiederhergestellt. Bestehende Nachrichten und Archivdaten bleiben erhalten.
+
 ## [0.11.0]
 
 - Admin-Quellenwechsel innerhalb der Update-Einstellungen: direkte Fork-Herkunft, Projektvertrag und Release-Kompatibilität prüfen; Warnungsdialog mit exaktem Bestätigungstext.

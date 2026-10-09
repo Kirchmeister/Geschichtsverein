@@ -11,7 +11,7 @@ import {DatabaseSync} from 'node:sqlite';
 import {fileBucket} from '../server/linux-storage.mjs';
 import {createRequire} from 'node:module';
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const tableOrder=['storage_places','archive_users','entries','entry_versions','archive_settings','archive_comments','entry_references','qr_print_jobs','qr_print_items','timeline_control','timeline_selections','timeline_selection_members','timeline_rotation','public_page_views','archive_backups','qr_access_alerts','archive_message_threads','archive_message_members','archive_messages'];
+const tableOrder=['storage_places','archive_users','entries','entry_versions','archive_settings','archive_comments','entry_references','qr_print_jobs','qr_print_items','timeline_control','timeline_selections','timeline_selection_members','timeline_rotation','public_page_views','archive_backups','qr_access_alerts','archive_message_threads','archive_message_members','archive_messages','archive_message_references'];
 const version=JSON.parse(fs.readFileSync(path.join(root,'version.json'),'utf8'));
 const formats=['history-archive-backup-v2','bruchkoebel-backup-v1']; // Read compatibility for existing exports only.
 function fail(message){throw Error(message)}

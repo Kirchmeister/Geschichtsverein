@@ -95,3 +95,6 @@ Der öffentliche Einstieg zeigt die Zeitleiste ohne Begrüßung. Der dezente But
 ## Update-Quelle
 
 Administratoren können unter **Einstellungen → Updates → Update-Quelle** zu einem direkten Fork der aktuellen GitHub-Quelle wechseln. Projekt- und Release-Prüfung sowie ein ausdrücklicher Warnungsdialog schützen vor Verwechslungen, nicht vor bösartigem Code. Der Wechsel installiert nichts und verändert keine Archivdaten. Der separate Update-Dienst muss diese Funktion ebenfalls unterstützen. Details: [Serverupdates](docs/server-updates.md).
+## Beitragsreferenzen in Nachrichten
+
+Auf Linux können interne Konten beim Schreiben einen Beitrag nach Titel oder ID auswählen. Die Verknüpfung bleibt im Gespräch und bei Antworten erhalten und nutzt eine interne Kennung statt einer festen Domain. Admin und Verwalter können aus einer Freigabeanfrage direkt mit dem Antragsteller sprechen und bei noch offener Anfrage unten im Gespräch genehmigen oder ablehnen. Nachrichten erteilen keine zusätzlichen Zugriffsrechte. Gelöschte Beiträge erhalten einen Hinweis; Unterhaltungen bleiben erhalten. Migration 17 ergänzt eine eigene Referenztabelle, die auch in Sicherungen enthalten ist. Alte Sicherungen bleiben importierbar.
