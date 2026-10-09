@@ -1,5 +1,23 @@
 # Änderungen
 
+## [0.12.1]
+
+- CA-Zertifikatspaket ausdrücklich im separaten Update-Container installieren und das Zertifikatsbündel beim Build prüfen. Behebt GitHub-Downloads mit „server certificate verification failed. CAfile: none“.
+- Nur den Update-Dienst neu bauen und nach erfolgreichem GitHub-Zugriffstest austauschen; kein App- oder Datenbankupdate für diese Reparatur erforderlich.
+
+## [0.12.0]
+
+- Interne Nachrichten mit dauerhafter Beitragsreferenz, Titel-/ID-Suche und internem Beitragslink.
+- Aus Freigabeanfragen direkt schreiben, Antragsteller vorauswählen und bestehende Unterhaltung derselben Beteiligten zur Anfrage wiederverwenden.
+- Genehmigen/Ablehnen unten im Gespräch nur bei offener Anfrage und für Admin/Verwalter; Anfragekennung schützt vor zwischenzeitlich ersetzten Anfragen.
+- Additive Migration 17; Beitragsreferenzen werden mit gesichert und wiederhergestellt. Bestehende Nachrichten und Archivdaten bleiben erhalten.
+
+## [0.11.0]
+
+- Admin-Quellenwechsel innerhalb der Update-Einstellungen: direkte Fork-Herkunft, Projektvertrag und Release-Kompatibilität prüfen; Warnungsdialog mit exaktem Bestätigungstext.
+- Quellenwechsel ohne Installation, protokolliert und mit getrennten übersprungenen Versionen. Nach dem Wechsel Projektvertrag auch vor jedem Release-Build prüfen.
+- Neuer Update-Dienst erforderlich; bestehende Quellen bleiben unverändert. Keine Schema- oder Archivdatenänderung.
+
 ## [0.10.3]
 
 - Begrüßung nur auf der internen Startseite unter Vereins- und Archivnamen.
@@ -23,6 +41,12 @@
 Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht verschoben. Versionen vor dem produktiven Serverbetrieb sind als Vorabversion gekennzeichnet.
 
 ## [Unreleased]
+
+## [0.13.0] – 2026-10-09
+
+- Update-Statusfenster mit automatisch aktualisierten Phasen, Laufzeit, aufklappbarem Zeitprotokoll und Wiederverbindung nach Serverneustart. Vorherige Vorgänge werden getrennt angezeigt.
+- Rotationsplanung als kompakte Karte mit minutengenauem HH:MM-Feld, Aktivierung, Zeitplanzusammenfassung und Testterminen in zwei/fünf Minuten. Monatliche Wiederholung erhält die Minuten.
+- Keine Datenmigration. Ausführliche Update-Phasen benötigen auch den Update-Dienst dieser Version. Stabile Veröffentlichung auf Main; weitere Entwicklung erfolgt auf Wunsch des Betreibers ebenfalls dort.
 
 ## [0.9.1] – 2026-10-07
 

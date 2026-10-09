@@ -6,8 +6,8 @@ Ein konfigurierbares Archiv für Geschichtsvereine: Beiträge, Quellen, Medien, 
 
 Dieses Projekt befindet sich in der Entwicklung. **Eine Linux-Testinstallation mit SQLite, lokalen Dateien und echter Passkey-Anmeldung ist verfügbar.** Die Produktionsfreigabe steht weiterhin aus. Bitte zunächst mit einer getrennten Testinstanz arbeiten.
 
-- `development`: laufende Entwicklung und Tests.
-- `main`: ausdrücklich freigegebene Versionen. Neue Änderungen bleiben bis zur Freigabe auf `development`.
+- `development`: bisheriger Entwicklungszweig; bleibt erhalten.
+- `main`: laufende Weiterentwicklung und geprüfte, versionierte Veröffentlichungen.
 - Veröffentlichte Versionsstände und Migrationshinweise: [Releases](https://github.com/Kirchmeister/Geschichtsverein/releases) und [CHANGELOG.md](CHANGELOG.md).
 
 Die Installation führt durch Ort, Vereinsname, Hosting-Adresse und den ersten Administrator. Sie kann leer beginnen oder einen geprüften Backup-Bestand übernehmen. Vorhandene Datenablagen werden nicht überschrieben.
@@ -43,7 +43,7 @@ GitHub enthält ausschließlich Code und Dokumentation; Archivdaten, Benutzerkon
 
 ## Entwicklung
 
-Technische Angaben zur Entwicklungs- und Testumgebung stehen in [docs/development-sites.md](docs/development-sites.md). Änderungen werden auf `development` geprüft; Releases für Vereine werden erst nach ausdrücklicher Freigabe auf `main` erstellt.
+Technische Angaben zur Entwicklungs- und Testumgebung stehen in [docs/development-sites.md](docs/development-sites.md). Änderungen werden geprüft und anschließend auf `main` gepflegt. Der Release-Workflow veröffentlicht die zugehörigen Versionsstände; eine Installation auf dem Vereinsserver erfolgt weiterhin erst auf Anforderung des Administrators.
 
 Der Archivtitel wird aus dem Ortsnamen vorgeschlagen (z. B. „Geschichte Rodenbachs“). Unter **Einstellungen → Archiv- & Vereinsname** kann der Administrator den vollständigen Titel ändern oder zur automatischen Bezeichnung zurückkehren. Diese Einstellung gehört zur Datensicherung und verändert keine Beitragstexte oder URLs.
 
@@ -92,3 +92,12 @@ Unter „Nachrichten“ direkt unter der Startseite können aktive Linux-Konten 
 Version 0.9.0 ergänzt Migration 16. Vor Server-Updates eine vollständige Sicherung erstellen. Nachrichten sind in portablen Sicherungen enthalten. Beim Import bleiben die bisherigen Konten deaktiviert; private Nachrichten werden erhalten, aber keinem neu eingerichteten Konto automatisch zugeordnet. Für eine vollständige Wiederherstellung derselben Linux-Instanz mit Konten müssen zusätzlich Datenverzeichnis und geschützte Konfiguration gesichert werden.
 
 Der öffentliche Einstieg zeigt die Zeitleiste ohne Begrüßung. Der dezente Button „Mit Passkey anmelden“ steht unten links unter der Zeitleiste und startet die Passkey-Abfrage direkt. Auch `/anmelden` zeigt standardmäßig diese öffentliche Ansicht. Einladungslinks öffnen weiterhin die Registrierung; geschützte Nachrichtenlinks führen nach erforderlicher Anmeldung zur jeweiligen Unterhaltung zurück.
+## Update-Quelle
+
+Administratoren können unter **Einstellungen → Updates → Update-Quelle** zu einem direkten Fork der aktuellen GitHub-Quelle wechseln. Projekt- und Release-Prüfung sowie ein ausdrücklicher Warnungsdialog schützen vor Verwechslungen, nicht vor bösartigem Code. Der Wechsel installiert nichts und verändert keine Archivdaten. Der separate Update-Dienst muss diese Funktion ebenfalls unterstützen. Details: [Serverupdates](docs/server-updates.md).
+## Beitragsreferenzen in Nachrichten
+
+Auf Linux können interne Konten beim Schreiben einen Beitrag nach Titel oder ID auswählen. Die Verknüpfung bleibt im Gespräch und bei Antworten erhalten und nutzt eine interne Kennung statt einer festen Domain. Admin und Verwalter können aus einer Freigabeanfrage direkt mit dem Antragsteller sprechen und bei noch offener Anfrage unten im Gespräch genehmigen oder ablehnen. Nachrichten erteilen keine zusätzlichen Zugriffsrechte. Gelöschte Beiträge erhalten einen Hinweis; Unterhaltungen bleiben erhalten. Migration 17 ergänzt eine eigene Referenztabelle, die auch in Sicherungen enthalten ist. Alte Sicherungen bleiben importierbar.
+Bei einem GitHub-Zertifikatsfehler im Online-Update-Dienst ist dessen Image ab 0.12.1 mit installiertem CA-Zertifikatspaket neu zu bauen. Die Reparatur erfordert kein App- oder Datenbankupdate. Siehe [Serverupdates](docs/server-updates.md).
+
+Die Rotationsplanung erlaubt minutengenaue Starttermine (Europe/Berlin); auf Linux prüft der Archivprozess den Plan jede Minute. Die Schaltflächen „In 2 Minuten“ und „In 5 Minuten“ tragen Testtermine ein, die erst nach „Zeitplan speichern“ wirksam werden. Updates zeigen ein schließbares Fortschrittsfenster mit Phasen und Zeitprotokoll. Einzelne Download-/Build-Phasen setzen den Update-Dienst ab 0.13.0 voraus.

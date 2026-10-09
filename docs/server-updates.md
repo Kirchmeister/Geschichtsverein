@@ -4,7 +4,7 @@
 
 Der Update-Dienst und die Admin-Oberfläche sind implementiert und mit separaten Testbeständen geprüft. Passkey-Anmeldung und ein konkreter Docker-Treiber sind vorhanden. **Der Docker-Treiber muss vor Aktivierung auf einer isolierten Linux-Instanz geprüft werden.** Es gibt daher noch keinen gefahrlosen Ein-Klick-Installer. Eine vorhandene Serverinstallation wird durch diese Änderungen nicht umgestellt.
 
-Die Standard-README beschreibt den Vereinsbetrieb. Die ChatGPT-/Sites-Verifikation und deren technische Speicheranbindung stehen ausschließlich in `development-sites.md`. Entwicklung erfolgt auf `development`; `main` bleibt bis zur ausdrücklich beauftragten Freigabe unverändert. Der Release-Workflow ist auf `main` beschränkt. Die bisherigen Vorab-Releases bleiben erhalten.
+Die Standard-README beschreibt den Vereinsbetrieb. Die ChatGPT-/Sites-Verifikation und deren technische Speicheranbindung stehen ausschließlich in `development-sites.md`. Entwicklung und geprüfte Veröffentlichungen erfolgen auf Wunsch des Betreibers ab jetzt auf `main`; der bisherige Branch `development` bleibt erhalten. Der Release-Workflow ist auf `main` beschränkt. Die bisherigen Vorab-Releases bleiben erhalten.
 
 ## Verhalten
 
@@ -108,3 +108,21 @@ Linux verwendet echte Passkey-Sitzungen und prüft Adminrechte aus der Instanzda
 Der Docker-Testbetrieb aus `docs/local-wsl.md` aktiviert keinen Update-Treiber. SQLite-/Dateiadapter und Passkey-Anmeldung sind verfügbar, die Container-Updateintegration wird separat durch den Betreiber aktiviert. In dieser Testinstanz werden daher keine Updates autonom installiert.
 
 Der Agent verwendet eine Kernel-Dateisperre (`flock`, Paket `util-linux`) auf `root/agent.lock`. Container-PIDs werden nicht als Dienstidentität verwendet. Beim Beenden oder Absturz wird die Sperre freigegeben; eine vorhandene Lockdatei darf bestehen bleiben. Für diese Korrektur genügt das neue Updater-Image; bereits geprüfte Archiv-Images bleiben verwendbar.
+## Update-Quelle wechseln
+
+Ab 0.11.0 enthält Einstellungen → Updates einen Abschnitt **Update-Quelle**. Nur der tatsächliche Admin darf Quellen prüfen und wechseln. Auch der separate Update-Dienst muss mit dem Dockerfile.updater dieser Version neu gebaut und eingerichtet sein; ein App-Update allein aktualisiert den Dienst nicht. Ein älterer Dienst zeigt einen entsprechenden Hinweis. Nicht gleichzeitig einen zweiten Dienst starten.
+
+Zulässig sind aktive direkte GitHub-Forks des aktuell eingestellten Repositorys. GitHub `parent.full_name` muss die aktuelle Quelle nennen; `source` (gemeinsamer Ursprung des Netzwerks) genügt nicht. Nach einem Wechsel ist die neue Quelle der Bezugspunkt. Bis zu 100 Forks werden angeboten; weitere können direkt eingegeben werden. Nicht eindeutig nachweisbare Herkunft wird abgelehnt. Bestehender GitHub-Zugang muss das Ziel lesen dürfen; Zugangsdaten werden weder angezeigt noch über das Formular geändert.
+
+Vor dem Warnungsdialog wird die neueste stabile Release-Version am aufgelösten Commit auf `docs/update-contract.json`, Version, Backupformat, Schema und erforderliche Projektdateien geprüft. Der Marker ist **kein Sicherheitszertifikat** und kann kopiert werden. Der Betreiber muss dem neuen Anbieter ausdrücklich vertrauen: Updates führen Servercode aus. Der Admin muss `ICH VERTRAUE DER NEUEN UPDATE-QUELLE` abtippen. Die Prüfung gilt fünf Minuten und wird vor dem Speichern erneut ausgeführt. Bei Fehlern bleibt die bisherige Quelle erhalten. Laufende Updates und offene Wiederherstellungen sperren den Wechsel.
+
+Der Wechsel installiert nichts, verändert keine Archivdaten und wird in der geschützten Updater-Konfiguration protokolliert. Übersprungene Versionen sind pro Repository getrennt. Nach dem Wechsel wird vor jedem Release-Build der Projektvertrag erneut geprüft. Fork-Betreiber dürfen die dauerhafte Projekt-ID und den Vertrags-Dateipfad nicht entfernen; Änderungen des Protokolls benötigen eine gesonderte kompatible Updater-Version. Eine höhere Schema-Nummer allein garantiert keine geeignete Migration: Sicherung, Probe-Wiederherstellung und Rückweg bleiben verpflichtend.
+## Zertifikatsfehler beim Laden von GitHub
+
+Bei `server certificate verification failed. CAfile: none` fehlt im bisherigen Update-Image das CA-Zertifikatspaket. Ab 0.12.1 installiert `Dockerfile.updater` ausdrücklich `ca-certificates` und prüft das Zertifikatsbündel beim Build. Nur das Update-Image neu bauen; `docker compose up` ist für diese Reparatur nicht erforderlich. Vor dem Austausch des laufenden Dienstes den GitHub-Zugriff mit `git ls-remote` im neuen Image testen. Bestehende Konfiguration, Mounts, Name, Hostnetzwerk und Neustartrichtlinie des Dienstes erhalten. TLS-Zertifikatsprüfung bleibt eingeschaltet. Die Archiv-App und ihre Daten werden dabei nicht aktualisiert.
+
+## Fortschritt ab 0.13.0
+
+Beim Start öffnet sich ein Statusfenster. Download, Build, geprüfte Sicherung, Installation und Funktionsprüfung werden getrennt angezeigt. „Details anzeigen“ enthält feste, zeitgestempelte Phasenmeldungen; rohe Prozessausgaben und Zugangsdaten werden nicht übernommen. Das Fenster kann geschlossen und über „Fortschritt anzeigen“ wieder geöffnet werden. Nach Seitenneuladen wird ein laufender Vorgang erneut erkannt. Während kurzer Nichterreichbarkeit bleibt der letzte Status sichtbar und die Oberfläche prüft die Verbindung erneut. Frühere Vorgänge stehen getrennt darunter.
+
+Oberfläche und Update-Dienst müssen für die zusätzlichen Phasen beide aktualisiert sein. Bei älteren Diensten zeigt die neue Oberfläche die vorhandenen groberen Phasen und weist auf das fehlende Detailprotokoll hin. Einen aktiven Update-Dienst niemals während einer laufenden Installation ersetzen. Die Versionsnummer des Dienst-Images ist unabhängig von der installierten Archivversion.
