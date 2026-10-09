@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.15.2]
+
+- Vollständigen Archivnamen im öffentlichen Profil in der gespeicherten Schreibweise anzeigen; lange Namen auch mobil umbrechen.
+- Hinweis „Private Arbeitsversion“ aus der Oberfläche entfernen.
+
 ## [0.15.1]
 
 - Einstellungen: mehr Abstand zur Überschrift, Benutzer & Einladungen an zweiter Stelle, Backups vor Updates am Ende; Hosting-Funktionsübersicht entfernen.

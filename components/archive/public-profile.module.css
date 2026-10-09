@@ -2,3 +2,6 @@
 .repositoryNote a { color: inherit; text-decoration: underline; text-decoration-color: #c4c8ce; text-underline-offset: 3px; }
 .repositoryNote a:hover { color: #4b5563; text-decoration-color: currentColor; }
 .repositoryNote a:focus-visible { outline: 2px solid var(--primary); outline-offset: 4px; border-radius: 2px; }
+
+.archiveName { width: 100%; max-width: 100%; min-width: 0; white-space: normal; overflow-wrap: anywhere; word-break: normal; overflow: visible; text-overflow: clip; line-height: 1.6; letter-spacing: .08em; text-transform: none; }
+@media (max-width: 650px) { .archiveName { letter-spacing: .04em; } }
