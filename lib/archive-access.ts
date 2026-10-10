@@ -10,7 +10,7 @@ function bootstrapAdminEmail(){return String((env as unknown as {ARCHIVE_BOOTSTR
 export async function archiveAccess(req:Request){
  const identity=authenticatedIdentity(req);if(!identity)return null;
  const linux=(env as any).ARCHIVE_HOSTING_RUNTIME==='linux';
- if(linux&&!await archiveDb().prepare('SELECT id FROM linux_accounts WHERE id=? AND disabled=0').bind(identity.subject).first())return null;
+ if(linux){const account=await archiveDb().prepare('SELECT name,email FROM linux_accounts WHERE id=? AND disabled=0').bind(identity.subject).first<{name:string,email:string}>();if(!account)return null;identity.name=account.name;identity.email=account.email;}
  const isBootstrapAdmin=!linux&&identity.email.toLowerCase()===bootstrapAdminEmail();
  const stored=await archiveDb().prepare('SELECT role FROM archive_users WHERE identity_provider=? AND identity_subject=?').bind(identity.provider,identity.subject).first<{role:ArchiveRole}>();
  if(linux&&!stored)return null;

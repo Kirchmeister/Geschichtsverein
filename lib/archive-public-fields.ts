@@ -2,4 +2,4 @@ export const publicFieldLabels:Record<string,string>={title:'Titel',category:'Be
 export const defaultPublicFields=['title','category','period','place','description','sources'];
 
 export const guestFieldLabels={...publicFieldLabels,updated:'Bearbeitungsdatum',storagePlaceId:'Aufbewahrungsort',people:'Personen & Familien'};
-export const defaultGuestFields=['title','category','period','description'];
+export const defaultGuestFields=['title','category','period','start','end','description'];

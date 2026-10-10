@@ -1,5 +1,13 @@
 # Änderungen
 
+## [0.25.0]
+
+- Neue Instanzen geben Gästen Beginn und Ende (Jahr) zusätzlich frei. Gespeicherte Feldauswahlen bestehender Instanzen bleiben unverändert.
+- Admins können Konten umbenennen, deaktivieren und dauerhaft löschen. Eindeutige, unveränderliche Konto-Kennungen unterscheiden gleiche Namen in Verwaltung und Empfängerauswahl.
+- Löschen entfernt E-Mail, Passkeys, Geräte und Anmelde-/Einladungsdaten atomar; Referenzen und Umfrageantworten bleiben mit pseudonymer Kennung erhalten. Neue Konten übernehmen keine alte Identität oder Nachrichten.
+- Alte automatische Hinweise ohne gespeicherte Identität werden bei mehrdeutiger Namenszuordnung neutral gekennzeichnet. Freie Texte und vorhandene Backups werden nicht umgeschrieben.
+- Datenbankschema 18 und Backupformat 2 unverändert; zusätzliche Linux-Konto-Kennungen werden beim Start eingerichtet.
+
 ## [0.24.0]
 
 - Empfängerauswahl mit getrennten Buttons für alle Gäste, alle internen Mitglieder und Auswahl aufheben; einzelne und mehrere Gäste bleiben individuell auswählbar. Empfängerzahl vor dem Senden sichtbar. Auswahlfragen auch an alle Gäste.

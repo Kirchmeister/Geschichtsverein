@@ -586,3 +586,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 .message-poll input:not([type=checkbox]) { width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--card); font-size: 16px; }
 .message-poll .message-check { display: flex; align-items: flex-start; gap: 10px; }
+
+.account-code { font-size: 13px; color: var(--muted-foreground); overflow-wrap: anywhere; }
+.account-actions { flex-wrap: wrap; gap: 10px; }
+.account-remove { color: var(--archive-tone-657168); }
