@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.17.2]
+- Der Einstellungsbereich „Namen“ enthält Archivname, Vereinsname und eine anpassbare Unterzeile für die Menüleiste. Vorgabe bleibt „Digitale Heimatforschung“.
+- Bestehende Installationen behalten den Standard; Änderungen sind nur für Admins möglich. Die Unterzeile wird in Sicherungen übernommen und beim Import wiederhergestellt.
+- Datenbankschema 18 und Backupformat 2 bleiben unverändert.
+
 ## [0.17.1]
 - Veröffentlichungsanfragen zeigen die anfragende Person deutlich in der offenen Aufgabenliste, Nachrichtenübersicht und Unterhaltung.
 - Neue automatische Mitteilungen und Erinnerungen enthalten den Namen als gespeicherten Nachrichtenbestandteil. Bestehende Mitteilungen lösen den Namen anhand derselben Anfrage auf, soweit er noch ermittelbar ist.
