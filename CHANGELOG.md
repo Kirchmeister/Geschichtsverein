@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.25.1]
+
+- Persönlicher Admin-Schalter für die Profilvorschau unten im Kontomenü. Standardmäßig aus, dauerhaft pro Konto gespeichert; Ausschalten kehrt zur tatsächlichen Rolle zurück und entfernt den Vorschau-Balken. Andere Rollen können die Einstellung nicht verändern.
+- Datenbankschema 18 und Backupformat 2 unverändert.
+
 ## [0.25.0]
 
 - Neue Instanzen geben Gästen Beginn und Ende (Jahr) zusätzlich frei. Gespeicherte Feldauswahlen bestehender Instanzen bleiben unverändert.

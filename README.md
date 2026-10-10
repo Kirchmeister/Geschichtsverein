@@ -202,3 +202,5 @@ Dauerhaftes Löschen verlangt die exakt eingegebene Konto-Kennung. Die E-Mail-Ad
 Eine neue Einladung mit derselben E-Mail-Adresse ist anschließend möglich. Registrierung erzeugt stets eine neue ID und Kennung; gleichnamige oder erneut angelegte Konten werden nicht zusammengeführt und erhalten keine alten privaten Nachrichten. Zusätzliche Linux-Kontotabellen werden beim Start eingerichtet; die Schema-/Backupformat-Version bleibt unverändert.
 
 Auf neuen Instanzen sind für Gäste **Beginn (Jahr)** und **Ende (Jahr)** zusätzlich vorausgewählt, damit die chronologische Ansicht datiert bleibt. Vorhandene gespeicherte Freigaben werden erhalten; bei Bedarf unter **Sichtbare Felder für Gäste** beide Felder aktivieren.
+
+Die Profilvorschau ist ab 0.25.1 standardmäßig ausgeschaltet. Administratoren aktivieren sie im persönlichen Kontomenü unter **Berechtigungen → Profilvorschau anzeigen**. Die Auswahl wird je Konto gespeichert, auch über erneute Anmeldungen hinweg. Ausschalten blendet den oberen Balken aus und beendet die Vorschau einer anderen Rolle. Die tatsächlichen Berechtigungen bleiben unverändert.
