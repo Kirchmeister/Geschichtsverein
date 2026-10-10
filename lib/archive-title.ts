@@ -1,3 +1,4 @@
+export const defaultArchiveSubtitle='Digitale Heimatforschung';
 /** German default for place names; administrators can override exceptional names. */
 export function suggestedArchiveTitle(place:string):string {
  const name=place.trim();
