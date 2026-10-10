@@ -171,3 +171,11 @@ Administratoren können in **Einstellungen → Benutzer & Einladungen** die Roll
 **Öffentliche Felder** stehen als vierter Bereich ausschließlich dem Administrator zur Verfügung. Öffentliche Freigaben bleiben unabhängig vom Gastzugriff. Das Änderungsprotokoll ist nur für Verwalter und Administratoren zugänglich. Die Gast-Feldauswahl wird als Einstellung mitgesichert; bei einer portablen Wiederherstellung bleiben Anmeldeidentitäten wie bisher deaktiviert und werden neu eingerichtet.
 
 Gäste erhalten keine Push-Benachrichtigungen. Beim ersten Einrichten einer Gastrolle erinnert eine interne Nachricht aktive Admins an die Gast-Feldauswahl, sofern diese noch nicht ausdrücklich gespeichert wurde.
+
+### Begrüßung und Push-Erinnerung
+
+Nach dem Annehmen einer Einladung wartet eine persönliche interne Willkommensnachricht mit einer Web-App-Anleitung im Nachrichtenbereich. Gäste können nur ihre Begrüßung lesen und keine Unterhaltungen beginnen. Bestehende Konten erhalten keine nachträgliche Begrüßung.
+
+Der erste bestätigte Lesestand startet eine Frist von 24 Stunden. Der Linux-Hintergrunddienst prüft anschließend minütlich, ob einmalig an die freiwillige Push-Einrichtung erinnert werden soll: nur bei einem erkannten geeigneten iPhone, fehlender Registrierung dieses Geräts, aktiver interner Rolle und ohne bewusste Push-Deaktivierung. Läuft der Dienst nicht oder befindet sich das Archiv im Wartungsmodus, erfolgt die Prüfung beim nächsten erfolgreichen Durchlauf. Es wird keine SMTP-Mail versendet. Sites besitzt keine eigenen Linux-Anmeldekonten und führt diesen Ablauf nicht aus.
+
+Gespeichert werden der erste Lesezeitpunkt, der Erinnerungsstatus, grobe Plattform-/Fähigkeitsmerkmale und gegebenenfalls ein Hash der Push-Adresse; keine vollständige Browserkennung. Diese Zustände und internen Nachrichten sind in den Datensicherungen enthalten.

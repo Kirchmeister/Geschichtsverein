@@ -1,3 +1,4 @@
+import {messageService} from '../server/message-service.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -17,7 +18,7 @@ try{
  const login=await service.loginOptions();assert.ok(await service.login(login.challenge,assertion(login.options,k)));await assert.rejects(()=>service.login(login.challenge,assertion(login.options,k,2)));
  const loginTime=service.accounts()[0].lastLogin;assert.ok(Date.parse(loginTime)>Date.parse('2020-01-01'));const invalid=await service.loginOptions();await assert.rejects(()=>service.login(invalid.challenge,{id:'nonexistent'}));assert.equal(service.accounts()[0].lastLogin,loginTime);
  const wrong=service.invite({email:'user@example.test',name:'Test User',role:'user'}),options=await service.registrationOptions(wrong);await assert.rejects(()=>service.register(options.challenge,credential(options.options,'https://attacker.test').response));assert.equal(service.accounts().length,1);
- const secondOptions=await service.registrationOptions(wrong),k2=credential(secondOptions.options);await service.register(secondOptions.challenge,k2.response);const accounts=service.accounts(),admin=accounts.find(a=>a.role==='admin'),user=accounts.find(a=>a.role==='user');service.edit(user.id,'manager',false,admin.id);assert.equal(service.accounts().find(a=>a.id===user.id).role,'manager');service.edit(user.id,'manager',true,admin.id);const blocked=await service.loginOptions();await assert.rejects(()=>service.login(blocked.challenge,assertion(blocked.options,k2)));assert.throws(()=>service.edit(admin.id,'user',true,admin.id));
+ const secondOptions=await service.registrationOptions(wrong),k2=credential(secondOptions.options);await service.register(secondOptions.challenge,k2.response);const welcomeAccounts=service.accounts();for(const a of welcomeAccounts){const inbox=messageService(db).list(a.id);assert.equal(inbox.filter(t=>t.subject==='Willkommen im Geschichtsarchiv').length,1);assert.match(messageService(db).detail(a.id,inbox[0].id).messages[0].body,new RegExp(a.name));}const accounts=service.accounts(),admin=accounts.find(a=>a.role==='admin'),user=accounts.find(a=>a.role==='user');service.edit(user.id,'manager',false,admin.id);assert.equal(service.accounts().find(a=>a.id===user.id).role,'manager');service.edit(user.id,'manager',true,admin.id);const blocked=await service.loginOptions();await assert.rejects(()=>service.login(blocked.challenge,assertion(blocked.options,k2)));assert.throws(()=>service.edit(admin.id,'user',true,admin.id));
 
  service.edit(user.id,'manager',false,admin.id);
  assert.equal(service.accounts().find(a=>a.id===admin.id).passkeyCount,1);

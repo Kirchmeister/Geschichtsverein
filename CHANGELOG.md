@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.21.0]
+
+- Persönliche interne Willkommensnachricht einmalig nach erfolgreicher Registrierung über eine Einladung, mit geräteabhängiger Web-App- und Push-Anleitung. Gäste erhalten nur lesenden Zugriff auf diese Nachricht, keine Unterhaltungen oder Push.
+- Einmalige iPhone-Push-Erinnerung frühestens 24 Stunden nach dem ersten Lesen der Begrüßung. Wiederholtes Lesen verschiebt die Frist nicht. Eingerichtetes Push auf dem Gerät, bewusste Deaktivierung, Gäste und deaktivierte Konten verhindern die Erinnerung.
+- Fristen werden durch den bestehenden Linux-Hintergrunddienst geprüft, auch ohne angemeldeten Nutzer. Keine rückwirkenden Begrüßungen für bestehende Konten.
+- Datenbankschema 18 und Backupformat 2 unverändert.
+
 ## [0.20.0]
 
 - Updates: kompakte Versionsübersicht, neueste Version hervorgehoben, ältere Angebote einklappbar und Sicherungswahl im Bestätigungsfenster.
@@ -139,6 +146,10 @@
 Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht verschoben. Versionen vor dem produktiven Serverbetrieb sind als Vorabversion gekennzeichnet.
 
 ## [Unreleased]
+
+## [0.21.0] – 2026-10-10
+
+- Änderungen und Migrationshinweise vor Veröffentlichung ergänzen.
 
 ## [0.14.0] – 2026-10-09
 

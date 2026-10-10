@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {sqliteBinding} from '../server/linux-storage.mjs';
+import {initializeAuth} from '../server/auth-service.mjs';
+import {initializePush} from '../server/push-service.mjs';
+import {messageService} from '../server/message-service.mjs';
+import {welcomeNotice,welcomeDevice,remindWelcome} from '../server/welcome-notices.mjs';
+const root=await fs.mkdtemp(path.resolve('.update-test-welcome-')),storage=sqliteBinding(path.join(root,'archive.sqlite'),path.resolve('drizzle')),db=storage.database,now=1700000000000,day=86400000;
+try{initializeAuth(db);initializePush(db);const service=messageService(db);
+ for(const [id,role] of [['reader','user'],['optout','manager'],['enabled','admin'],['guest','guest'],['unread','user'],['android','user'],['unsupported','user'],['disabled','user']]){db.prepare('INSERT INTO linux_accounts VALUES(?,?,?,0)').run(id,id+'@example.test','Hello '+id);db.prepare('INSERT INTO archive_users(id,identity_provider,identity_subject,display_name,created,role) VALUES(?,?,?,?,?,?)').run(id,'linux',id,id,'now',role);welcomeNotice(db,{id,name:'Hello '+id},role,'iPhone OS 17_0',now);welcomeNotice(db,{id,name:'duplicate'},role,'Android',now);const threads=service.list(id);assert.equal(threads.length,1);const t=service.detail(id,threads[0].id);assert.match(t.messages[0].body,new RegExp('Hello '+id));assert.equal(t.onboarding,true);assert.equal(service.count(id),1);welcomeDevice(db,id,{platform:id==='android'?'android':'iphone',capable:id!=='unsupported',permission:'default',endpoint:id==='enabled'?'https://web.push.apple.com/test':''},now);if(id!=='unread')service.read(id,t.id,t.messages[0].id);}
+ // Inject deterministic first-read times after exercising the real read hook.
+ for(const row of db.prepare("SELECT key,data FROM archive_settings WHERE key LIKE 'welcome:%'").all()){const s=JSON.parse(row.data);if(s.readAt!==null)s.readAt=now;db.prepare('UPDATE archive_settings SET data=? WHERE key=?').run(JSON.stringify(s),row.key)}
+ const first=JSON.parse(db.prepare("SELECT data FROM archive_settings WHERE key='welcome:reader'").get().data);service.read('reader',first.thread,first.messageId);assert.equal(JSON.parse(db.prepare("SELECT data FROM archive_settings WHERE key='welcome:reader'").get().data).readAt,now);
+ db.prepare("INSERT INTO linux_push_preferences VALUES('optout',0,'{}')").run();db.prepare("INSERT INTO linux_push_preferences VALUES('enabled',1,'{}')").run();db.prepare('INSERT INTO linux_push_subscriptions VALUES(?,?,?,?,?,NULL)').run(createHash('sha256').update('https://web.push.apple.com/test').digest('hex'),'enabled','https://web.push.apple.com/test','{}','now');db.prepare("UPDATE linux_accounts SET disabled=1 WHERE id='disabled'").run();
+ assert.equal(remindWelcome(db,now+day-1),0);assert.equal(remindWelcome(db,now+day),1);assert.equal(service.list('reader').length,2);assert.equal(remindWelcome(db,now+day*3),0);assert.equal(service.list('guest').length,1);assert.match(service.detail('guest',service.list('guest')[0].id).messages[0].body,/Push-Benachrichtigungen sind für diese Rolle nicht verfügbar/);assert.throws(()=>service.send('guest',{body:'no',subject:'no',recipients:['reader']}));assert.throws(()=>service.detail('guest',first.thread));assert.equal(service.count('guest'),0);const preview=messageService(db,'guest');assert.equal(preview.list('reader').length,2);assert.deepEqual(preview.recipients('reader'),[]);assert.throws(()=>preview.send('reader',{body:'blocked',subject:'blocked',recipients:['enabled']}));
+ // Deleting without reading must not start a timer.
+ const u=service.list('unread')[0];service.hide('unread',u.id,u.lastMessageId);assert.equal(JSON.parse(db.prepare("SELECT data FROM archive_settings WHERE key='welcome:unread'").get().data).readAt,null);assert.equal(remindWelcome(db,now+day*5),0);
+ console.log('PASS: once-only welcome, personalized guides, actual first-read 24h boundary, offline reminder, subscriptions/opt-out/guest/disabled exclusions, guest access and unread deletion.');
+}finally{storage.close();await fs.rm(root,{recursive:true,force:true})}
