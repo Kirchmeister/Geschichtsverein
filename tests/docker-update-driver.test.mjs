@@ -11,7 +11,7 @@ try{
  const driver=dockerUpdateDriver(cfg,run);
  await assert.rejects(driver('migrate',code),/angehalten/);assert.equal(calls.some(c=>c[1][0]==='run'),false);
  foreign=true;await assert.rejects(driver('stop',code),/Archivablagen/);assert.equal(calls.some(c=>c[1][0]==='stop'),false);
- foreign=false;await driver('stop',code);assert.deepEqual(calls.at(-1),['docker',['stop','--time','60','geschichtsarchiv-test']]);
+ foreign=false;await driver('quiesce',code);assert.equal((await fs.readFile(cfg.configRoot+'/maintenance','utf8')).trim(),'1');assert.equal(calls.some(c=>c[1][0]==='stop'),false);await driver('stop',code);assert.deepEqual(calls.at(-1),['docker',['stop','--time','60','geschichtsarchiv-test']]);
  running=false;await driver('migrate',code);const probe=calls.at(-1)[1];assert.equal(probe.includes('none'),true);assert.equal(probe.at(-1),'migrate');
  await assert.rejects(driver('verify-restore',code,'/outside/data','/outside/config'),/Probeablagen/);
  console.log('PASS: Docker driver confines mutations to the configured archive and refuses live migrations and foreign containers.');

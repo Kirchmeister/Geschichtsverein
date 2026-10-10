@@ -1,5 +1,15 @@
 # Änderungen
 
+## [0.20.0]
+
+- Updates: kompakte Versionsübersicht, neueste Version hervorgehoben, ältere Angebote einklappbar und Sicherungswahl im Bestätigungsfenster.
+- Optional vor dem Update eine frische Nextcloud-Sicherung vollständig hochladen und durch Rücklesen mit Prüfsummen prüfen; nur damit entfällt die Texteingabe. Fehler verhindern Migrationen. Lokale Sicherung und Probe-Wiederherstellung bleiben verpflichtend.
+- Fortschritt: getrennte Download-/Build-Phasen, Dauer des aktuellen Schritts, Dienst-Lebenszeichen, Nextcloud-Fortschritt und Wartungsstatus. Ältere Dienste kennzeichnen den zusammengefassten Download/Build ausdrücklich.
+- Der externe Update-Dienst muss separat auf 0.20.0 aktualisiert werden; ein Archiv-App-Update ersetzt den Dienst nicht.
+- Gäste: Push-Endpunkte gesperrt; Rollenwechsel entfernt vorhandene Geräteanmeldungen, Warteschlange und aktivierte Push-Einstellungen.
+- Erste Gastrolle: einmalige interne Nachricht an aktive Admins mit Link zur Gast-Feldauswahl, sofern diese noch nicht ausdrücklich gespeichert wurde.
+- Datenbankschema 18 und Backupformat 2 unverändert.
+
 ## [0.19.0]
 
 - Neue Rolle Gast: einladbar, als Kontorolle zuweisbar und in der Admin-Profilvorschau verfügbar. Reiner Lesezugriff auf alle vorhandenen Beiträge mit einer gemeinsamen, adminseitigen Auswahl sichtbarer Attribute und Dateitypen.

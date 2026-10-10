@@ -552,3 +552,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* The mobile dialog receives initial focus without a selection-like outline. */
 [data-slot="sidebar"][data-mobile="true"]:focus{outline:none}
+
+/* Compact, consistent server update controls. */
+.update-overview{display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--card)}
+.update-overview>div{display:grid;gap:4px;flex:1;min-width:140px}.update-overview small,.update-backup-summary p,.update-compatibility{font-size:13px;color:var(--muted-foreground)}
+.update-release-latest{padding:18px!important;border:1px solid var(--border)!important;border-radius:12px;background:var(--secondary)}
+.update-release header{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.update-release header h3{margin:0}.update-release header small{width:100%}
+.update-release-badge{font-size:12px;border-radius:20px;padding:4px 8px;background:var(--card);color:var(--primary)}
+.update-release-notes,.update-older-releases{margin:14px 0}.update-release-notes .pre{max-height:300px;overflow:auto;overflow-wrap:anywhere}
+.update-backup-summary{padding:14px;border:1px solid var(--border);border-radius:10px}.update-backup-summary p{margin:6px 0 0}
+.update-install-dialog{width:calc(100vw - 32px);max-width:580px;max-height:90dvh;overflow:auto}.update-backup-choice{display:flex;align-items:flex-start;gap:12px;padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--secondary)}
+.update-backup-choice input{width:20px;height:20px;flex-shrink:0;margin-top:3px}.update-backup-choice span{display:grid;gap:7px}.update-backup-choice small{font-size:13px;color:var(--muted-foreground);line-height:1.5}
+.update-confirmation{display:grid;gap:10px;font-size:14px}.update-confirmation strong{overflow-wrap:anywhere}.update-confirmation input{width:100%;min-width:0}
+.update-compatibility{padding:12px;border-left:3px solid var(--primary);background:var(--secondary);line-height:1.6}
+@media(max-width:640px){.update-overview>button{width:100%}.update-release-latest{padding:14px!important}.update-install-dialog .update-progress-actions{flex-wrap:wrap}.update-install-dialog .update-progress-actions button{flex:1;min-height:44px}}

@@ -22,7 +22,7 @@ Die interne Startseite begrüßt angemeldete Personen unter Archiv- und Vereinsn
 
 ## Funktionen
 
-- Admin, Verwalter und Nutzer sowie öffentliche Ansicht
+- Admin, Verwalter, Nutzer und Gäste sowie öffentliche Ansicht
 - Geprüfte Veröffentlichung und öffentliche Zeitleisten-Auswahl
 - Personen-/Familientags, Textverknüpfungen und Versionsvergleich
 - Moderierte Kommentare und Antworten
@@ -35,7 +35,7 @@ Die interne Startseite begrüßt angemeldete Personen unter Archiv- und Vereinsn
 
 Ein vollständiges Backup umfasst Daten und Dateien und dokumentiert Software-, Datenbankschema- und Backupformat-Version. Vor einem Serverupdate wird zusätzlich der passende Programmstand und die Serverkonfiguration gesichert. Der Updater überprüft die Sicherung und eine getrennte Probe-Wiederherstellung, bevor er Daten verändern darf.
 
-Ein Update wird nur vom Admin gestartet. Übersprungene Versionen werden bei automatischer Suche ausgeblendet, bei **Jetzt nach Updates suchen** jedoch mit Kennzeichnung wieder angeboten. Ein Code-Downgrade ersetzt keine Datenwiederherstellung.
+Ein Update wird nur vom Admin gestartet. Bei eingerichtetem und erfolgreich getestetem Nextcloud-Zugang kann der Admin vor dem Update eine neue externe Sicherung auswählen. Erst nach vollständigem Upload und Prüfsummenprüfung entfällt die Texteingabe; die lokale Rückfallsicherung und Probe-Wiederherstellung erfolgen zusätzlich. Dafür müssen Archiv-App und separater Update-Dienst mindestens Version 0.20.0 verwenden. Übersprungene Versionen werden bei automatischer Suche ausgeblendet, bei **Jetzt nach Updates suchen** jedoch mit Kennzeichnung wieder angeboten. Ein Code-Downgrade ersetzt keine Datenwiederherstellung.
 
 [Serverupdates und Wiederherstellung](docs/server-updates.md) · [Technischer Backup-Import](docs/installation.md)
 
@@ -169,3 +169,5 @@ Die Kommentarmoderation zeigt Status, Beitrag, Autor, Datum und Kommentar in ein
 Administratoren können in **Einstellungen → Benutzer & Einladungen** die Rolle **Gast** einladen oder einem vorhandenen Konto zuweisen. Gäste lesen alle vorhandenen, nicht gelöschten Beiträge, auch ohne öffentliche Freigabe. In **Sichtbare Felder für Gäste** (dritter Einstellungsbereich) wird die gemeinsame Sichtbarkeit festgelegt. Standardmäßig sind Titel, Bereich, Datierung und Beschreibung sichtbar; Dateien und weitere Attribute müssen ausdrücklich freigeschaltet werden. Ausgeblendete Werte und Dateitypen werden serverseitig zurückgehalten. Gäste erhalten keine Bearbeitungs-, Freigabe-, Versions-, Nachrichten- oder Verwaltungsfunktionen; eigene Passkeys und Abmeldung bleiben verfügbar. Die Admin-Profilvorschau enthält ebenfalls Gast.
 
 **Öffentliche Felder** stehen als vierter Bereich ausschließlich dem Administrator zur Verfügung. Öffentliche Freigaben bleiben unabhängig vom Gastzugriff. Das Änderungsprotokoll ist nur für Verwalter und Administratoren zugänglich. Die Gast-Feldauswahl wird als Einstellung mitgesichert; bei einer portablen Wiederherstellung bleiben Anmeldeidentitäten wie bisher deaktiviert und werden neu eingerichtet.
+
+Gäste erhalten keine Push-Benachrichtigungen. Beim ersten Einrichten einer Gastrolle erinnert eine interne Nachricht aktive Admins an die Gast-Feldauswahl, sofern diese noch nicht ausdrücklich gespeichert wurde.

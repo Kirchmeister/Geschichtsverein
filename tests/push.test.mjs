@@ -4,7 +4,7 @@ import path from 'node:path';
 import {createECDH,randomBytes} from 'node:crypto';
 import webpush from 'web-push';
 import {sqliteBinding} from '../server/linux-storage.mjs';
-import {initializeAuth} from '../server/auth-service.mjs';
+import {authService,initializeAuth} from '../server/auth-service.mjs';
 import {initializePush,pushService,validSubscription} from '../server/push-service.mjs';
 const root=await fs.mkdtemp(path.resolve('.update-test-push-')),storage=sqliteBinding(path.join(root,'archive.sqlite'),path.resolve('drizzle')),db=storage.database;
 const fixture=i=>{const ecdh=createECDH('prime256v1');ecdh.generateKeys();return {endpoint:'https://fcm.googleapis.com/fcm/send/fixture-'+i,keys:{p256dh:ecdh.getPublicKey().toString('base64url'),auth:randomBytes(16).toString('base64url')}}};
@@ -22,5 +22,7 @@ db.prepare("INSERT INTO archive_comments(id,entry_id,author_name,body,status,cre
 db.prepare("INSERT INTO archive_comments(id,entry_id,author_name,body,status,created) VALUES(?,?,'Person','Body','pending','now')").run('comment-fourth',id);service.scan();service.configure('admin',false,service.settings('admin').preferences);assert.equal((await service.deliver()).sent,0);service.configure('admin',true,service.settings('admin').preferences);
 db.prepare("INSERT INTO archive_comments(id,entry_id,author_name,body,status,created) VALUES(?,?,'Person','Body','pending','now')").run('comment-fifth',id);service.scan();failure={statusCode:410};await service.deliver();assert.equal(service.settings('admin').devices,0);assert.equal(db.prepare('SELECT count(*) AS n FROM linux_push_queue').get().n,0);
 initializePush(db);const seen=db.prepare('SELECT count(*) AS n FROM linux_push_seen').get().n;service.scan();assert.equal(db.prepare('SELECT count(*) AS n FROM linux_push_seen').get().n,seen);
+// Guest changes revoke existing preferences, subscriptions and pending delivery immediately.
+service.subscribe('user',fixture('guest-revocation'));db.prepare("INSERT INTO qr_access_alerts VALUES('entry',1,'now')").run();service.scan();const auth=authService(db,{origin:'https://archive.example.test',sessionKey:'a'.repeat(64)});auth.edit('user','guest',false,'admin');assert.equal(db.prepare("SELECT count(*) AS n FROM linux_push_subscriptions WHERE account_id='user'").get().n,0);assert.equal(db.prepare("SELECT enabled FROM linux_push_preferences WHERE account_id='user'").get().enabled,0);assert.throws(()=>service.settings('user'),/Gäste/);assert.throws(()=>service.subscribe('user',fixture('guest-bypass')),/Gäste/);assert.throws(()=>service.configure('user',true,{}),/Gäste/);assert.equal((await service.deliver()).sent,0);
 console.log('PASS: role defaults, account ownership, SSRF rejection, encrypted Web Push payload, deduplicated requests, QR state transitions, activation/update/backup events, role revocation, disable, retry and expired device cleanup.');
 }finally{storage.close();await fs.rm(root,{recursive:true,force:true})}

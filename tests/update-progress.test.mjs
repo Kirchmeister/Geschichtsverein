@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import vm from 'node:vm';
+const require=createRequire(import.meta.url),esbuild=require(require.resolve('esbuild',{paths:[require.resolve('vite')]}));
+const mocks={'react':'export const useEffect=()=>{};export const useState=initial=>[initial,()=>{}];','react/jsx-runtime':'export const jsx=(type,props)=>({type,props});export const jsxs=jsx;export const Fragment="Fragment";','lucide-react':'export const Check="Check",LoaderCircle="Loader";','@/components/ui/dialog':'export const Dialog="Dialog",DialogContent="Content",DialogTitle="Title",DialogDescription="Description";'};
+const result=await esbuild.build({entryPoints:['components/archive/update-progress.tsx'],bundle:true,platform:'node',format:'cjs',jsx:'automatic',write:false,plugins:[{name:'mock',setup(build){build.onResolve({filter:/^(react|lucide-react|@\/)/},args=>({path:args.path,namespace:'mock'}));build.onLoad({filter:/.*/,namespace:'mock'},args=>({contents:mocks[args.path],loader:'js'}))}}]});
+const scope={module:{exports:{}},Date};vm.runInNewContext(result.outputFiles[0].text,scope);
+function text(node){if(node===null||node===undefined||typeof node==='boolean')return '';if(typeof node==='string'||typeof node==='number')return String(node);if(Array.isArray(node))return node.map(text).join(' ');return text(node.props?.children)}
+const now=new Date().toISOString(),old=new Date(Date.now()-90000).toISOString(),props={open:true,onOpenChange:()=>{},queued:false,reconnecting:false,job:{id:'test',tag:'v0.20.0',status:'preparing',created:old,updated:old,events:[{status:'preparing',at:old}]}};
+let rendered=text(scope.module.exports.UpdateProgress(props));assert.match(rendered,/Code wird geladen und gebaut/);assert.match(rendered,/älterer Update-Dienst/);assert.doesNotMatch(rendered,/Neue Version wird gebaut/);
+rendered=text(scope.module.exports.UpdateProgress({...props,job:{...props.job,status:'building',events:[{status:'downloading',at:old},{status:'building',at:now}]}}));assert.match(rendered,/Neue Version wird gebaut/);assert.doesNotMatch(rendered,/Code wird geladen und gebaut/);
+rendered=text(scope.module.exports.UpdateProgress({...props,service:{features:{phases:true,heartbeat:true}},job:{...props.job,status:'building',heartbeat:old}}));assert.match(rendered,/über 45 Sekunden/);assert.match(rendered,/Weiterhin erreichbar/);
+rendered=text(scope.module.exports.UpdateProgress({...props,job:{...props.job,status:'nextcloud_uploading',stopped:true,nextcloudRequested:true,nextcloudProgress:{completed:2,total:4}},service:{features:{phases:true}}}));assert.match(rendered,/2 \/ 4 Dateien/);assert.match(rendered,/Wartungsmodus/);
+rendered=text(scope.module.exports.UpdateProgress({...props,job:{...props.job,status:'rolled_back',previousVersion:'0.19.0',finished:now}}));assert.match(rendered,/0\.19\.0\s+bleibt aktiv/);assert.doesNotMatch(rendered,/Update erfolgreich/);
+console.log('PASS: legacy download/build honesty, detailed phase detection, stale heartbeat warning, backup counts, maintenance and rollback outcome.');

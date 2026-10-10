@@ -126,3 +126,61 @@ Bei `server certificate verification failed. CAfile: none` fehlt im bisherigen U
 Beim Start öffnet sich ein Statusfenster. Download, Build, geprüfte Sicherung, Installation und Funktionsprüfung werden getrennt angezeigt. „Details anzeigen“ enthält feste, zeitgestempelte Phasenmeldungen; rohe Prozessausgaben und Zugangsdaten werden nicht übernommen. Das Fenster kann geschlossen und über „Fortschritt anzeigen“ wieder geöffnet werden. Nach Seitenneuladen wird ein laufender Vorgang erneut erkannt. Während kurzer Nichterreichbarkeit bleibt der letzte Status sichtbar und die Oberfläche prüft die Verbindung erneut. Frühere Vorgänge stehen getrennt darunter.
 
 Oberfläche und Update-Dienst müssen für die zusätzlichen Phasen beide aktualisiert sein. Bei älteren Diensten zeigt die neue Oberfläche die vorhandenen groberen Phasen und weist auf das fehlende Detailprotokoll hin. Einen aktiven Update-Dienst niemals während einer laufenden Installation ersetzen. Die Versionsnummer des Dienst-Images ist unabhängig von der installierten Archivversion.
+
+## Fortschritt und Nextcloud-Sicherung ab 0.20.0
+
+Die Oberfläche zeigt die neueste stabile Version zuerst; weitere Angebote sind einklappbar. „Update vorbereiten“ öffnet die Sicherungswahl. Wenn der gespeicherte Nextcloud-/WebDAV-Zugang erfolgreich getestet wurde und der neue Dienst angebunden ist, kann **Vor dem Update automatisch nach Nextcloud sichern** gewählt werden. Die tägliche Sicherung muss dafür nicht aktiviert sein. Ohne diese Auswahl bleibt der bisherige Bestätigungstext erforderlich.
+
+Der Ablauf ist: Code herunterladen → Docker-Image bauen → Wartungsmodus → optionale neue Nextcloud-Sicherung einschließlich vollständigem Upload und Rücklesen aller Prüfsummen → Anwendung anhalten → lokale vollständige Rückfallsicherung und Probe-Wiederherstellung → Migration → Start und Funktionsprüfung. Erst eine erfolgreiche externe Sicherung ersetzt die Texteingabe. Scheitert sie, beginnt keine Migration und der bisherige Stand wird wieder freigegeben. Eine vorhandene alte Sicherung reicht für diese Auswahl nicht aus. Die Sicherung erscheint auch unter Backups. Bei Abbruch kann eine noch unvollständige Sicherung dort fortgesetzt werden; dadurch wird kein Update erneut gestartet.
+
+Das Statusfenster zeigt die Dauer des aktuellen Schritts, den letzten Dienstkontakt und den Wartungsstatus. Der Agent schreibt während langer Schritte alle zehn Sekunden ein Lebenszeichen. Nach 45 Sekunden ohne Lebenszeichen weist die Oberfläche darauf hin; sie schätzt keine Prozentzahlen für Download oder Build. Nextcloud zeigt Dateizahlen je Kopier-/Prüf-/Uploadphase. Das Detailprotokoll enthält ausschließlich Phasen und Zeitpunkte, keine Rohlogs oder Zugangsdaten.
+
+**Archiv-App und separater Update-Dienst müssen beide aktualisiert werden.** Ein früher Dienst, beispielsweise 0.12.1, lädt Code und baut das Docker-Image innerhalb derselben Phase. Deshalb kann dessen „Download“ sehr lange dauern. Die neue Oberfläche nennt diesen Schritt ausdrücklich „Code laden und bauen“ und erklärt die fehlenden Detailmeldungen. Ein App-Update allein ersetzt das externe Dienst-Image nicht. Die Nextcloud-Auswahl wird erst angeboten, wenn beide Seiten sie unterstützen.
+
+### Vorhandenen Docker-Update-Dienst ersetzen
+
+Nur im Leerlauf durchführen. Zuerst den bisherigen Job prüfen, ohne Zugangsschlüssel auszugeben:
+
+```bash
+sudo docker exec geschichtsarchiv-updater node -e 'const fs=require("node:fs");const c=JSON.parse(fs.readFileSync(process.env.ARCHIVE_UPDATER_CONFIG,"utf8"));const s=JSON.parse(fs.readFileSync(c.root+"/update-state.json","utf8"));if(s.job&&!["complete","rolled_back"].includes(s.job.status)){console.error("Update oder Wiederherstellung offen: "+s.job.status);process.exit(1)}console.log("Update-Dienst im Leerlauf")'
+```
+
+Danach den geprüften aktuellen Code holen und das neue Dienst-Image bauen:
+
+```bash
+cd ~/geschichtsarchiv
+git pull --ff-only
+sudo docker build -f Dockerfile.updater -t geschichtsarchiv-updater:0.20.0 .
+```
+
+Den bisherigen Dienst anhalten und als Rückfallcontainer behalten. Beim neuen `docker run` **genau die bisherigen Hostpfade** verwenden. Das folgende Beispiel entspricht der hier verwendeten Linux-Installation; andere Betreiber müssen Benutzer und Pfade anpassen. Die Archiv-App wird dabei nicht angehalten oder neu gebaut. Kein `docker compose up` ausführen, wenn das Archiv bereits vom Update-Dienst verwaltet wird.
+
+```bash
+(
+set -eu
+if sudo docker inspect geschichtsarchiv-updater-vor-0200 >/dev/null 2>&1; then
+  echo "Rückfallcontainer existiert bereits; zuerst prüfen."
+  exit 1
+fi
+sudo docker exec geschichtsarchiv-updater node -e 'const fs=require("node:fs");const c=JSON.parse(fs.readFileSync(process.env.ARCHIVE_UPDATER_CONFIG,"utf8"));const s=JSON.parse(fs.readFileSync(c.root+"/update-state.json","utf8"));if(s.job&&!["complete","rolled_back"].includes(s.job.status)){console.error("Update noch aktiv; Dienst nicht ersetzen.");process.exit(1)}'
+sudo docker stop geschichtsarchiv-updater
+sudo docker rename geschichtsarchiv-updater geschichtsarchiv-updater-vor-0200
+if ! sudo docker run -d --name geschichtsarchiv-updater \
+  --restart unless-stopped --network host \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /home/u367583/geschichtsarchiv-updater:/home/u367583/geschichtsarchiv-updater \
+  -v /home/u367583/geschichtsarchiv-daten:/home/u367583/geschichtsarchiv-daten \
+  -v /home/u367583/geschichtsarchiv:/home/u367583/geschichtsarchiv \
+  -e ARCHIVE_UPDATER_CONFIG=/home/u367583/geschichtsarchiv/linux-config/updater.json \
+  geschichtsarchiv-updater:0.20.0; then
+  sudo docker rm -f geschichtsarchiv-updater >/dev/null 2>&1 || true
+  sudo docker rename geschichtsarchiv-updater-vor-0200 geschichtsarchiv-updater
+  sudo docker start geschichtsarchiv-updater
+  exit 1
+fi
+)
+sudo docker logs --tail=30 geschichtsarchiv-updater
+sudo ss -ltnp 'sport = :3099'
+```
+
+Erwartet: laufender Dienst und Listener ausschließlich auf `127.0.0.1:3099`. Danach Einstellungen → Updates neu laden. Bei nicht erfolgreichem Start zuerst die Logs prüfen; den angehaltenen Rückfallcontainer nicht löschen. Ein Rückwechsel ist nur ohne laufenden Updatejob zulässig. Für das erste App-Update auf 0.20.0 kann noch der bisherige Text erforderlich sein; die neue Nextcloud-Auswahl steht ab dem anschließenden Update zur Verfügung.

@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {signedBackupHeaders,verifyBackupRequest,updateBackupClient,runUpdateBackup} from '../server/update-backup-protocol.mjs';
+const secret='a'.repeat(64),body=JSON.stringify({jobId:crypto.randomUUID()}),nonces=new Map();
+const headers=new Headers(signedBackupHeaders(secret,'POST',body));assert.equal(verifyBackupRequest(secret,'POST',body,headers,nonces),true);assert.equal(verifyBackupRequest(secret,'POST',body,headers,nonces),false);
+assert.equal(verifyBackupRequest(secret,'POST',body+'x',new Headers(signedBackupHeaders(secret,'POST',body)),new Map()),false);
+assert.equal(verifyBackupRequest(secret,'POST',body,new Headers({...signedBackupHeaders(secret,'POST',body),Origin:'https://archive.test'}),new Map()),false);
+assert.equal(verifyBackupRequest(secret,'POST',body,new Headers(signedBackupHeaders(secret,'POST',body,String(Date.now()-120000))),new Map()),false);
+let called=0;const client=updateBackupClient({secret,appPort:8080},async(url,options)=>{assert.equal(url,'http://127.0.0.1:8080/api/updates/backup');assert.equal(options.redirect,'error');assert.equal(options.headers.Origin,undefined);assert.equal(verifyBackupRequest(secret,options.method,options.body||'',new Headers(options.headers),new Map()),true);called++;return Response.json({available:true})});assert.equal((await client('GET')).available,true);assert.equal(called,1);
+const phases=[];let steps=0;const result=await runUpdateBackup(async()=>[{status:'copying'},{status:'verifying'},{status:'uploading'},{status:'complete',id:'backup',verified:new Date().toISOString(),version:'0.19.0'}][steps++],crypto.randomUUID(),async r=>phases.push(r.status));assert.equal(result.id,'backup');assert.deepEqual(phases,['copying','verifying','uploading','complete']);
+await assert.rejects(()=>runUpdateBackup(async()=>({status:'complete',id:'unchecked'}),'id',async()=>{}),/nicht vollständig geprüft/);
+await assert.rejects(()=>runUpdateBackup(async()=>({status:'error',error:'upload failed'}),'id',async()=>{}),/upload failed/);
+await assert.rejects(()=>runUpdateBackup(async()=>({status:'unexpected'}),'id',async()=>{}),/Ungültiger/);
+console.log('PASS: signed local backup requests, replay/origin/body/time rejection, full upload/verification and fail-closed completion.');

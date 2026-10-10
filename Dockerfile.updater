@@ -1,6 +1,7 @@
 FROM node:24-bookworm-slim
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates git tar docker.io util-linux && test -s /etc/ssl/certs/ca-certificates.crt && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
-COPY server/update-agent.mjs server/update-engine.mjs server/update-lock.mjs server/update-source.mjs server/docker-update-driver.mjs ./server/
+COPY server/update-agent.mjs server/update-engine.mjs server/update-lock.mjs server/update-source.mjs server/update-backup-protocol.mjs server/docker-update-driver.mjs ./server/
+COPY version.json ./version.json
 RUN chmod 755 /app/server/docker-update-driver.mjs
 CMD ["node","server/update-agent.mjs"]

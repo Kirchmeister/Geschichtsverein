@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {sqliteBinding} from '../server/linux-storage.mjs';
+import {authService,initializeAuth} from '../server/auth-service.mjs';
+import {messageService} from '../server/message-service.mjs';
+const root=await fs.mkdtemp(path.resolve('.update-test-guest-notice-')),storage=sqliteBinding(path.join(root,'archive.sqlite'),path.resolve('drizzle')),db=storage.database;
+try{initializeAuth(db);for(const [id,role,disabled] of [['admin','admin',0],['admin2','admin',0],['disabled','admin',1],['manager','manager',0],['user','user',0]]){db.prepare('INSERT INTO linux_accounts VALUES(?,?,?,?)').run(id,id+'@example.test',id,disabled);db.prepare('INSERT INTO archive_users(id,identity_provider,identity_subject,display_name,created,role) VALUES(?,?,?,?,?,?)').run(id,'linux',id,id,'now',role)}const auth=authService(db,{origin:'https://archive.example.test',sessionKey:'a'.repeat(64)});auth.invite({email:'guest@example.test',name:'Guest',role:'guest'});const messages=messageService(db);assert.equal(messages.count('admin'),1);assert.equal(messages.count('admin2'),1);assert.equal(messages.count('manager'),0);const thread=messages.list('admin')[0];const detail=messages.detail('admin',thread.id);assert.match(detail.messages[0].body,/nicht veröffentlichte/);assert.match(detail.messages[0].body,/Titel, Bereich/);assert.equal(detail.settingsLink,'/?ansicht=einstellungen&abschnitt=gast-felder');auth.invite({email:'guest2@example.test',name:'Guest2',role:'guest'});auth.edit('user','guest',false,'admin');assert.equal(messages.count('admin'),1);
+ db.prepare("DELETE FROM archive_settings WHERE key='guest_setup_notice'").run();db.prepare("INSERT INTO archive_settings VALUES('guest_fields','[]','now','admin')").run();auth.invite({email:'guest3@example.test',name:'Guest3',role:'guest'});assert.equal(messages.count('admin'),1);assert.equal(db.prepare("SELECT count(*) AS n FROM archive_message_members WHERE account_id='disabled'").get().n,0);
+ console.log('PASS: first guest notice to active admins only, actionable settings link, once-only delivery and explicit field configuration suppresses notice.');
+}finally{storage.close();await fs.rm(root,{recursive:true,force:true})}
