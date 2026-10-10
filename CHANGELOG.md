@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.26.0]
+
+- Beim Speichern im Beitragseditor Auswahl zwischen „Nur speichern“ und „Speichern und Veröffentlichung beantragen“. Überlagerter Dialog mit Rückkehr zur Bearbeitung und sichtbaren Fehlern.
+- Optionaler Freigabeantrag und Speichern erfolgen in derselben Transaktion für die neue Version. Standalone-Anfragen verwenden dieselbe Logik; bestehender Genehmigungs-, Nachrichten- und Erinnerungsprozess unverändert. Konflikte erzeugen keine Anfrage oder Benachrichtigung.
+- Datenbankschema 18 und Backupformat 2 unverändert.
+
 ## [0.25.1]
 
 - Persönlicher Admin-Schalter für die Profilvorschau unten im Kontomenü. Standardmäßig aus, dauerhaft pro Konto gespeichert; Ausschalten kehrt zur tatsächlichen Rolle zurück und entfernt den Vorschau-Balken. Andere Rollen können die Einstellung nicht verändern.

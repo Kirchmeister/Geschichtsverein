@@ -592,3 +592,5 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .account-remove { color: var(--archive-tone-657168); }
 
 .account-preview-setting{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px 20px;margin-top:20px;padding:16px;border:1px solid var(--border);border-radius:8px;background:var(--muted)}.account-preview-setting label{font-size:14px;font-weight:600;cursor:pointer}.account-preview-setting p{margin:5px 0 0;color:var(--muted-foreground)}.account-preview-setting>p{grid-column:1/-1}.account-preview-setting [data-slot="switch"]{min-width:40px;min-height:24px}.account-preview-setting [data-slot="switch-thumb"]{width:20px;height:20px}
+
+.entry-save-choice{width:min(520px,calc(100vw - 28px));border:1px solid var(--border);border-radius:14px;background:var(--card);padding:24px!important}.entry-save-options{display:grid;gap:10px;margin-top:8px}.entry-save-options button{min-height:44px;white-space:normal;text-align:center;line-height:1.5}.entry-save-back{justify-self:start;color:var(--muted-foreground);font-size:13px;padding:6px 0;text-decoration:underline;text-underline-offset:3px}
