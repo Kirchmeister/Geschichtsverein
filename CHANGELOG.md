@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.22.0]
+
+- Interne Zeitleiste als Kachel auf der Startseite: aktiviert die chronologische Sortierung im Archivbestand, ohne separate Ansicht oder Menüpunkt. Öffentliche Zeitleiste und Rotation bleiben unverändert.
+- Archivbestand: kombinierbare Filter, Jahresbereich und Sortierung nach Datierung (beide Richtungen, undatiert immer zuletzt), Forschungsstand, Titel, letzter Bearbeitung oder frühestem gespeichertem Versionsstand. QR-Statusfilter entfernt.
+- Einstellungen: unterer globaler Speicherbalken entfernt; Nextcloud, SMTP und Einladungseinstellungen speichern jeweils nur ihren eigenen Bereich. Fehler und ungespeicherte Änderungen bleiben sichtbar; parallele Änderungen werden gegen Überschreiben geschützt. Einheitliche Abstände und Trennlinien auch für die Feldfreigaben.
+- Datenbankschema 18 und Backupformat 2 unverändert.
+
 ## [0.21.0]
 
 - Persönliche interne Willkommensnachricht einmalig nach erfolgreicher Registrierung über eine Einladung, mit geräteabhängiger Web-App- und Push-Anleitung. Gäste erhalten nur lesenden Zugriff auf diese Nachricht, keine Unterhaltungen oder Push.
@@ -146,6 +153,10 @@
 Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht verschoben. Versionen vor dem produktiven Serverbetrieb sind als Vorabversion gekennzeichnet.
 
 ## [Unreleased]
+
+## [0.22.0] – 2026-10-10
+
+- Änderungen und Migrationshinweise vor Veröffentlichung ergänzen.
 
 ## [0.21.0] – 2026-10-10
 
