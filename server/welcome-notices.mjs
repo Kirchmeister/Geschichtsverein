@@ -9,7 +9,7 @@ function notice(db,id,name,subject,body,now){const sender='system-welcome',creat
 export function welcomeNotice(db,account,role,userAgent='',now=Date.now()){
  if(state(db,account.id))return;
  const platform=/iPhone|iPad|iPod/.test(userAgent)?'iphone':/Android/.test(userAgent)?'android':'other';
- const body=`Willkommen, ${account.name}!\n\nHier können Sie im Archiv recherchieren und Beiträge lesen. Ihre zugeordnete Rolle bestimmt die weiteren Möglichkeiten. Über Ihren Namen unten links öffnen Sie Ihr persönliches Menü.\n\n${platform==='iphone'?iphoneGuide:platform==='android'?androidGuide:iphoneGuide+'\n\n'+androidGuide}\n\n${role==='guest'?'Als Gast haben Sie lesenden Zugriff auf die für Gäste freigegebenen Felder. Push-Benachrichtigungen sind für diese Rolle nicht verfügbar.':activate}`;
+ const body=`Willkommen, ${account.name}!\n\nHier können Sie im Archiv recherchieren und Beiträge lesen. Ihre zugeordnete Rolle bestimmt die weiteren Möglichkeiten. Über Ihren Namen unten links öffnen Sie Ihr persönliches Menü.\n\n${platform==='iphone'?iphoneGuide:platform==='android'?androidGuide:iphoneGuide+'\n\n'+androidGuide}\n\n${role==='guest'?'Als Gast haben Sie lesenden Zugriff auf die für Gäste freigegebenen Felder und auf Mitteilungen von Admin oder Verwalter. Antworten sind nur über vorgegebene Auswahlfragen möglich. Push informiert Sie ausschließlich über neue interne Nachrichten.\n\n'+activate:activate}`;
  const n=notice(db,account.id,account.name,'Willkommen im Geschichtsarchiv',body,now);save(db,account.id,{...n,platform,readAt:null,remindedAt:null,device:null},now);
 }
 export function welcomeRead(db,actor,thread,lastId,now=Date.now()){const s=state(db,actor);if(s&&s.thread===thread&&lastId>=s.messageId&&s.readAt===null){s.readAt=now;save(db,actor,s,now)}}
@@ -22,7 +22,7 @@ export function welcomeDevice(db,actor,d,now=Date.now()){
 }
 export function remindWelcome(db,now=Date.now()){
  db.exec('BEGIN IMMEDIATE');try{
- const rows=db.prepare("SELECT a.id,a.name,s.data FROM archive_settings s JOIN linux_accounts a ON s.key='welcome:'||a.id JOIN archive_users u ON u.identity_provider='linux' AND u.identity_subject=a.id WHERE a.disabled=0 AND u.role IN ('user','manager','admin')").all();let count=0;
+ const rows=db.prepare("SELECT a.id,a.name,s.data FROM archive_settings s JOIN linux_accounts a ON s.key='welcome:'||a.id JOIN archive_users u ON u.identity_provider='linux' AND u.identity_subject=a.id WHERE a.disabled=0 AND u.role IN ('user','manager','admin','guest')").all();let count=0;
  for(const a of rows){const s=JSON.parse(a.data),d=s.device;if(s.readAt===null||!Number.isFinite(s.readAt)||now-s.readAt<86400000||s.remindedAt!==null||d?.platform!=='iphone'||!d.capable)continue;
  const prefs=db.prepare('SELECT enabled FROM linux_push_preferences WHERE account_id=?').get(a.id);if(prefs&&prefs.enabled===0)continue;
  if(d.endpoint&&prefs?.enabled&&db.prepare('SELECT 1 FROM linux_push_subscriptions WHERE id=? AND account_id=?').get(d.endpoint,a.id))continue;

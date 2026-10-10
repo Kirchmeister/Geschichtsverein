@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.24.0]
+
+- Empfängerauswahl mit getrennten Buttons für alle Gäste, alle internen Mitglieder und Auswahl aufheben; einzelne und mehrere Gäste bleiben individuell auswählbar. Empfängerzahl vor dem Senden sichtbar. Auswahlfragen auch an alle Gäste.
+- Gäste erhalten ausschließlich Nachrichten-Push, einschließlich Auswahlfragen, nach ausdrücklicher Aktivierung pro Konto und Gerät. Andere Push-Themen bleiben serverseitig gesperrt. Rollenwechsel und Neustart erhalten aktivierte Nachrichtengeräte und entfernen unzulässige Themen; private Gespräche ohne Gastfreigabe erzeugen keinen Gast-Push.
+- Persönliches Kontomenü, Gast-Berechtigungen, Begrüßung und iPhone-Erinnerung berücksichtigen Nachrichten-Push. Keine automatische Geräteaktivierung.
+- Datenbankschema 18 und Backupformat 2 unverändert.
+
 ## [0.23.0]
 
 - Admin und Verwalter können Gäste gezielt mit internen Mitteilungen erreichen. Gäste lesen und löschen nur für sich; eigene Nachrichten, freie Antworten und Push bleiben gesperrt.
