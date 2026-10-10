@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.23.0]
+
+- Admin und Verwalter können Gäste gezielt mit internen Mitteilungen erreichen. Gäste lesen und löschen nur für sich; eigene Nachrichten, freie Antworten und Push bleiben gesperrt.
+- Auswahlfragen an Gäste mit zwei bis vier frei beschrifteten Antworten, Bestätigung vor der einmaligen Auswahl, persönlichem Antwortstatus mit Datum und Schließen durch Admin/Verwalter. Antworten ändern keine Zugriffsrechte und bleiben beim persönlichen Löschen erhalten.
+- Datenbankschema 18 und Backupformat 2 unverändert; Fragen und Antworten sind im gesicherten Einstellungsbestand enthalten.
+
 ## [0.22.0]
 
 - Interne Zeitleiste als Kachel auf der Startseite: aktiviert die chronologische Sortierung im Archivbestand, ohne separate Ansicht oder Menüpunkt. Öffentliche Zeitleiste und Rotation bleiben unverändert.

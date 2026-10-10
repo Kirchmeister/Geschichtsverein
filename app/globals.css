@@ -577,3 +577,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .archive-date-filter input{width:140px;min-height:44px;background:var(--background);color:var(--foreground);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:16px}
 .archive-date-filter button{margin-left:auto;min-height:44px;font-size:13px}
 @media(max-width:650px){.research>.section-heading{align-items:flex-start;gap:8px;flex-direction:column}.research .archive-result-summary{text-align:left}.archive-date-filter label{flex:1;min-width:100px}.archive-date-filter input{width:100%}.archive-date-filter button{width:100%;margin-left:0}}
+
+.message-poll { margin: 1.25rem 0; padding: 1.25rem; border: 1px solid var(--border); border-radius: 16px; background: var(--archive-tone-f2f5ed); }
+.message-poll h3 { margin: 0 0 .75rem; font-size: 1.15rem; }
+.message-poll label { display: block; margin: .75rem 0; }
+.message-poll li { margin: .5rem 0; overflow-wrap: anywhere; }
+.message-poll .messages-actions { flex-wrap: wrap; gap: .5rem; }
+
+.message-poll input:not([type=checkbox]) { width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--card); font-size: 16px; }
+.message-poll .message-check { display: flex; align-items: flex-start; gap: 10px; }
