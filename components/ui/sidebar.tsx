@@ -164,6 +164,7 @@ function Sidebar({
   collapsible?: "offcanvas" | "icon" | "none"
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
+  const mobilePanelRef = React.useRef<HTMLDivElement>(null)
 
   if (collapsible === "none") {
     return (
@@ -187,6 +188,14 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
+          ref={mobilePanelRef}
+          tabIndex={-1}
+          onOpenAutoFocus={(event) => {
+            // Focus the panel, not the already active first navigation item.
+            // Tab still enters the menu normally; the dialog focus trap stays active.
+            event.preventDefault()
+            mobilePanelRef.current?.focus({ preventScroll: true })
+          }}
           className="w-(--sidebar-width) bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
           style={
             {

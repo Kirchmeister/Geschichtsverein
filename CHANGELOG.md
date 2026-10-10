@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.18.2]
+
+- Mobile Seitenleiste: initialer Fokus liegt beim Öffnen auf dem Menüdialog statt auf „Startseite“. Dadurch entfällt der zusätzliche Rahmen um den bereits aktiven Menüpunkt.
+- Tastaturnavigation, Fokusbegrenzung im geöffneten Menü und aktive Markierung bleiben erhalten.
+- Datenbankschema 18 und Backupformat 2 unverändert.
+
 ## [0.18.1]
 
 - Kleines Aktualisieren-Symbol rechts im Profilvorschau-Balken lädt die gesamte Seite auch in installierten Web-Apps neu, ohne den Balken zu vergrößern.
