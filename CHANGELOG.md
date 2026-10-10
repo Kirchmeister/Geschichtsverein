@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.17.3]
+
+- Menüleiste prüft den tatsächlich benötigten Platz und verdichtet Abstände bei Bedarf, unabhängig von Rolle und Bildschirmbreite. Touch-Flächen bleiben mindestens 44 Pixel hoch; bei sehr geringer Höhe bleibt das Menü scrollbar.
+- Kontoeinstellungen bleiben über den Namen erreichbar. Die native Abmeldung erfolgt ausschließlich über ein separates Icon mit Bestätigungsdialog; Sites zeigt kein nicht unterstütztes Abmelde-Icon.
+- Datenbankschema 18 und Backupformat 2 bleiben unverändert.
+
 ## [0.17.2]
 
 - Statistiken: sieben Tage als Standard, deutsches Datum in Ansicht und CSV.

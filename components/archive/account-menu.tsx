@@ -1,8 +1,8 @@
  'use client';
 import {PushSettings} from './push-settings';
 import {PasskeySettings} from './passkeys';
-import {useState,type ReactNode} from 'react';
-import {UserRound,LogOut,ChevronUp} from 'lucide-react';
+import {useState,useRef,type ReactNode} from 'react';
+import {UserRound,LogOut} from 'lucide-react';
 import {archiveRequest,type PreviewRole} from '@/lib/archive-api';
 import {Dialog,DialogContent,DialogTitle,DialogDescription} from '@/components/ui/dialog';
 import {SidebarMenuButton,useSidebar} from '@/components/ui/sidebar';
@@ -12,11 +12,12 @@ export function ArchiveNavigationButton({children,onClick,isActive=false,footer=
  return footer?<button type="button" className="settings-nav" aria-current={isActive?'page':undefined} onClick={choose}>{children}</button>:<SidebarMenuButton isActive={isActive} onClick={choose}>{children}</SidebarMenuButton>;
 }
 export function AccountControls({session,onOpen}:{session:ArchiveSession|null,onOpen:()=>void}){
- const [busy,setBusy]=useState(false),[error,setError]=useState('');
+ const [busy,setBusy]=useState(false),[error,setError]=useState(''),[logoutOpen,setLogoutOpen]=useState(false);
+ const cancelRef=useRef<HTMLButtonElement>(null),logoutRef=useRef<HTMLButtonElement>(null);
  async function logout(){setBusy(true);setError('');try{let pushEndpoint;try{const registration=await navigator.serviceWorker?.getRegistration('/'),subscription=await registration?.pushManager.getSubscription();pushEndpoint=subscription?.endpoint;await subscription?.unsubscribe()}catch{}await archiveRequest('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'logout',pushEndpoint})});location.assign('/anmelden')}catch(e:any){setError(e.message);setBusy(false)}}
  if(!session)return <div className="sidebar-account"><span>Profil wird geladen …</span></div>;
  if(session.role==='public')return null;
- return <div className="sidebar-account"><button type="button" className="sidebar-account-name" aria-haspopup="dialog" onClick={onOpen}><UserRound size={18} aria-hidden="true"/><span>{session.name||'Angemeldet'}</span><ChevronUp size={15} aria-hidden="true"/></button>{session.canLogout&&<button type="button" className="sidebar-account-logout" disabled={busy} onClick={logout}><LogOut size={15} aria-hidden="true"/>{busy?'Wird abgemeldet …':'Abmelden'}</button>}{error&&<p role="alert" className="error">{error}</p>}</div>;
+ return <div className="sidebar-account"><div className="sidebar-account-row"><button type="button" className="sidebar-account-name" aria-haspopup="dialog" onClick={onOpen}><UserRound size={18} aria-hidden="true"/><span>{session.name||'Angemeldet'}</span></button>{session.canLogout&&<button ref={logoutRef} type="button" className="sidebar-account-logout-icon" aria-label="Abmelden" title="Abmelden" aria-haspopup="dialog" disabled={busy} onClick={()=>{setError('');setLogoutOpen(true)}}><LogOut size={19} aria-hidden="true"/></button>}</div><Dialog open={logoutOpen} onOpenChange={open=>{if(!busy)setLogoutOpen(open)}}><DialogContent className="account-logout-dialog" showCloseButton={!busy} onCloseAutoFocus={event=>{event.preventDefault();logoutRef.current?.focus()}} onOpenAutoFocus={event=>{event.preventDefault();cancelRef.current?.focus()}} onEscapeKeyDown={event=>{if(busy)event.preventDefault()}}><span className="account-logout-symbol"><LogOut size={24} aria-hidden="true"/></span><DialogTitle>Wirklich abmelden?</DialogTitle><DialogDescription>Sie werden von diesem Gerät abgemeldet. Für den nächsten Zugriff auf Ihr Konto benötigen Sie Ihren Passkey.</DialogDescription>{error&&<p role="alert" className="error">{error}</p>}<div className="account-logout-actions"><button ref={cancelRef} type="button" disabled={busy} onClick={()=>setLogoutOpen(false)}>Abbrechen</button><button type="button" className="primary" disabled={busy} onClick={logout}>{busy?'Wird abgemeldet …':'Abmelden'}</button></div></DialogContent></Dialog></div>;
 }
 export function SidebarAccount({session,onOpen}:{session:ArchiveSession|null,onOpen:()=>void}){
  const {isMobile,setOpenMobile}=useSidebar();return <AccountControls session={session} onOpen={()=>{if(isMobile)setOpenMobile(false);onOpen()}}/>;

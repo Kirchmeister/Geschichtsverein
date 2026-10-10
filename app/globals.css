@@ -461,3 +461,33 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 /* Requester names remain visible independently of the shortened message preview. */
 .message-requester{display:block;font-size:14px;line-height:1.5;color:var(--foreground);white-space:normal;overflow-wrap:anywhere;margin:6px 0}
 .message-requester strong{font-size:inherit;font-weight:650}.message-list-row .message-requester{white-space:normal;overflow:visible;text-overflow:clip}
+
+/* Role-aware sidebar density: standard styling remains unchanged until content overflows. */
+.archive-sidebar-layout{display:flex;flex-direction:column;height:100%;min-height:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+.archive-sidebar-layout>[data-slot=sidebar-header],.archive-sidebar-layout>[data-slot=sidebar-footer]{flex-shrink:0}
+.archive-sidebar-layout [data-slot=sidebar-menu]{flex-shrink:0}
+.archive-sidebar-layout>[data-slot=sidebar-content]{overflow-y:auto;overscroll-behavior:contain}
+.archive-sidebar-layout[data-density=compact] .brand{padding:14px 12px 18px}
+.archive-sidebar-layout[data-density=compact] [data-slot=sidebar-menu]{gap:2px}
+.archive-sidebar-layout[data-density=compact] [data-slot=sidebar-menu-button]{min-height:44px;padding:8px 12px}
+.archive-sidebar-layout[data-density=compact]>[data-slot=sidebar-footer]{gap:3px}
+.archive-sidebar-layout[data-density=tight] .brand{padding:8px 10px 10px;font-size:1.05rem;gap:9px;letter-spacing:.025em}
+.archive-sidebar-layout[data-density=tight] .brand small{font-size:.875rem;line-height:1.35;letter-spacing:.04em;margin-top:3px}
+.archive-sidebar-layout[data-density=tight] .brand>svg{width:24px;height:24px;flex-shrink:0}
+.archive-sidebar-layout[data-density=tight]>[data-slot=sidebar-header]{padding-block:4px;max-height:30%;overflow-y:auto}
+.archive-sidebar-layout[data-density=tight] [data-slot=sidebar-menu]{gap:0}
+.archive-sidebar-layout[data-density=tight] [data-slot=sidebar-menu-button]{min-height:44px;padding:6px 10px;font-size:.9375rem;line-height:1.35;gap:9px}
+.archive-sidebar-layout[data-density=tight]>[data-slot=sidebar-footer]{gap:0;padding-block:4px}
+.archive-sidebar-layout[data-density=tight] .settings-nav{min-height:44px;padding-block:6px;font-size:.9375rem}
+.archive-sidebar-layout[data-density=tight] .sidebar-account{padding-block:5px 0}
+.sidebar-account-row{display:flex;align-items:center;gap:4px}
+.sidebar-account-row .sidebar-account-name{flex:1;min-width:0;min-height:44px;width:auto}
+.sidebar-account-logout-icon{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:44px;height:44px;color:var(--muted-foreground);border-radius:6px}
+.sidebar-account-logout-icon:hover{background:var(--archive-tone-eef1e9);color:var(--foreground)}
+.sidebar-account-logout-icon:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.account-logout-dialog{max-width:440px!important;border-radius:12px!important;padding:26px!important;gap:14px}
+.account-logout-dialog [data-slot=dialog-title]{font-size:1.6rem;font-weight:400}
+.account-logout-dialog [data-slot=dialog-description]{line-height:1.65;font-size:.9375rem}
+.account-logout-symbol{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--muted);color:var(--primary)}
+.account-logout-actions{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin-top:6px}
+.account-logout-actions>button{min-height:44px;padding:9px 15px;border:1px solid var(--border);border-radius:5px;font-size:.9375rem}

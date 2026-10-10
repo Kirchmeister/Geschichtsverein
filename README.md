@@ -147,3 +147,7 @@ Exakt `STATISTIK ZURÜCKSETZEN` bestätigen. Bei anderem Containernamen diesen a
 Nur `public_page_views` wird geleert: Beitrags-, Zeitleisten- und QR-Aufrufe einschließlich authentifizierter und unauthentifizierter Zählungen. Andere Archivdaten und QR-Fehlerhinweise bleiben erhalten. Neue Aufrufe werden wieder gezählt.
 
 Vor der Löschung sichert das Script alle bisherigen Statistikzeilen als geprüfte JSON-Datei innerhalb derselben Datenbanktransaktion, mit Dateirechten 600 unter `<Datenverzeichnis>/statistics-reset-backups/`. Es nennt den Containerpfad; `/data` entspricht dem eingebundenen Host-Datenverzeichnis. Die Zählwertsicherung ersetzt keine vollständige Archivsicherung. Fehler vor dem Commit führen zum Zurückrollen der Löschung.
+
+### Menü und Abmeldung
+
+Die linke Menüleiste passt ihre Abstände automatisch an den tatsächlich benötigten Platz an, auch nach Profilwechseln und Bildschirmdrehungen. Bei ausreichend Höhe bleibt die Standardansicht erhalten; bei sehr geringer Höhe kann der Menübereich gescrollt werden. Kontoeinstellungen öffnen sich über den Benutzernamen. Auf der Linux-Instanz öffnet das Abmelde-Icon rechts daneben eine Bestätigung mit Abbrechen und Abmelden. In Sites fehlt dieses Icon, da dort keine native Passkey-Abmeldung angeboten wird.
