@@ -5,6 +5,7 @@ export type CommentMode='open'|'closed'|'hidden';
 export async function commentMode():Promise<CommentMode>{const r=await archiveDb().prepare("SELECT data FROM archive_settings WHERE key='comments_mode'").first<{data:string}>();return r?JSON.parse(r.data):'open'}
 export async function commentEntry(req:Request,id:string){
  const access=await archiveAccess(req);
+ if(access?.role==='guest')throw new AccessError('Kommentare sind für Gäste nicht verfügbar.',403);
  const row=await archiveDb().prepare("SELECT id,publication_status,approved_version,approved_by,approved_at FROM entries WHERE id=? AND deleted=0").bind(id).first<any>();
  if(!row||(!access||access.role==='public')&&!(row.publication_status==='approved'&&row.approved_version&&row.approved_by&&row.approved_at))throw new AccessError('Dieser Beitrag ist nicht verfügbar.',404);
  return access;

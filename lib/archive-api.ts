@@ -1,4 +1,4 @@
-export type PreviewRole='admin'|'manager'|'user'|'public';
+export type PreviewRole='admin'|'manager'|'user'|'guest'|'public';
 let previewRole:PreviewRole|null=null;
 export function setArchivePreviewRole(role:PreviewRole|null){previewRole=role}
 export function archivePreviewHeaders(){return previewRole?{'x-archive-preview-role':previewRole}:{} as Record<string,string>}

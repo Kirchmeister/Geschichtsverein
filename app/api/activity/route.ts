@@ -1,7 +1,7 @@
 import {requireArchiveAction,accessResponse} from '@/lib/archive-access';
 import {archiveDb} from '@/lib/archive-db';
 export async function GET(req:Request){try{
- await requireArchiveAction(req);const u=new URL(req.url),q=(u.searchParams.get('q')||'').trim().normalize('NFKC').toLocaleLowerCase('de'),author=u.searchParams.get('author')||'',before=u.searchParams.get('before');
+ await requireArchiveAction(req,'readActivity');const u=new URL(req.url),q=(u.searchParams.get('q')||'').trim().normalize('NFKC').toLocaleLowerCase('de'),author=u.searchParams.get('author')||'',before=u.searchParams.get('before');
  if(q.length>200||author.length>100||before&&!/^\d{1,12}$/.test(before))return Response.json({error:'Bitte Suche und Filter prüfen.'},{status:400});
  const db=archiveDb(),where:string[]=[],values:any[]=[];
  if(q){where.push("instr(lower(replace(replace(replace(replace(data,'Ä','ä'),'Ö','ö'),'Ü','ü'),'ẞ','ß')),?)>0");values.push(q)}

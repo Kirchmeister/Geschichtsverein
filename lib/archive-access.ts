@@ -18,9 +18,9 @@ export async function archiveAccess(req:Request){
  const canPreview=actualRole==='admin';
  const requested=req.headers.get('x-archive-preview-role');
  if(requested&&!canPreview)throw new AccessError('Die Rollen-Vorschau ist nur für den Eigentümer verfügbar.',403);
- if(requested&&!['admin','manager','user','public'].includes(requested))throw new AccessError('Ungültige Rollen-Vorschau.',400);
+ if(requested&&!['admin','manager','user','guest','public'].includes(requested))throw new AccessError('Ungültige Rollen-Vorschau.',400);
  return {identity,canPreview,actualRole,role:(canPreview&&requested?requested:actualRole) as PreviewRole};
 }
 export class AccessError extends Error {constructor(message:string,public status=403){super(message)}}
-export async function requireArchiveAction(req:Request,action?:ArchiveAction){await requireInstalled();const access=await archiveAccess(req);if(!access)throw new AccessError('Bitte die Website direkt öffnen und anmelden.',401);if(access.role==='public'||action&&!canArchive(access.role,action))throw new AccessError('Diese Aktion ist in der gewählten Rolle nicht erlaubt.',403);return access}
+export async function requireArchiveAction(req:Request,action?:ArchiveAction){await requireInstalled();const access=await archiveAccess(req);if(!access)throw new AccessError('Bitte die Website direkt öffnen und anmelden.',401);if(access.role==='public'||access.role==='guest'&&!action||action&&!canArchive(access.role,action))throw new AccessError('Diese Aktion ist in der gewählten Rolle nicht erlaubt.',403);return access}
 export function accessResponse(e:unknown){return e instanceof AccessError?Response.json({error:e.message},{status:e.status}):null}

@@ -163,3 +163,9 @@ Der Titel unter **Einstellungen → Namen → Titel des Archivs** wird als volls
 Für unterschiedliche Vereine oder Test- und Produktionsinstanzen lassen sich eindeutige Archivtitel vergeben, etwa „Ortsarchiv – Test“. Verschiedene Instanzen benötigen eigene Hosting-Adressen. Die App-Identität und bestehende Links werden durch eine Umbenennung nicht verändert. Bereits installierte Symbole übernehmen Namensänderungen je nach Browser/Betriebssystem verzögert oder müssen umbenannt beziehungsweise erneut hinzugefügt werden.
 
 Die Kommentarmoderation zeigt Status, Beitrag, Autor, Datum und Kommentar in einheitlichen Karten. Die Einstellungen der Kommentarfunktion bleiben bis zum manuellen Einklappen geöffnet.
+
+### Gäste mit Lesezugriff
+
+Administratoren können in **Einstellungen → Benutzer & Einladungen** die Rolle **Gast** einladen oder einem vorhandenen Konto zuweisen. Gäste lesen alle vorhandenen, nicht gelöschten Beiträge, auch ohne öffentliche Freigabe. In **Sichtbare Felder für Gäste** (dritter Einstellungsbereich) wird die gemeinsame Sichtbarkeit festgelegt. Standardmäßig sind Titel, Bereich, Datierung und Beschreibung sichtbar; Dateien und weitere Attribute müssen ausdrücklich freigeschaltet werden. Ausgeblendete Werte und Dateitypen werden serverseitig zurückgehalten. Gäste erhalten keine Bearbeitungs-, Freigabe-, Versions-, Nachrichten- oder Verwaltungsfunktionen; eigene Passkeys und Abmeldung bleiben verfügbar. Die Admin-Profilvorschau enthält ebenfalls Gast.
+
+**Öffentliche Felder** stehen als vierter Bereich ausschließlich dem Administrator zur Verfügung. Öffentliche Freigaben bleiben unabhängig vom Gastzugriff. Das Änderungsprotokoll ist nur für Verwalter und Administratoren zugänglich. Die Gast-Feldauswahl wird als Einstellung mitgesichert; bei einer portablen Wiederherstellung bleiben Anmeldeidentitäten wie bisher deaktiviert und werden neu eingerichtet.

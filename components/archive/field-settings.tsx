@@ -1,0 +1,11 @@
+'use client';
+import {useEffect,useState} from 'react';
+import {archiveRequest} from '@/lib/archive-api';
+import {SettingsPanel} from './settings-panel';
+export function FieldSettings({guest=false}:{guest?:boolean}){
+ const [fields,setFields]=useState<string[]>([]),[labels,setLabels]=useState<Record<string,string>>({}),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState('');
+ const path=guest?'/api/guest-fields':'/api/public-fields';
+ useEffect(()=>{archiveRequest(path).then(d=>{setFields(d.fields);setLabels(d.labels)}).catch(e=>setError(e.message)).finally(()=>setLoading(false))},[path]);
+ async function save(){setBusy(true);setError('');setNotice('');try{await archiveRequest(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields})});setNotice('Die Feldauswahl wurde gespeichert.')}catch(e:any){setError(e.message)}finally{setBusy(false)}}
+ return <SettingsPanel title={guest?'Sichtbare Felder für Gäste':'Öffentliche Felder'}><p>{guest?'Gäste dürfen alle vorhandenen Beiträge lesen, einschließlich nicht veröffentlichter Einträge. Diese Auswahl gilt für alle Gäste. Abgewählte Felder und Dateitypen werden nicht ausgeliefert; Änderungen und Verwaltungsfunktionen sind gesperrt.':'Diese Felder sind bei allen genehmigten Beiträgen öffentlich sichtbar. Abgewählte Felder und Dateien werden nicht an die öffentliche Ansicht übermittelt.'}</p>{loading?<p role="status">Feldauswahl wird geladen …</p>:<><div className="public-field-options">{Object.entries(labels).map(([key,label])=><label key={key}><input type="checkbox" disabled={busy} checked={fields.includes(key)} onChange={e=>setFields(old=>e.target.checked?[...old,key]:old.filter(k=>k!==key))}/><span>{label}</span></label>)}</div><button className="primary" disabled={busy||!Object.keys(labels).length||!guest&&!fields.length} onClick={save}>{busy?'Wird gespeichert …':'Feldauswahl speichern'}</button></>}{error&&<p className="error" role="alert">{error}</p>}{notice&&<p className="notice" role="status">{notice}</p>}</SettingsPanel>
+}

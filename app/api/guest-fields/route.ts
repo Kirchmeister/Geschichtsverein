@@ -1,0 +1,7 @@
+import {archiveDb} from '@/lib/archive-db';
+import {guestFields} from '@/lib/archive-guest';
+import {guestFieldLabels} from '@/lib/archive-public-fields';
+import {requireArchiveAction,accessResponse} from '@/lib/archive-access';
+import {sameOrigin} from '@/lib/archive-comments';
+export async function GET(req:Request){try{await requireArchiveAction(req,'manageSettings');return Response.json({fields:await guestFields(),labels:guestFieldLabels},{headers:{'Cache-Control':'no-store'}})}catch(e){return accessResponse(e)||Response.json({error:'Gast-Felder konnten nicht geladen werden.'},{status:503})}}
+export async function POST(req:Request){try{const access=await requireArchiveAction(req,'manageSettings');if(!sameOrigin(req))return Response.json({error:'Bitte die Website direkt öffnen.'},{status:403});const {fields}=await req.json() as any;if(!Array.isArray(fields)||fields.some(k=>typeof k!=='string'||!Object.hasOwn(guestFieldLabels,k)))return Response.json({error:'Bitte gültige Felder auswählen.'},{status:400});const selected=[...new Set(fields)];await archiveDb().prepare("INSERT INTO archive_settings(key,data,updated,updated_by) VALUES('guest_fields',?,?,?) ON CONFLICT(key) DO UPDATE SET data=excluded.data,updated=excluded.updated,updated_by=excluded.updated_by").bind(JSON.stringify(selected),new Date().toISOString(),access.identity.subject).run();return Response.json({fields:selected})}catch(e){return accessResponse(e)||Response.json({error:'Gast-Felder konnten nicht gespeichert werden.'},{status:503})}}

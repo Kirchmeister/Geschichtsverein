@@ -1,5 +1,15 @@
 # Änderungen
 
+## [0.19.0]
+
+- Neue Rolle Gast: einladbar, als Kontorolle zuweisbar und in der Admin-Profilvorschau verfügbar. Reiner Lesezugriff auf alle vorhandenen Beiträge mit einer gemeinsamen, adminseitigen Auswahl sichtbarer Attribute und Dateitypen.
+- Server prüft Gast-Zugriffe auf Beitragsdaten und Dateien; Bearbeitung, Versionen, gelöschte Einträge und Verwaltungsendpunkte bleiben gesperrt.
+- Einstellungen: Gast-Felder an Position 3, öffentliche Felder an Position 4. Öffentliche Felder sind nur noch vom Administrator verwaltbar; separater Menüpunkt entfällt.
+- Änderungsprotokoll nur noch für Verwalter und Administratoren, einschließlich serverseitiger Zugriffssperre.
+- Seitenleistenpunkt heißt QR-Codes drucken.
+- Vollständige Archivbezeichnungen auch auf der ausgeloggten Anmeldeseite.
+- Datenbankschema 18 und Backupformat 2 unverändert.
+
 ## [0.18.2]
 
 - Mobile Seitenleiste: initialer Fokus liegt beim Öffnen auf dem Menüdialog statt auf „Startseite“. Dadurch entfällt der zusätzliche Rahmen um den bereits aktiven Menüpunkt.
