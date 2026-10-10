@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.17.4]
+
+- Mobiler Viewport verwendet Gerätebreite und Startskalierung 1, ohne Zoom-Sperre.
+- Touch-Geräte vermeiden Doppeltipp-Zoom über touch-action: manipulation; Scrollen und bewusstes Pinch-Zoom bleiben möglich. Texteingaben haben mindestens 16 Pixel Schriftgröße gegen unerwünschten Fokus-Zoom.
+- Mobile Dialoge, Menü, lange Bezeichnungen und Audioplayer bleiben innerhalb der verfügbaren Fensterbreite. Desktop-Zoom unverändert.
+- Datenbankschema 18 und Backupformat 2 bleiben unverändert.
+
 ## [0.17.3]
 
 - Menüleiste prüft den tatsächlich benötigten Platz und verdichtet Abstände bei Bedarf, unabhängig von Rolle und Bildschirmbreite. Touch-Flächen bleiben mindestens 44 Pixel hoch; bei sehr geringer Höhe bleibt das Menü scrollbar.

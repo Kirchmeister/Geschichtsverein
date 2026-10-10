@@ -491,3 +491,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .account-logout-symbol{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--muted);color:var(--primary)}
 .account-logout-actions{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin-top:6px}
 .account-logout-actions>button{min-height:44px;padding:9px 15px;border:1px solid var(--border);border-radius:5px;font-size:.9375rem}
+
+/* Keep touch layouts stable without blocking intentional pinch zoom. */
+@media (hover:none) and (pointer:coarse){
+ html{touch-action:manipulation}
+ input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=hidden]):not([type=button]):not([type=submit]):not([type=reset]),textarea,select,[contenteditable=true]{font-size:1rem!important;font-size:max(16px,1rem)!important}
+}
+@media(max-width:767px){
+ .content{min-width:0;max-width:100%}
+ .content input:not([type=checkbox]):not([type=radio]):not([type=range]),.content textarea,.content select{min-width:0;max-width:100%}
+ [data-slot=dialog-content]{max-width:calc(100vw - 2rem)!important}
+ [data-slot=sidebar][data-mobile=true]{max-width:calc(100vw - 1rem)}
+ .brand>div{min-width:0;overflow-wrap:anywhere}
+ .audio-card audio{max-width:100%}
+}

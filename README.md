@@ -151,3 +151,7 @@ Vor der Löschung sichert das Script alle bisherigen Statistikzeilen als geprüf
 ### Menü und Abmeldung
 
 Die linke Menüleiste passt ihre Abstände automatisch an den tatsächlich benötigten Platz an, auch nach Profilwechseln und Bildschirmdrehungen. Bei ausreichend Höhe bleibt die Standardansicht erhalten; bei sehr geringer Höhe kann der Menübereich gescrollt werden. Kontoeinstellungen öffnen sich über den Benutzernamen. Auf der Linux-Instanz öffnet das Abmelde-Icon rechts daneben eine Bestätigung mit Abbrechen und Abmelden. In Sites fehlt dieses Icon, da dort keine native Passkey-Abmeldung angeboten wird.
+
+### Mobile Darstellung und Zoom
+
+Die Seite startet in Gerätebreite mit Skalierung 1. Auf Touch-Geräten verhindert `touch-action: manipulation` Doppeltipp-Zoom, während Scrollen und bewusstes Zoomen mit zwei Fingern erlaubt bleiben. Texteingabefelder verwenden mindestens 16 Pixel Schriftgröße gegen automatisches Vergrößern beim Fokussieren. Browser- und Bedienungshilfen behalten ihre Kontrolle über die Vergrößerung. Desktop-Zoom wird nicht eingeschränkt.
