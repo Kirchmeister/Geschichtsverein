@@ -1,16 +1,18 @@
+import {defaultArchiveSubtitle} from '@/lib/archive-title';
 import {installation} from '@/lib/archive-installation';
 import {archiveAccess,accessResponse} from '@/lib/archive-access';
 import {archiveDb} from '@/lib/archive-db';
 import {systemSettings} from '@/lib/archive-system-settings';
 import {checkHostingDomain,normalizeHostingDomain,domainConfirmation} from '@/lib/archive-qr-domain';
 import {sameOrigin} from '@/lib/archive-comments';
-export async function GET(req:Request){try{const config=await installation(),access=await archiveAccess(req);let restored=null;if(!config.completed&&access?.actualRole==='admin'){const db=archiveDb();const stats=await db.prepare('SELECT count(*) AS entries FROM entries').first();restored={...stats,sourceCreated:config.sourceCreated||null,restored:!!config.restored,domain:(await systemSettings()).domain||''}}return Response.json({...config,canSetup:access?.actualRole==='admin',restored},{headers:{'Cache-Control':'no-store'}})}catch(e){return accessResponse(e)||Response.json({error:'Einrichtung konnte nicht gelesen werden.'},{status:503})}}
+export async function GET(req:Request){try{const config=await installation(),access=await archiveAccess(req);let restored=null;if(!config.completed&&access?.actualRole==='admin'){const db=archiveDb();const stats=await db.prepare('SELECT count(*) AS entries FROM entries').first();restored={...stats,sourceCreated:config.sourceCreated||null,restored:!!config.restored,domain:(await systemSettings()).domain||''}}return Response.json({...config,subtitle:config.subtitle||defaultArchiveSubtitle,canSetup:access?.actualRole==='admin',restored},{headers:{'Cache-Control':'no-store'}})}catch(e){return accessResponse(e)||Response.json({error:'Einrichtung konnte nicht gelesen werden.'},{status:503})}}
 export async function POST(req:Request){try{if(!sameOrigin(req))return Response.json({error:'Bitte die Website direkt öffnen.'},{status:403});const access=await archiveAccess(req);if(access?.actualRole!=='admin')return Response.json({error:'Nur Administratoren dürfen die Einrichtung und Archivbezeichnungen ändern.'},{status:403});const input=await req.json() as any;
 if(input.action==='save-title'||input.action==='save-branding'){
  const old=await installation();if(!old.completed)return Response.json({error:'Bitte zuerst die Einrichtung abschließen.'},{status:409});
  if(typeof input.title!=='string'||input.title.length>200||/[\x00-\x1f]/.test(input.title))return Response.json({error:'Bitte einen Titel mit höchstens 200 Zeichen angeben.'},{status:400});
  if(input.action==='save-branding'&&(typeof input.association!=='string'||!input.association.trim()||input.association.length>200||/[\x00-\x1f]/.test(input.association)))return Response.json({error:'Bitte einen Vereinsnamen mit 1 bis 200 Zeichen angeben.'},{status:400});
- const updated={...old,title:input.title.trim(),association:input.action==='save-branding'?input.association.trim():old.association};
+ if(input.action==='save-branding'&&input.subtitle!==undefined&&(typeof input.subtitle!=='string'||!input.subtitle.trim()||input.subtitle.length>120||/[\x00-\x1f]/.test(input.subtitle)))return Response.json({error:'Bitte eine Unterzeile mit 1 bis 120 Zeichen angeben.'},{status:400});
+ const updated={...old,title:input.title.trim(),association:input.action==='save-branding'?input.association.trim():old.association,...(input.action==='save-branding'&&input.subtitle!==undefined?{subtitle:input.subtitle.trim()||defaultArchiveSubtitle}:{})};
  const result=await archiveDb().prepare("INSERT INTO archive_settings(key,data,updated,updated_by) VALUES('installation',?,?,?) ON CONFLICT(key) DO UPDATE SET data=excluded.data,updated=excluded.updated,updated_by=excluded.updated_by WHERE archive_settings.data=?").bind(JSON.stringify(updated),new Date().toISOString(),access.identity.name,JSON.stringify(old)).run();
  if(!result.meta.changes)return Response.json({error:'Die Einstellungen wurden inzwischen geändert. Bitte neu laden.'},{status:409});
  return Response.json(updated);

@@ -123,3 +123,27 @@ Nutzer, Verwalter und Admin können eine Unterhaltung **nur für sich löschen**
 Version 0.17.0 verwendet Schema 18 (persönlicher Ausblendungsstand mit Standardwert 0). Das Update erhält alle bestehenden Nachrichten. Alte Sicherungen können weiterhin importiert werden; Sicherungen mit Schema 18 benötigen eine passende oder neuere Anwendung. Code-Downgrades bitte nur in getrennten Testinstanzen mit passender Sicherung testen.
 
 Veröffentlichungsanfragen nennen unter „Angefragt von“ die anfragende Person in der Aufgabenliste und in den automatischen Nachrichten. Bei neuen Mitteilungen und Erinnerungen wird der Name im Nachrichtentext festgehalten. Bei älteren Mitteilungen wird er aus der zugehörigen Anfrage ermittelt; wenn dies nicht mehr eindeutig möglich ist, erscheint „Nicht mehr ermittelbar“. Der technische Absender bleibt „Archiv-Benachrichtigung“.
+
+Unter **Einstellungen → Namen** können Administratoren Archivname, Vereinsname und die Unterzeile in der Menüleiste ändern. Die Unterzeile ist mit „Digitale Heimatforschung“ vorbelegt, erlaubt 1 bis 120 Zeichen und wird nach dem Speichern sofort aktualisiert. Alte Installationen ohne diese Einstellung verwenden den bisherigen Text. Sicherungen enthalten die Unterzeile; der Import stellt sie wieder her.
+
+### Statistik zum Produktionsstart zurücksetzen (Linux)
+
+Standardmäßig erscheinen die letzten sieben Tage einschließlich heute, neueste zuerst. Datumsangaben und CSV-Daten verwenden TT.MM.JJJJ. Längere Zeiträume bleiben auswählbar.
+
+Das separate Script ist nur über die Konsole verfügbar. Im Repository-Verzeichnis zuerst die Vorschau aufrufen:
+
+```bash
+sudo bash scripts/reset-statistics.sh --preview
+```
+
+Zum Zurücksetzen:
+
+```bash
+sudo bash scripts/reset-statistics.sh --reset
+```
+
+Exakt `STATISTIK ZURÜCKSETZEN` bestätigen. Bei anderem Containernamen diesen als zweites Argument angeben; Standard ist `geschichtsarchiv-archive-1`. Der Container muss laufen. Nicht während eines Updates ausführen; aktiver Wartungsmodus führt zum Abbruch.
+
+Nur `public_page_views` wird geleert: Beitrags-, Zeitleisten- und QR-Aufrufe einschließlich authentifizierter und unauthentifizierter Zählungen. Andere Archivdaten und QR-Fehlerhinweise bleiben erhalten. Neue Aufrufe werden wieder gezählt.
+
+Vor der Löschung sichert das Script alle bisherigen Statistikzeilen als geprüfte JSON-Datei innerhalb derselben Datenbanktransaktion, mit Dateirechten 600 unter `<Datenverzeichnis>/statistics-reset-backups/`. Es nennt den Containerpfad; `/data` entspricht dem eingebundenen Host-Datenverzeichnis. Die Zählwertsicherung ersetzt keine vollständige Archivsicherung. Fehler vor dem Commit führen zum Zurückrollen der Löschung.
