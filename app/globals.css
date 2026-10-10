@@ -542,3 +542,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .comment-moderation-settings .settings-panel-content>p{font-size:14px;line-height:1.65;color:var(--muted-foreground)}
 .comment-moderation-loading{font-size:15px;color:var(--muted-foreground);margin-top:20px}
 @media(max-width:767px){.comment-moderation-heading h1{font-size:26px}.comment-moderation-toolbar{padding:14px;margin-top:22px}.comment-moderation-card{padding:18px 16px}.comment-moderation-card-header h3{font-size:19px;min-width:0;flex-basis:100%}.comment-moderation-actions button{flex:1;white-space:normal}.comment-moderation-empty{align-items:flex-start;text-align:left}.comment-moderation-settings>summary h2{font-size:20px}}
+
+/* Compact page reload stays within the existing preview bar height. */
+.role-preview>.role-preview-refresh{margin-left:auto;flex:0 0 28px;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;min-height:28px;padding:0;background:transparent;border:1px solid transparent;border-radius:4px;color:inherit}
+.role-preview>.role-preview-refresh:hover{background:var(--card);border-color:var(--border)}
+.role-preview>.role-preview-refresh:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+.role-preview>.role-preview-refresh:disabled{opacity:.5;cursor:wait}
+@media(max-width:767px){.role-preview>select{min-width:0;flex-shrink:1}.role-preview>.role-preview-refresh{flex-basis:32px;width:32px;height:32px;min-height:32px}}

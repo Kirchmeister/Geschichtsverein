@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.18.1]
+
+- Kleines Aktualisieren-Symbol rechts im Profilvorschau-Balken lädt die gesamte Seite auch in installierten Web-Apps neu, ohne den Balken zu vergrößern.
+- Während laufender Speicherung oder Audioarbeit gesperrt; beim Bearbeiten eines Beitrags und in den Einstellungen Rückfrage vor dem Neuladen.
+- Datenbankschema 18 und Backupformat 2 unverändert.
+
 ## [0.18.0]
 
 - Freigegebenes Design der Kommentarmoderation: einheitliche Typografie, Filterleiste, Statuskennzeichen, Kommentarkarten und mobile Aktionsbuttons.
