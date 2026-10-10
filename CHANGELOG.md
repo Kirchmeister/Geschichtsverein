@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.18.0]
+
+- Freigegebenes Design der Kommentarmoderation: einheitliche Typografie, Filterleiste, Statuskennzeichen, Kommentarkarten und mobile Aktionsbuttons.
+- Kommentarfunktion über den gemeinsamen aufklappbaren Einstellungsbereich; bleibt bis zum manuellen Schließen geöffnet.
+- Web-App-Name verwendet den eingestellten Archivtitel in Manifest, Kurzname, Seitentitel und iPhone-Metadaten. Änderungen werden dynamisch für neue Installationen ausgeliefert.
+- Datenbankschema 18 und Backupformat 2 unverändert.
+
 ## [0.17.4]
 
 - Mobiler Viewport verwendet Gerätebreite und Startskalierung 1, ohne Zoom-Sperre.

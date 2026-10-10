@@ -155,3 +155,11 @@ Die linke Menüleiste passt ihre Abstände automatisch an den tatsächlich benö
 ### Mobile Darstellung und Zoom
 
 Die Seite startet in Gerätebreite mit Skalierung 1. Auf Touch-Geräten verhindert `touch-action: manipulation` Doppeltipp-Zoom, während Scrollen und bewusstes Zoomen mit zwei Fingern erlaubt bleiben. Texteingabefelder verwenden mindestens 16 Pixel Schriftgröße gegen automatisches Vergrößern beim Fokussieren. Browser- und Bedienungshilfen behalten ihre Kontrolle über die Vergrößerung. Desktop-Zoom wird nicht eingeschränkt.
+
+### Name der installierten Web-App
+
+Der Titel unter **Einstellungen → Namen → Titel des Archivs** wird als vollständiger und kurzer Web-App-Name sowie als iPhone-Titel vorgeschlagen. Bei leerem Titelfeld gilt der automatische Archivtitel. Der Name wird aus den Einstellungen dieser Instanz geladen, ohne Neubuild; lange Namen können auf dem Home-Bildschirm durch das Betriebssystem gekürzt dargestellt werden.
+
+Für unterschiedliche Vereine oder Test- und Produktionsinstanzen lassen sich eindeutige Archivtitel vergeben, etwa „Ortsarchiv – Test“. Verschiedene Instanzen benötigen eigene Hosting-Adressen. Die App-Identität und bestehende Links werden durch eine Umbenennung nicht verändert. Bereits installierte Symbole übernehmen Namensänderungen je nach Browser/Betriebssystem verzögert oder müssen umbenannt beziehungsweise erneut hinzugefügt werden.
+
+Die Kommentarmoderation zeigt Status, Beitrag, Autor, Datum und Kommentar in einheitlichen Karten. Die Einstellungen der Kommentarfunktion bleiben bis zum manuellen Einklappen geöffnet.

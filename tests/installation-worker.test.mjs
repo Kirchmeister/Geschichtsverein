@@ -13,7 +13,11 @@ assert.equal((await call('/api/design',admin,{theme:'plum',expectedTheme:'sage'}
 assert.equal((await call('/api/installation',user,{action:'save-title',title:'Fremder Titel'})).status,403);
 assert.equal((await call('/api/installation',admin,{action:'save-title',title:'Geschichte unseres Ortes'})).status,200);
 assert.equal((await (await call('/api/installation')).json()).title,'Geschichte unseres Ortes');
+const appManifest=await (await call('/manifest.webmanifest',{})).json();assert.equal(appManifest.name,'Geschichte unseres Ortes');assert.equal(appManifest.short_name,appManifest.name);assert.equal(appManifest.id,'/');assert.equal(appManifest.start_url,'/');
+const brandedHtml=await (await call('/',{})).text();assert.match(brandedHtml,/<meta[^>]*name="apple-mobile-web-app-title"[^>]*content="Geschichte unseres Ortes"/);assert.match(brandedHtml,/<meta[^>]*name="application-name"[^>]*content="Geschichte unseres Ortes"/);
+
 assert.equal((await call('/api/installation',admin,{action:'save-title',title:''})).status,200);
+assert.equal((await (await call('/manifest.webmanifest',{})).json()).name,'Geschichte Neuer Orts');
 assert.equal((await call('/api/installation',user,{action:'save-branding',title:'Titel',association:'Fremder Verein'})).status,403);
 for(const association of ['', ' '.repeat(3), 'x'.repeat(201), 'Name\nVerein'])assert.equal((await call('/api/installation',admin,{action:'save-branding',title:'',association})).status,400);
 assert.equal((await call('/api/installation',admin,{action:'save-branding',title:'',association:'  Umbenannter Verein  ',place:'Nicht ändern',domain:'https://nicht-aendern.test'})).status,200);
