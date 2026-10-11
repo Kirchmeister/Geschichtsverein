@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.33.1] - 2026-10-11
+
+- Obere interne Menüleiste bleibt beim Scrollen am oberen Rand und ist auf 48 Pixel zuzüglich iPhone-Sicherheitsabstand reduziert.
+- Menüschalter behält eine 44-Pixel-Touchfläche; lange Seitennamen bleiben einzeilig. Menüs und Dialoge liegen oberhalb der Leiste.
+- Sprungziele erhalten Abstand zur feststehenden Leiste. Datenbankschema 19 und Backupformat 2 unverändert.
+
 ## [0.33.0] - 2026-10-11
 
 - Kartenangebot um „Beide Karten“ erweitert; öffentliche Reiter für Zeitleiste, heutige und historische Karte.

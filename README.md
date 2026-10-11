@@ -165,6 +165,8 @@ Vor der Löschung sichert das Script alle bisherigen Statistikzeilen als geprüf
 
 ### Menü und Abmeldung
 
+Ab 0.33.1 bleibt die kompakte obere Menüleiste beim Scrollen sichtbar. Sie ist 48 Pixel hoch, zuzüglich eines gegebenenfalls nötigen Geräte-Sicherheitsabstands. Der Menüschalter bleibt ausreichend groß für Touch-Bedienung; lange Seitennamen werden einzeilig gekürzt. Geöffnete Menüs und Dialoge liegen weiterhin über der Leiste.
+
 Die linke Menüleiste passt ihre Abstände automatisch an den tatsächlich benötigten Platz an, auch nach Profilwechseln und Bildschirmdrehungen. Bei ausreichend Höhe bleibt die Standardansicht erhalten; bei sehr geringer Höhe kann der Menübereich gescrollt werden. Kontoeinstellungen öffnen sich über den Benutzernamen. Auf der Linux-Instanz öffnet das Abmelde-Icon rechts daneben eine Bestätigung mit Abbrechen und Abmelden.
 
 ### Mobile Darstellung und Zoom

@@ -610,3 +610,18 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* Backup period and staged restore use the existing settings palette. */
 .backup-period{display:flex;gap:12px;flex-wrap:wrap;border:0;padding:0;margin:24px 0 12px}.backup-period legend{margin-bottom:10px;font-weight:600}.backup-period label{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border);border-radius:10px}.backup-period input{width:18px;height:18px}.backup-show-all{font-size:.9rem}.backup-restore{margin-top:24px;padding-top:24px;border-top:1px solid var(--border)}.backup-restore>label,.backup-restore-dialog label{display:grid;gap:10px;margin:16px 0}.backup-restore-dialog{max-height:90dvh;overflow-y:auto}.restore-preview{display:grid;grid-template-columns:1fr 2fr;gap:8px 16px;margin:18px 0;padding:16px;border-radius:12px;background:var(--muted)}.restore-preview dt{font-weight:600}.restore-preview dd{margin:0;overflow-wrap:anywhere}@media(max-width:600px){.restore-preview{grid-template-columns:1fr;gap:4px}.restore-preview dd{margin-bottom:10px}.backup-period{gap:8px}.backup-restore .comment-actions{flex-wrap:wrap}}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  min-height: calc(48px + env(safe-area-inset-top, 0px));
+  padding: calc(2px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 2px max(16px, env(safe-area-inset-left, 0px));
+  background: var(--background);
+  gap: 8px;
+}
+.topbar > div { min-width: 0; flex-wrap: nowrap; gap: 8px; }
+.topbar > div > svg { flex-shrink: 0; }
+.topbar b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.topbar [data-slot=sidebar-trigger] { min-width: 44px; min-height: 44px; height: 44px; padding: 6px 8px; }
+.topbar [data-slot=sidebar-trigger] .menu-label { font-size: 1rem; }
+html { scroll-padding-top: calc(60px + env(safe-area-inset-top, 0px)); }

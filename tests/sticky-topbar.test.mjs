@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const css=readFileSync('app/globals.css','utf8');
+const final=css.slice(css.lastIndexOf('.topbar {'));
+assert.match(final,/position: sticky/);
+assert.match(final,/top: 0/);
+assert.match(final,/z-index: 30/);
+assert.match(final,/48px \+ env\(safe-area-inset-top/);
+assert.match(final,/background: var\(--background\)/);
+assert.match(final,/flex-wrap: nowrap/);
+assert.match(final,/text-overflow: ellipsis/);
+assert.match(final,/min-height: 44px/);
+assert.match(final,/scroll-padding-top/);
+for(const component of ['dialog','sheet'])assert.match(readFileSync('components/ui/'+component+'.tsx','utf8'),/z-50/);
+console.log('PASS: compact sticky topbar, safe area, touch target, single-line labels, anchor offset and overlay ordering.');
