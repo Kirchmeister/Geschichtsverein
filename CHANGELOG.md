@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.34.0] - 2026-10-11
+
+- Beitrags-Minikarten starten am Standort mit Zoom 16; ungefähre Lagen mit Zoom 14. Standorteditor unverändert.
+- Öffentliche Karten erhalten eine gemeinsame Startansicht: gesamte Umgebung, Ortsübersicht (14) oder Nahansicht (16), unabhängig vom Gesamtradius.
+- Vorschau und Zurücksetzen verwenden die Startansicht; Standortlinks haben Vorrang und Kartenwechsel behalten die Besuchsansicht. Änderungen der Startkonfiguration verwerfen den gemerkten Ausschnitt.
+- Bestehende Installationen behalten die Gesamtansicht; Einstellung wird mitgesichert. Schema 19 und Backupformat 2 unverändert.
+
 ## [0.33.1] - 2026-10-11
 
 - Obere interne Menüleiste bleibt beim Scrollen am oberen Rand und ist auf 48 Pixel zuzüglich iPhone-Sicherheitsabstand reduziert.

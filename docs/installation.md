@@ -53,3 +53,7 @@ Das Importwerkzeug prüft TAR-Pfade, Prüfsummen, Datensätze und Referenzen; ei
 ## Kartenangebot ab 0.33.0
 
 In der Einrichtung und unter Einstellungen → Karte stehen heutige Karte, historische Karte oder beide Karten zur Auswahl. Mittelpunkt und Radius gelten gemeinsam; beide Kartentitel sind getrennt anpassbar und werden gesichert. Ein Upgrade aktiviert keine zusätzliche Karte automatisch. Für diese Erweiterung sind keine neuen Datenbankmigrationen oder Änderungen am separaten Update-Dienst erforderlich.
+
+## Karten-Startansicht ab 0.34.0
+
+Startansicht und Gesamtradius sind getrennt einstellbar. Gesamtansicht bleibt der Upgrade-Standard; Zoom 14 oder 16 kann bei der Einrichtung beziehungsweise in den Karteneinstellungen gewählt werden. Beide Anbieter verwenden dieselbe Einstellung, die mitgesichert und wiederhergestellt wird. Keine neue Datenbankmigration oder Änderung am Update-Dienst erforderlich.

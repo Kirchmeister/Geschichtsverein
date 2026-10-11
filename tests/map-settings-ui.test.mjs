@@ -11,3 +11,5 @@ let tree=render();assert.equal(nodes(tree).filter(n=>n.type==='input').length,1)
 console.log('PASS: checkbox hides configuration without losing values; preview appears when enabled; disambiguated choice sets the matching coordinates.');
 
 value={...value,enabled:true,provider:'both',osmTitle:'Heute',ohmTitle:'Damals'};tree=render();assert.ok(nodes(tree).some(n=>n.type==='option'&&n.props.value==='both'));assert.equal(nodes(tree).filter(n=>n.type==='input'&&['Heute','Damals'].includes(n.props.value)).length,2);nodes(tree).find(n=>n.type==='input'&&n.props.value==='Damals').props.onChange({target:{value:'Vergangenheit'}});assert.equal(value.ohmTitle,'Vergangenheit');assert.equal(value.osmTitle,'Heute');
+
+tree=render();const startSelect=nodes(tree).find(n=>n.type==='select'&&n.props.value==='area');assert.ok(startSelect);startSelect.props.onChange({target:{value:'locality'}});assert.equal(value.startView,'locality');assert.equal(value.radius,5);assert.equal(value.provider,'both');

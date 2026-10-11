@@ -22,6 +22,10 @@ Die interne Startseite begrüßt angemeldete Personen unter Archiv- und Vereinsn
 
 ## Ortskarte einrichten
 
+Ab 0.34.0 wählen Sie unter **Startansicht** zwischen **Gesamte Kartenumgebung**, **Ortsübersicht (Zoom 14)** und **Nahansicht (Zoom 16)**. Die Einstellung gilt für beide Karten; der Radius begrenzt weiterhin die erkundbare Umgebung. Besucher können herauszoomen. Vorschau und „Ansicht zurücksetzen“ verwenden die gewählte Startansicht. Bei sehr kleinen Radien kann die notwendige Gesamtansicht bereits näher sein; dann wird nicht weiter herausgezoomt. Bestehende Installationen behalten ihre Gesamtansicht. Die Startansicht gehört zur Datensicherung. Ein Konfigurationswechsel verwirft den gemerkten Besuchsausschnitt; Beitragsstandortlinks haben Vorrang.
+
+Mini-Karten in Beiträgen zeigen den Standort standardmäßig auf Zoom 16, bei „Lage ungefähr“ auf Zoom 14. Dies gilt intern, für Gäste und öffentlich unter den bestehenden Sichtbarkeitsregeln. Die Standortauswahl im Editor bleibt unverändert; die Verlinkung zur großen Karte übernimmt den passenden Standortzoom innerhalb der Kartenumgebung.
+
 Ab Version 0.33.0 bietet **Kartenangebot → Beide Karten** die heutige und historische Karte in getrennten öffentlichen Reitern an: **Zeitleiste**, **Heutige Karte**, **Historische Karte**. Beide verwenden denselben Ort, Mittelpunkt und Radius. Nur die geöffnete Karte lädt externe Kartendaten. Ausschnitt, Zoom und historisches Jahr werden während des Browserbesuchs beim Wechsel gemerkt; nach einer Änderung der Kartenumgebung wird die Ansicht zurückgesetzt. Die Titel sind getrennt anpassbar; leere Felder verwenden „Heutige Karte“ beziehungsweise „Historische Karte“. Ein bisheriger eigener Titel bleibt der bisher ausgewählten Karte zugeordnet. Bestehende Installationen behalten ihr Kartenangebot. Die Auswahl und beide Titel gehören zur Datensicherung. Der historische Zeitschieber verändert weiterhin nur das Kartenmaterial, nicht die Archivmarkierungen.
 
 

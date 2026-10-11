@@ -8,3 +8,5 @@ for(const place of ['Bruchköbel','Testort']){const db=new DatabaseSync(':memory
 console.log('PASS: configuration validation, radius bounds, provider titles, disambiguated places, disabled retention and non-destructive legacy migration.');
 
 const both=normalizeMapConfig({...cfg,provider:'both',osmTitle:'Heute vor Ort',ohmTitle:'Früher vor Ort'});assert.equal(both.provider,'both');assert.equal(mapTitle(both,'osm'),'Heute vor Ort');assert.equal(mapTitle(both,'ohm'),'Früher vor Ort');assert.equal(normalizeMapConfig({...cfg,title:'Alter Titel'}).ohmTitle,'Alter Titel');assert.throws(()=>normalizeMapConfig({...both,ohmTitle:'x'.repeat(201)}));
+
+assert.equal(normalizeMapConfig(cfg).startView,'area');for(const startView of ['area','locality','detail'])assert.equal(normalizeMapConfig({...cfg,startView}).startView,startView);for(const startView of ['unknown',16,null]){if(startView!==null)assert.throws(()=>normalizeMapConfig({...cfg,startView}));}
