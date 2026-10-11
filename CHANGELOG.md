@@ -1,5 +1,13 @@
 # Änderungen
 
+## [0.33.0] - 2026-10-11
+
+- Kartenangebot um „Beide Karten“ erweitert; öffentliche Reiter für Zeitleiste, heutige und historische Karte.
+- Getrennte anpassbare Kartentitel mit generischen Standards; bisheriger eigener Titel bleibt bei der bisherigen Karte erhalten.
+- Karten werden nur im geöffneten Reiter geladen; bestehende Zeitkartenlinks bleiben nutzbar.
+- Datenbankschema 19 und Backupformat 2 unverändert.
+
+
 ## [0.32.0] - 2026-10-11
 
 - Backup-Liste mit gemerkter Auswahl 7/14/31 Tage und Ansicht aller vorhandenen Sicherungen; Aufbewahrung unverändert.

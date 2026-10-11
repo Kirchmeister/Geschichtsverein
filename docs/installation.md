@@ -49,3 +49,7 @@ sudo docker run --rm --network none --user "$(id -u):$(id -g)" \
 Nach Prüfung entstehen `archive.sqlite`, `bucket/`, portable Datei-/Metadatenkopien und `restore-report.json`. Das neue Verzeichnis als `/data` in die neue Instanz einhängen, Besitzrechte für den Containerbenutzer einstellen und eine eigene Konfiguration erzeugen. Beim Offline-Import sind **alle importierten Anmeldeidentitäten deaktiviert**; einen neuen Administrator einladen und die Ersteinrichtung abschließen. Dienstpasswörter neu eingeben, Verbindungen testen und pausierte Aufgaben erst danach aktivieren.
 
 Das Importwerkzeug prüft TAR-Pfade, Prüfsummen, Datensätze und Referenzen; einzelne Tabellenzeilen sind auf 4 MiB beschränkt. Das Schema entsteht ausschließlich aus den mitgelieferten Migrationen. Ältere Exporte ohne eigene Schema-Prüfsumme werden mit Warnung unterstützt. Bestehende Zielordner werden abgelehnt, Fehler entfernen die temporäre Ablage. Genügend Speicher für sämtliche Kopien vorsehen.
+
+## Kartenangebot ab 0.33.0
+
+In der Einrichtung und unter Einstellungen → Karte stehen heutige Karte, historische Karte oder beide Karten zur Auswahl. Mittelpunkt und Radius gelten gemeinsam; beide Kartentitel sind getrennt anpassbar und werden gesichert. Ein Upgrade aktiviert keine zusätzliche Karte automatisch. Für diese Erweiterung sind keine neuen Datenbankmigrationen oder Änderungen am separaten Update-Dienst erforderlich.

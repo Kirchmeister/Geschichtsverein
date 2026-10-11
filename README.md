@@ -22,6 +22,9 @@ Die interne Startseite begrüßt angemeldete Personen unter Archiv- und Vereinsn
 
 ## Ortskarte einrichten
 
+Ab Version 0.33.0 bietet **Kartenangebot → Beide Karten** die heutige und historische Karte in getrennten öffentlichen Reitern an: **Zeitleiste**, **Heutige Karte**, **Historische Karte**. Beide verwenden denselben Ort, Mittelpunkt und Radius. Nur die geöffnete Karte lädt externe Kartendaten. Ausschnitt, Zoom und historisches Jahr werden während des Browserbesuchs beim Wechsel gemerkt; nach einer Änderung der Kartenumgebung wird die Ansicht zurückgesetzt. Die Titel sind getrennt anpassbar; leere Felder verwenden „Heutige Karte“ beziehungsweise „Historische Karte“. Ein bisheriger eigener Titel bleibt der bisher ausgewählten Karte zugeordnet. Bestehende Installationen behalten ihr Kartenangebot. Die Auswahl und beide Titel gehören zur Datensicherung. Der historische Zeitschieber verändert weiterhin nur das Kartenmaterial, nicht die Archivmarkierungen.
+
+
 Während der Ersteinrichtung oder später unter **Einstellungen → Karte** kann der Administrator die Karte aktivieren. Wählen Sie **OpenStreetMap** für die heutige Umgebung ohne Zeitschieber oder **OpenHistoricalMap** für historische Daten mit Zeitschieber. Historische Daten müssen für den gewählten Ort bereits von Mitwirkenden erfasst sein; eine dünne oder leere Darstellung ist möglich.
 
 Suchen Sie den Ort und wählen Sie einen Treffer anhand von Region und Land. Prüfen Sie den Mittelpunkt auf der Vorschaukarte; er lässt sich durch Klicken, Verschieben der Markierung oder Koordinateneingabe ändern. Der Radius reicht von 0,5 bis 100 km. Ein Kreis zeigt den Bereich; die rechteckige öffentliche Ansicht enthält auch Umgebung außerhalb des Kreises. Der Titel entsteht automatisch aus dem Ort und kann überschrieben werden. Die Vorschau verwendet immer die heutige Karte zur Orientierung.
