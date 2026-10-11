@@ -1,5 +1,9 @@
 # Änderungen
 
+## [0.30.1]
+
+- Browser-Zoom auf mobilen öffentlichen Profilen und Beitragsseiten begrenzt, damit Karten-Gesten nicht die ganze Seite vergrößern. Kartenzoom und Desktop-Browserzoom bleiben bedienbar; beim Verlassen des öffentlichen Profils werden die ursprünglichen Regeln wiederhergestellt.
+
 ## [0.30.0]
 - Optionaler geografischer Standort für jeden Beitrag, mit Lagebeschreibung und Kennzeichnung ungefährer Lage; Auswahl über Karte oder Koordinaten.
 - Mini-Karten in der Leseansicht, öffentlich genehmigte Beiträge als gruppierte Kartenmarkierungen. Der OHM-Zeitschieber verändert das Kartenmaterial, nicht die Archivmarkierungen.
