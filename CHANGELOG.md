@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.27.0]
+
+- Vorläufige Bruchköbel-Zeitkarte mit eigenem Zeitschieber und dezentem Link im öffentlichen Profil. Experimentstatus bleibt bestehen.
+- Kartenstart für die verwendete MapLibre-Version korrigiert. Datenbankschema 18 und Backupformat 2 unverändert.
+
 ## [0.26.0]
 
 - Beim Speichern im Beitragseditor Auswahl zwischen „Nur speichern“ und „Speichern und Veröffentlichung beantragen“. Überlagerter Dialog mit Rückkehr zur Bearbeitung und sichtbaren Fehlern.
