@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.30.0]
+- Optionaler geografischer Standort für jeden Beitrag, mit Lagebeschreibung und Kennzeichnung ungefährer Lage; Auswahl über Karte oder Koordinaten.
+- Mini-Karten in der Leseansicht, öffentlich genehmigte Beiträge als gruppierte Kartenmarkierungen. Der OHM-Zeitschieber verändert das Kartenmaterial, nicht die Archivmarkierungen.
+- Sichtbarkeit separat für Gäste und Öffentlichkeit; Standorte werden in Versionen und Sicherungen erhalten und können gezielt zurückgeholt werden.
+
+
 ## [0.29.0]
 
 - Admin-Kartenkonfiguration in Erstinstallation und einklappbaren Einstellungen: Aktivierung, OSM/OHM, Ortssuche mit Region/Land, Mittelpunkt, Radius und eigener Titel.

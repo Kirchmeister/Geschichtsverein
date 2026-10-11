@@ -1,3 +1,5 @@
+import {normalizeEntryLocation} from './archive-entry-location';
+import {mapSettings} from './archive-map';
 import {requireInstalled} from './archive-installation';
 import {withPersonTags} from './archive-people';
 import {validDescriptionLinks} from '@/lib/archive-description-links';
@@ -6,8 +8,8 @@ import {archiveDb} from '@/lib/archive-db';
 import {approvedEntriesQuery} from '@/lib/archive-permissions';
 import {publicFieldLabels,defaultPublicFields} from '@/lib/archive-public-fields';
 export {publicFieldLabels};
-export async function publicFields(){const saved=await archiveDb().prepare("SELECT data FROM archive_settings WHERE key='public_fields'").first<{data:string}>();return saved?JSON.parse(saved.data) as string[]:defaultPublicFields}
-export function projectPublicEntry(data:any,fields:string[]){data=withPersonTags(data);const out:any={id:data.id};for(const key of fields)if(!['images','documents','audio'].includes(key)&&typeof data[key]==='string')out[key]=data[key];if(fields.includes('description')&&validDescriptionLinks(data.descriptionLinks,data.description||''))out.descriptionLinks=data.descriptionLinks;out.files=(data.files||[]).filter((f:any)=>fields.includes(f.type.startsWith('audio/')?'audio':f.type.startsWith('image/')?'images':'documents')).map((f:any)=>({key:f.key,name:f.name,type:f.type}));return out}
+export async function publicFields(includeDisabledLocation=false){const saved=await archiveDb().prepare("SELECT data FROM archive_settings WHERE key='public_fields'").first<{data:string}>();const fields=saved?JSON.parse(saved.data) as string[]:defaultPublicFields;return includeDisabledLocation||(await mapSettings()).value.enabled?fields:fields.filter(k=>k!=='location')}
+export function projectPublicEntry(data:any,fields:string[]){data=withPersonTags(data);const out:any={id:data.id};if(fields.includes('location')){try{out.location=normalizeEntryLocation(data.location)}catch{out.location=null}}for(const key of fields)if(!['images','documents','audio'].includes(key)&&typeof data[key]==='string')out[key]=data[key];if(fields.includes('description')&&validDescriptionLinks(data.descriptionLinks,data.description||''))out.descriptionLinks=data.descriptionLinks;out.files=(data.files||[]).filter((f:any)=>fields.includes(f.type.startsWith('audio/')?'audio':f.type.startsWith('image/')?'images':'documents')).map((f:any)=>({key:f.key,name:f.name,type:f.type}));return out}
 export async function publicEntries(){await requireInstalled();const fields=await publicFields(),rows=await archiveDb().prepare(approvedEntriesQuery).all();return {fields,entries:rows.results.map((r:any)=>projectPublicEntry(JSON.parse(r.data),fields))}}
 export async function publicFileAllowed(key:string){const data=await publicEntries();return data.entries.some(e=>e.files.some((f:any)=>f.key===key))}
 

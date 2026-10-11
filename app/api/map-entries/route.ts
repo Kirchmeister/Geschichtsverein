@@ -1,0 +1,6 @@
+import {archiveDb} from '@/lib/archive-db';
+import {mapSettings} from '@/lib/archive-map';
+import {publicFields,projectPublicEntry} from '@/lib/archive-public';
+import {requireInstalled} from '@/lib/archive-installation';
+const headers={'Cache-Control':'no-store'};
+export async function GET(){try{await requireInstalled();if(!(await mapSettings()).value.enabled)return Response.json({entries:[]},{headers});const fields=await publicFields();if(!fields.includes('location'))return Response.json({entries:[]},{headers});const rows=await archiveDb().prepare("SELECT v.data,r.reference FROM entries e JOIN entry_versions v ON v.version=e.approved_version AND v.entry_id=e.id JOIN entry_references r ON r.entry_id=e.id WHERE e.deleted=0 AND e.publication_status='approved' AND e.approved_by IS NOT NULL AND e.approved_at IS NOT NULL AND v.action<>'Gelöscht'").all();return Response.json({entries:rows.results.map((r:any)=>{const entry=projectPublicEntry(JSON.parse(r.data),fields);return {reference:r.reference,title:entry.title||'Beitrag',location:entry.location}}).filter((e:any)=>e.location)},{headers})}catch{return Response.json({error:'Die verorteten Beiträge konnten nicht geladen werden.'},{status:503,headers})}}
