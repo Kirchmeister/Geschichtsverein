@@ -1,5 +1,14 @@
 # Änderungen
 
+## [0.32.0] - 2026-10-11
+
+- Backup-Liste mit gemerkter Auswahl 7/14/31 Tage und Ansicht aller vorhandenen Sicherungen; Aufbewahrung unverändert.
+- TAR-Downloads nennen die tatsächliche Software- und Schema-Version der Sicherung.
+- Admin-Wiederherstellung im Web: begrenzter Upload, isolierte vollständige Prüfung, Vorschau, ausdrückliche Bestätigung, geprüfte Rückfallsicherung und Wiederanlauf/Rollback. Lokale Konten, Passkeys und Dienstzugänge bleiben erhalten; automatische Pläne werden pausiert.
+- App und separater Serverdienst müssen mindestens 0.32.0 verwenden. Backupformat 2 und Schema 19 bleiben unverändert; neuere unbekannte Schemas werden abgelehnt.
+- Einrichtung und Betriebsdokumentation auf Linux ausgerichtet.
+
+
 ## [0.31.0]
 
 - Installierte mobile Web-App durch Herunterziehen am oberen Seitenrand aktualisieren, mit Hinweis zum Loslassen und Ladeanzeige. Kurze, horizontale und Mehrfinger-Gesten lösen keinen Refresh aus.
@@ -141,7 +150,7 @@
 ## [0.17.3]
 
 - Menüleiste prüft den tatsächlich benötigten Platz und verdichtet Abstände bei Bedarf, unabhängig von Rolle und Bildschirmbreite. Touch-Flächen bleiben mindestens 44 Pixel hoch; bei sehr geringer Höhe bleibt das Menü scrollbar.
-- Kontoeinstellungen bleiben über den Namen erreichbar. Die native Abmeldung erfolgt ausschließlich über ein separates Icon mit Bestätigungsdialog; Sites zeigt kein nicht unterstütztes Abmelde-Icon.
+- Kontoeinstellungen bleiben über den Namen erreichbar. Die native Abmeldung erfolgt ausschließlich über ein separates Icon mit Bestätigungsdialog.
 - Datenbankschema 18 und Backupformat 2 bleiben unverändert.
 
 ## [0.17.2]
@@ -341,11 +350,11 @@ Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht ver
 
 ## [0.4.0] – 2026-10-07
 
-- Separate Linux-Laufzeit mit SQLite und lokalem Objektspeicher; Sites bleibt auf seinen bisherigen Bindings.
+- Separate Linux-Laufzeit mit SQLite und lokalem Objektspeicher.
 - Echte Passkey-Registrierung/Anmeldung, einmalige Einladungen und adminseitige Rollen-/Kontosperren. Linux lehnt OAI-Identitätsheader ab.
 - Docker-/WSL-Testinstallation mit Ersteinrichtung, eigener Geheimniskonfiguration und optionalem internem HTTPS für Mobiltests.
 - Portable Backup-Wiederherstellung direkt in die Linux-Ablage; Archivdaten werden nicht in GitHub übernommen.
-- Linux-Hintergrundläufe benötigen einen Service-Schlüssel. Native und Sites-Build werden getrennt geprüft.
+- Linux-Hintergrundläufe benötigen einen Service-Schlüssel.
 - Keine Änderung des Archivschemas (15) oder des Backupformats (2). Neue Anmeldetabellen sind Linux-intern und werden bei portablem Import neu eingerichtet; vollständige Rohsicherungen müssen sie enthalten.
 - Noch Entwicklungsstand: Docker-/physische Passkey-Bedienung vor Ort prüfen; SMTP-Versand, Geräteverlust-Wiederherstellung und Container-Update-Treiber noch nicht produktiv freigegeben.
 

@@ -55,7 +55,7 @@ GitHub enthält ausschließlich Code und Dokumentation; Archivdaten, Benutzerkon
 
 ## Entwicklung
 
-Technische Angaben zur Entwicklungs- und Testumgebung stehen in [docs/development-sites.md](docs/development-sites.md). Änderungen werden geprüft und anschließend auf `main` gepflegt. Der Release-Workflow veröffentlicht die zugehörigen Versionsstände; eine Installation auf dem Vereinsserver erfolgt weiterhin erst auf Anforderung des Administrators.
+Änderungen werden geprüft und anschließend auf `main` gepflegt. Der Release-Workflow veröffentlicht die zugehörigen Versionsstände; eine Installation auf dem Vereinsserver erfolgt weiterhin erst auf Anforderung des Administrators.
 
 Der Archivtitel wird aus dem Ortsnamen vorgeschlagen (z. B. „Geschichte Rodenbachs“). Unter **Einstellungen → Archiv- & Vereinsname** kann der Administrator den vollständigen Titel ändern oder zur automatischen Bezeichnung zurückkehren. Diese Einstellung gehört zur Datensicherung und verändert keine Beitragstexte oder URLs.
 
@@ -69,7 +69,7 @@ Unter **Einstellungen → Archiv- & Vereinsname** kann der Administrator auch de
 
 Unter Einstellungen → E-Mail / SMTP Server, Port, TLS-Modus, Zugang und Absender speichern. Danach bei „Testmail an“ eine Zieladresse eingeben und „SMTP prüfen“ wählen. Eine erfolgreiche Prüfung bedeutet, dass der SMTP-Server die Nachricht angenommen hat; Posteingang und Spamordner prüfen. STARTTLS benötigt einen entsprechend konfigurierten Port (häufig 587), direkte TLS-Verbindungen häufig 465. Zertifikatsprüfung bleibt aktiviert. Die Zieladresse wird nicht als Einstellung gespeichert.
 
-Bei Benutzer & Einladungen kann der Admin „Einladung per E-Mail senden“ wählen. Bei einem Versandfehler bleibt der vertrauliche Einladungslink zum manuellen Weitergeben vorhanden. Sites führt keinen SMTP-Versand aus.
+Bei Benutzer & Einladungen kann der Admin „Einladung per E-Mail senden“ wählen. Bei einem Versandfehler bleibt der vertrauliche Einladungslink zum manuellen Weitergeben vorhanden.
 
 Über den Namen unten links können angemeldete Personen ihre eigenen Passkeys verwalten: hinzufügen, umbenennen und entfernen. Vor dem Hinzufügen oder Entfernen wird ein vorhandener Passkey erneut bestätigt. Pro Konto sind bis zu 20 Schlüssel möglich; der letzte Schlüssel kann nicht entfernt werden. Die Schlüssel können auf unterschiedlichen Geräten oder in unterschiedlichen Passwortspeichern liegen. Administratoren sehen die Anzahl pro Konto, verwalten aber keine fremden Schlüssel. Private Schlüssel bleiben beim Authenticator.
 
@@ -81,7 +81,7 @@ Auf dem Linux-Server öffnet der Name unten links das Kontomenü. Im Register **
 
 Nutzer, Verwalter und Admin erhalten die Optionen neue interne Nachrichten und QR-Probleme (jeweils Ein). Verwalter und Admin erhalten zusätzlich Kommentaranfragen (Ein). Veröffentlichungsanfragen werden als interne Nachricht zugestellt und verwenden deren Push-Einstellung. Admins erhalten zusätzlich Backupfehler und die erfolgreiche Passkey-Registrierung einer eingeladenen Person (jeweils Ein) sowie neue Softwareversionen (Aus). Die Vorauswahlen aktivieren keinen Versand ohne Ihre ausdrückliche Push-Aktivierung. QR-Hinweise melden ausschließlich den Wechsel zwischen „Probleme vorhanden“ und „alle behoben“.
 
-Push erfordert HTTPS und Browser-Unterstützung. Auf iPhone/iPad die Website zum Home-Bildschirm hinzufügen, von dort öffnen und Benachrichtigungen erlauben. Nach einem Browserwechsel oder portablen Datenimport neu registrieren. Sites zeigt die Optionen und einen Hinweis zur Linux-Verfügbarkeit; dort läuft kein Push-Versand.
+Push erfordert HTTPS und Browser-Unterstützung. Auf iPhone/iPad die Website zum Home-Bildschirm hinzufügen, von dort öffnen und Benachrichtigungen erlauben. Nach einem Browserwechsel oder portablen Datenimport neu registrieren.
 
 Die Linux-Anwendung erzeugt ihre VAPID-Schlüssel beim ersten Start und speichert sie im geschützten Datenbestand. Keine zusätzlichen Schlüssel oder externen Konten müssen konfiguriert werden. Der Hintergrundprozess verarbeitet die Versandwarteschlange jede Minute. Vor jeder Zustellung werden Rolle, Kontostatus und persönliche Auswahl geprüft. Abgelaufene Geräte werden entfernt; vorübergehende Fehler werden bis zu sechs Mal innerhalb von 24 Stunden versucht. Nachrichten enthalten nur einen allgemeinen Hinweis, keine Namen oder Beitragstexte. Push verwendet die Browserdienste von Google, Mozilla, Apple oder Microsoft; Geräte-Endpunkte und Schlüssel verbleiben im eigenen Linux-Datenbestand und sind nicht Teil portabler Archivbackups. Betriebssystem, Browser und Push-Dienst können die Zustellung verzögern oder verhindern.
 
@@ -99,7 +99,7 @@ Die persönlichen Benachrichtigungseinstellungen enthalten eine aufklappbare Anl
 
 Unter „Nachrichten“ direkt unter der Startseite können aktive Linux-Konten Nachrichten an einzelne, mehrere oder alle derzeit aktiven Konten senden. Die Zahl zeigt ungelesene eingegangene Nachrichten; sie wird alle 30 Sekunden aktualisiert. Nur Beteiligte sehen Inhalt und Empfänger. „Allen antworten“ bleibt in derselben Unterhaltung; andere Empfänger beginnen eine neue. Admins können Mitteilungen an alle kennzeichnen; Antworten darauf erfolgen als neue Nachricht. Texte sind auf 4.000 Zeichen begrenzt, Betreff auf 120; keine Dateianhänge. Die Übersicht zeigt die neuesten 200 Unterhaltungen, ältere bekannte Unterhaltungslinks bleiben gültig. Lange Unterhaltungen laden ältere Nachrichten in Schritten von 100 nach.
 
-„Neue interne Nachricht“ ist in den persönlichen Push-Einstellungen für Nutzer, Verwalter und Admin vorausgewählt. Konto-Push und Gerät müssen trotzdem aktiviert sein. Versand versucht die Zustellung unmittelbar; der bestehende Push-Hintergrunddienst übernimmt Wiederholungen. Nur Empfänger werden informiert, Nachrichtentext, Betreff und Namen stehen nicht in Push-Mitteilungen. Der Klick öffnet die Unterhaltung nach Anmeldung. Sites zeigt einen Hinweis auf die eigenen Linux-Konten; es werden dort keine Demo-Konten oder echten Nachrichten erzeugt.
+„Neue interne Nachricht“ ist in den persönlichen Push-Einstellungen für Nutzer, Verwalter und Admin vorausgewählt. Konto-Push und Gerät müssen trotzdem aktiviert sein. Versand versucht die Zustellung unmittelbar; der bestehende Push-Hintergrunddienst übernimmt Wiederholungen. Nur Empfänger werden informiert, Nachrichtentext, Betreff und Namen stehen nicht in Push-Mitteilungen. Der Klick öffnet die Unterhaltung nach Anmeldung.
 
 Version 0.9.0 ergänzt Migration 16. Vor Server-Updates eine vollständige Sicherung erstellen. Nachrichten sind in portablen Sicherungen enthalten. Beim Import bleiben die bisherigen Konten deaktiviert; private Nachrichten werden erhalten, aber keinem neu eingerichteten Konto automatisch zugeordnet. Für eine vollständige Wiederherstellung derselben Linux-Instanz mit Konten müssen zusätzlich Datenverzeichnis und geschützte Konfiguration gesichert werden.
 
@@ -162,7 +162,7 @@ Vor der Löschung sichert das Script alle bisherigen Statistikzeilen als geprüf
 
 ### Menü und Abmeldung
 
-Die linke Menüleiste passt ihre Abstände automatisch an den tatsächlich benötigten Platz an, auch nach Profilwechseln und Bildschirmdrehungen. Bei ausreichend Höhe bleibt die Standardansicht erhalten; bei sehr geringer Höhe kann der Menübereich gescrollt werden. Kontoeinstellungen öffnen sich über den Benutzernamen. Auf der Linux-Instanz öffnet das Abmelde-Icon rechts daneben eine Bestätigung mit Abbrechen und Abmelden. In Sites fehlt dieses Icon, da dort keine native Passkey-Abmeldung angeboten wird.
+Die linke Menüleiste passt ihre Abstände automatisch an den tatsächlich benötigten Platz an, auch nach Profilwechseln und Bildschirmdrehungen. Bei ausreichend Höhe bleibt die Standardansicht erhalten; bei sehr geringer Höhe kann der Menübereich gescrollt werden. Kontoeinstellungen öffnen sich über den Benutzernamen. Auf der Linux-Instanz öffnet das Abmelde-Icon rechts daneben eine Bestätigung mit Abbrechen und Abmelden.
 
 ### Mobile Darstellung und Zoom
 
@@ -188,7 +188,7 @@ Gäste können ausschließlich Push-Benachrichtigungen für neue interne Nachric
 
 Nach dem Annehmen einer Einladung wartet eine persönliche interne Willkommensnachricht mit einer Web-App-Anleitung im Nachrichtenbereich. Gäste können ihre Begrüßung und gezielte Mitteilungen von Admin und Verwalter lesen und für sich löschen, aber keine Unterhaltungen beginnen oder frei antworten. Bestehende Konten erhalten keine nachträgliche Begrüßung.
 
-Der erste bestätigte Lesestand startet eine Frist von 24 Stunden. Der Linux-Hintergrunddienst prüft anschließend minütlich, ob einmalig an die freiwillige Push-Einrichtung erinnert werden soll: nur bei einem erkannten geeigneten iPhone, fehlender Registrierung dieses Geräts, aktiver interner Rolle und ohne bewusste Push-Deaktivierung. Läuft der Dienst nicht oder befindet sich das Archiv im Wartungsmodus, erfolgt die Prüfung beim nächsten erfolgreichen Durchlauf. Es wird keine SMTP-Mail versendet. Sites besitzt keine eigenen Linux-Anmeldekonten und führt diesen Ablauf nicht aus.
+Der erste bestätigte Lesestand startet eine Frist von 24 Stunden. Der Linux-Hintergrunddienst prüft anschließend minütlich, ob einmalig an die freiwillige Push-Einrichtung erinnert werden soll: nur bei einem erkannten geeigneten iPhone, fehlender Registrierung dieses Geräts, aktiver interner Rolle und ohne bewusste Push-Deaktivierung. Läuft der Dienst nicht oder befindet sich das Archiv im Wartungsmodus, erfolgt die Prüfung beim nächsten erfolgreichen Durchlauf. Es wird keine SMTP-Mail versendet.
 
 Gespeichert werden der erste Lesezeitpunkt, der Erinnerungsstatus, grobe Plattform-/Fähigkeitsmerkmale und gegebenenfalls ein Hash der Push-Adresse; keine vollständige Browserkennung. Diese Zustände und internen Nachrichten sind in den Datensicherungen enthalten.
 
@@ -232,3 +232,13 @@ Auf Touch-Geräten begrenzen öffentliche Profil-, Beitrags- und Kartenseiten de
 ### Mobile Web-App aktualisieren
 
 In der installierten Web-App auf iPhone oder Android lässt sich die Seite am oberen Rand mit einem Finger ausreichend weit nach unten ziehen. Sobald „Loslassen zum Aktualisieren“ erscheint, löst Loslassen einen vollständigen Refresh der aktuellen Adresse aus. Kurzes Ziehen aktualisiert nicht. Karten, Bedienelemente, offene Dialoge und die mobile Menüleiste sind ausgenommen. Im normalen Browser bleibt dessen eigene Aktualisierungsfunktion verfügbar. Vor dem Aktualisieren sollten Änderungen gespeichert werden.
+
+### Backup-Anzeige und Wiederherstellung über die Oberfläche
+
+Unter **Einstellungen → Backups** sind 7, 14 oder 31 Tage auswählbar; Standard sind 7 Tage. Die Auswahl bleibt in diesem Browser gespeichert. **Alle vorhandenen Sicherungen anzeigen** hebt den Filter vorübergehend auf. Laufende Sicherungen bleiben sichtbar. Dies ändert weder Daten noch die separat konfigurierte Nextcloud-Aufbewahrung.
+
+Downloads verwenden den Versionsstand der jeweiligen Sicherung: `geschichtsarchiv-backup-<ID>_v0.32.0_schema19.tar`. Unbekannte Versionsstände älterer Exporte werden als unbekannt gekennzeichnet, nicht mit der aktuellen Softwareversion ersetzt.
+
+**Sicherung zurückspielen** erlaubt dem Admin den Upload einer TAR-Datei bis 2 GiB, auch aus einer anderen Instanz oder außerhalb des Anzeigezeitraums. Erst nach Prüfung und Vorschau sowie exakt eingegebenem Bestätigungstext wird der Bestand ersetzt. Der separate Serverdienst erstellt zuvor eine geprüfte vollständige Rückfallsicherung einschließlich Konfiguration und Programmstand mit Probe-Wiederherstellung. Fehler oder ein Dienstneustart lösen die Wiederherstellung des bisherigen Stands aus; bei beschädigter Rückfallsicherung bleibt der Wartungsmodus aktiv.
+
+App **und separater Update-Dienst benötigen mindestens 0.32.0**. Ein App-Update aktualisiert den Dienstcontainer nicht. Die Einrichtung steht in [Serverupdates](docs/server-updates.md), der Ablauf und seine Grenzen in [Installation und Wiederherstellung](docs/installation.md). Vor dem Produktiveinsatz eine getrennte Wiederherstellungsprobe durchführen.

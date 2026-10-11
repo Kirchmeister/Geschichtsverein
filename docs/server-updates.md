@@ -4,7 +4,7 @@
 
 Der Update-Dienst und die Admin-Oberfläche sind implementiert und mit separaten Testbeständen geprüft. Passkey-Anmeldung und ein konkreter Docker-Treiber sind vorhanden. **Der Docker-Treiber muss vor Aktivierung auf einer isolierten Linux-Instanz geprüft werden.** Es gibt daher noch keinen gefahrlosen Ein-Klick-Installer. Eine vorhandene Serverinstallation wird durch diese Änderungen nicht umgestellt.
 
-Die Standard-README beschreibt den Vereinsbetrieb. Die ChatGPT-/Sites-Verifikation und deren technische Speicheranbindung stehen ausschließlich in `development-sites.md`. Entwicklung und geprüfte Veröffentlichungen erfolgen auf Wunsch des Betreibers ab jetzt auf `main`; der bisherige Branch `development` bleibt erhalten. Der Release-Workflow ist auf `main` beschränkt. Die bisherigen Vorab-Releases bleiben erhalten.
+Entwicklung und geprüfte Veröffentlichungen erfolgen auf Wunsch des Betreibers ab jetzt auf `main`; der bisherige Branch `development` bleibt erhalten. Der Release-Workflow ist auf `main` beschränkt. Die bisherigen Vorab-Releases bleiben erhalten.
 
 ## Verhalten
 
@@ -99,7 +99,7 @@ Nach der Übernahme verwaltet der Agent den Archivcontainer. Nicht zusätzlich `
 
 ## Anmeldung und Fähigkeiten
 
-Linux verwendet echte Passkey-Sitzungen und prüft Adminrechte aus der Instanzdatenbank. Browseranfragen können keine Treiberpfade oder Docker-Befehle festlegen. Sites benötigt keinen Server-Updater und erhält keinen Dockerzugang.
+Linux verwendet echte Passkey-Sitzungen und prüft Adminrechte aus der Instanzdatenbank. Browseranfragen können keine Treiberpfade oder Docker-Befehle festlegen.
 
 ## Prüfungen
 
@@ -190,3 +190,11 @@ Erwartet: laufender Dienst und Listener ausschließlich auf `127.0.0.1:3099`. Da
 Frühere Dienste begrenzen sowohl `docker build` als auch den aufrufenden Treiber auf 900 Sekunden. Bei langsamem Image-Bau bricht der erste Versuch dadurch ab; ein späterer Versuch kann dank Build-Cache schneller fertig werden. Ab 0.27.1 darf der Docker-Build bis zu 60 Minuten dauern, der aufrufende Dienst wartet 61 Minuten. Andere Treiberaktionen behalten ihr bisheriges Limit mit zusätzlichem Zeitpuffer im aufrufenden Dienst. Der begrenzte Prozessausgabepuffer beträgt 16 MiB. Fehler unterscheiden Zeitüberschreitung, volle Festplatte, Ausgabelimit und sonstige Prozessfehler; Rohlogs und Zugangsdaten werden nicht an die Oberfläche weitergereicht.
 
 **Das Update-Dienst-Image muss separat ersetzt werden**, auch wenn die Archiv-App bereits aktuell ist. Nur nach einem abgeschlossenen oder sicher zurückgerollten Job nach „Vorhandenen Docker-Update-Dienst ersetzen“ vorgehen und für diese Korrektur `geschichtsarchiv-updater:0.27.1` bauen und starten. Bestehende Hostpfade und Konfiguration erhalten; das Archiv dabei nicht mit Compose neu starten. Bei diesem frühen Build-Abbruch läuft die bisherige App weiter, Sicherung und Migration werden noch nicht begonnen. Ein längeres Limit behebt keine tatsächlichen Compiler-, Netzwerk- oder Speicherplatzfehler.
+
+## Web-Wiederherstellung ab 0.32.0
+
+Den separaten Dienst wie bei früheren Dienst-Upgrades aus `Dockerfile.updater` neu bauen und seinen Container mit denselben Mounts, derselben Konfiguration und demselben lokalen Port ersetzen. Beispiel für den Build im aktuellen Repository: `sudo docker build -f Dockerfile.updater -t geschichtsarchiv-updater:0.32.0 .`. Bestehende Dienst-Konfiguration und Geheimnisse erhalten; den Dienst nur bei abgeschlossenem Update/Wiederherstellung ersetzen. Erst danach die App auf 0.32.0 aktualisieren. Die Oberfläche erkennt einen älteren Dienst und deaktiviert die Wiederherstellung mit einem Hinweis.
+
+Prüfung und Wiederherstellung teilen die Dienstsperre mit Updates. Der TAR-Upload wird begrenzt und gestreamt, anschließend in die geschützte Dienstablage verschoben. Die Dateiprüfung läuft isoliert im App-Image ohne Netzwerk. Importablagen befinden sich unter `<Updater-Ablage>/restores/`; Rückfallsicherungen unter `<Updater-Ablage>/backups/`. Nach erfolgreichem Austausch bleibt der bisherige Datenordner zusätzlich als `.before-restore-<ID>` erhalten. Rückfallkopien enthalten Konten, Schlüssel und personenbezogene Daten; vertraulich behandeln, genügend Speicher reservieren und erst nach erfolgreicher Betriebsprüfung gemäß eigener Aufbewahrungspolitik offline bereinigen.
+
+Bei einem Fehler mit offener Wiederherstellung kein weiteres Update starten. Unter Updates die Wiederherstellung erneut versuchen oder den Dienst anhand seiner Protokolle prüfen. Die Wartungssperre nicht manuell umgehen.

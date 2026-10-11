@@ -19,7 +19,18 @@ export function updateFailureMessage(action,kind){
  if(kind==='DISK_FULL')return step+' fehlgeschlagen: Auf dem Server fehlt freier Speicherplatz.';
  return step+' fehlgeschlagen. Bitte das Docker-/Dienstprotokoll auf dem Server prüfen.';
 }
+export function restoreFailureKind(error){
+ const text=String(error?.stderr||'');
+ if(/ARCHIVE_RESTORE_ERROR:NEWER_SCHEMA|newer database schema/.test(text))return 'NEWER_SCHEMA';
+ if(/ARCHIVE_RESTORE_ERROR:INTEGRITY|Integrity check failed|checksum|Missing integrity|Truncated|Incomplete|Invalid member size/.test(text))return 'INTEGRITY';
+ if(/ARCHIVE_RESTORE_ERROR:FORMAT|Unsupported|unsafe|Duplicate|Unknown or duplicate|Required archive tables/.test(text))return 'FORMAT';
+ return null;
+}
+export const restoreFailureMessage=kind=>({NEWER_SCHEMA:'Die Sicherung verwendet ein neueres Datenbankschema. Bitte zuerst eine kompatible Softwareversion installieren.',INTEGRITY:'Die Sicherung ist beschädigt oder unvollständig; die Prüfsummenprüfung ist fehlgeschlagen.',FORMAT:'Diese Datei ist keine unterstützte vollständige Archiv-Sicherung.'})[kind];
 export async function invokeUpdateDriver(cfg,action,code,dataRoot=cfg.dataRoot,configRoot=cfg.configRoot,run=promisify(execFile)){
  try{return await run(cfg.driver,[action,code,dataRoot,configRoot],{timeout:updateDriverTimeout(action),maxBuffer:updateOutputLimit});}
- catch(error){throw Error(updateFailureMessage(action,updateFailureKind(error)));}
+ catch(error){
+  if(action==='restore-stage'&&restoreFailureKind(error))throw Error(restoreFailureMessage(restoreFailureKind(error)));
+  throw Error(updateFailureMessage(action,updateFailureKind(error)));
+ }
 }

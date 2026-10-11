@@ -14,7 +14,7 @@ gh auth setup-git
 cd ~/projekte
 gh repo clone Kirchmeister/Geschichtsverein
 cd Geschichtsverein
-git switch development
+git switch main
 ```
 
 Bei `gh auth login` GitHub.com, HTTPS und Anmeldung im Browser auswählen. Berechtigungen für das private Repository müssen vorhanden sein.
@@ -43,7 +43,7 @@ docker compose exec archive node scripts/linux-start.mjs scripts/linux-admin.mjs
 
 Dieser Befehl erzeugt einen vertraulichen, einmal nutzbaren Link. Er funktioniert nur, solange noch kein Linux-Konto angelegt ist. Den Link im Windows-Browser öffnen und den Passkey bestätigen (z. B. Windows Hello). Es gibt kein festes Testpasswort und keinen öffentlichen Admin-Zugang. Danach Ort und Vereinsnamen in der Ersteinrichtung eingeben; die Hosting-Domain darf für den lokalen Test leer bleiben.
 
-In Einstellungen → Benutzer & Einladungen können weitere Konten mit Nutzer-, Verwalter- oder Administratorrolle eingeladen werden. Kontoänderungen sind nur für echte Administratoren möglich, auch bei Rollen-Vorschau. Das eigene Konto lässt sich hier nicht sperren oder herunterstufen. Einladungen gelten standardmäßig sieben Tage (in den Einstellungen änderbar) und können widerrufen werden; der Link wird derzeit manuell übermittelt. Automatischer SMTP-Versand und Zugangswiederherstellung bei Verlust aller Passkeys sind noch nicht freigegeben.
+In Einstellungen → Benutzer & Einladungen können weitere Konten mit Nutzer-, Verwalter- oder Administratorrolle eingeladen werden. Kontoänderungen sind nur für echte Administratoren möglich, auch bei Rollen-Vorschau. Das eigene Konto lässt sich hier nicht sperren oder herunterstufen. Einladungen gelten standardmäßig sieben Tage (in den Einstellungen änderbar) und können widerrufen werden; der Link wird derzeit manuell übermittelt. SMTP-Versand kann unter Einstellungen eingerichtet werden. Zugangswiederherstellung bei Verlust aller Passkeys ist noch nicht verfügbar.
 
 ## 4. Test vom Mobiltelefon
 

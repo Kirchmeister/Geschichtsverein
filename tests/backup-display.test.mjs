@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {backupFilename,visibleBackups} from '../lib/backup-display.mjs';
+const id='12345678-1234-1234-1234-123456789abc';
+assert.equal(backupFilename(id,{applicationVersion:'0.4.3',databaseSchemaVersion:15}),'geschichtsarchiv-backup-'+id+'_v0.4.3_schema15.tar');
+assert.equal(backupFilename(id,{}),'geschichtsarchiv-backup-'+id+'_version-unbekannt.tar');
+assert.throws(()=>backupFilename('../unsafe'));
+const now=new Date(2026,9,11,12).getTime(),at=days=>{const d=new Date(now);d.setDate(d.getDate()-days);return d.toISOString()},rows=[{created:at(0),status:'complete'},{created:at(6),status:'complete'},{created:at(7),status:'complete'},{created:at(40),status:'uploading'}];
+assert.equal(visibleBackups(rows,7,now).length,3);
+assert.equal(visibleBackups(rows,14,now).length,4);
+assert.equal(visibleBackups(rows,7,now,true).length,4);
+console.log('PASS: actual backup version in filenames, seven calendar days, and unfinished/all backups remain accessible.');

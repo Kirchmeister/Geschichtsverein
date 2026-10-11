@@ -1,0 +1,20 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {randomUUID} from 'node:crypto';
+import {UpdateEngine} from '../server/update-engine.mjs';
+const base=await fs.mkdtemp(path.resolve('.restore-engine-test-'));
+async function fixture(name,failure=''){
+ const root=path.join(base,name,'manager'),dataRoot=path.join(base,name,'data'),configRoot=path.join(base,name,'config'),code=path.join(root,'releases','current');for(const dir of [dataRoot,configRoot,code])await fs.mkdir(dir,{recursive:true});
+ await fs.writeFile(path.join(dataRoot,'records'),'original');await fs.writeFile(path.join(configRoot,'secret'),'preserved');await fs.writeFile(path.join(code,'version.json'),JSON.stringify({version:'0.32.0',codeCommit:'a'.repeat(40),databaseSchemaVersion:19,backupFormatVersion:2}));await fs.symlink(code,path.join(root,'current'));let failed=false;const actions=[];
+ const options={root,dataRoot,configRoot,listReleases:async()=>[],prepareRelease:async()=>code,validateRestore:async(data)=>{assert.equal(await fs.readFile(path.join(data,'records'),'utf8'),'original');if(failure==='backup')throw Error('backup failed')},driver:async(action,c,d)=>{actions.push(action);if(action==='restore-stage'){await fs.mkdir(path.join(d,'staged'));await fs.writeFile(path.join(d,'staged','records'),'restored');return {stdout:JSON.stringify({counts:{entries:1},files:0,applicationVersion:'0.4.3'})}}if(action==='restore-merge'&&failure==='merge')throw Error('merge failed');if(action==='health'&&failure==='health'&&!failed){failed=true;throw Error('health failed')}}};
+ const engine=await new UpdateEngine(options).init(),id=randomUUID();await fs.mkdir(path.join(dataRoot,'restore-inbox'));await fs.writeFile(path.join(dataRoot,'restore-inbox',id+'.tar'),'fixture');return {engine,options,id,actions};
+}
+try{
+ const f=await fixture('success');await f.engine.inspectRestore(f.id);await assert.rejects(()=>f.engine.startRestore(f.id,'wrong'),/Bestätigung/);assert.equal(f.actions.includes('stop'),false);const r=await f.engine.startRestore(f.id,'ARCHIV WIEDERHERSTELLEN');assert.equal(r.job.status,'complete');assert.equal(r.job.kind,'restore');assert.equal(await fs.readFile(path.join(f.options.dataRoot,'records'),'utf8'),'restored');assert.equal(await fs.readFile(path.join(r.job.backup,'data','records'),'utf8'),'original');assert.equal(await fs.readFile(path.join(f.options.configRoot,'secret'),'utf8'),'preserved');assert.equal(f.engine.state.restorePreview,null);
+ for(const failure of ['merge','health','backup']){const t=await fixture(failure,failure);await t.engine.inspectRestore(t.id);const s=await t.engine.startRestore(t.id,'ARCHIV WIEDERHERSTELLEN');assert.equal(s.job.status,'rolled_back',JSON.stringify(s.job));assert.equal(await fs.readFile(path.join(t.options.dataRoot,'records'),'utf8'),'original');if(failure==='backup')assert.equal(t.actions.includes('restore-merge'),false);}
+ f.engine.state.job.status='restoring';await f.engine.persist();const recovered=await new UpdateEngine(f.options).init();assert.equal(recovered.state.job.status,'rolled_back');assert.equal(await fs.readFile(path.join(f.options.dataRoot,'records'),'utf8'),'original');
+ const old=await fixture('expired');await old.engine.inspectRestore(old.id);old.engine.state.restorePreview.created='2020-01-01';await assert.rejects(()=>old.engine.startRestore(old.id,'ARCHIV WIEDERHERSTELLEN'),/erneut/);assert.equal(old.actions.includes('stop'),false);
+ const unsafe=await fixture('symlink');await fs.unlink(path.join(unsafe.options.dataRoot,'restore-inbox',unsafe.id+'.tar'));await fs.symlink(path.join(unsafe.options.configRoot,'secret'),path.join(unsafe.options.dataRoot,'restore-inbox',unsafe.id+'.tar'));await assert.rejects(()=>unsafe.engine.inspectRestore(unsafe.id),/Ungültige/);
+ console.log('PASS: staged restore, confirmation/expiration gates, safety snapshot, failed merge/health/rehearsal rollback, restart recovery and unsafe upload rejection.');
+}finally{await fs.rm(base,{recursive:true,force:true})}

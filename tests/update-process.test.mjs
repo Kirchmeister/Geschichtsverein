@@ -7,4 +7,5 @@ for(const [error,match] of [[{killed:true,signal:'SIGTERM'},/Zeitlimit.*60 Minut
  await assert.rejects(invokeUpdateDriver(cfg,'prepare','/release',undefined,undefined,async()=>{throw error}),e=>{assert.match(e.message,match);assert.ok(!e.message.includes('SECRET'));return true});
 }
 assert.equal(updateFailureKind({code:1,stderr:'build failed'}),'COMMAND_FAILED');
+for(const [stderr,message] of [['Backup uses a newer database schema',/neueres/],['Integrity check failed: files/0',/beschädigt/],['Unsupported or unsafe archive member',/unterstützte/]])await assert.rejects(invokeUpdateDriver(cfg,'restore-stage','/release',undefined,undefined,async()=>{throw {stderr}}),message);
 console.log('PASS: Build/supervisor deadlines coordinated; timeout, output limit, disk-full and generic failures classified without leaking raw process output.');
