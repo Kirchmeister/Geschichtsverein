@@ -10,6 +10,10 @@ Beim ersten Öffnen fordert der Einrichtungsbildschirm Ort und Vereinsname. Die 
 
 Die zwei optionalen Laufzeitwerte `ARCHIVE_INITIAL_PLACE` und `ARCHIVE_INITIAL_ASSOCIATION` dienen ausschließlich der Übernahme einer bereits bestehenden Installation. Sind beide gesetzt und existiert keine gespeicherte Installationskonfiguration, gilt diese Installation als eingerichtet. Auf einer neuen Installation diese Werte weglassen. Die bestehende Sites-Installation verwendet diese Übernahme ohne Änderung ihrer Archivdaten.
 
+## Optionale Karte
+
+Die Ersteinrichtung bietet dieselbe Kartenkonfiguration wie **Einstellungen → Karte**: Aktivierung, OSM/OHM, eindeutige Ortsauswahl, veränderlicher Mittelpunkt, Radius und optionaler Titel. Ausschalten löscht die Werte nicht. Importierte Kartenwerte werden übernommen und können vor Abschluss der Einrichtung angepasst werden. Die Einrichtung schreibt Ort, Vereinsname, Domain und Karte zusammen, sodass ungültige Kartenwerte keinen halbfertigen Installationsstand erzeugen. Weitere Hinweise zu Suchdienst und Kartenanbietern stehen in der README.
+
 ## Backup aus Sites oder einer anderen Instanz erstellen
 
 Als Admin unter Einstellungen eine manuelle Sicherung erstellen, bis zum Status „complete“ warten und die TAR-Datei herunterladen. Der neue Export heißt `history-archive-backup-v2`; das Importwerkzeug liest auch das frühere Format. Es enthält Datenbanktabellen, Originaldateien, Metadaten und Prüfsummen. Verbindungspasswörter und Laufzeitschlüssel werden nicht exportiert. TAR-Dateien vertraulich behandeln: sie enthalten Archiv- und Benutzerinformationen.

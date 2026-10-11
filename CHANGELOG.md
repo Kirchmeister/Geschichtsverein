@@ -1,5 +1,14 @@
 # Änderungen
 
+## [0.29.0]
+
+- Admin-Kartenkonfiguration in Erstinstallation und einklappbaren Einstellungen: Aktivierung, OSM/OHM, Ortssuche mit Region/Land, Mittelpunkt, Radius und eigener Titel.
+- Verschiebbare Markierung und Radiusvorschau auf der heutigen Karte; öffentliche historische Karte behält den Zeitschieber, OSM zeigt keinen Zeitschieber.
+- Ausschalten blendet Karte, Tab und Felder aus, erhält gespeicherte Werte. Direktlinks laden dann keine Kartenbibliotheken oder Kacheln.
+- Bisherige Ortskarte in die Datenbankkonfiguration übernommen; neue Installationen starten ohne Karte. Einstellungen werden mitgesichert und beim Restore übernommen.
+- Datenbankschema 19; Backupformat 2 unverändert. Beiträge können noch nicht mit Kartenmarkern verortet werden.
+
+
 ## [0.28.0]
 - Freigegebene Beiträge nennen die genehmigende Person dezent beim Veröffentlichungsstatus.
 - Öffentliches Profil für alle angemeldeten Rollen direkt erreichbar; öffentliche Zeitleiste und Zeitkarte als verlinkbare Ansichten.
