@@ -1,5 +1,9 @@
 # Änderungen
 
+## [0.30.2]
+
+- Update-Startbutton im Bestätigungsdialog auch ohne Hover lesbar: korrekte Designfarben für aktivierte und deaktivierte Zustände. Abstand und Textumbruch der Aktionsbuttons auf schmalen Ansichten verbessert.
+
 ## [0.30.1]
 
 - Browser-Zoom auf mobilen öffentlichen Profilen und Beitragsseiten begrenzt, damit Karten-Gesten nicht die ganze Seite vergrößern. Kartenzoom und Desktop-Browserzoom bleiben bedienbar; beim Verlassen des öffentlichen Profils werden die ursprünglichen Regeln wiederhergestellt.
