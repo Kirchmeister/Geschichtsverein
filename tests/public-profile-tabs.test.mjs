@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import vm from 'node:vm';
+const require=createRequire(import.meta.url),esbuild=require(require.resolve('esbuild',{paths:[require.resolve('vite')]}));
+const mocks={
+ react:`export const useState=initial=>{const n=cursor++;if(!(n in states))states[n]=initial;return [states[n],v=>states[n]=v]};export const useEffect=f=>{effects.push(f)};export const useLayoutEffect=()=>{};export const useRef=initial=>({current:initial});`,
+ 'react/jsx-runtime':`export const jsx=(type,props)=>({type,props});export const jsxs=jsx;export const Fragment='Fragment';`,
+ '@/components/archive/installation':`export const useBranding=()=>({title:'Testarchiv'});`,
+ '@/lib/archive-title':`export const archiveTitle=b=>b.title;`,
+ '@/lib/archive-public-intro':`export const publicIntroDefaults=()=>({heading:'Historie',text:'Einführung'});export const introLinkParts=text=>[{text}];`,
+ '@/lib/archive-api':`export const archiveRequest=path=>Promise.resolve(path==='/api/public-profile'?{entries:[]}:null);`,
+ '@/lib/archive-timeline-navigation':`export const readTimelinePosition=()=>null;export const rememberTimelinePosition=()=>{};`,
+ './public-profile.module.css':`export default {};`
+};
+const result=await esbuild.build({entryPoints:['components/archive/public-profile.tsx'],bundle:true,platform:'node',format:'cjs',jsx:'automatic',write:false,plugins:[{name:'mock',setup(build){build.onResolve({filter:/^(react|lucide-react|@\/|\.\/public-profile.module.css)/},args=>({path:args.path,namespace:'mock'}));build.onLoad({filter:/.*/,namespace:'mock'},args=>({contents:mocks[args.path]||'export const PublicPageView="PageView",LinkedDescription="Description",EntryComments="Comments",AudioPlayer="Audio",publicFieldLabels={},entryReferencePath=()=>"/",Image="Image",Volume2="Audio",FileText="File";',loader:'js'}))}}]});
+const location={href:'https://archive.test/?ansicht=oeffentlich&tab=zeitkarte'},scope={module:{exports:{}},cursor:0,states:[],effects:[],URL,window:{location,addEventListener(){},removeEventListener(){},history:{state:null,pushState(_,__,url){location.href=new URL(url,location.href).href}}}};
+vm.runInNewContext(result.outputFiles[0].text,scope);
+function render(){scope.cursor=0;scope.effects=[];return scope.module.exports.PublicProfile({footer:{type:'LoginFooter',props:{}}})}
+function nodes(tree){if(!tree||typeof tree!=='object')return [];return [tree,...[tree.props?.children].flat(Infinity).flatMap(nodes)]}
+let tree=render();assert.ok(!nodes(tree).some(n=>n.type==='PageView'),'map deep link must not count a timeline view before URL initialization');for(const effect of scope.effects)effect();await new Promise(resolve=>setImmediate(resolve));tree=render();
+assert.ok(nodes(tree).some(n=>typeof n.type==='function'&&n.type.name==='TimeMap'));
+const links=nodes(tree).filter(n=>n.type==='a');assert.equal(links.find(n=>n.props.children==='Zeitkarte').props['aria-current'],'page');assert.ok(nodes(tree).some(n=>n.type==='LoginFooter'));assert.ok(links.some(n=>n.props.href==='https://github.com/Kirchmeister/Geschichtsverein'));assert.ok(!links.some(n=>n.props.href==='/experimente/bruchkoebel-zeitkarte.html'));
+links.find(n=>n.props.children==='Öffentliche Zeitleiste').props.onClick({button:0,preventDefault(){}});tree=render();assert.equal(new URL(location.href).searchParams.get('tab'),null);assert.ok(!nodes(tree).some(n=>typeof n.type==='function'&&n.type.name==='TimeMap'));assert.ok(nodes(tree).some(n=>n.type==='PageView'));assert.ok(nodes(tree).some(n=>n.type==='LoginFooter'));
+console.log('PASS: directly linkable map/timeline tabs preserve login and GitHub footer; map view does not count as timeline view.');

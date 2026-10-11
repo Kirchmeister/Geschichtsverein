@@ -27,6 +27,7 @@ try {
  assert.equal((await mf.dispatchFetch('https://archive.test/api/publication',{method:'POST',headers:{...outsider,'x-archive-preview-role':'admin','Content-Type':'application/json'},body:JSON.stringify({...review,action:'approve'})})).status,403);
  assert.equal((await call('/api/publication',{method:'POST',body:{...review,version:review.version+999,action:'approve'}})).status,409);
  await json('/api/publication',{role:'manager',method:'POST',body:{...review,action:'approve'}});
+ assert.equal((await json('/api/publication?id='+entry.id,{role:'user'}))[0].approvedBy,'Test Admin');assert.equal((await call('/api/publication?id='+entry.id,{role:'public'})).status,403);
  await json('/api/timeline-selection',{role:'user',method:'POST',body:{id:entry.id,visible:true}});const details=async()=>({entries:[(await json('/api/public-entry?reference='+entry.reference,{role:'public'})).entry]});let publicData=await details();assert.equal(publicData.entries.length,1);assert.equal(publicData.entries[0].description,entry.description);assert.equal(publicData.entries[0].interpretation,undefined);assert.equal(publicData.entries[0].uncertainty,undefined);assert.equal(publicData.entries[0].files.length,0);assert.ok(!JSON.stringify(publicData).includes('GEHEIME_NOTIZ'));
  assert.equal((await call('/api/files?public=1&key='+audioKey,{role:'public'})).status,403);
  await json('/api/public-fields',{method:'POST',body:{fields:['title','description','audio']}});

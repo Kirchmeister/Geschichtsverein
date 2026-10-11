@@ -596,3 +596,5 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .entry-save-choice{width:min(520px,calc(100vw - 28px));border:1px solid var(--border);border-radius:14px;background:var(--card);padding:24px!important}.entry-save-options{display:grid;gap:10px;margin-top:8px}.entry-save-options button{min-height:44px;white-space:normal;text-align:center;line-height:1.5}.entry-save-back{justify-self:start;color:var(--muted-foreground);font-size:13px;padding:6px 0;text-decoration:underline;text-underline-offset:3px}
 
 .update-progress-steps li.failed { color: #8d3b26; }
+
+.publication-approver{font-size:.88em;font-weight:400;color:var(--muted-foreground);overflow-wrap:anywhere}

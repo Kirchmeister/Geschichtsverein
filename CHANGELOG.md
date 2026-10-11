@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.28.0]
+- Freigegebene Beiträge nennen die genehmigende Person dezent beim Veröffentlichungsstatus.
+- Öffentliches Profil für alle angemeldeten Rollen direkt erreichbar; öffentliche Zeitleiste und Zeitkarte als verlinkbare Ansichten.
+- Menü und Verwaltung heißen „Zeitleiste verwalten“. Anmeldung, Archiv-Rückweg und GitHub-Hinweis bleiben in beiden öffentlichen Ansichten erreichbar.
+- Historische Karte ohne Testkennzeichnung; Hinweise zu gemeinschaftlicher Pflege, Lücken und möglichen Fehlern ergänzt.
+
+
 ## [0.27.1]
 
 - Docker-Build für Serverupdates erhält 60 statt 15 Minuten; aufrufender Dienst wartet länger als der Build. Größeres begrenztes Ausgabepufferlimit und getrennte Meldungen für Zeitlimit, volle Festplatte, Ausgabelimit und sonstige Prozessfehler ohne Rohlogs.
