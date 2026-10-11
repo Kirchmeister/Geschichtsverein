@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.27.1]
+
+- Docker-Build für Serverupdates erhält 60 statt 15 Minuten; aufrufender Dienst wartet länger als der Build. Größeres begrenztes Ausgabepufferlimit und getrennte Meldungen für Zeitlimit, volle Festplatte, Ausgabelimit und sonstige Prozessfehler ohne Rohlogs.
+- Fehlgeschlagene Phase bleibt im Updatefenster sichtbar, einschließlich älterer „prepare“-Fehler. Build-Abbruch lässt die bisherige App und die Daten unverändert.
+- Wichtig: Auch das separat laufende Docker-Update-Dienst-Image erneuern; ein App-Update allein ersetzt diesen Dienst nicht. Datenbankschema 18 und Backupformat 2 unverändert.
+
 ## [0.27.0]
 
 - Vorläufige Bruchköbel-Zeitkarte mit eigenem Zeitschieber und dezentem Link im öffentlichen Profil. Experimentstatus bleibt bestehen.

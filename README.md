@@ -37,6 +37,8 @@ Ein vollständiges Backup umfasst Daten und Dateien und dokumentiert Software-, 
 
 Ein Update wird nur vom Admin gestartet. Bei eingerichtetem und erfolgreich getestetem Nextcloud-Zugang kann der Admin vor dem Update eine neue externe Sicherung auswählen. Erst nach vollständigem Upload und Prüfsummenprüfung entfällt die Texteingabe; die lokale Rückfallsicherung und Probe-Wiederherstellung erfolgen zusätzlich. Dafür müssen Archiv-App und separater Update-Dienst mindestens Version 0.20.0 verwenden. Übersprungene Versionen werden bei automatischer Suche ausgeblendet, bei **Jetzt nach Updates suchen** jedoch mit Kennzeichnung wieder angeboten. Ein Code-Downgrade ersetzt keine Datenwiederherstellung.
 
+Bei einem Build-Abbruch nach rund 15 Minuten den separaten Update-Dienst auf mindestens 0.27.1 erneuern; ein App-Update allein genügt dafür nicht.
+
 [Serverupdates und Wiederherstellung](docs/server-updates.md) · [Technischer Backup-Import](docs/installation.md)
 
 GitHub enthält ausschließlich Code und Dokumentation; Archivdaten, Benutzerkonten, Sicherungen und Zugangsdaten gehören nicht ins Repository.

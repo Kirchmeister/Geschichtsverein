@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import fs from 'node:fs/promises';
+import {updateBuildTimeout,updateOutputLimit,updateFailureKind,updateFailureMessage} from './update-process.mjs';
 import path from 'node:path';
 import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
@@ -7,7 +8,7 @@ import {fileURLToPath} from 'node:url';
 export function dockerUpdateDriver(cfg,run=promisify(execFile)){
  const root=path.resolve(cfg.root),data=path.resolve(cfg.dataRoot),config=path.resolve(cfg.configRoot),name=cfg.container;
  if(!/^geschichtsarchiv-[a-z0-9-]+$/.test(name||'')||!Number.isInteger(cfg.appPort)||cfg.appPort<1024||cfg.appPort>65535||![cfg.uid,cfg.gid].every(n=>Number.isInteger(n)&&n>=1))throw Error('Docker-Treiber: Container, Port und Benutzerkennung prüfen.');
- const docker=(args,timeout=120000)=>run('docker',args,{timeout,maxBuffer:1024*1024});
+ const docker=(args,timeout=120000)=>run('docker',args,{timeout,maxBuffer:updateOutputLimit});
  async function image(code){const p=await fs.realpath(code);if(!p.startsWith(root+'/releases/'))throw Error('Release außerhalb der verwalteten Ablage.');const v=JSON.parse(await fs.readFile(path.join(p,'version.json'),'utf8'));if(!/^[a-f0-9]{40}$/.test(v.codeCommit||''))throw Error('Code-Commit fehlt.');return {code:p,v,tag:'geschichtsarchiv-managed:'+v.codeCommit}}
  async function inspect(){try{return JSON.parse((await docker(['inspect',name])).stdout)[0]}catch(e){if(/No such (object|container)/i.test(e.stderr||''))return null;throw e}}
  async function owned(){const c=await inspect();if(!c)return null;const mounts=c.Mounts||[];if(!mounts.some(m=>m.Destination==='/data'&&m.Source===data)||!mounts.some(m=>m.Destination==='/config'&&m.Source===config||m.Destination==='/config/app.env'&&m.Source===config+'/app.env'))throw Error('Container gehört nicht zu den konfigurierten Archivablagen.');if(c.Config?.Labels?.['io.history-archive.managed']!=='true'&&c.Config?.Labels?.['com.docker.compose.service']!=='archive')throw Error('Fremder Container wird nicht verändert.');return c}
@@ -15,7 +16,7 @@ export function dockerUpdateDriver(cfg,run=promisify(execFile)){
  async function probe(code,action,d,c){const i=await image(code);return docker(['run','--rm','--network','none','--user','0:0','--mount','type=bind,src='+d+',dst=/data'+(action==='verify'?',readonly':''),'--mount','type=bind,src='+c+'/app.env,dst=/config/app.env,readonly',i.tag,'node','scripts/update-probe.mjs',action],900000)}
  return async function driver(action,code,d=data,c=config){
   const i=await image(code);if(action!=='verify-restore'&&(path.resolve(d)!==data||path.resolve(c)!==config))throw Error('Live-Ablagen stimmen nicht überein.');
-  if(action==='prepare'){await docker(['build','--label','io.history-archive.managed=true','-t',i.tag,i.code],900000);return}
+  if(action==='prepare'){await docker(['build','--label','io.history-archive.managed=true','-t',i.tag,i.code],updateBuildTimeout);return}
   if(action==='verify-restore'){const trial=path.resolve(d).startsWith(root+'/backups/')&&path.resolve(c).startsWith(root+'/backups/')&&path.dirname(path.resolve(d))===path.dirname(path.resolve(c))&&path.basename(d)==='data'&&path.basename(c)==='config';if(!trial&&(path.resolve(d)!==data||path.resolve(c)!==config))throw Error('Ungültige Probeablagen.');await probe(code,'verify',d,c);return}
   if(action==='quiesce'){const existing=await inspect();await owned(existing);if(!existing?.State.Running)throw Error('Archiv muss für die Nextcloud-Sicherung laufen.');await marker('1');return;}
   if(action==='stop'){const existing=await owned();await marker('1');if(existing)await docker(['stop','--time','60',name]);return}
@@ -26,4 +27,4 @@ export function dockerUpdateDriver(cfg,run=promisify(execFile)){
   throw Error('Unbekannte Treiberaktion.');
  };
 }
-if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){const cfg=JSON.parse(await fs.readFile(process.env.ARCHIVE_UPDATER_CONFIG,'utf8'));try{await dockerUpdateDriver(cfg)(...process.argv.slice(2))}catch{console.error('Docker-Updateprüfung fehlgeschlagen; Wartungsmodus bleibt bestehen.');process.exitCode=1}}
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){const cfg=JSON.parse(await fs.readFile(process.env.ARCHIVE_UPDATER_CONFIG,'utf8'));try{await dockerUpdateDriver(cfg)(...process.argv.slice(2))}catch(error){const kind=updateFailureKind(error);console.error('ARCHIVE_UPDATE_ERROR:'+kind);console.error(updateFailureMessage(process.argv[2],kind));process.exitCode=1}}

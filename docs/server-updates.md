@@ -184,3 +184,9 @@ sudo ss -ltnp 'sport = :3099'
 ```
 
 Erwartet: laufender Dienst und Listener ausschließlich auf `127.0.0.1:3099`. Danach Einstellungen → Updates neu laden. Bei nicht erfolgreichem Start zuerst die Logs prüfen; den angehaltenen Rückfallcontainer nicht löschen. Ein Rückwechsel ist nur ohne laufenden Updatejob zulässig. Für das erste App-Update auf 0.20.0 kann noch der bisherige Text erforderlich sein; die neue Nextcloud-Auswahl steht ab dem anschließenden Update zur Verfügung.
+
+## Build-Abbruch nach rund 15 Minuten: Korrektur ab 0.27.1
+
+Frühere Dienste begrenzen sowohl `docker build` als auch den aufrufenden Treiber auf 900 Sekunden. Bei langsamem Image-Bau bricht der erste Versuch dadurch ab; ein späterer Versuch kann dank Build-Cache schneller fertig werden. Ab 0.27.1 darf der Docker-Build bis zu 60 Minuten dauern, der aufrufende Dienst wartet 61 Minuten. Andere Treiberaktionen behalten ihr bisheriges Limit mit zusätzlichem Zeitpuffer im aufrufenden Dienst. Der begrenzte Prozessausgabepuffer beträgt 16 MiB. Fehler unterscheiden Zeitüberschreitung, volle Festplatte, Ausgabelimit und sonstige Prozessfehler; Rohlogs und Zugangsdaten werden nicht an die Oberfläche weitergereicht.
+
+**Das Update-Dienst-Image muss separat ersetzt werden**, auch wenn die Archiv-App bereits aktuell ist. Nur nach einem abgeschlossenen oder sicher zurückgerollten Job nach „Vorhandenen Docker-Update-Dienst ersetzen“ vorgehen und für diese Korrektur `geschichtsarchiv-updater:0.27.1` bauen und starten. Bestehende Hostpfade und Konfiguration erhalten; das Archiv dabei nicht mit Compose neu starten. Bei diesem frühen Build-Abbruch läuft die bisherige App weiter, Sicherung und Migration werden noch nicht begonnen. Ein längeres Limit behebt keine tatsächlichen Compiler-, Netzwerk- oder Speicherplatzfehler.
