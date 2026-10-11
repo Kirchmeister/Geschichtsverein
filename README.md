@@ -228,3 +228,7 @@ Das Feld „Standort auf der Karte“ muss vom Administrator unter „Öffentlic
 Ausgeschaltete Karten behalten Standortdaten, blenden aber Mini-Karten und öffentliche Standorte aus. Punkte außerhalb des konfigurierten Radius sind in der Mini-Karte sichtbar; die Hauptkarte bleibt auf ihre Umgebung begrenzt. Standort, Beschreibung und Genauigkeit sind Teil der normalen Beitragsversion und der Sicherung; die Versionshistorie erlaubt die gemeinsame Wiederherstellung dieser Werte. Es ist keine zusätzliche Datenbankmigration erforderlich.
 
 Auf Touch-Geräten begrenzen öffentliche Profil-, Beitrags- und Kartenseiten den Browser-Zoom, damit Zwei-Finger-Gesten nur die Karte vergrößern. Ein-Finger-Scrollen und die Karten-Zoomtasten bleiben verfügbar; Desktop-Browser behalten ihren normalen Zoom. Browser- oder Betriebssystemfunktionen zur erzwungenen Vergrößerung können diese Vorgabe übersteuern.
+
+### Mobile Web-App aktualisieren
+
+In der installierten Web-App auf iPhone oder Android lässt sich die Seite am oberen Rand mit einem Finger ausreichend weit nach unten ziehen. Sobald „Loslassen zum Aktualisieren“ erscheint, löst Loslassen einen vollständigen Refresh der aktuellen Adresse aus. Kurzes Ziehen aktualisiert nicht. Karten, Bedienelemente, offene Dialoge und die mobile Menüleiste sind ausgenommen. Im normalen Browser bleibt dessen eigene Aktualisierungsfunktion verfügbar. Vor dem Aktualisieren sollten Änderungen gespeichert werden.

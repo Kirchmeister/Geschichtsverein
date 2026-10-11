@@ -605,3 +605,5 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* Public touch pages: scroll the page, pinch only inside the map iframe. */
 @media(hover:none) and (pointer:coarse){html[data-public-fixed-zoom]{touch-action:pan-x pan-y}}
+
+.archive-pull-refresh{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);left:50%;transform:translate(-50%,-120px);z-index:60;display:flex;align-items:center;gap:9px;max-width:calc(100vw - 24px);padding:10px 16px;border:1px solid var(--border);border-radius:24px;background:var(--card);color:var(--foreground);box-shadow:0 3px 16px #00000014;font-size:13px;line-height:1.4;pointer-events:none;opacity:0;transition:transform .15s,opacity .15s}.archive-pull-refresh.is-visible{transform:translate(-50%,0);opacity:1}.archive-pull-refresh svg{flex-shrink:0}.archive-pull-refresh.is-refreshing svg{animation:archive-refresh-spin 1s linear infinite}@keyframes archive-refresh-spin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.archive-pull-refresh{transition:none}.archive-pull-refresh.is-refreshing svg{animation:none}}

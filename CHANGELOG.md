@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.31.0]
+
+- Installierte mobile Web-App durch Herunterziehen am oberen Seitenrand aktualisieren, mit Hinweis zum Loslassen und Ladeanzeige. Kurze, horizontale und Mehrfinger-Gesten lösen keinen Refresh aus.
+- Karten, Eingabefelder, verschachtelte Scrollbereiche und offene Dialoge beziehungsweise mobile Menüleisten ausgenommen; Desktop und normale Browser behalten ihr bisheriges Verhalten.
+
 ## [0.30.2]
 
 - Update-Startbutton im Bestätigungsdialog auch ohne Hover lesbar: korrekte Designfarben für aktivierte und deaktivierte Zustände. Abstand und Textumbruch der Aktionsbuttons auf schmalen Ansichten verbessert.
