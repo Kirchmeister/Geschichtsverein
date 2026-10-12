@@ -1,5 +1,14 @@
 # Änderungen
 
+## [0.41.0] - 2026-10-12
+
+- Startseite als Übersicht; neuer Menüpunkt „Archiv“ direkt darunter. Recherche-Unteransichten werden zu einer zentralen Archivseite mit Kachel-Voreinstellungen zusammengeführt.
+- Kombinierbare Suche, Kategorien, Forschungsstand, Jahre, Aufbewahrung, Medien, Quellen und Personen/Familien; aktive Filter und Zurücksetzen, Listen-/Zeitleistendarstellung.
+- Echte serverseitige Trefferzählung, Sortierung und begrenzte Ergebnisseiten: 10/20/50/100, kompakte Seitenzahlen, Ergebnisbereich und Korrektur nicht mehr vorhandener Seiten.
+- Vollständiger Archivzustand in der URL; gespeicherte Seitengröße, Browser-Zurück/Vorwärts, sichere Rückkehr nach Anmeldung, Abbruch veralteter Suchabfragen.
+- Gezielte Detailabrufe und eigene Übersichts-/Auswahlabfragen; Gäste suchen und filtern ausschließlich freigegebene Angaben, einschließlich geschützter Zahlen und Sortierungen.
+- Linux-, SQL-, URL-, Datenschutz- und Regressionstests sowie Betreiberanleitung aktualisiert. Datenbankschema 19 und Backupformat 2 unverändert; Update-Dienst 0.35.0 genügt weiterhin.
+
 ## [0.40.0] - 2026-10-12
 
 - Gemeinsame Checkbox „Datierung ist ungefähr (ca.)“ für Zeitraum, Beginn und Ende; striktes Boolean-Attribut `isApproximateDate`, bei älteren Einträgen standardmäßig false.

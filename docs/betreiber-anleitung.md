@@ -168,7 +168,7 @@ Es gibt absichtlich keinen universellen Austauschbefehl mit geratenen Hostpfaden
 
 ### C. Zur Oberfläche zurückkehren
 
-„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.40.0 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.40.0 bringen.
+„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.41.0 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.41.0 bringen.
 
 ### D. Bilder nach dem Update auf 0.37.0
 
@@ -195,6 +195,16 @@ Neue Veröffentlichungsanfragen stehen weiterhin auf der Startseite unter „Aus
 Tragen Sie das Jahr wie bisher als Zahl ein, zum Beispiel 1520. Für eine unsichere Datierung aktivieren Sie darunter „Datierung ist ungefähr (ca.)“. Der Beitrag zeigt dann „ca. 1520“. Die eine Checkbox gilt gemeinsam für Zeitraum, Beginn und Ende; ein Zeitraum erscheint beispielsweise als „ca. 1520–1530“. Die technische Sortierung und die Jahresfilter ändern sich dadurch nicht. Ohne Datierung erscheint kein „ca.“. Bereits in den freien Text eingetragenes „ca.“ wird nicht verdoppelt und beim Ausschalten nicht gelöscht.
 
 Bestehende Beiträge bleiben ohne Zusatz, bis die Option ausdrücklich aktiviert wird. Speichern Sie die Änderung und beantragen Sie bei Bedarf erneut die Veröffentlichung. Die Kennzeichnung bleibt in Versionen und Sicherungen erhalten. Beim Zurückholen einer früheren Datierungsangabe wird ihre gemeinsame Circa-Kennzeichnung mit übernommen; beachten Sie, dass sie auch die übrigen Datierungsfelder betrifft.
+
+### I. Das neue Archiv ab 0.41.0
+
+Auf der Startseite bleiben die Übersicht, Eintrag anlegen und Veröffentlichungsanfragen. Zum Recherchieren öffnen Sie **Archiv** direkt unter Startseite im Menü. Alternativ wählen Sie eine der bisherigen Recherchekacheln; diese stellt passende Filter im Archiv ein. Sie können alle Filter anschließend ändern oder entfernen.
+
+Geben Sie einen Suchbegriff ein und kombinieren Sie Kategorie, Forschungsstand, Jahresbereich, Medien oder die weiteren Filter. Suche und Filter sind miteinander kombinierbar. Die Suche nach Personen/Familien zeigt passende Namen zur Auswahl. „Filter zurücksetzen“ zeigt wieder den vollständigen für Ihr Konto zugänglichen Bestand. Die Datierung kann auch als Zeitleiste sortiert angezeigt werden.
+
+Unten und oberhalb der Ergebnisse stehen Seitenzahlen und „Einträge … von …“. Sie können 10, 20, 50 oder 100 Beiträge pro Seite wählen. Der Browser merkt sich diese Auswahl nach Möglichkeit. Bei neuen Filtern geht es automatisch auf die erste Seite. Kopieren Sie die Adresse aus der Adressleiste, um eine gefilterte Ansicht weiterzugeben. Der Empfänger benötigt weiterhin ein berechtigtes Konto; Gäste sehen nur ihre freigegebenen Felder. Browser-Zurück/Vorwärts und Neuladen behalten die passende Ansicht. Eine notwendige Anmeldung führt zum geteilten Archivlink zurück.
+
+Ein Beitrag wird vollständig erst beim Öffnen geladen. Suche und Seitenabfragen benötigen keine vollständige Neuladung der Webseite. Falls keine Ergebnisse erscheinen, löschen Sie einzelne aktive Filter oder verwenden Sie „Filter zurücksetzen“.
 
 ## 7. Häufige Situationen
 

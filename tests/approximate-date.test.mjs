@@ -29,6 +29,6 @@ try{
  for(const range of [['1521','1521'],['1522',''],['','1519']])assert.equal(m.matchesArchiveYears(dates[1],...range),m.matchesArchiveYears({...dates[1],isApproximateDate:false},...range));assert.equal(m.matchesArchiveYears(dates[1],'1522','1522'),false);
  assert.equal(m.archiveSearchText(dates[1]),m.archiveSearchText({...dates[1],isApproximateDate:false}));assert.ok(m.archiveSearchText(dates[1]).includes('1521'));assert.ok(!m.archiveSearchText(dates[1]).includes('isapproximatedate'));
  assert.equal(JSON.stringify(data),original);assert.deepEqual(JSON.parse(original),data);
- const page=await readFile('app/page.tsx','utf8');assert.ok(page.includes('checked={edit.isApproximateDate===true}'));assert.ok(page.includes('entryDateText(detail'));assert.ok(page.includes('entryDateText(e)'));
+ const page=await readFile('app/page.tsx','utf8');assert.ok(page.includes('checked={edit.isApproximateDate===true}'));assert.ok(page.includes('entryDateText(detail'));assert.ok((await readFile('components/archive/archive-browser.tsx','utf8')).includes('entryDateText(entry)'));
  console.log('PASS: strict/default flag, single circa prefix, empty/negative/zero/range dates, all readers, field privacy, approved timeline display, history/restore, raw search and unchanged chronological sorting/filtering.');
 }finally{await Promise.all([file,'.approximate-date-test.css'].map(path=>rm(path,{force:true})))}

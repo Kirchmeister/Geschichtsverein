@@ -15,4 +15,4 @@ try{
   const code=await new Promise((resolve,reject)=>{child.once('error',reject);child.once('exit',resolve)});if(code!==0)throw Error('Packaged Linux runtime test failed: '+test);
  }
  console.log('PASS: isolated standalone package starts through the Docker entry script; packaged configuration, health, roles and backup export work.');
-}finally{await fs.rm(stage,{recursive:true,force:true})}
+}finally{await fs.rm(stage,{recursive:true,force:true,maxRetries:5,retryDelay:100})}

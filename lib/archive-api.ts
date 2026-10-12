@@ -19,17 +19,12 @@ export async function readArchiveResponse(response: Response): Promise<any> {
 }
 
 export async function archiveRequest(path: string, options: RequestInit = {}) {
-  let response: Response;
-  try {
-    response = await fetch(path, {
-      ...options,
-      credentials: 'same-origin',
-      cache: 'no-store',
-      headers: { Accept: 'application/json', ...archivePreviewHeaders(), ...options.headers },
-      signal: AbortSignal.timeout(30000),
-    });
-  } catch {
-    throw new Error('Die Verbindung zur Website wurde unterbrochen oder hat zu lange gedauert. Bitte erneut versuchen. Ihre Eingaben bleiben erhalten.');
-  }
-  return readArchiveResponse(response);
+ const controller=new AbortController(),abort=()=>controller.abort(),timer=setTimeout(abort,30000);
+ if(options.signal?.aborted)abort();else options.signal?.addEventListener('abort',abort,{once:true});
+ try{
+  let response:Response;
+  try{response=await fetch(path,{...options,credentials:'same-origin',cache:'no-store',headers:{Accept:'application/json',...archivePreviewHeaders(),...options.headers},signal:controller.signal})}
+  catch{throw new Error('Die Verbindung zur Website wurde unterbrochen oder hat zu lange gedauert. Bitte erneut versuchen. Ihre Eingaben bleiben erhalten.')}
+  return await readArchiveResponse(response);
+ }finally{clearTimeout(timer);options.signal?.removeEventListener('abort',abort)}
 }
