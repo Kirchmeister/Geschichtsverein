@@ -1,5 +1,13 @@
 # Änderungen
 
+## [0.39.0] - 2026-10-12
+
+- Veröffentlichungsanfragen erzeugen keine internen Systemnachrichten und keine Drei-Tage-Erinnerungen mehr; vorhandene Nachrichten und die Aufgabenübersicht bleiben erhalten.
+- Eigenes standardmäßig ausgewähltes Push-Thema „Neue Veröffentlichungsanfrage“ ausschließlich für Admins/Verwalter, unabhängig von Nachrichten-Push, mit Link zur Startseite.
+- Eigenes standardmäßig ausgewähltes Push-Thema „Eigener Beitrag zur Veröffentlichung freigegeben“ für die anfragende Person, mit Beitragstitel und internem Beitragslink. Globale Push-Aktivierung weiterhin erforderlich.
+- Atomare Ereignisspeicherung, Deduplizierung und erneute Rollen-/Einstellungs-/Vorgangsprüfung vor Versand; keine nachträglichen Pushs für alte Systemnachrichten oder vorhandene Anfragen.
+- Dokumentation und Linux-/Push-Tests aktualisiert. Schema 19 und Backupformat 2 unverändert; Update-Dienst 0.35.0 genügt weiterhin.
+
 ## [0.38.2] - 2026-10-12
 
 - Beschriftung unter der kleinen Beitragskarte richtet sich nach dem tatsächlich angezeigten Kartenmaterial: heutige Karte bei OpenStreetMap, historische Karte bei OpenHistoricalMap, einschließlich des automatischen Rückfalls.

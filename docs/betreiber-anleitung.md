@@ -168,7 +168,7 @@ Es gibt absichtlich keinen universellen Austauschbefehl mit geratenen Hostpfaden
 
 ### C. Zur Oberfläche zurückkehren
 
-„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.38.2 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.38.2 bringen.
+„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.39.0 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.39.0 bringen.
 
 ### D. Bilder nach dem Update auf 0.37.0
 
@@ -183,6 +183,12 @@ In der internen Leseansicht stehen Schließen-X und „Eintrag bearbeiten“ obe
 ### F. Einen Entwurf verwerfen ab 0.38.1
 
 Beim Öffnen des Bearbeitungsfensters ist kein Textfeld automatisch ausgewählt. Klicken oder tippen Sie das gewünschte Feld zum Bearbeiten an. Wenn Sie Ihre Änderungen nicht behalten möchten, wählen Sie unten im Bearbeitungsfenster „Entwurf verwerfen“ und bestätigen Sie die Rückfrage. Das Fenster schließt sich und der Hinweis auf diesen lokalen Entwurf verschwindet. Der zuletzt gespeicherte Beitrag und seine Freigabe bleiben erhalten; Sie müssen nichts speichern oder neu genehmigen lassen. „Abbrechen“ oder das Schließen-X bewahren den Entwurf weiterhin, damit Sie später fortsetzen können.
+
+### G. Veröffentlichungshinweise ab 0.39.0
+
+Neue Veröffentlichungsanfragen stehen weiterhin auf der Startseite unter „Ausstehende Veröffentlichungsanfragen“. Das System verschickt dafür keine internen Nachrichten und keine Erinnerungsnachrichten nach drei Tagen mehr. Bereits vorhandene Nachrichten bleiben erhalten.
+
+Öffnen Sie Ihre persönlichen Push-Einstellungen. Als Admin oder Verwalter können Sie „Neue Veröffentlichungsanfrage“ ein- oder ausschalten; ein normaler Nutzer hat diese Option nicht. „Eigener Beitrag zur Veröffentlichung freigegeben“ informiert die Person, die die Anfrage gestellt hat, nach der Genehmigung. Diese Option ist standardmäßig ausgewählt. Beide Hinweise benötigen weiterhin eine insgesamt aktivierte Push-Zustellung und die Browser-/Geräteberechtigung. Sie sind unabhängig von der Option „Neue interne Nachricht“. Beim Update werden frühere Vorgänge nicht nachträglich versendet.
 
 ## 7. Häufige Situationen
 

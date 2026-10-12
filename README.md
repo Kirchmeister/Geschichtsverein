@@ -67,7 +67,7 @@ Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quell
 
 Einstellungen → Updates zeigt die App- und Dienstversion getrennt, die erforderliche Mindestversion und einen verständlichen Status. **Anleitung öffnen** führt zur passenden versionierten Betreiberanleitung; **Erneut prüfen** liest den Dienststatus erneut, ohne ein Update zu starten. Die Vorbereitung führt durch Sicherung, gegebenenfalls Dienstwechsel, App-Update und Abschlussprüfung. Im Bestätigungsdialog werden die Anforderungen des ausgewählten Releases geprüft. Unbekannte Versionen und nicht erreichbare Dienste werden nicht als bereit behandelt. Die SSH-Hilfe bietet gefilterte Diagnose und einen kopierbaren KI-Prompt; Container und Hostpfade werden nicht geraten. Der Updater erneuert sich weiterhin nicht selbst.
 
-Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.38.2 ist nicht erforderlich.
+Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.39.0 ist nicht erforderlich.
 
 ## Updatekanäle und Kompatibilität ab 0.35.0
 
@@ -128,7 +128,7 @@ Portable Archivbackups übertragen keine Linux-Anmeldeidentitäten oder Passkeys
 
 Auf dem Linux-Server öffnet der Name unten links das Kontomenü. Im Register **Benachrichtigungen** können Sie Push aktivieren, den Browser freigeben und die Ereignisse persönlich auswählen. Die Auswahl und der Hauptschalter gelten für Ihr Konto; jeden Browser separat aktivieren. Das Ausschalten stoppt die Zustellung auf allen Geräten, „Alle Geräte abmelden“ entfernt die Registrierungen. Beim Abmelden aus dem Konto wird die Registrierung dieses Browsers entfernt.
 
-Nutzer, Verwalter und Admin erhalten die Optionen neue interne Nachrichten und QR-Probleme (jeweils Ein). Verwalter und Admin erhalten zusätzlich Kommentaranfragen (Ein). Veröffentlichungsanfragen werden als interne Nachricht zugestellt und verwenden deren Push-Einstellung. Admins erhalten zusätzlich Backupfehler und die erfolgreiche Passkey-Registrierung einer eingeladenen Person (jeweils Ein) sowie neue Softwareversionen (Aus). Die Vorauswahlen aktivieren keinen Versand ohne Ihre ausdrückliche Push-Aktivierung. QR-Hinweise melden ausschließlich den Wechsel zwischen „Probleme vorhanden“ und „alle behoben“.
+Nutzer, Verwalter und Admin erhalten die Optionen neue interne Nachrichten und QR-Probleme (jeweils Ein). Nutzer, Verwalter und Admin erhalten zusätzlich „Eigener Beitrag zur Veröffentlichung freigegeben“ (Ein). Verwalter und Admin erhalten außerdem Kommentaranfragen und „Neue Veröffentlichungsanfrage“ (jeweils Ein). Diese Veröffentlichungsthemen sind unabhängig von internen Nachrichten einstellbar. Admins erhalten zusätzlich Backupfehler und die erfolgreiche Passkey-Registrierung einer eingeladenen Person (jeweils Ein) sowie neue Softwareversionen (Aus). Die Vorauswahlen aktivieren keinen Versand ohne Ihre ausdrückliche Push-Aktivierung. QR-Hinweise melden ausschließlich den Wechsel zwischen „Probleme vorhanden“ und „alle behoben“.
 
 Push erfordert HTTPS und Browser-Unterstützung. Auf iPhone/iPad die Website zum Home-Bildschirm hinzufügen, von dort öffnen und Benachrichtigungen erlauben. Nach einem Browserwechsel oder portablen Datenimport neu registrieren.
 
@@ -165,10 +165,14 @@ Die Rotationsplanung erlaubt minutengenaue Starttermine (Europe/Berlin); auf Lin
 
 Die öffentliche Profilseite verlinkt am Seitenende dezent auf das GitHub-Projekt und seinen Quellcode.
 
-Neue Veröffentlichungsanfragen informieren auf Linux alle aktiven Admins und Verwalter automatisch über eine interne Nachricht mit Beitragslink. Die Freigabe erfolgt weiterhin im Beitrag. Push nutzt ausschließlich die Einstellung „Neue interne Nachricht“; ein separater Freigabe-Push entfällt. Die Startseite zeigt offene Anfragen weiterhin als ergänzende Übersicht. Frühere Anfragen werden beim Update nicht nachträglich als Nachrichten versendet.
+Ab 0.39.0 erzeugen neue Veröffentlichungsanfragen keine internen Systemnachrichten mehr. Die Startseite zeigt sie weiterhin unter **Ausstehende Veröffentlichungsanfragen**. Admins und Verwalter können unter ihren Push-Einstellungen **Neue Veröffentlichungsanfrage** unabhängig von internen Nachrichten ein- oder ausschalten. Der Push führt zur Startseite und enthält „Ein Beitrag wartet auf Veröffentlichungsfreigabe.“ Nutzer und Gäste erhalten diese Anfrage-Pushs nicht.
 
 ### Offene Veröffentlichungsanfragen
-Admin und Verwalter sehen unter Nachrichten alle offenen Anfragen unabhängig vom Lesestand. Nach drei Tagen erstellt der Linux-Hintergrunddienst einmalig eine interne Erinnerung für die aktuell berechtigten aktiven Konten. Nachrichten-Push gilt auch hierfür; es gibt keinen zusätzlichen Genehmigungsprozess. Entscheidung, Rücknahme, Löschung oder eine Bearbeitung, die die Anfrage aufhebt, beendet die Erinnerung. Der laufende Linux-Container prüft jede Minute; bei Stillstand wird nach dem Neustart nachgeholt. Auch vor dem Update angelegte offene Anfragen werden berücksichtigt.
+Admin und Verwalter erreichen offene Anfragen über die Startseite und weiterhin über die vorhandene Aufgabenliste unter Nachrichten. Automatische Erinnerungsnachrichten nach drei Tagen entfallen. Bereits vorhandene Nachrichten bleiben erhalten und erzeugen keine nachträglichen Pushs. Beim Update vorhandene offene Anfragen bleiben sichtbar, lösen aber keine neue Benachrichtigungswelle aus.
+
+Nach einer Genehmigung erhält ausschließlich die anfragende Person den Push „Dein Beitrag ‚[Titel]‘ wurde zur Veröffentlichung freigegeben.“, sofern Push insgesamt und **Eigener Beitrag zur Veröffentlichung freigegeben** aktiviert sind. Die Profiloption ist für interne Nutzer standardmäßig eingeschaltet; Geräteberechtigung und globale Push-Aktivierung bleiben erforderlich. Die Mitteilung öffnet den Beitrag im internen Archiv.
+
+Push-Ereignisse werden atomar mit Anfrage beziehungsweise Genehmigung gespeichert und pro Vorgang dedupliziert. Rollen und Einstellungen werden vor der Zustellung erneut geprüft; zurückgezogene, gelöschte oder durch Bearbeitung überholte Vorgänge werden nicht mehr zugestellt. Ausschalten aktiviert später keinen Nachversand bereits verarbeiteter Vorgänge. Es entstehen weder neue interne Nachrichten noch neue E-Mails durch diese Veröffentlichungshinweise.
 
 Das Archivsymbol ist im Web-App-Manifest und als Apple-Touch-Icon eingebunden. Bereits installierte Web-Apps aktualisieren ihre Symbole je nach Betriebssystem verzögert; gegebenenfalls den Home-Bildschirm-Eintrag entfernen und erneut hinzufügen.
 
@@ -179,11 +183,11 @@ Die Nextcloud-Einrichtung erfolgt unter Einstellungen in drei Schritten: Zugang 
 ### Interne Nachrichten und persönliches Löschen
 Nachrichten liegen unverschlüsselt in der Datenbank dieser Instanz (keine Ende-zu-Ende-Verschlüsselung); HTTPS schützt die Übertragung. Sie werden nicht per E-Mail versendet. Backups enthalten auch Nachrichten und können diese auf ein externes WebDAV-Ziel übertragen. Push enthält nur einen Hinweis und einen Link, keinen Nachrichtentext.
 
-Nutzer, Verwalter und Admin können eine Unterhaltung **nur für sich löschen**. Sie wird persönlich ausgeblendet, nicht aus der Datenbank oder aus Sicherungen entfernt. Andere Beteiligte behalten Zugriff. Neue Antworten machen die Unterhaltung wieder sichtbar; während des Löschens eingehende neue Antworten bleiben ungelesen. Offene Veröffentlichungsanfragen bleiben in der unabhängigen Aufgabenliste, auch nach dem Löschen ihrer Mitteilung. Der Versandnachweis für die einmalige Erinnerung nach drei Tagen bleibt erhalten.
+Nutzer, Verwalter und Admin können eine Unterhaltung **nur für sich löschen**. Sie wird persönlich ausgeblendet, nicht aus der Datenbank oder aus Sicherungen entfernt. Andere Beteiligte behalten Zugriff. Neue Antworten machen die Unterhaltung wieder sichtbar; während des Löschens eingehende neue Antworten bleiben ungelesen. Offene Veröffentlichungsanfragen bleiben in der unabhängigen Aufgabenliste, auch nach dem Löschen ihrer Mitteilung. Frühere Erinnerungsnachrichten bleiben als historische Nachrichten erhalten; neue werden nicht erstellt.
 
 Version 0.17.0 verwendet Schema 18 (persönlicher Ausblendungsstand mit Standardwert 0). Das Update erhält alle bestehenden Nachrichten. Alte Sicherungen können weiterhin importiert werden; Sicherungen mit Schema 18 benötigen eine passende oder neuere Anwendung. Code-Downgrades bitte nur in getrennten Testinstanzen mit passender Sicherung testen.
 
-Veröffentlichungsanfragen nennen unter „Angefragt von“ die anfragende Person in der Aufgabenliste und in den automatischen Nachrichten. Bei neuen Mitteilungen und Erinnerungen wird der Name im Nachrichtentext festgehalten. Bei älteren Mitteilungen wird er aus der zugehörigen Anfrage ermittelt; wenn dies nicht mehr eindeutig möglich ist, erscheint „Nicht mehr ermittelbar“. Der technische Absender bleibt „Archiv-Benachrichtigung“.
+Veröffentlichungsanfragen nennen unter „Angefragt von“ die anfragende Person in der Aufgabenliste. Die früheren automatischen Nachrichten bleiben erhalten; ab 0.39.0 werden keine neuen erstellt. Bei älteren Mitteilungen wird er aus der zugehörigen Anfrage ermittelt; wenn dies nicht mehr eindeutig möglich ist, erscheint „Nicht mehr ermittelbar“. Der technische Absender bleibt „Archiv-Benachrichtigung“.
 
 Unter **Einstellungen → Namen** können Administratoren Archivname, Vereinsname und die Unterzeile in der Menüleiste ändern. Die Unterzeile ist mit „Digitale Heimatforschung“ vorbelegt, erlaubt 1 bis 120 Zeichen und wird nach dem Speichern sofort aktualisiert. Alte Installationen ohne diese Einstellung verwenden den bisherigen Text. Sicherungen enthalten die Unterzeile; der Import stellt sie wieder her.
 

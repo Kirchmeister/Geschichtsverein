@@ -3,7 +3,7 @@
   "minimumServiceVersion": "0.35.0",
   "intermediateReleases": [],
   "supportedSources": [
-    {"minimumVersion":"0.20.0","maximumVersion":"0.38.2","minimumSchema":18,"maximumSchema":19,"backupFormatVersion":2}
+    {"minimumVersion":"0.20.0","maximumVersion":"0.39.0","minimumSchema":18,"maximumSchema":19,"backupFormatVersion":2}
   ],
   "testedSourceVersions": ["0.20.0", "0.27.1", "0.32.0", "0.34.0", "0.35.0"],
   "note": "Linux mit gültigem Migrationsjournal. Unbekannte ältere Ausgangsstände sind gesperrt. Vor jedem Update wird die konkrete Datenablage isoliert migriert und geprüft."
