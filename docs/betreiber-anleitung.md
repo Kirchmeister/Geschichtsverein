@@ -168,7 +168,7 @@ Es gibt absichtlich keinen universellen Austauschbefehl mit geratenen Hostpfaden
 
 ### C. Zur Oberfläche zurückkehren
 
-„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.38.1 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.38.1 bringen.
+„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.38.2 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.38.2 bringen.
 
 ### D. Bilder nach dem Update auf 0.37.0
 
@@ -176,7 +176,7 @@ Für neue Bilder ist beim Hochladen jeweils eine eigene Beschriftung erforderlic
 
 ### E. Kleine Beitragskarte und Bedienung ab 0.38.0
 
-Beim Bearbeiten eines Beitrags klappen Sie „Standort auf der Karte“ auf. Unter „Karte im öffentlichen Beitrag“ können Sie den Standard oder einen aktivierten Kartenanbieter wählen. Wenn nur OpenHistoricalMap aktiviert ist, zeigt auch die kleine Beitragskarte automatisch historische Karten. Bei beiden aktiven Karten bleibt OpenStreetMap der Standard. Wird die gewählte Karte später deaktiviert, erscheint die noch aktive Karte. Ohne aktive Karte bleibt die kleine Karte ausgeblendet. Das öffentliche Standortfeld muss weiterhin freigegeben sein. Speichern Sie die Wahl im Beitrag und beantragen Sie bei Bedarf eine neue Veröffentlichung.
+Beim Bearbeiten eines Beitrags klappen Sie „Standort auf der Karte“ auf. Unter „Karte im öffentlichen Beitrag“ können Sie den Standard oder einen aktivierten Kartenanbieter wählen. Wenn nur OpenHistoricalMap aktiviert ist, zeigt auch die kleine Beitragskarte automatisch historische Karten. Bei beiden aktiven Karten bleibt OpenStreetMap der Standard. Wird die gewählte Karte später deaktiviert, erscheint die noch aktive Karte. Ohne aktive Karte bleibt die kleine Karte ausgeblendet. Der Text unter der kleinen Karte nennt ab 0.38.2 passend zur angezeigten Karte „Standort auf der heutigen Karte“ oder „Standort auf der historischen Karte“. Das öffentliche Standortfeld muss weiterhin freigegeben sein. Speichern Sie die Wahl im Beitrag und beantragen Sie bei Bedarf eine neue Veröffentlichung.
 
 In der internen Leseansicht stehen Schließen-X und „Eintrag bearbeiten“ oben in einer festen Leiste. Scrollen Sie im Beitrag; die Leiste bleibt erreichbar. Der bisherige Bearbeiten-Button unten bleibt ebenfalls erhalten.
 

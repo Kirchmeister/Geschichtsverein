@@ -47,7 +47,7 @@ Beim Öffnen des Beitragseditors liegt der Fokus auf der Fensterüberschrift; de
 
 ## Beitragskarte und Detailansicht ab 0.38.0
 
-Im Beitragseditor unter **Standort auf der Karte → Karte im öffentlichen Beitrag** wählen Sie „Standard aus den Einstellungen“, OpenStreetMap oder OpenHistoricalMap. Nur unter Einstellungen → Karte aktivierte Anbieter sind auswählbar. Standard und bestehende Beiträge verwenden bei beiden aktivierten Karten OpenStreetMap; bei nur einer aktiven Karte diese. Wird eine gewählte Karte deaktiviert, verwendet die kleine Beitragskarte die noch aktive Karte. Ohne aktive Karte wird sie ausgeblendet. Die Wahl gehört zum Standort, zur Beitragsversion und zur Sicherung; die bestehenden Feldfreigaben gelten weiterhin. Der Standorteditor verwendet zur Koordinatenauswahl weiterhin OpenStreetMap.
+Im Beitragseditor unter **Standort auf der Karte → Karte im öffentlichen Beitrag** wählen Sie „Standard aus den Einstellungen“, OpenStreetMap oder OpenHistoricalMap. Nur unter Einstellungen → Karte aktivierte Anbieter sind auswählbar. Standard und bestehende Beiträge verwenden bei beiden aktivierten Karten OpenStreetMap; bei nur einer aktiven Karte diese. Wird eine gewählte Karte deaktiviert, verwendet die kleine Beitragskarte die noch aktive Karte. Ohne aktive Karte wird sie ausgeblendet. Die Wahl gehört zum Standort, zur Beitragsversion und zur Sicherung; die bestehenden Feldfreigaben gelten weiterhin. Der Standorteditor verwendet zur Koordinatenauswahl weiterhin OpenStreetMap. Ab 0.38.2 steht unter der kleinen Karte passend zum tatsächlich verwendeten Anbieter „Standort auf der heutigen Karte“ oder „Standort auf der historischen Karte“, auch beim automatischen Rückfall.
 
 Die interne Detailansicht hat eine feste Leiste mit Schließen-X und einem zusätzlichen **Eintrag bearbeiten**-Button oben. Der Beitrag scrollt unterhalb dieser Leiste; der Bearbeiten-Button am Ende bleibt erhalten. Gäste können schließen, erhalten aber keinen Bearbeiten-Button. Das öffentliche Profil bleibt davon unberührt.
 
@@ -67,7 +67,7 @@ Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quell
 
 Einstellungen → Updates zeigt die App- und Dienstversion getrennt, die erforderliche Mindestversion und einen verständlichen Status. **Anleitung öffnen** führt zur passenden versionierten Betreiberanleitung; **Erneut prüfen** liest den Dienststatus erneut, ohne ein Update zu starten. Die Vorbereitung führt durch Sicherung, gegebenenfalls Dienstwechsel, App-Update und Abschlussprüfung. Im Bestätigungsdialog werden die Anforderungen des ausgewählten Releases geprüft. Unbekannte Versionen und nicht erreichbare Dienste werden nicht als bereit behandelt. Die SSH-Hilfe bietet gefilterte Diagnose und einen kopierbaren KI-Prompt; Container und Hostpfade werden nicht geraten. Der Updater erneuert sich weiterhin nicht selbst.
 
-Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.38.1 ist nicht erforderlich.
+Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.38.2 ist nicht erforderlich.
 
 ## Updatekanäle und Kompatibilität ab 0.35.0
 

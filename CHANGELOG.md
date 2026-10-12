@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.38.2] - 2026-10-12
+
+- Beschriftung unter der kleinen Beitragskarte richtet sich nach dem tatsächlich angezeigten Kartenmaterial: heutige Karte bei OpenStreetMap, historische Karte bei OpenHistoricalMap, einschließlich des automatischen Rückfalls.
+- Die Standortüberschrift und die OpenStreetMap-Vorschau zur Koordinatenauswahl bleiben unverändert. Regressionstests für beide Anbieter und die Einstellungsvorschau ergänzt.
+- Datenbankschema 19 und Backupformat 2 unverändert; Update-Dienst 0.35.0 genügt weiterhin.
+
 ## [0.38.1] - 2026-10-12
 
 - Beitragseditor fokussiert beim Öffnen die Fensterüberschrift statt des Titelfelds; keine automatische Textmarkierung und kein automatisch fokussiertes Eingabefeld auf Mobilgeräten.

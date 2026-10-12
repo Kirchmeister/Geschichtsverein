@@ -26,7 +26,8 @@ r=await run({enabled:true,provider:'osm',place:'Testort',lat:50,lon:8,radius:5,t
 r=await run({enabled:true,provider:'osm',place:'Testort',lat:50,lon:8,radius:5,title:'',startView:'locality'},'?lat=50&lon=8');assert.equal(r.scope.linked.zoom,16);
 
 const historicalPoint={enabled:true,provider:'ohm',place:'Standort',lat:50,lon:8,radius:2,title:'',startView:'detail'};
-r=await run(historicalPoint,'?vorschau=1');assert.equal(r.scope.options.style,'https://www.openhistoricalmap.org/map-styles/main/main.json');assert.equal(r.scope.startView.zoom,16);assert.equal(r.elements.get('time-controls').hidden,true);assert.equal(r.scope.sources,undefined);
+r=await run(historicalPoint,'?vorschau=1');assert.equal(r.scope.options.style,'https://www.openhistoricalmap.org/map-styles/main/main.json');assert.equal(r.scope.startView.zoom,16);assert.equal(r.elements.get('time-controls').hidden,true);assert.equal(r.scope.sources,undefined);assert.equal(r.elements.get('status').textContent,'Standort auf der historischen Karte');
 r=await run(historicalPoint,'?vorschau=1',null,{locked:false,point:true});assert.ok(r.scope.options.style.sources.osm);
-r=await run(historicalPoint,'?vorschau=1',null,{locked:true,point:false});assert.ok(r.scope.options.style.sources.osm);
+r=await run(historicalPoint,'?vorschau=1',null,{locked:true,point:false});assert.ok(r.scope.options.style.sources.osm);assert.equal(r.elements.get('status').textContent,'Standort auf der heutigen Karte');
+r=await run({...historicalPoint,provider:'osm'},'?vorschau=1');assert.ok(r.scope.options.style.sources.osm);assert.equal(r.elements.get('status').textContent,'Standort auf der heutigen Karte');
 console.log('PASS: locked historical contribution point uses OHM material; coordinate editor and settings preview retain OSM.');
