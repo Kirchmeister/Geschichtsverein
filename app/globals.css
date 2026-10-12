@@ -638,3 +638,5 @@ html { scroll-padding-top: calc(60px + env(safe-area-inset-top, 0px)); }
 .entry-reader-close svg{width:20px;height:20px}
 .entry-reader-scroll{overflow-y:auto;min-height:0;flex:1 1 auto;padding:28px;display:grid;gap:20px;overscroll-behavior:contain;scroll-padding-top:16px}
 @media(max-width:650px){.entry-reader-scroll{padding:18px;gap:16px}.entry-reader-toolbar{padding:10px 14px;gap:10px}}
+
+.form-actions{flex-wrap:wrap}.form-actions .discard-draft{margin-right:auto;text-decoration:underline;text-underline-offset:3px}.editor [data-slot=dialog-title][tabindex="-1"]:focus-visible{outline:2px solid var(--archive-tone-496c51);outline-offset:5px}

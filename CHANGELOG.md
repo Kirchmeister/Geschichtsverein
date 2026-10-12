@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.38.1] - 2026-10-12
+
+- Beitragseditor fokussiert beim Öffnen die Fensterüberschrift statt des Titelfelds; keine automatische Textmarkierung und kein automatisch fokussiertes Eingabefeld auf Mobilgeräten.
+- „Entwurf verwerfen“ im Bearbeitungsfenster löscht nach Bestätigung die lokale Entwurfssicherung und schließt den Editor. Gespeicherte Beiträge und Veröffentlichungsfreigaben bleiben unverändert.
+- Abbrechen/Schließen behält den Entwurf weiterhin. Verwerfen ist während Speichern, Upload oder Audioverarbeitung gesperrt; bei einem Löschfehler bleiben die Eingaben geöffnet.
+- Dokumentation und gezielte Tests ergänzt. Datenbankschema 19 und Backupformat 2 unverändert; Update-Dienst 0.35.0 genügt weiterhin.
+
 ## [0.38.0] - 2026-10-12
 
 - Kartenanbieter je Beitragsstandort: Standard aus den Einstellungen oder ausdrücklich OpenStreetMap/OpenHistoricalMap. Nur aktive Anbieter auswählbar; ohne aktivierte Karte keine kleine Beitragskarte.

@@ -168,7 +168,7 @@ Es gibt absichtlich keinen universellen Austauschbefehl mit geratenen Hostpfaden
 
 ### C. Zur Oberfläche zurückkehren
 
-„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.38.0 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.38.0 bringen.
+„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.38.1 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.38.1 bringen.
 
 ### D. Bilder nach dem Update auf 0.37.0
 
@@ -179,6 +179,10 @@ Für neue Bilder ist beim Hochladen jeweils eine eigene Beschriftung erforderlic
 Beim Bearbeiten eines Beitrags klappen Sie „Standort auf der Karte“ auf. Unter „Karte im öffentlichen Beitrag“ können Sie den Standard oder einen aktivierten Kartenanbieter wählen. Wenn nur OpenHistoricalMap aktiviert ist, zeigt auch die kleine Beitragskarte automatisch historische Karten. Bei beiden aktiven Karten bleibt OpenStreetMap der Standard. Wird die gewählte Karte später deaktiviert, erscheint die noch aktive Karte. Ohne aktive Karte bleibt die kleine Karte ausgeblendet. Das öffentliche Standortfeld muss weiterhin freigegeben sein. Speichern Sie die Wahl im Beitrag und beantragen Sie bei Bedarf eine neue Veröffentlichung.
 
 In der internen Leseansicht stehen Schließen-X und „Eintrag bearbeiten“ oben in einer festen Leiste. Scrollen Sie im Beitrag; die Leiste bleibt erreichbar. Der bisherige Bearbeiten-Button unten bleibt ebenfalls erhalten.
+
+### F. Einen Entwurf verwerfen ab 0.38.1
+
+Beim Öffnen des Bearbeitungsfensters ist kein Textfeld automatisch ausgewählt. Klicken oder tippen Sie das gewünschte Feld zum Bearbeiten an. Wenn Sie Ihre Änderungen nicht behalten möchten, wählen Sie unten im Bearbeitungsfenster „Entwurf verwerfen“ und bestätigen Sie die Rückfrage. Das Fenster schließt sich und der Hinweis auf diesen lokalen Entwurf verschwindet. Der zuletzt gespeicherte Beitrag und seine Freigabe bleiben erhalten; Sie müssen nichts speichern oder neu genehmigen lassen. „Abbrechen“ oder das Schließen-X bewahren den Entwurf weiterhin, damit Sie später fortsetzen können.
 
 ## 7. Häufige Situationen
 
