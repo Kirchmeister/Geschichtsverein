@@ -41,6 +41,12 @@ Mit **Karte speichern** übernehmen Sie die Änderung. Ausschalten blendet den �
 
 Die Ortssuche nutzt Photon auf OpenStreetMap-Datenbasis und läuft nur nach ausdrücklichem Suchen. Der öffentliche [Photon-Dienst](https://github.com/komoot/photon#demo-server) erlaubt angemessene Nutzung ohne Verfügbarkeitsgarantie; umfangreiche Nutzung kann begrenzt werden. Betreiber können in `linux-config/app.env` mit `ARCHIVE_GEOCODER_URL=https://ihr-photon-server.example/api/` einen anderen kompatiblen HTTPS-Photon-Endpunkt setzen und den App-Container neu starten. Keine Zugangsdaten in dieser URL verwenden. Beim Laden der Karte werden externe Kartendienste und Bibliotheken kontaktiert. Quellenhinweise bleiben sichtbar. Die [OSM-Kachelnutzungsbedingungen](https://operations.osmfoundation.org/policies/tiles/) gelten für die heutige Karte; keine Offline- oder Massendownloads sind eingebaut.
 
+## Beitragskarte und Detailansicht ab 0.38.0
+
+Im Beitragseditor unter **Standort auf der Karte → Karte im öffentlichen Beitrag** wählen Sie „Standard aus den Einstellungen“, OpenStreetMap oder OpenHistoricalMap. Nur unter Einstellungen → Karte aktivierte Anbieter sind auswählbar. Standard und bestehende Beiträge verwenden bei beiden aktivierten Karten OpenStreetMap; bei nur einer aktiven Karte diese. Wird eine gewählte Karte deaktiviert, verwendet die kleine Beitragskarte die noch aktive Karte. Ohne aktive Karte wird sie ausgeblendet. Die Wahl gehört zum Standort, zur Beitragsversion und zur Sicherung; die bestehenden Feldfreigaben gelten weiterhin. Der Standorteditor verwendet zur Koordinatenauswahl weiterhin OpenStreetMap.
+
+Die interne Detailansicht hat eine feste Leiste mit Schließen-X und einem zusätzlichen **Eintrag bearbeiten**-Button oben. Der Beitrag scrollt unterhalb dieser Leiste; der Bearbeiten-Button am Ende bleibt erhalten. Gäste können schließen, erhalten aber keinen Bearbeiten-Button. Das öffentliche Profil bleibt davon unberührt.
+
 ## Bildbeschriftungen ab 0.37.0
 
 Jedes neu hochgeladene Bild benötigt eine eigene Beschriftung (bis 500 Zeichen). Dateien auswählen, die Beschriftung für jedes Bild ausfüllen und **Ausgewählte Dateien hochladen** anklicken; anschließend den Beitrag speichern. Bei einem Uploadfehler bleiben die noch nicht hochgeladenen Dateien zur Korrektur oder zum erneuten Versuch ausgewählt. Erfolgreiche Uploads sind bereits zugeordnet. Noch ausstehende Uploads werden nicht in der lokalen Entwurfssicherung gespeichert.
@@ -57,7 +63,7 @@ Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quell
 
 Einstellungen → Updates zeigt die App- und Dienstversion getrennt, die erforderliche Mindestversion und einen verständlichen Status. **Anleitung öffnen** führt zur passenden versionierten Betreiberanleitung; **Erneut prüfen** liest den Dienststatus erneut, ohne ein Update zu starten. Die Vorbereitung führt durch Sicherung, gegebenenfalls Dienstwechsel, App-Update und Abschlussprüfung. Im Bestätigungsdialog werden die Anforderungen des ausgewählten Releases geprüft. Unbekannte Versionen und nicht erreichbare Dienste werden nicht als bereit behandelt. Die SSH-Hilfe bietet gefilterte Diagnose und einen kopierbaren KI-Prompt; Container und Hostpfade werden nicht geraten. Der Updater erneuert sich weiterhin nicht selbst.
 
-Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.37.0 ist nicht erforderlich.
+Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.38.0 ist nicht erforderlich.
 
 ## Updatekanäle und Kompatibilität ab 0.35.0
 

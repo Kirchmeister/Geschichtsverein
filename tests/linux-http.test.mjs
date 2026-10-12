@@ -148,5 +148,19 @@ console.log('PASS: authenticated Linux publication request creates one linked no
  const legacyEntry=(await (await request('/api/entries','user')).json()).find(e=>e.id===captionEntry.id);assert.equal(legacyEntry.files[0].caption,undefined);assert.equal((await request('/api/entries','user',legacyEntry)).status,400);assert.equal((await (await request('/api/entries?history='+captionEntry.id,'user')).json()).length,captionHistory.length);
  assert.equal((await request('/api/entries','user',{...legacyEntry,files:[firstImage,secondImage]})).status,200);
  console.log('PASS: real HTTP rejects uncaptioned uploads/saves, preserves individual captions through review/public/guest projection and history, respects media visibility and requires captions on legacy edits.');
+
+ const providerInput={...saveInput,id:crypto.randomUUID(),title:'Historische Beitragskarte',location:{lat:50,lon:8,label:'Standort',approximate:false,mapProvider:'ohm'}};
+ response=await request('/api/entries','user',{...providerInput,requestPublication:true});assert.equal(response.status,200,await response.clone().text());let providerEntry=await response.json();assert.equal(providerEntry.location.mapProvider,'ohm');
+ const providerReview=(await (await request('/api/publication?id='+providerEntry.id,'manager')).json())[0];assert.equal(providerReview.data.location.mapProvider,'ohm');
+ assert.equal((await request('/api/publication','manager',{id:providerEntry.id,updated:providerEntry.updated,version:providerReview.requestedVersion,action:'approve'})).status,200);
+ assert.equal((await request('/api/public-fields','admin',{fields:['title','location']})).status,200);assert.equal((await (await request('/api/public-entry?reference='+providerEntry.reference)).json()).entry.location.mapProvider,'ohm');
+ assert.equal((await request('/api/guest-fields','admin',{fields:['title','location']})).status,200);assert.equal((await (await request('/api/entries','guest')).json()).find(e=>e.id===providerEntry.id).location.mapProvider,'ohm');
+ assert.equal((await request('/api/entries','user',{...providerInput,id:crypto.randomUUID(),location:{...providerInput.location,mapProvider:'invalid'}})).status,400);
+ mapSaved=await (await request('/api/map','admin',{action:'save',config:{...mapSaved,provider:'osm'},expectedRevision:mapSaved.revision})).json();
+ assert.equal((await request('/api/entries','user',{...providerInput,id:crypto.randomUUID()})).status,400);
+ response=await request('/api/entries','user',{...providerEntry,title:'Gespeicherte Wahl bleibt erhalten'});assert.equal(response.status,200,await response.clone().text());providerEntry=await response.json();assert.equal(providerEntry.location.mapProvider,'ohm');
+ response=await request('/api/entries','user',{...providerEntry,location:{...providerEntry.location,mapProvider:'default'}});assert.equal(response.status,200);providerEntry=await response.json();assert.equal(providerEntry.location.mapProvider,'default');
+ const providerHistory=await (await request('/api/entries?history='+providerEntry.id,'user')).json();assert.ok(providerHistory.some(v=>v.data.location?.mapProvider==='ohm'));assert.ok(providerHistory.some(v=>v.data.location?.mapProvider==='default'));
+ console.log('PASS: active provider persists, unknown/new disabled selections rejected, existing disabled preference preserved, default change and version history supported.');
  suiteCompleted=true;console.log('PASS: full Linux HTTP suite completed.');
 }catch(e){console.error('HTTP verification failed:',e);throw e}finally{await new Promise(resolve=>davServer.close(resolve));server.kill('SIGTERM');await new Promise(resolve=>{if(server.exitCode!==null||server.signalCode!==null)return resolve();server.once('exit',resolve)});await fs.rm(root,{recursive:true,force:true})}

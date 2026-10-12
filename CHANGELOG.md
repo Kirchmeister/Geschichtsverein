@@ -1,5 +1,13 @@
 # Änderungen
 
+## [0.38.0] - 2026-10-12
+
+- Kartenanbieter je Beitragsstandort: Standard aus den Einstellungen oder ausdrücklich OpenStreetMap/OpenHistoricalMap. Nur aktive Anbieter auswählbar; ohne aktivierte Karte keine kleine Beitragskarte.
+- Bei nur einem Anbieter automatische Nutzung dieser Karte; bei beiden bleibt OpenStreetMap der Standard. Deaktivierte gespeicherte Auswahlen fallen auf den noch aktiven Anbieter zurück und bleiben für spätere Reaktivierung erhalten.
+- Historisches Kartenmaterial auch in der kleinen Beitragskarte; Standortwahl wird versioniert, freigegeben und mitgesichert. Standorteditor behält OpenStreetMap zur Koordinatenauswahl.
+- Feste interne Detailleiste mit jederzeit erreichbarem Schließen-X und zusätzlichem Bearbeiten-Button oben; bisheriger Button unten und Gast-Leserechte bleiben erhalten.
+- Datenbankschema 19 und Backupformat 2 unverändert. Update-Dienst 0.35.0 genügt weiterhin.
+
 ## [0.37.0] - 2026-10-12
 
 - Jedes neue Bild benötigt vor dem Upload eine eigene Beschriftung; Mehrfachauswahl bietet getrennte Eingaben und lädt erst nach vollständiger Prüfung hoch. Fehlgeschlagene Uploads können ohne erneutes Hochladen bereits erfolgreicher Dateien wiederholt werden.
