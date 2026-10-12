@@ -1,7 +1,7 @@
 name: Versioned releases
 on:
   push:
-    branches: [main]
+    branches: [main, development]
   workflow_dispatch:
 permissions:
   contents: write
@@ -10,15 +10,20 @@ concurrency:
   cancel-in-progress: false
 jobs:
   release:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/development'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
+      - name: Select versioned release channel
+        id: channel
+        run: node -e "const v=require('./version.json'); const ok=(process.env.GITHUB_REF_NAME==='development')===v.prerelease; require('fs').appendFileSync(process.env.GITHUB_OUTPUT, 'publish='+ok+'\\n')"
       - name: Verify version and release notes
+        if: steps.channel.outputs.publish == 'true'
         run: node scripts/check-version.mjs
       - name: Publish fixed tags and release notes
+        if: steps.channel.outputs.publish == 'true'
         run: node scripts/github-release.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

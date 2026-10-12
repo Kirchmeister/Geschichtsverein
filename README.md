@@ -37,6 +37,22 @@ Mit **Karte speichern** übernehmen Sie die Änderung. Ausschalten blendet den �
 
 Die Ortssuche nutzt Photon auf OpenStreetMap-Datenbasis und läuft nur nach ausdrücklichem Suchen. Der öffentliche [Photon-Dienst](https://github.com/komoot/photon#demo-server) erlaubt angemessene Nutzung ohne Verfügbarkeitsgarantie; umfangreiche Nutzung kann begrenzt werden. Betreiber können in `linux-config/app.env` mit `ARCHIVE_GEOCODER_URL=https://ihr-photon-server.example/api/` einen anderen kompatiblen HTTPS-Photon-Endpunkt setzen und den App-Container neu starten. Keine Zugangsdaten in dieser URL verwenden. Beim Laden der Karte werden externe Kartendienste und Bibliotheken kontaktiert. Quellenhinweise bleiben sichtbar. Die [OSM-Kachelnutzungsbedingungen](https://operations.osmfoundation.org/policies/tiles/) gelten für die heutige Karte; keine Offline- oder Massendownloads sind eingebaut.
 
+## Markdown in Beiträgen ab 0.35.0
+
+Beschreibung, Quellen, eigene Interpretation, offene Fragen und Nutzungsrechte unterstützen Markdown mit Überschriften, Fett/Kursiv, Listen, Zitaten, Links und Tabellen. Der Editor bietet Formatierungsbuttons und **Bearbeiten / Vorschau**. Neue Beiträge verwenden Markdown; bestehende Texte bleiben Klartext, bis **Markdown-Formatierung aktivieren** für das jeweilige Feld ausgewählt wird. Abschalten verändert den Quelltext nicht. Intern, für Gäste und öffentlich wird derselbe Renderer verwendet; die vorhandenen Freigaben gelten weiterhin. Eingebettetes HTML wird nur als Text dargestellt, unsichere Linkprotokolle sind gesperrt, Markdown-Bilder laden keine externen Medien. Dateien und Audio weiter über die Dateiverwaltung hinzufügen.
+
+Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quelltext gespeichert. Formatierungsbuttons erhalten vorhandene Zuordnungen; manuelle Änderungen innerhalb eines zugeordneten Textes entfernen dessen Zuordnung wie bisher. Markdown-Linktexte können vorhandene Zuordnungen überlagern; innerhalb eines Markdown-Links wird kein zweiter Link verschachtelt. Versionshistorie und Sicherungen behalten Quelltext und Feldformat. Die gezielte Wiederherstellung übernimmt beide gemeinsam.
+
+## Updatekanäle und Kompatibilität ab 0.35.0
+
+**Wichtig: Auch den separaten Update-Dienst auf mindestens 0.35.0 aktualisieren**, siehe [Serverupdates](docs/server-updates.md). Eine neue App allein ersetzt den Dienst nicht. Eine Migration einer bestehenden Instanz auf 0.35.0 verlangt den neuen Dienst bereits vor der Datenänderung; ein alter Dienst erhält eine verständliche Sperre. Ohne den neuen Dienst sind weitere Installationen und die Beta-Auswahl in der neuen Oberfläche gesperrt.
+
+Unter **Einstellungen → Updates** bietet **Beta-Updates zusätzlich anbieten** optional versionierte Development-Releases wie `0.36.0-beta.1` an. Standardmäßig erscheinen nur stabile Main-Releases. Die Auswahl bleibt beim Dienstneustart gespeichert. Ausschalten installiert nichts und entfernt keinen vorhandenen Betastand. Installierter Kanal, neueste stabile Version, blockierte Ziele und erforderliche Zwischenschritte werden angezeigt. Eine Beta kehrt erst über einen neueren kompatiblen stabilen Stand zurück; Downgrades bleiben gesperrt.
+
+Jedes neue Release enthält `docs/update-compatibility.json` mit unterstützten Ausgangsständen und Mindestversion des Dienstes. Notwendige Zwischenreleases werden über `intermediateReleases` ausdrücklich angegeben. Der Dienst prüft Metadaten am festen Commit, den vorgesehenen Branch und den kürzesten freigegebenen Pfad. Jeder Schritt benötigt einen eigenen Installationsauftrag; Folgeschritte erfolgen nicht automatisch. Nach Sicherung und Probe-Wiederherstellung wird die konkrete Zielmigration auf einer getrennten Kopie geprüft. Erst danach verändert sie die Live-Daten.
+
+Die aktuelle Policy unterstützt Linux-Stände ab 0.20.0 mit Schema 18/19, Backupformat 2 und gültigem Migrationsjournal. Repräsentative historische Schema-Prüfungen erfolgen für 0.20.0, 0.27.1, 0.32.0 und 0.34.0. Das ist keine Garantie für beliebige alte Installationen: unbekannte Ausgangsstände, fehlende Metadaten, geänderte Migrationsdateien oder fehlende Medien blockieren den Vorgang. Ein älterer Stand benötigt zunächst eine gesonderte Prüfung und einen ausdrücklich freigegebenen Migrationsweg.
+
 ## Funktionen
 
 - Admin, Verwalter, Nutzer und Gäste sowie öffentliche Ansicht

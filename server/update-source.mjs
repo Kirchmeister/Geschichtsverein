@@ -1,3 +1,4 @@
+import {versionPattern,releaseChannel} from './update-compatibility.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -12,7 +13,7 @@ export function repositoryName(input){
 }
 export function checkContract(contract,version,pkg,current,tag){
  if(contract?.projectId!==PROJECT||contract.updateProtocol!==1||contract.backupFormatVersion!==current.backupFormatVersion||version.backupFormatVersion!==current.backupFormatVersion)throw Error('Projektkennung oder Update-/Sicherungsformat passt nicht.');
- if(!/^v(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)$/.test(tag)||version.version!==tag.slice(1)||pkg.version!==version.version||version.prerelease!==false||!Number.isInteger(version.databaseSchemaVersion)||version.databaseSchemaVersion<current.databaseSchemaVersion)throw Error('Release-Version oder Datenbankschema passt nicht.');
+ if(!versionPattern.test(tag)||version.version!==tag.slice(1)||pkg.version!==version.version||typeof version.prerelease!=='boolean'||version.prerelease!==tag.includes('-beta.')||!Number.isInteger(version.databaseSchemaVersion)||version.databaseSchemaVersion<current.databaseSchemaVersion)throw Error('Release-Version oder Datenbankschema passt nicht.');
 }
 export async function checkLocalRelease(directory,current,tag){
  const values={};for(const name of required){const file=path.join(directory,name);const stat=await fs.lstat(file);if(!stat.isFile()||stat.isSymbolicLink())throw Error('Projektdatei fehlt oder ist ungültig.');if(name.endsWith('.json'))values[name]=JSON.parse(await fs.readFile(file,'utf8'));}

@@ -16,6 +16,7 @@ COPY --from=build --chown=node:node /app/drizzle ./drizzle
 COPY --from=build --chown=node:node /app/server ./server
 COPY --from=build --chown=node:node /app/scripts ./scripts
 COPY --from=build --chown=node:node /app/version.json ./version.json
+COPY --from=build --chown=node:node /app/docs/update-compatibility.json ./docs/update-compatibility.json
 # CLI requires the same verified WebAuthn package as the application.
 COPY --from=build --chown=node:node /app/node_modules ./node_modules
 RUN mkdir /data /config && chown node:node /data /config

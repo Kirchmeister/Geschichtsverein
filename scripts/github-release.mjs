@@ -1,7 +1,9 @@
 import fs from 'node:fs';
 import {pathToFileURL} from 'node:url';
-export async function publishReleases({repository,sha,token,request=fetch,version=JSON.parse(fs.readFileSync('version.json','utf8')),changelog=fs.readFileSync('CHANGELOG.md','utf8'),baseline=JSON.parse(fs.readFileSync('releases/baseline.json','utf8'))}){
+export async function publishReleases({repository,sha,token,request=fetch,version=JSON.parse(fs.readFileSync('version.json','utf8')),changelog=fs.readFileSync('CHANGELOG.md','utf8'),branch=process.env.GITHUB_REF_NAME||'main',baseline=JSON.parse(fs.readFileSync('releases/baseline.json','utf8'))}){
  if(!/^[\w.-]+\/[\w.-]+$/.test(repository)||!/^[a-f0-9]{40}$/.test(sha)||!token)throw Error('Missing release environment.');
+ if(version.prerelease!==version.version.includes('-beta.'))throw Error('Beta-Version benötigt eine eindeutige Beta-Nummer.');
+ if((version.prerelease&&branch!=='development')||(!version.prerelease&&branch!=='main'))throw Error('Release-Kanal passt nicht zum Branch.');
  const base='https://api.github.com/repos/'+repository;
  async function api(path,method='GET',data){const r=await request(base+path,{method,headers:{Authorization:'Bearer '+token,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2026-03-10'},...(data?{body:JSON.stringify(data)}:{})});if(r.status===404&&method==='GET')return null;if(!r.ok)throw Error('GitHub release request failed: HTTP '+r.status);return r.json();}
  function notes(v){const marker='## ['+v+']',start=changelog.indexOf(marker);if(start<0)throw Error('Missing release notes.');const end=changelog.indexOf('\n## [',start+marker.length);return changelog.slice(start,end<0?undefined:end).trim();}

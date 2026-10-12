@@ -1,5 +1,14 @@
 # Änderungen
 
+## [0.35.0] - 2026-10-12
+
+- Markdown für Beschreibung, Quellen, Interpretation, offene Fragen und Rechte: Formatierungsbuttons und Vorschau; gemeinsame sichere Darstellung intern, für Gäste und öffentlich. Bestehende Felder bleiben Klartext bis zur ausdrücklichen Aktivierung.
+- Textformate gehören zu Versionen und Backups; gezielte Wiederherstellung übernimmt das jeweilige Format. Positionsbezogene Verknüpfungen und Personentags werden beim Formatieren erhalten.
+- Update-Kompatibilität mit festen Release-Commits, Branch-Prüfung, Schema-/Format-/Dienstprüfung und kürzestem freigegebenem Zwischenversionspfad. Unbekannte Ausgangsstände sind gesperrt.
+- Zielmigration wird nach geprüfter Sicherung auf einer isolierten Kopie getestet, bevor Live-Daten verändert werden. Historische Schema-Prüfungen für 0.20.0, 0.27.1, 0.32.0 und 0.34.0; keine Zusage für beliebige zwei Jahre alte Installationen.
+- Dauerhafte optionale Beta-Auswahl; nur versionierte Development-Betas. Ausschalten verändert keinen Programmstand. Rückkehr zu Main erfordert einen kompatiblen neueren Stand; kein Downgrade.
+- Wichtig: Separaten Update-Dienst ebenfalls auf mindestens 0.35.0 erneuern. Schema 19 und Backupformat 2 unverändert.
+
 ## [0.34.0] - 2026-10-11
 
 - Beitrags-Minikarten starten am Standort mit Zoom 16; ungefähre Lagen mit Zoom 14. Standorteditor unverändert.

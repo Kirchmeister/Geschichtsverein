@@ -8,6 +8,7 @@ try{
  await fs.cp('.next-linux/standalone',stage,copy);
  await fs.cp('.next-linux/static',path.join(stage,'.next-linux/static'),copy);
  for(const dir of ['server','scripts','drizzle','public'])await fs.cp(dir,path.join(stage,dir),copy);
+ await fs.mkdir(path.join(stage,'docs'),{recursive:true});await fs.copyFile('docs/update-compatibility.json',path.join(stage,'docs/update-compatibility.json'));
  await fs.copyFile('version.json',path.join(stage,'version.json'));
  for(const test of ['tests/linux-http.test.mjs','tests/restore-http.test.mjs']){
   const child=spawn(process.execPath,[test],{env:{...process.env,ARCHIVE_TEST_STANDALONE_ROOT:stage,HOSTNAME:'invalid-container-hostname'},stdio:'inherit'});

@@ -7,6 +7,7 @@ try{
  const cfg={root:root+'/manager',dataRoot:root+'/data',configRoot:root+'/config',container:'geschichtsarchiv-test',appPort:8080,uid:process.getuid(),gid:process.getgid()};
  if(!cfg.uid)cfg.uid=cfg.gid=1000;
  const code=cfg.root+'/releases/test';await fs.mkdir(code,{recursive:true});await fs.mkdir(cfg.configRoot);await fs.writeFile(code+'/version.json',JSON.stringify({version:'0.10.0',codeCommit:'a'.repeat(40),databaseSchemaVersion:16}));
+ await fs.symlink(code,cfg.root+'/current');
  const timeouts=[];const calls=[];let running=true,foreign=false;const run=async(cmd,args,options)=>{timeouts.push(options);calls.push([cmd,args]);if(args[0]==='inspect'&&args[1]===cfg.container+'-restore-helper')return {stdout:'[]'};if(args[0]==='inspect')return {stdout:JSON.stringify([{State:{Running:running},Config:{Image:'test',Labels:{'com.docker.compose.service':'archive'}},Mounts:[{Destination:'/data',Source:foreign?'/other':cfg.dataRoot},{Destination:'/config',Source:cfg.configRoot}]}])};return {stdout:''}};
  const driver=dockerUpdateDriver(cfg,run);
  await driver('prepare',code);assert.equal(timeouts.at(-1).timeout,60*60*1000);assert.equal(timeouts.at(-1).maxBuffer,16*1024*1024);
@@ -14,6 +15,7 @@ try{
  foreign=true;await assert.rejects(driver('stop',code),/Archivablagen/);assert.equal(calls.some(c=>c[1][0]==='stop'),false);
  foreign=false;await driver('quiesce',code);assert.equal((await fs.readFile(cfg.configRoot+'/maintenance','utf8')).trim(),'1');assert.equal(calls.some(c=>c[1][0]==='stop'),false);await driver('stop',code);assert.deepEqual(calls.at(-1),['docker',['stop','--time','60','geschichtsarchiv-test']]);
  running=false;await driver('migrate',code);const probe=calls.at(-1)[1];assert.equal(probe.includes('none'),true);assert.equal(probe.at(-1),'migrate');
+ const trial=cfg.root+'/backups/example/migration-test';await fs.mkdir(trial+'/data',{recursive:true});await fs.mkdir(trial+'/config');await driver('verify-update',code,trial+'/data',trial+'/config');assert.equal(calls.at(-1)[1].at(-1),'verify');await assert.rejects(driver('verify-update',code,cfg.dataRoot,cfg.configRoot),/Migrationsprobe/);
  await assert.rejects(driver('verify-restore',code,'/outside/data','/outside/config'),/Probeablagen/);
  const importDir=cfg.root+'/restores/12345678-1234-1234-1234-123456789abc';await fs.mkdir(importDir,{recursive:true});await driver('restore-stage',code,importDir,cfg.configRoot);assert.ok(calls.at(-1)[1].includes('scripts/restore-backup.mjs'));assert.ok(calls.at(-1)[1].includes('--linux'));
  await assert.rejects(driver('restore-stage',code,'/outside',cfg.configRoot),/Importablage/);await assert.rejects(driver('restore-merge',code,importDir,'/outside'),/Importablage/);

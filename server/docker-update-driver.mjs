@@ -18,9 +18,9 @@ export function dockerUpdateDriver(cfg,run=promisify(execFile)){
   await docker(['rm','-f',name+'-restore-helper']);
  }
  async function marker(value){await fs.writeFile(path.join(config,'maintenance'),value,{mode:0o600});await run('chown',[cfg.uid+':'+cfg.gid,path.join(config,'maintenance')],{timeout:10000})}
- async function probe(code,action,d,c){const i=await image(code);return docker(['run','--rm','--network','none','--user','0:0','--mount','type=bind,src='+d+',dst=/data'+(action==='verify'?',readonly':''),'--mount','type=bind,src='+c+'/app.env,dst=/config/app.env,readonly',i.tag,'node','scripts/update-probe.mjs',action],900000)}
+ async function probe(code,action,d,c){const i=await image(code),service=JSON.parse(await fs.readFile(new URL('../version.json',import.meta.url),'utf8')),source=JSON.parse(await fs.readFile(path.join(root,'current','version.json'),'utf8'));return docker(['run','--rm','--network','none','--user','0:0','-e','ARCHIVE_UPDATE_SERVICE_VERSION='+service.version,'-e','ARCHIVE_UPDATE_SOURCE_VERSION='+source.version,'--mount','type=bind,src='+d+',dst=/data'+(action==='verify'?',readonly':''),'--mount','type=bind,src='+c+'/app.env,dst=/config/app.env,readonly',i.tag,'node','scripts/update-probe.mjs',action],900000)}
  return async function driver(action,code,d=data,c=config){
-  const i=await image(code);if(!['verify-restore','restore-stage','restore-merge'].includes(action)&&(path.resolve(d)!==data||path.resolve(c)!==config))throw Error('Live-Ablagen stimmen nicht überein.');
+  const i=await image(code);if(!['verify-restore','verify-update','restore-stage','restore-merge'].includes(action)&&(path.resolve(d)!==data||path.resolve(c)!==config))throw Error('Live-Ablagen stimmen nicht überein.');
   if(['restore-stage','restore-merge'].includes(action)){
    const restore=path.resolve(d);
    if(!/^[-a-f0-9]{36}$/.test(path.basename(restore))||path.dirname(restore)!==root+'/restores'||await fs.realpath(restore)!==restore||path.resolve(c)!==config)throw Error('Ungültige Importablage.');
@@ -30,6 +30,7 @@ export function dockerUpdateDriver(cfg,run=promisify(execFile)){
    return docker(['run','--rm','--name',name+'-restore-helper','--label','io.history-archive.restore-helper='+root,'--network','none','--user','0:0','--mount','type=bind,src='+data+',dst=/live,readonly','--mount','type=bind,src='+restore+',dst=/restore',i.tag,'node','scripts/restore-preserve-local.mjs'],900000);
   }
   if(action==='prepare'){await docker(['build','--label','io.history-archive.managed=true','-t',i.tag,i.code],updateBuildTimeout);return}
+  if(action==='verify-update'){const trial=path.dirname(path.resolve(d));if(!trial.startsWith(root+'/backups/')||path.basename(trial)!=='migration-test'||path.dirname(path.resolve(c))!==trial||path.basename(d)!=='data'||path.basename(c)!=='config')throw Error('Ungültige Migrationsprobe.');await probe(code,'migrate',d,c);await probe(code,'verify',d,c);return}
   if(action==='verify-restore'){const trial=path.resolve(d).startsWith(root+'/backups/')&&path.resolve(c).startsWith(root+'/backups/')&&path.dirname(path.resolve(d))===path.dirname(path.resolve(c))&&path.basename(d)==='data'&&path.basename(c)==='config';if(!trial&&(path.resolve(d)!==data||path.resolve(c)!==config))throw Error('Ungültige Probeablagen.');await probe(code,'verify',d,c);return}
   if(action==='quiesce'){const existing=await inspect();await owned(existing);if(!existing?.State.Running)throw Error('Archiv muss für die Nextcloud-Sicherung laufen.');await marker('1');return;}
   if(action==='stop'){await clearRestoreHelper();const existing=await owned();await marker('1');if(existing)await docker(['stop','--time','60',name]);return}
