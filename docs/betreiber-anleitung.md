@@ -168,7 +168,11 @@ Es gibt absichtlich keinen universellen Austauschbefehl mit geratenen Hostpfaden
 
 ### C. Zur Oberfläche zurückkehren
 
-„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.36.1 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.36.1 bringen.
+„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.37.0 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.37.0 bringen.
+
+### D. Bilder nach dem Update auf 0.37.0
+
+Für neue Bilder ist beim Hochladen jeweils eine eigene Beschriftung erforderlich. Bei mehreren Bildern alle Beschriftungsfelder ausfüllen und danach „Ausgewählte Dateien hochladen“ anklicken. Anschließend den Beitrag speichern. Bereits vorhandene Bilder bleiben auch ohne Beschriftung sichtbar. Wenn Sie einen solchen Beitrag bearbeiten und speichern, ergänzen Sie zuerst alle fehlenden Bildbeschriftungen. Die vorhandenen Bilder müssen dafür nicht erneut hochgeladen werden. Unter Bildern stehen künftig Beschriftungen statt Dateinamen; direkte Bild-Download-Links entfallen.
 
 ## 7. Häufige Situationen
 

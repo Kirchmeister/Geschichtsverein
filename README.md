@@ -41,6 +41,12 @@ Mit **Karte speichern** übernehmen Sie die Änderung. Ausschalten blendet den �
 
 Die Ortssuche nutzt Photon auf OpenStreetMap-Datenbasis und läuft nur nach ausdrücklichem Suchen. Der öffentliche [Photon-Dienst](https://github.com/komoot/photon#demo-server) erlaubt angemessene Nutzung ohne Verfügbarkeitsgarantie; umfangreiche Nutzung kann begrenzt werden. Betreiber können in `linux-config/app.env` mit `ARCHIVE_GEOCODER_URL=https://ihr-photon-server.example/api/` einen anderen kompatiblen HTTPS-Photon-Endpunkt setzen und den App-Container neu starten. Keine Zugangsdaten in dieser URL verwenden. Beim Laden der Karte werden externe Kartendienste und Bibliotheken kontaktiert. Quellenhinweise bleiben sichtbar. Die [OSM-Kachelnutzungsbedingungen](https://operations.osmfoundation.org/policies/tiles/) gelten für die heutige Karte; keine Offline- oder Massendownloads sind eingebaut.
 
+## Bildbeschriftungen ab 0.37.0
+
+Jedes neu hochgeladene Bild benötigt eine eigene Beschriftung (bis 500 Zeichen). Dateien auswählen, die Beschriftung für jedes Bild ausfüllen und **Ausgewählte Dateien hochladen** anklicken; anschließend den Beitrag speichern. Bei einem Uploadfehler bleiben die noch nicht hochgeladenen Dateien zur Korrektur oder zum erneuten Versuch ausgewählt. Erfolgreiche Uploads sind bereits zugeordnet. Noch ausstehende Uploads werden nicht in der lokalen Entwurfssicherung gespeichert.
+
+Unter Bildern steht in der internen, Gast-, öffentlichen und Freigabeansicht ausschließlich die Beschriftung; Bild und Beschriftung sind keine Download-Links. Dokumente und Audio behalten ihre bisherigen Funktionen. Bereits gespeicherte Bilder ohne Beschriftung bleiben sichtbar, ohne Dateinamen darunter. Beim nächsten Bearbeiten und Speichern müssen fehlende Beschriftungen ergänzt oder die Bildzuordnungen entfernt werden. Beschriftungen gehören zur Beitragsversion und werden mitgesichert und bei der Wiederherstellung übernommen. Änderungen benötigen wie bisher eine neue Freigabe.
+
 ## Markdown in Beiträgen ab 0.35.0
 
 Beschreibung, Quellen, eigene Interpretation, offene Fragen und Nutzungsrechte unterstützen Markdown mit Überschriften, Fett/Kursiv, Listen, Zitaten, Links und Tabellen. Der Editor bietet Formatierungsbuttons und **Bearbeiten / Vorschau**. Neue Beiträge verwenden Markdown; bestehende Texte bleiben Klartext, bis **Markdown-Formatierung aktivieren** für das jeweilige Feld ausgewählt wird. Abschalten verändert den Quelltext nicht. Intern, für Gäste, öffentlich und ab 0.36.1 beim Prüfen von Veröffentlichungsanfragen wird derselbe Renderer verwendet; die vorhandenen Freigaben gelten weiterhin. Eingebettetes HTML wird nur als Text dargestellt, unsichere Linkprotokolle sind gesperrt, Markdown-Bilder laden keine externen Medien. Dateien und Audio weiter über die Dateiverwaltung hinzufügen.
@@ -51,7 +57,7 @@ Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quell
 
 Einstellungen → Updates zeigt die App- und Dienstversion getrennt, die erforderliche Mindestversion und einen verständlichen Status. **Anleitung öffnen** führt zur passenden versionierten Betreiberanleitung; **Erneut prüfen** liest den Dienststatus erneut, ohne ein Update zu starten. Die Vorbereitung führt durch Sicherung, gegebenenfalls Dienstwechsel, App-Update und Abschlussprüfung. Im Bestätigungsdialog werden die Anforderungen des ausgewählten Releases geprüft. Unbekannte Versionen und nicht erreichbare Dienste werden nicht als bereit behandelt. Die SSH-Hilfe bietet gefilterte Diagnose und einen kopierbaren KI-Prompt; Container und Hostpfade werden nicht geraten. Der Updater erneuert sich weiterhin nicht selbst.
 
-Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.36.1 ist nicht erforderlich.
+Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.37.0 ist nicht erforderlich.
 
 ## Updatekanäle und Kompatibilität ab 0.35.0
 

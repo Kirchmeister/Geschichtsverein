@@ -1,5 +1,13 @@
 # Änderungen
 
+## [0.37.0] - 2026-10-12
+
+- Jedes neue Bild benötigt vor dem Upload eine eigene Beschriftung; Mehrfachauswahl bietet getrennte Eingaben und lädt erst nach vollständiger Prüfung hoch. Fehlgeschlagene Uploads können ohne erneutes Hochladen bereits erfolgreicher Dateien wiederholt werden.
+- Bildbeschriftungen werden serverseitig beim Upload und Beitragsspeichern geprüft (nicht leer, höchstens 500 Zeichen) und gehören zur Version, Freigabe und Sicherung.
+- Bilder werden intern, für Gäste, öffentlich und in der Freigabeprüfung ohne Download-Link und mit Beschriftung statt Dateiname dargestellt.
+- Bestandsbilder bleiben ohne Beschriftung sichtbar; beim nächsten Bearbeiten und Speichern sind fehlende Beschriftungen zu ergänzen. Dokumente und Audio unverändert.
+- Datenbankschema 19 und Backupformat 2 unverändert. Update-Dienst 0.35.0 genügt weiterhin.
+
 ## [0.36.1] - 2026-10-12
 
 - Veröffentlichungsanfragen lassen sich auch mit gespeichertem Kartenstandort öffnen: Standort und Karte werden über die bestehende Kartenansicht dargestellt.
