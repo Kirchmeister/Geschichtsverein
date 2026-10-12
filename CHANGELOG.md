@@ -1,5 +1,13 @@
 # Änderungen
 
+## [0.40.0] - 2026-10-12
+
+- Gemeinsame Checkbox „Datierung ist ungefähr (ca.)“ für Zeitraum, Beginn und Ende; striktes Boolean-Attribut `isApproximateDate`, bei älteren Einträgen standardmäßig false.
+- Einheitliche Circa-Anzeige intern, öffentlich, für Gäste, in Listen/Personenansichten, Zeitleiste und Freigabeprüfung; kein Zusatz bei fehlender Datierung und keine Verdopplung vorhandener ca./circa-Angaben.
+- Gespeicherte Jahreswerte, chronologische Sortierung, Rohwertsuche und Jahresfilter bleiben unabhängig von der Kennzeichnung. Versteckte Datierungsfelder geben auch die Kennzeichnung nicht preis.
+- Kennzeichnung wird versioniert, mitgesichert und beim gezielten Zurückholen einer Datierung mit übernommen; gemeinsamer Einfluss auf andere Datierungsfelder wird erläutert.
+- Dokumentation und Tests ergänzt. Datenbankschema 19 und Backupformat 2 unverändert; Update-Dienst 0.35.0 genügt weiterhin.
+
 ## [0.39.0] - 2026-10-12
 
 - Veröffentlichungsanfragen erzeugen keine internen Systemnachrichten und keine Drei-Tage-Erinnerungen mehr; vorhandene Nachrichten und die Aufgabenübersicht bleiben erhalten.

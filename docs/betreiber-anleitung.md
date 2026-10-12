@@ -168,7 +168,7 @@ Es gibt absichtlich keinen universellen Austauschbefehl mit geratenen Hostpfaden
 
 ### C. Zur Oberfläche zurückkehren
 
-„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.39.0 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.39.0 bringen.
+„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.40.0 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.40.0 bringen.
 
 ### D. Bilder nach dem Update auf 0.37.0
 
@@ -189,6 +189,12 @@ Beim Öffnen des Bearbeitungsfensters ist kein Textfeld automatisch ausgewählt.
 Neue Veröffentlichungsanfragen stehen weiterhin auf der Startseite unter „Ausstehende Veröffentlichungsanfragen“. Das System verschickt dafür keine internen Nachrichten und keine Erinnerungsnachrichten nach drei Tagen mehr. Bereits vorhandene Nachrichten bleiben erhalten.
 
 Öffnen Sie Ihre persönlichen Push-Einstellungen. Als Admin oder Verwalter können Sie „Neue Veröffentlichungsanfrage“ ein- oder ausschalten; ein normaler Nutzer hat diese Option nicht. „Eigener Beitrag zur Veröffentlichung freigegeben“ informiert die Person, die die Anfrage gestellt hat, nach der Genehmigung. Diese Option ist standardmäßig ausgewählt. Beide Hinweise benötigen weiterhin eine insgesamt aktivierte Push-Zustellung und die Browser-/Geräteberechtigung. Sie sind unabhängig von der Option „Neue interne Nachricht“. Beim Update werden frühere Vorgänge nicht nachträglich versendet.
+
+### H. Ungefähre Datierungen ab 0.40.0
+
+Tragen Sie das Jahr wie bisher als Zahl ein, zum Beispiel 1520. Für eine unsichere Datierung aktivieren Sie darunter „Datierung ist ungefähr (ca.)“. Der Beitrag zeigt dann „ca. 1520“. Die eine Checkbox gilt gemeinsam für Zeitraum, Beginn und Ende; ein Zeitraum erscheint beispielsweise als „ca. 1520–1530“. Die technische Sortierung und die Jahresfilter ändern sich dadurch nicht. Ohne Datierung erscheint kein „ca.“. Bereits in den freien Text eingetragenes „ca.“ wird nicht verdoppelt und beim Ausschalten nicht gelöscht.
+
+Bestehende Beiträge bleiben ohne Zusatz, bis die Option ausdrücklich aktiviert wird. Speichern Sie die Änderung und beantragen Sie bei Bedarf erneut die Veröffentlichung. Die Kennzeichnung bleibt in Versionen und Sicherungen erhalten. Beim Zurückholen einer früheren Datierungsangabe wird ihre gemeinsame Circa-Kennzeichnung mit übernommen; beachten Sie, dass sie auch die übrigen Datierungsfelder betrifft.
 
 ## 7. Häufige Situationen
 

@@ -640,3 +640,5 @@ html { scroll-padding-top: calc(60px + env(safe-area-inset-top, 0px)); }
 @media(max-width:650px){.entry-reader-scroll{padding:18px;gap:16px}.entry-reader-toolbar{padding:10px 14px;gap:10px}}
 
 .form-actions{flex-wrap:wrap}.form-actions .discard-draft{margin-right:auto;text-decoration:underline;text-underline-offset:3px}.editor [data-slot=dialog-title][tabindex="-1"]:focus-visible{outline:2px solid var(--archive-tone-496c51);outline-offset:5px}
+
+.form-grid .approximate-date-option>span{display:flex;align-items:center;gap:10px}.form-grid .approximate-date-option input[type="checkbox"]{width:18px;height:18px;flex:0 0 18px;padding:0;accent-color:var(--archive-tone-294e3e)}

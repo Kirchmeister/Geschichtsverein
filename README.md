@@ -41,6 +41,14 @@ Mit **Karte speichern** übernehmen Sie die Änderung. Ausschalten blendet den �
 
 Die Ortssuche nutzt Photon auf OpenStreetMap-Datenbasis und läuft nur nach ausdrücklichem Suchen. Der öffentliche [Photon-Dienst](https://github.com/komoot/photon#demo-server) erlaubt angemessene Nutzung ohne Verfügbarkeitsgarantie; umfangreiche Nutzung kann begrenzt werden. Betreiber können in `linux-config/app.env` mit `ARCHIVE_GEOCODER_URL=https://ihr-photon-server.example/api/` einen anderen kompatiblen HTTPS-Photon-Endpunkt setzen und den App-Container neu starten. Keine Zugangsdaten in dieser URL verwenden. Beim Laden der Karte werden externe Kartendienste und Bibliotheken kontaktiert. Quellenhinweise bleiben sichtbar. Die [OSM-Kachelnutzungsbedingungen](https://operations.osmfoundation.org/policies/tiles/) gelten für die heutige Karte; keine Offline- oder Massendownloads sind eingebaut.
 
+## Ungefähre Datierung ab 0.40.0
+
+Im Beitragseditor kennzeichnet **Datierung ist ungefähr (ca.)** gemeinsam Zeitraum/Datierung, Beginn und Ende. Die gespeicherten Jahreswerte bleiben unverändert; nur die Darstellung erhält „ca.“. Einzeljahr: „ca. 1520“, zusammengefasster Zeitraum: „ca. 1520–1530“, einzeln angezeigte Beginn-/Ende-Felder jeweils mit „ca.“. Ein bereits im freien Datierungstext vorhandenes „ca.“ oder „circa“ wird nicht doppelt ergänzt. Beim Ausschalten bleibt selbst eingegebener Freitext unverändert. Ohne sichtbare Datierung erscheint kein alleinstehendes „ca.“.
+
+Die Kennzeichnung gilt in internen Listen und Suchergebnissen, Personenansichten, Details, Freigabeprüfung, Gast-/öffentlicher Ansicht und Zeitleiste. Sortierung und Jahresfilter verwenden weiterhin die regulären Jahreswerte; der Circa-Schalter erweitert keine Filterbereiche. Die Suche verarbeitet die bisherigen Rohwerte, ohne den Zusatz oder das Boolean-Attribut zu indexieren. Die öffentlichen und Gast-Feldfreigaben gelten weiterhin; bei versteckten Datierungsfeldern wird auch die Kennzeichnung nicht ausgegeben.
+
+Bestehende Einträge ohne `isApproximateDate` gelten als exakt (`false`). Die Kennzeichnung gehört zur gespeicherten Version, Veröffentlichung und Sicherung. Beim gezielten Zurückholen eines Datierungsfelds wird auch die gemeinsame Kennzeichnung übernommen; sie wirkt dadurch auf die übrigen Datierungsfelder. Die Kennzeichnung kann in der Historie auch einzeln zurückgeholt werden. Änderungen benötigen wie gewohnt eine neue Freigabe.
+
 ## Entwürfe und Editorfokus ab 0.38.1
 
 Beim Öffnen des Beitragseditors liegt der Fokus auf der Fensterüberschrift; der Titel wird nicht automatisch markiert. **Abbrechen** und Schließen behalten die lokale Entwurfssicherung zum Fortsetzen. **Entwurf verwerfen** im Bearbeitungsfenster löscht nach Bestätigung den Entwurf in diesem Tab und schließt das Fenster. Der gespeicherte Beitrag und seine Freigabe werden dabei nicht geändert. Das gilt auch für noch nicht gespeicherte neue Beiträge. Während Speichern, Datei-Uploads oder Audioverarbeitung ist Verwerfen gesperrt.
@@ -67,7 +75,7 @@ Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quell
 
 Einstellungen → Updates zeigt die App- und Dienstversion getrennt, die erforderliche Mindestversion und einen verständlichen Status. **Anleitung öffnen** führt zur passenden versionierten Betreiberanleitung; **Erneut prüfen** liest den Dienststatus erneut, ohne ein Update zu starten. Die Vorbereitung führt durch Sicherung, gegebenenfalls Dienstwechsel, App-Update und Abschlussprüfung. Im Bestätigungsdialog werden die Anforderungen des ausgewählten Releases geprüft. Unbekannte Versionen und nicht erreichbare Dienste werden nicht als bereit behandelt. Die SSH-Hilfe bietet gefilterte Diagnose und einen kopierbaren KI-Prompt; Container und Hostpfade werden nicht geraten. Der Updater erneuert sich weiterhin nicht selbst.
 
-Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.39.0 ist nicht erforderlich.
+Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.40.0 ist nicht erforderlich.
 
 ## Updatekanäle und Kompatibilität ab 0.35.0
 

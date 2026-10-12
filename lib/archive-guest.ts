@@ -10,7 +10,7 @@ export async function guestFields():Promise<string[]>{
 export function projectGuestEntry(data:any,fields:string[],reference:string,storagePlace=''){
  const projected=projectPublicEntry(data,fields);
  // Empty placeholders keep the shared search UI usable without exposing hidden values.
- const out:any={id:data.id,reference,fieldFormats:projected.fieldFormats,files:projected.files,visibleFields:fields};
+ const out:any={id:data.id,reference,...(projected.isApproximateDate!==undefined?{isApproximateDate:projected.isApproximateDate}:{}),fieldFormats:projected.fieldFormats,files:projected.files,visibleFields:fields};
  for(const key of Object.keys(guestFieldLabels))if(!['images','documents','audio','people'].includes(key))out[key]=fields.includes(key)&&typeof data[key]==='string'?data[key]:'';
  out.location=fields.includes('location')?projected.location||null:null;
  if(!out.title)out.title='Beitrag';
