@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.36.0] - 2026-10-12
+
+- Geführte Update-Vorbereitung mit getrennten App-/Dienstversionen, Mindestanforderung, Bereitschaftsstatus und eigener Folge für Sicherung, Dienstwechsel, App-Update und Abschlussprüfung.
+- Versionierte Betreiberanleitung direkt in der Oberfläche, erneute Statusprüfung, gefilterte SSH-Diagnose und kopierbarer KI-Prompt. Keine geratenen Container-/Mountnamen und keine automatische Updater-Selbsterneuerung.
+- Einsteigeranleitung für wenig erfahrene SSH-Betreiber mit KI-Begleitung, Neuinstallation, Sicherungen, getrenntem Updater und kontrolliertem Dienstwechsel; verlinkt aus README und Betriebsanleitungen.
+- Nicht erreichbare/alte/unbekannte Dienste und laufende Vorgänge werden ausdrücklich angezeigt. Dienst 0.35.0 genügt für App 0.36.0. Schema 19 und Backupformat 2 unverändert.
+
 ## [0.35.0] - 2026-10-12
 
 - Markdown für Beschreibung, Quellen, Interpretation, offene Fragen und Rechte: Formatierungsbuttons und Vorschau; gemeinsame sichere Darstellung intern, für Gäste und öffentlich. Bestehende Felder bleiben Klartext bis zur ausdrücklichen Aktivierung.

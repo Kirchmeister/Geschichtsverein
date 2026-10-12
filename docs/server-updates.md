@@ -1,15 +1,17 @@
 # Updates auf dem eigenen Server
 
+Für Betreiber mit wenig Linux-Erfahrung: **[Einsteigeranleitung mit KI-Begleitung](betreiber-anleitung.md)**. Ab App 0.36.0 führt die Oberfläche durch Sicherung, Dienstprüfung, App-Update und Abschlussprüfung und zeigt beide Versionen getrennt. Für App 0.36.0 genügt Dienst 0.35.0; gleiche Versionsnummern sind nicht erforderlich.
+
 ## Stand
 
 Der Update-Dienst und die Admin-Oberfläche sind implementiert und mit separaten Testbeständen geprüft. Passkey-Anmeldung und ein konkreter Docker-Treiber sind vorhanden. **Der Docker-Treiber muss vor Aktivierung auf einer isolierten Linux-Instanz geprüft werden.** Es gibt daher noch keinen gefahrlosen Ein-Klick-Installer. Eine vorhandene Serverinstallation wird durch diese Änderungen nicht umgestellt.
 
-Entwicklung und geprüfte Veröffentlichungen erfolgen auf Wunsch des Betreibers ab jetzt auf `main`; der bisherige Branch `development` bleibt erhalten. Der Release-Workflow ist auf `main` beschränkt. Die bisherigen Vorab-Releases bleiben erhalten.
+Entwicklung und geprüfte Veröffentlichungen erfolgen auf Wunsch des Betreibers ab jetzt auf `main`; der bisherige Branch `development` bleibt erhalten. Stabile Releases werden auf `main`, ausdrücklich versionierte Betas auf `development` veröffentlicht. Die bisherigen Vorab-Releases bleiben erhalten.
 
 ## Verhalten
 
 - Der eigenständige Dienst prüft GitHub beim Start und alle sechs Stunden. Er installiert nichts automatisch.
-- Nur stabile, nicht als Entwurf/Vorabversion markierte Releases mit `vMajor.Minor.Patch` werden angeboten. `development` wird nie zum Updateziel.
+- Standardmäßig werden nur stabile Main-Releases angeboten. Ab Dienst 0.35.0 kann der Betreiber zusätzlich nummerierte Development-Betas aktivieren; gewöhnliche Development-Commits sind keine Updateziele.
 - „Version überspringen“ blendet die Version in automatischen Ergebnissen aus. „Jetzt nach Updates suchen“ zeigt sie mit Kennzeichnung wieder an und erlaubt Installation oder Rücknahme des Überspringens.
 - Vor einer Installation verlangt die Admin-Oberfläche `UPDATE MIT GEPRÜFTER SICHERUNG`.
 - Ein nur vom Betreiber eingerichteter lokaler Dienst führt die Arbeiten aus. Eine Browseranfrage kann keine Shellbefehle oder Programme vorgeben.
@@ -21,7 +23,7 @@ Entwicklung und geprüfte Veröffentlichungen erfolgen auf Wunsch des Betreibers
 2. Wartungsmodus aktivieren: alle Schreibzugriffe und Hintergrundschreiber beenden; Anwendung vollständig stoppen.
 3. Datenbankbestand, Dateien, Konfiguration einschließlich Wiederherstellungsschlüsseln und den bisherigen Code vollständig kopieren.
 4. Dateien mit Größen/SHA-256 vergleichen und SQLite-Integrität prüfen. Die Kopie erneut in eine getrennte Probeablage wiederherstellen und vom Hosting-Treiber auf Anwendungsebene prüfen lassen. Ohne diese Prüfung keine Migration.
-5. Alle nötigen Migrationen durchführen; Zwischenversionen müssen nicht einzeln installiert werden. Der Treiber darf keine nötigen Migrationen überspringen.
+5. Die Zielmigration auf einer isolierten Kopie prüfen und erst danach alle nötigen Migrationen gegen den gestoppten Bestand durchführen. Technisch notwendige Zwischenreleases werden seit 0.35.0 einzeln installiert und bestätigt; der Treiber darf keine nötigen Migrationen überspringen.
 6. Neuen Code über den `current`-Symlink auswählen und **weiterhin im Wartungsmodus** starten. Gesundheitsprüfung einschließlich Versions-/Schemaabgleich durchführen.
 7. Erfolg dauerhaft protokollieren und erst dann Schreibzugriffe freigeben. Ein Neustart des Updaters kann diese Freigabe idempotent nachholen.
 
@@ -91,7 +93,7 @@ Diese Anleitung beschreibt die Einrichtung; sie wird nicht durch ein Repository-
 3. Die oben gezeigte Konfiguration als `configRoot/updater.json` mit Modus 0600 anlegen. `uid`, `gid`, Container und Pfade aus der tatsächlichen Installation übernehmen. Ein zufälliges Geheimnis lokal erzeugen und dasselbe in `app.env` als `ARCHIVE_UPDATER_SECRET` hinterlegen. `ARCHIVE_UPDATER_URL=http://127.0.0.1:3099/` hinzufügen. Keine Schlüssel in GitHub speichern. Vor der ersten Umschaltung eine externe vollständige Sicherung und einen geprüften Restore bereithalten.
 4. Das Agent-Image aus `Dockerfile.updater` bauen. Als separaten Container mit Linux-Hostnetzwerk starten. Die drei Verzeichnisse unter **denselben absoluten Hostpfaden** einbinden; nur der Agent erhält `/var/run/docker.sock`. `ARCHIVE_UPDATER_CONFIG` auf die eingebundene Konfiguration setzen. Keine Apache-Weiterleitung für Port 3099 anlegen. Docker-Socketzugriff hat weitreichende Hostrechte und gehört ausschließlich in den unabhängigen Betreiber-Dienst, niemals in die Web-App.
 5. Den ersten Archivstand beaufsichtigt über die Treiberaktionen `stop`, `start`, `health`, `commit` übernehmen; vorher `verify-restore` gegen eine geprüfte Kopie durchführen. Der Agent muss auf das Startimage und den aktuellen Symlink abgestimmt sein. Bei einem Fehler Wartungsmodus beibehalten und die gesicherte Ausgangskonfiguration verwenden.
-6. Anschließend in **Einstellungen → Updates** prüfen. Nur stabile GitHub-Releases sind Updateziele. Solange nur Development-/Vorabversionen existieren, wird kein installierbares Onlineupdate angeboten. Ein neuer Commit im Development-Branch allein ist kein Release.
+6. Anschließend in **Einstellungen → Updates** beide Versionsstände und den Status prüfen. Stabile Releases sind der Standard; versionierte Betas erfordern die ausdrücklich aktivierte Beta-Option ab 0.35.0. Ein neuer Commit im Development-Branch allein ist kein Release.
 
 Der Treiber beendet und ersetzt ausschließlich den konfigurierten Archivcontainer. Er bindet die App mit Linux-Hostnetzwerk an `127.0.0.1:8080`, den Agenten an `127.0.0.1:3099`. Apache bleibt als HTTPS-Proxy bestehen; Nextcloud und Taler werden nicht umgestellt. Der Wartungsmodus blockiert Appzugriffe und Hintergrundaufgaben bis zur erfolgreichen Versions-, Schema- und Dateiprüfung. Der Agent bleibt während des Appwechsels erreichbar.
 

@@ -4,20 +4,17 @@ Entwicklungsstand, noch keine Produktionsfreigabe. Alle Befehle im Ubuntu-Termin
 
 ## 1. Quellcode beziehen
 
-Das derzeitige Repository ist privat. Beispielsweise mit GitHub CLI anmelden (keine Tokens in Dateien oder Befehlsargumente schreiben):
+Das Repository ist öffentlich; zum Lesen ist keine GitHub-Anmeldung erforderlich. Git muss installiert sein. Für einen privaten Fork lassen Sie sich die passende Anmeldung erklären, ohne Tokens in Dateien oder Befehlsargumente zu schreiben:
 
 ```bash
-sudo apt update
-sudo apt install gh
-gh auth login
-gh auth setup-git
+mkdir -p ~/projekte
 cd ~/projekte
-gh repo clone Kirchmeister/Geschichtsverein
+git clone https://github.com/Kirchmeister/Geschichtsverein.git
 cd Geschichtsverein
 git switch main
 ```
 
-Bei `gh auth login` GitHub.com, HTTPS und Anmeldung im Browser auswählen. Berechtigungen für das private Repository müssen vorhanden sein.
+Für eine nachvollziehbare Installation bevorzugt ein veröffentlichtes stabiles Release verwenden; dabei von der [Einsteigeranleitung und ihrem KI-Prompt](betreiber-anleitung.md) begleiten lassen. Einen bereits vorhandenen Projektordner nicht überschreiben.
 
 ## 2. Geheimnisse erzeugen und Docker starten
 

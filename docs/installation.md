@@ -1,5 +1,7 @@
 # Linux-Installation und Wiederherstellung
 
+Neu im Serverbetrieb? Beginnen Sie mit der **[Einsteigeranleitung und ihrem KI-Prompt](betreiber-anleitung.md)**. Sie können sich die Einrichtung anhand dieses Repositorys von ChatGPT oder einer anderen KI begleiten lassen, jeweils mit kleinen geprüften Schritten und ohne Zugangsdaten weiterzugeben.
+
 ## Neue Installation
 
 Die [WSL-/Docker-Anleitung](local-wsl.md) beschreibt den ersten Start. Auf einem Linux-Server denselben Docker-Build verwenden und die Anwendung hinter einem HTTPS-Reverse-Proxy betreiben. `scripts/linux-init.mjs` erzeugt die geschützte Konfiguration. `ARCHIVE_ORIGIN` vor der ersten Passkey-Registrierung auf die endgültige HTTPS-Anmeldeadresse setzen. Datenablage und Konfiguration gemeinsam sichern; Geheimnisse gehören nicht in Git.

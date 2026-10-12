@@ -10,10 +10,10 @@ const root=await fs.mkdtemp(path.resolve('.update-test-restore-http-')),key='c'.
 assert.ok(standalone,'Use tests/linux-package.test.mjs to exercise the real packaged server.');
 const storage=sqliteBinding(root+'/archive.sqlite',path.resolve('drizzle'));initializeAuth(storage.database);
 for(const role of ['admin','manager','user','guest']){storage.database.prepare('INSERT INTO linux_accounts VALUES(?,?,?,0)').run(role,role+'@example.invalid',role);storage.database.prepare('INSERT INTO archive_users(id,identity_provider,identity_subject,display_name,role,created) VALUES(?,?,?,?,?,?)').run(role,'linux',role,role,role,'2026-01-01')}
-storage.close();let reject=false;const commands=[],uploaded=Buffer.alloc(1536,65);
+storage.close();let reject=false,statusFailure=false;const commands=[],uploaded=Buffer.alloc(1536,65);
 const service=http.createServer(async(req,res)=>{let body='';for await(const chunk of req)body+=chunk;
  const expected=createHmac('sha256',key).update([req.headers['x-archive-time'],req.headers['x-archive-nonce'],req.method,req.url,body].join('\n')).digest('hex');assert.equal(req.headers['x-archive-signature'],expected);assert.equal(req.url,'/updates');
- if(req.method==='GET'){res.setHeader('Content-Type','application/json');res.end(JSON.stringify({enabled:true,features:{restore:true},busy:false}));return}
+ if(req.method==='GET'){if(statusFailure){res.writeHead(503,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'Synthetic service unavailable'}));return}res.setHeader('Content-Type','application/json');res.end(JSON.stringify({enabled:true,currentVersion:'0.35.0',serviceVersion:'0.35.0',features:{restore:true,compatibility:true,betaChannels:true},busy:false}));return}
  const command=JSON.parse(body);commands.push(command);
  if(command.action==='restore-inspect'){
   assert.deepEqual(await fs.readFile(root+'/restore-inbox/'+command.id+'.tar'),uploaded);
@@ -28,6 +28,7 @@ function cookie(role){const now=Math.floor(Date.now()/1000),data=Buffer.from(JSO
 const upload=(role='admin',extra={})=>fetch(origin+'/api/restores',{method:'POST',headers:{Cookie:cookie(role),Origin:origin,'Content-Type':'application/x-tar',...extra},body:uploaded});
 try{
  let ready=false;for(let n=0;n<100;n++){try{if((await fetch(origin+'/api/health')).ok){ready=true;break}}catch{}await new Promise(r=>setTimeout(r,100))}assert.ok(ready,output);
+ const updateStatus=()=>fetch(origin+'/api/updates',{headers:{Cookie:cookie('admin')}});let updateReply=await updateStatus();assert.equal(updateReply.status,200);let updateData=await updateReply.json();assert.equal(updateData.appVersion,JSON.parse(await fs.readFile('version.json','utf8')).version);assert.equal(updateData.serviceVersion,'0.35.0');assert.equal((await fetch(origin+'/api/updates',{headers:{Cookie:cookie('guest')}})).status,403);statusFailure=true;updateReply=await updateStatus();assert.equal(updateReply.status,200);updateData=await updateReply.json();assert.equal(updateData.enabled,false);assert.equal(updateData.connectionStatus,'unreachable');assert.ok(updateData.appVersion);statusFailure=false;
  for(const role of ['manager','user','guest'])assert.equal((await upload(role)).status,403);
  assert.equal((await upload('admin',{Origin:'https://attacker.invalid'})).status,403);
  assert.equal((await upload('admin',{'x-archive-preview-role':'user'})).status,403);
