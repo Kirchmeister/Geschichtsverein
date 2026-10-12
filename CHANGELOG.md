@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.36.1] - 2026-10-12
+
+- Veröffentlichungsanfragen lassen sich auch mit gespeichertem Kartenstandort öffnen: Standort und Karte werden über die bestehende Kartenansicht dargestellt.
+- Die angefragte Version zeigt Markdown, Beitragsverknüpfungen und Personentags korrekt; bestehender Klartext bleibt unverändert.
+- Gezielte Regressionstests für Standortobjekte, Feldformate und eingereichte Daten. Schema 19 und Backupformat 2 unverändert; Update-Dienst 0.35.0 genügt weiterhin.
+
 ## [0.36.0] - 2026-10-12
 
 - Geführte Update-Vorbereitung mit getrennten App-/Dienstversionen, Mindestanforderung, Bereitschaftsstatus und eigener Folge für Sicherung, Dienstwechsel, App-Update und Abschlussprüfung.

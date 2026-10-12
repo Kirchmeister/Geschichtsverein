@@ -43,7 +43,7 @@ Die Ortssuche nutzt Photon auf OpenStreetMap-Datenbasis und läuft nur nach ausd
 
 ## Markdown in Beiträgen ab 0.35.0
 
-Beschreibung, Quellen, eigene Interpretation, offene Fragen und Nutzungsrechte unterstützen Markdown mit Überschriften, Fett/Kursiv, Listen, Zitaten, Links und Tabellen. Der Editor bietet Formatierungsbuttons und **Bearbeiten / Vorschau**. Neue Beiträge verwenden Markdown; bestehende Texte bleiben Klartext, bis **Markdown-Formatierung aktivieren** für das jeweilige Feld ausgewählt wird. Abschalten verändert den Quelltext nicht. Intern, für Gäste und öffentlich wird derselbe Renderer verwendet; die vorhandenen Freigaben gelten weiterhin. Eingebettetes HTML wird nur als Text dargestellt, unsichere Linkprotokolle sind gesperrt, Markdown-Bilder laden keine externen Medien. Dateien und Audio weiter über die Dateiverwaltung hinzufügen.
+Beschreibung, Quellen, eigene Interpretation, offene Fragen und Nutzungsrechte unterstützen Markdown mit Überschriften, Fett/Kursiv, Listen, Zitaten, Links und Tabellen. Der Editor bietet Formatierungsbuttons und **Bearbeiten / Vorschau**. Neue Beiträge verwenden Markdown; bestehende Texte bleiben Klartext, bis **Markdown-Formatierung aktivieren** für das jeweilige Feld ausgewählt wird. Abschalten verändert den Quelltext nicht. Intern, für Gäste, öffentlich und ab 0.36.1 beim Prüfen von Veröffentlichungsanfragen wird derselbe Renderer verwendet; die vorhandenen Freigaben gelten weiterhin. Eingebettetes HTML wird nur als Text dargestellt, unsichere Linkprotokolle sind gesperrt, Markdown-Bilder laden keine externen Medien. Dateien und Audio weiter über die Dateiverwaltung hinzufügen.
 
 Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quelltext gespeichert. Formatierungsbuttons erhalten vorhandene Zuordnungen; manuelle Änderungen innerhalb eines zugeordneten Textes entfernen dessen Zuordnung wie bisher. Markdown-Linktexte können vorhandene Zuordnungen überlagern; innerhalb eines Markdown-Links wird kein zweiter Link verschachtelt. Versionshistorie und Sicherungen behalten Quelltext und Feldformat. Die gezielte Wiederherstellung übernimmt beide gemeinsam.
 
@@ -51,7 +51,7 @@ Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quell
 
 Einstellungen → Updates zeigt die App- und Dienstversion getrennt, die erforderliche Mindestversion und einen verständlichen Status. **Anleitung öffnen** führt zur passenden versionierten Betreiberanleitung; **Erneut prüfen** liest den Dienststatus erneut, ohne ein Update zu starten. Die Vorbereitung führt durch Sicherung, gegebenenfalls Dienstwechsel, App-Update und Abschlussprüfung. Im Bestätigungsdialog werden die Anforderungen des ausgewählten Releases geprüft. Unbekannte Versionen und nicht erreichbare Dienste werden nicht als bereit behandelt. Die SSH-Hilfe bietet gefilterte Diagnose und einen kopierbaren KI-Prompt; Container und Hostpfade werden nicht geraten. Der Updater erneuert sich weiterhin nicht selbst.
 
-Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.36.0 ist nicht erforderlich.
+Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.36.1 ist nicht erforderlich.
 
 ## Updatekanäle und Kompatibilität ab 0.35.0
 

@@ -168,7 +168,7 @@ Es gibt absichtlich keinen universellen Austauschbefehl mit geratenen Hostpfaden
 
 ### C. Zur Oberfläche zurückkehren
 
-„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.36.0 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.36.0 bringen.
+„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.36.1 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.36.1 bringen.
 
 ## 7. Häufige Situationen
 
