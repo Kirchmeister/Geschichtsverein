@@ -14,7 +14,8 @@ try{
  const {ReviewVersion}=await import('../'+file+'?'+Date.now());
  const render=value=>renderToStaticMarkup(createElement(ReviewVersion,{data:value}));
  const html=render(data); // Real location object previously crashed React as an invalid child.
- for(const expected of ['<strong><a','person-tag','/beitrag/BK-2345-6789-ABCD','<ul>','<em>Vermutung','<blockquote>','href="https://example.test/license"','Beleg.pdf'])assert.ok(html.includes(expected),expected);
+ for(const expected of ['<strong><a','person-tag','/beitrag/BK-2345-6789-ABCD','<ul>','<blockquote>','href="https://example.test/license"','Beleg.pdf'])assert.ok(html.includes(expected),expected);
+ assert.ok(!html.includes('Vermutung'));assert.ok(!html.includes('Eigene Interpretation'));
  assert.ok(!/<p[^>]*>\s*<(?:div|p|ul|blockquote)/.test(html),'No block elements nested in paragraphs');
  const plain=render({...data,fieldFormats:undefined,location:null,files:undefined});
  assert.ok(plain.includes('**'));assert.ok(!plain.includes('<strong>'));assert.ok(plain.includes('- Archiv'));assert.ok(!plain.includes('<ul>'));

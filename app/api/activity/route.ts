@@ -4,7 +4,7 @@ export async function GET(req:Request){try{
  await requireArchiveAction(req,'readActivity');const u=new URL(req.url),q=(u.searchParams.get('q')||'').trim().normalize('NFKC').toLocaleLowerCase('de'),author=u.searchParams.get('author')||'',before=u.searchParams.get('before');
  if(q.length>200||author.length>100||before&&!/^\d{1,12}$/.test(before))return Response.json({error:'Bitte Suche und Filter prüfen.'},{status:400});
  const db=archiveDb(),where:string[]=[],values:any[]=[];
- if(q){where.push("instr(lower(replace(replace(replace(replace(data,'Ä','ä'),'Ö','ö'),'Ü','ü'),'ẞ','ß')),?)>0");values.push(q)}
+ if(q){where.push("instr(lower(replace(replace(replace(replace(json_remove(data,'$.interpretation','$.fieldFormats.interpretation'),'Ä','ä'),'Ö','ö'),'Ü','ü'),'ẞ','ß')),?)>0");values.push(q)}
  if(author){if(author==='unknown')where.push('actor_id IS NULL');else{where.push('actor_id=?');values.push(author)}}
  if(before){where.push('(created < (SELECT created FROM entry_versions WHERE version=?) OR (created = (SELECT created FROM entry_versions WHERE version=?) AND version<?))');values.push(Number(before),Number(before),Number(before))}
  const result=await db.prepare(`SELECT version,entry_id AS entryId,data,created,action,actor_id AS actorId,actor_name AS actorName FROM entry_versions ${where.length?'WHERE '+where.join(' AND '):''} ORDER BY created DESC,version DESC LIMIT 51`).bind(...values).all();

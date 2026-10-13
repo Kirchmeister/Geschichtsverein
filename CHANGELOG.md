@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.44.0] - 2026-10-13
+
+- „Eigene Interpretation“ aus Bearbeitung, interner Leseansicht, Gast-/öffentlicher Ansicht, Freigabeprüfung, Feldfreigaben und Versionshistorie entfernt.
+- Inhalte und Formatmetadata werden auch bei alten öffentlichen/Gast-Freigaben nicht ausgeliefert. Archiv-, öffentliche und Änderungsprotokoll-Suche berücksichtigen das ausgeblendete Feld nicht mehr.
+- Vorhandene Texte und Textformate bleiben serverseitig beim Speichern anderer Angaben unverändert erhalten; alte Versionen und Sicherungen werden nicht verändert. Keine Übernahme des Feldes aus der Versionshistorie, keine neuen Web-Eingaben für das entfernte Feld.
+- Speicher-, Projektions-, Such- und Linux-Regressionstests sowie Dokumentation aktualisiert. Schema 19, Backupformat 2 und Dienstanforderungen unverändert.
+
 ## [0.43.0] - 2026-10-13
 
 - Dauerhafte Admin-Erinnerung bei fehlender einsatzbereiter automatischer Sicherung und mindestens 31 Tagen seit dem letzten erfolgreichen Backup; bei fehlender Sicherung sofort. Tageszähler nach deutschem Kalender, Aktualisierung bei Anmeldung, Rückkehr und erfolgreicher Sicherung.

@@ -81,7 +81,7 @@ Unter Bildern steht in der internen, Gast-, öffentlichen und Freigabeansicht au
 
 ## Markdown in Beiträgen ab 0.35.0
 
-Beschreibung, Quellen, eigene Interpretation, offene Fragen und Nutzungsrechte unterstützen Markdown mit Überschriften, Fett/Kursiv, Listen, Zitaten, Links und Tabellen. Der Editor bietet Formatierungsbuttons und **Bearbeiten / Vorschau**. Neue Beiträge verwenden Markdown; bestehende Texte bleiben Klartext, bis **Markdown-Formatierung aktivieren** für das jeweilige Feld ausgewählt wird. Abschalten verändert den Quelltext nicht. Intern, für Gäste, öffentlich und ab 0.36.1 beim Prüfen von Veröffentlichungsanfragen wird derselbe Renderer verwendet; die vorhandenen Freigaben gelten weiterhin. Eingebettetes HTML wird nur als Text dargestellt, unsichere Linkprotokolle sind gesperrt, Markdown-Bilder laden keine externen Medien. Dateien und Audio weiter über die Dateiverwaltung hinzufügen.
+Beschreibung, Quellen, offene Fragen und Nutzungsrechte unterstützen Markdown mit Überschriften, Fett/Kursiv, Listen, Zitaten, Links und Tabellen. Der Editor bietet Formatierungsbuttons und **Bearbeiten / Vorschau**. Neue Beiträge verwenden Markdown; bestehende Texte bleiben Klartext, bis **Markdown-Formatierung aktivieren** für das jeweilige Feld ausgewählt wird. Abschalten verändert den Quelltext nicht. Intern, für Gäste, öffentlich und ab 0.36.1 beim Prüfen von Veröffentlichungsanfragen wird derselbe Renderer verwendet; die vorhandenen Freigaben gelten weiterhin. Eingebettetes HTML wird nur als Text dargestellt, unsichere Linkprotokolle sind gesperrt, Markdown-Bilder laden keine externen Medien. Dateien und Audio weiter über die Dateiverwaltung hinzufügen.
 
 Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quelltext gespeichert. Formatierungsbuttons erhalten vorhandene Zuordnungen; manuelle Änderungen innerhalb eines zugeordneten Textes entfernen dessen Zuordnung wie bisher. Markdown-Linktexte können vorhandene Zuordnungen überlagern; innerhalb eines Markdown-Links wird kein zweiter Link verschachtelt. Versionshistorie und Sicherungen behalten Quelltext und Feldformat. Die gezielte Wiederherstellung übernimmt beide gemeinsam.
 
@@ -89,7 +89,7 @@ Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quell
 
 Einstellungen → Updates zeigt die App- und Dienstversion getrennt, die erforderliche Mindestversion und einen verständlichen Status. **Anleitung öffnen** führt zur passenden versionierten Betreiberanleitung; Ab 0.42.0 liegen Anleitung, SSH-Hilfe und KI-Prompt unter **Einstellungen → Hilfe**. **Status und Updates prüfen** aktualisiert Dienststatus und verfügbare Releases, ohne etwas zu installieren. Die Vorbereitung führt durch Sicherung, gegebenenfalls Dienstwechsel, App-Update und Abschlussprüfung. Im Bestätigungsdialog werden die Anforderungen des ausgewählten Releases geprüft. Unbekannte Versionen und nicht erreichbare Dienste werden nicht als bereit behandelt. Die SSH-Hilfe bietet gefilterte Diagnose und einen kopierbaren KI-Prompt; Container und Hostpfade werden nicht geraten. Der Updater erneuert sich weiterhin nicht selbst.
 
-Die App 0.43.0 lässt sich weiterhin mit Dienst **0.35.0** installieren. Für **manuelles Zurückrollen und den vollständigen Protokoll-Download** muss der separate Dienst auf **0.42.0** erneuert werden; die Oberfläche kennzeichnet fehlende Funktionen und verlinkt Hilfe. App-Updates erneuern ihn nicht automatisch.
+Die App 0.44.0 lässt sich weiterhin mit Dienst **0.35.0** installieren. Für **manuelles Zurückrollen und den vollständigen Protokoll-Download** muss der separate Dienst auf **0.42.0** erneuert werden; die Oberfläche kennzeichnet fehlende Funktionen und verlinkt Hilfe. App-Updates erneuern ihn nicht automatisch.
 
 ## Updatekanäle und Kompatibilität ab 0.35.0
 
@@ -313,6 +313,10 @@ In der installierten Web-App auf iPhone oder Android lässt sich die Seite am ob
 ### Backup-Erinnerung ab 0.43.0
 
 Ohne einsatzbereite aktivierte automatische Sicherung erscheint für Administratoren ab 31 Kalendertagen seit dem letzten erfolgreichen Backup eine dauerhafte Erinnerung; ohne bisherige Sicherung sofort. Sie zeigt die Tageszahl nach Europe/Berlin, wird bei Anmeldung/Rückkehr, regelmäßig und nach Sicherungsaktionen aktualisiert und hat keinen Ausblenden-Button. Einmal aktiviert bleibt sie auch beim späteren Einschalten der Automatik bis zur nächsten erfolgreichen Sicherung bestehen. Laufende oder fehlgeschlagene Sicherungen reichen nicht. Erfolgreiche manuelle und WebDAV-Sicherungen zählen; interne Update-Rückfallsnapshots ersetzen diese Erinnerung nicht. Der Link „Jetzt Backup erstellen“ öffnet Einstellungen → Backups, klappt den Bereich auf und scrollt zu den Aktionen; er startet nichts automatisch. Serverseitiger Adminschutz verhindert Gast-/Nutzerzugriff auf Sicherungsmetadaten; Rollen-Vorschauen erhalten den Hinweis nicht. Zukünftige automatische Speicheranbieter können ihre Bereitschaft über dieselbe Provider-Schnittstelle melden.
+
+### Eigene Interpretation ab 0.44.0
+
+Das bisherige Feld „Eigene Interpretation“ ist aus Bearbeitung, interner Leseansicht, Gäste-/öffentlicher Ansicht, Freigabeprüfung, Feldauswahl und Versionshistorie entfernt. Archivsuche, öffentliche Suche und Änderungsprotokoll berücksichtigen seine Inhalte nicht mehr. Bereits gespeicherte Texte, Textformate und frühere Versionen bleiben unverändert in Datenbank und Sicherungen erhalten; beim Speichern anderer Felder übernimmt der Server diese Daten aus dem aktuellen gespeicherten Stand. Sie lassen sich über die Weboberfläche nicht mehr ändern oder aus früheren Versionen übernehmen. Alte Feldfreigaben werden bei der Auslieferung ignoriert; es erfolgt keine Löschung oder Datenmigration.
 
 ### Eintragsaktionen ab 0.43.0
 

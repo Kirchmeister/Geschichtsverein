@@ -252,6 +252,12 @@ Auch **Wert zurückholen**, **Ausgewählte Werte zurückholen** und **Gesamte Ve
 
 Für diese Änderungen ist nach bereits installiertem Update-Dienst 0.42.0 kein weiterer Dienstwechsel nötig.
 
+### N. Das entfernte Interpretationsfeld ab 0.44.0
+
+„Eigene Interpretation“ erscheint nicht mehr im Formular, in Beitragsansichten, Gast-/öffentlicher Ansicht, Freigabeprüfung, Feldauswahl oder Versionshistorie. Es wird auch nicht mehr für Suchtreffer im Archiv, öffentlichen Profil und Änderungsprotokoll verwendet. Andere Textfelder wie Beschreibung, Quellen und offene Fragen bleiben bestehen.
+
+Ihre bisherigen Inhalte und die zugehörige Formatierung werden nicht gelöscht. Sie bleiben in der Datenbank, früheren Beitragsversionen und vollständigen Sicherungen erhalten. Wenn Sie andere Angaben bearbeiten oder frühere sichtbare Werte übernehmen, bewahrt der Server die aktuell gespeicherte Interpretation unverändert. Das Feld lässt sich über die Oberfläche nicht mehr bearbeiten oder zurückholen. Auch eine früher aktivierte öffentliche oder Gast-Freigabe liefert es nicht mehr aus. Sie müssen dafür keine Feldauswahl manuell korrigieren und keine Datenmigration durchführen. Der bereits eingerichtete Update-Dienst muss für diese Änderung nicht erneuert werden.
+
 ## 7. Häufige Situationen
 
 | Anzeige / Situation | Nächster Schritt |
