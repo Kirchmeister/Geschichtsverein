@@ -258,6 +258,18 @@ Für diese Änderungen ist nach bereits installiertem Update-Dienst 0.42.0 kein 
 
 Ihre bisherigen Inhalte und die zugehörige Formatierung werden nicht gelöscht. Sie bleiben in der Datenbank, früheren Beitragsversionen und vollständigen Sicherungen erhalten. Wenn Sie andere Angaben bearbeiten oder frühere sichtbare Werte übernehmen, bewahrt der Server die aktuell gespeicherte Interpretation unverändert. Das Feld lässt sich über die Oberfläche nicht mehr bearbeiten oder zurückholen. Auch eine früher aktivierte öffentliche oder Gast-Freigabe liefert es nicht mehr aus. Sie müssen dafür keine Feldauswahl manuell korrigieren und keine Datenmigration durchführen. Der bereits eingerichtete Update-Dienst muss für diese Änderung nicht erneuert werden.
 
+### O. Textbearbeitung und Gliederung ab 0.45.0
+
+„Eintrag bearbeiten“ gliedert sich in vier offene Rahmen: Grunddaten, Beschreibung und Verknüpfungen, Quellen und Forschung sowie Dateien und Nutzungsrechte. Am Ende stehen die gemeinsamen Speicheraktionen. Beschreibung, Quellen, offene Fragen und Nutzungsrechte passen ihre Höhe automatisch dem Inhalt an. Sie können Text einfügen, tippen oder über die Gerätetastatur diktieren; das Feld wächst nach unten. Beim Kürzen schrumpft es wieder bis zu einer Mindesthöhe. Scrollen Sie im Dialog, um darunterliegende Abschnitte zu erreichen.
+
+Die kleine Checkbox **Markdown** steht unmittelbar vor ihrem Namen. **Bearbeiten** zeigt den Quelltext, **Vorschau** das Ergebnis. Die Symbole bedeuten: B = Fett, I = Kursiv, H = Überschrift, Aufzählung = Liste, Anführungszeichen = Zitat, Kette = Link, Raster = Tabelle. Am Computer zeigen sie beim Darüberfahren ihren Namen; Screenreader erhalten dieselben Beschriftungen. Die Buttons haben gleich große Bedienflächen.
+
+Markieren Sie Text und wählen Sie ein Format. Ein erkennbares aktives Format wird hervorgehoben. Noch einmal drücken entfernt die betreffende Auszeichnung; der Text bleibt erhalten. Bei Überschrift, Liste und Zitat sind die betroffenen Zeilen maßgeblich. Bei bereits zusammenhängend ausgezeichnetem Text wird die umgebende Formatierung entfernt. Der allgemeine Linkbutton setzt zunächst `https://example.org` ein; ersetzen Sie die Adresse im Quelltext durch das gewünschte Ziel. Eine vorhandene Markdown-Tabelle wird mit dem Tabellenbutton in Text mit Tabulatoren zwischen den Zellen und Zeilenumbrüchen zwischen den Zeilen umgewandelt. Alle Zellinhalte einschließlich Überschriften und Beispielwerte bleiben erhalten; kontrollieren Sie den Text danach.
+
+Für interne Beitragslinks markieren Sie zuerst eine passende Textstelle und wählen **Beitrag verknüpfen**. Suchen Sie nach Titel oder Referenz und wählen Sie den Beitrag. **Person/Familie zuordnen** öffnet die Namenssuche und Auswahl der Art. Die bestehenden Zuordnungen darunter können bearbeitet beziehungsweise entfernt werden. Formatierungsbuttons erhalten ihre Textpositionen; normale Änderungen innerhalb des zugeordneten Textes entfernen die betreffende Zuordnung wie bisher. Alle Änderungen müssen anschließend gespeichert werden.
+
+Beim iPhone entfällt die bisherige Verschiebungs-/Zoom-Geometrie des Bearbeitungsdialogs; die Schrift ist mindestens 16 px groß und die Höhe wird ohne Zusammenziehen des aktiven Feldes gemessen. Bitte nach dem Update am iPhone prüfen: vorhandenen Text öffnen, Cursor in verschiedene Zeilen setzen, einzelne Zeichen einfügen/löschen, Text markieren, formatieren und diktieren. Eine Bildschirm-/Cursorabweichung ist ohne echten Gerätetest nicht abschließend überprüfbar. Falls sie weiterhin auftritt, iOS-Version, Browser/Web-App-Modus und verwendeten Zoom notieren. Kein erneuter Wechsel des Update-Dienstes nötig.
+
 ## 7. Häufige Situationen
 
 | Anzeige / Situation | Nächster Schritt |

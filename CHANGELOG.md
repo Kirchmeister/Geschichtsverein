@@ -1,5 +1,15 @@
 # Änderungen
 
+## [0.45.0] - 2026-10-13
+
+- Bearbeitungsformular in vier dezent umrahmte, offene Abschnitte gegliedert; Speichern, Abbrechen und Entwurf verwerfen bleiben gemeinsam außerhalb der Abschnitte.
+- Markdown-Checkboxen klein und direkt links neben „Markdown“; Bearbeiten/Vorschau bleiben Textbuttons. Einheitliche 44-px-Symbolbuttons mit Hilfetext, Screenreader-Beschriftung und erkennbarem Formatierungszustand.
+- Fett, Kursiv, Überschrift, Liste, Zitat und Link lassen sich wieder entfernen; vorhandene Tabellen werden unter Erhalt ihrer Zellinhalte zu Text mit Tabulatoren. Textauswahl und Positionszuordnungen werden anhand konkreter Textänderungen erhalten.
+- Beschreibung, Quellen, offene Fragen und Nutzungsrechte wachsen und schrumpfen mit ihrem Inhalt, auch bei Einfügen, Diktat und Breitenänderung. Unsichtbare Messkopie statt Zusammenziehen des fokussierten Feldes; native Eingabezusammensetzung bleibt erhalten.
+- Beitrags-/Personenverknüpfungen mit klaren Buttons, Auswahlhinweis, Suchbereichen und bestehenden Zuordnungen übersichtlicher gestaltet.
+- Bearbeitungsdialog ohne Zentrierungs-Transformation und Zoom-Animation, explizite Textgeometrie und mindestens 16-px-Schrift für stabile mobile Cursorpositionen. Reales iPhone-Verhalten muss am Gerät nachgeprüft werden.
+- Formatierungs-, Zuordnungs-, Höhen- und UI-Regressionstests sowie Betreiberanleitung ergänzt. Schema 19, Backupformat 2 und Dienstanforderungen unverändert.
+
 ## [0.44.0] - 2026-10-13
 
 - „Eigene Interpretation“ aus Bearbeitung, interner Leseansicht, Gast-/öffentlicher Ansicht, Freigabeprüfung, Feldfreigaben und Versionshistorie entfernt.

@@ -89,7 +89,7 @@ Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quell
 
 Einstellungen → Updates zeigt die App- und Dienstversion getrennt, die erforderliche Mindestversion und einen verständlichen Status. **Anleitung öffnen** führt zur passenden versionierten Betreiberanleitung; Ab 0.42.0 liegen Anleitung, SSH-Hilfe und KI-Prompt unter **Einstellungen → Hilfe**. **Status und Updates prüfen** aktualisiert Dienststatus und verfügbare Releases, ohne etwas zu installieren. Die Vorbereitung führt durch Sicherung, gegebenenfalls Dienstwechsel, App-Update und Abschlussprüfung. Im Bestätigungsdialog werden die Anforderungen des ausgewählten Releases geprüft. Unbekannte Versionen und nicht erreichbare Dienste werden nicht als bereit behandelt. Die SSH-Hilfe bietet gefilterte Diagnose und einen kopierbaren KI-Prompt; Container und Hostpfade werden nicht geraten. Der Updater erneuert sich weiterhin nicht selbst.
 
-Die App 0.44.0 lässt sich weiterhin mit Dienst **0.35.0** installieren. Für **manuelles Zurückrollen und den vollständigen Protokoll-Download** muss der separate Dienst auf **0.42.0** erneuert werden; die Oberfläche kennzeichnet fehlende Funktionen und verlinkt Hilfe. App-Updates erneuern ihn nicht automatisch.
+Die App 0.45.0 lässt sich weiterhin mit Dienst **0.35.0** installieren. Für **manuelles Zurückrollen und den vollständigen Protokoll-Download** muss der separate Dienst auf **0.42.0** erneuert werden; die Oberfläche kennzeichnet fehlende Funktionen und verlinkt Hilfe. App-Updates erneuern ihn nicht automatisch.
 
 ## Updatekanäle und Kompatibilität ab 0.35.0
 
@@ -313,6 +313,14 @@ In der installierten Web-App auf iPhone oder Android lässt sich die Seite am ob
 ### Backup-Erinnerung ab 0.43.0
 
 Ohne einsatzbereite aktivierte automatische Sicherung erscheint für Administratoren ab 31 Kalendertagen seit dem letzten erfolgreichen Backup eine dauerhafte Erinnerung; ohne bisherige Sicherung sofort. Sie zeigt die Tageszahl nach Europe/Berlin, wird bei Anmeldung/Rückkehr, regelmäßig und nach Sicherungsaktionen aktualisiert und hat keinen Ausblenden-Button. Einmal aktiviert bleibt sie auch beim späteren Einschalten der Automatik bis zur nächsten erfolgreichen Sicherung bestehen. Laufende oder fehlgeschlagene Sicherungen reichen nicht. Erfolgreiche manuelle und WebDAV-Sicherungen zählen; interne Update-Rückfallsnapshots ersetzen diese Erinnerung nicht. Der Link „Jetzt Backup erstellen“ öffnet Einstellungen → Backups, klappt den Bereich auf und scrollt zu den Aktionen; er startet nichts automatisch. Serverseitiger Adminschutz verhindert Gast-/Nutzerzugriff auf Sicherungsmetadaten; Rollen-Vorschauen erhalten den Hinweis nicht. Zukünftige automatische Speicheranbieter können ihre Bereitschaft über dieselbe Provider-Schnittstelle melden.
+
+### Überarbeitetes Bearbeitungsformular ab 0.45.0
+
+Grunddaten, Beschreibung/Verknüpfungen, Quellen/Forschung und Dateien/Nutzungsrechte stehen in eigenen offenen Rahmen. Die Checkbox „Markdown“ steht klein links neben ihrer Beschriftung. Bearbeiten/Vorschau bleiben Textbuttons; die sieben Formatierungsaktionen sind gleich große, beschriftete Symbolbuttons (44 px). Erkannte aktive Formate werden angezeigt und durch erneutes Anklicken entfernt. Blockformate gelten für betroffene Zeilen, Inlineformate für die umgebende erkannte Auszeichnung beziehungsweise die Auswahl. Tabellen werden zu Text mit Tabulatoren zwischen den Zellen; Zellinhalte und vorhandene Inlineformatierungen bleiben erhalten. Der Linkbutton erzeugt zunächst eine bearbeitbare Beispieladresse.
+
+Die vier Textbereiche wachsen automatisch mit vorhandenen, getippten, eingefügten oder diktierten Inhalten und schrumpfen bis zur Mindesthöhe. Das Dialogfenster scrollt normal; es gibt keine eigene starre Textfeldhöhe. Eine Messkopie verhindert das kurzfristige Zusammenziehen des fokussierten Feldes. Bestehende Beitrags- und Personenpositionen werden bei Formatierungsänderungen gezielt verschoben; normale Änderungen innerhalb einer Zuordnung entfernen sie wie bisher. „Beitrag verknüpfen“ und „Person/Familie zuordnen“ verlangen zuerst eine markierte Textstelle. Vorhandene Zuordnungen bleiben sichtbar und entfernbar.
+
+Der Bearbeitungsdialog nutzt keine CSS-Zentrierungstransformation oder Zoom-Animation mehr. Textgröße und Zeilenhöhe sind explizit, mindestens 16 px; Benutzerzoom bleibt erlaubt. Das vermeidet mögliche Safari-Geometrieprobleme. Ein echter iPhone-Cursortest kann durch Quellcode- und Modelltests nicht ersetzt werden; nach dem Update am Gerät prüfen. Kein neuer Update-Dienst und keine Datenmigration erforderlich.
 
 ### Eigene Interpretation ab 0.44.0
 
