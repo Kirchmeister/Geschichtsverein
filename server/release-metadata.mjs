@@ -7,5 +7,5 @@ export async function releaseMetadata(repository,release,headers,fetcher=fetch){
  const contract=values['docs/update-contract.json'];if(contract.projectId!==project||contract.updateProtocol!==1)throw Error('Projektkennung oder Updateprotokoll ist unbekannt.');
  const branch=release.prerelease?'development':'main',comparison=await api('/compare/'+commit.sha+'...'+branch);if(!['ahead','identical'].includes(comparison.status))throw Error('Release gehört nicht zum vorgesehenen '+branch+'-Branch.');
  return {...release,commit:commit.sha,branchVerified:true,version:values['version.json'],compatibility:values['docs/update-compatibility.json']};
- }catch(e){return {...release,metadataError:String(e.message).slice(0,300)}}
+ }catch(e){if(e.githubRequestFailure)throw e;return {...release,metadataError:String(e.message).slice(0,300)}}
 }

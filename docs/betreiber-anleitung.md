@@ -317,3 +317,16 @@ sudo docker exec APP_CONTAINER node scripts/linux-start.mjs scripts/linux-recove
 5. Nach der Anmeldung einen zweiten Passkey einrichten, vorhandene Administratorzugänge prüfen und vertrauenswürdige Stellvertretungen bestimmen. Nicht mehr benötigte Einladungen widerrufen.
 
 Falls die Adresse bereits existiert, bricht die Routine ab. Verwenden Sie eine andere erreichbare Adresse; bearbeiten Sie nicht auf Verdacht die Datenbank. Ohne SSH-Zugriff muss der zuständige Serverbetreiber helfen. Diese Anleitung gilt ab App 0.46.0 und benötigt keinen Austausch des separaten Updaters.
+
+
+### GitHub-Fehler bei Update-Suche oder Start
+
+Version 0.46.1 korrigiert die Abfragewiederholungen und die Fehleranzeige. **Den separaten Update-Dienst nach Abschnitt 4 auf 0.46.1 erneuern**, anschließend die App aktualisieren. Ein App-Update allein ersetzt den laufenden Dienst nicht. Bei einer bereits blockierten GitHub-Abfrage kann das App-Update erst nach Ablauf der Sperre oder nach Korrektur der Zugangskonfiguration gelingen.
+
+Die bisherige Suche prüfte auch die Metadaten für bis zu fünf historische Installationen erneut; der Installationsstart wiederholte die gesamte Suche. Damit konnte die unauthentifizierte GitHub-Grenze von 60 Anfragen pro Stunde und öffentlicher IP schon nach wenigen Bedienvorgängen erreicht werden. Das ist eine mögliche Ursache von HTTP 403, keine Diagnose allein anhand des Statuscodes. Nextcloud ist an dieser Stelle noch nicht beteiligt: GitHub-Vorprüfung, Download und Build erfolgen vor der externen Sicherung.
+
+Der Dienst speichert erfolgreiche GitHub-Antworten fünf Minuten im Arbeitsspeicher und führt gleichzeitig laufende identische Anfragen zusammen. Ein Dienstneustart leert diesen Cache. Bereits gespeicherte historische Notizen werden nicht erneut abgefragt. Der heruntergeladene Release-Commit und seine Kompatibilität werden weiterhin vor Installation geprüft; fehlgeschlagene Antworten werden nicht als Freigabe verwendet.
+
+Bei bestätigtem Anfragelimit enthält die Meldung den frühesten Wiederholungszeitpunkt in UTC (`Z`). Bis dahin keine erneuten Anfragen; der Dienst pausiert selbst. Bei HTTP 403 ohne Limitangaben Repositoryzugriff und gegebenenfalls Token-Berechtigungen prüfen; bei HTTP 401 den Token prüfen. Die Oberfläche zeigt bei fehlgeschlagener Suche „Update-Prüfung derzeit nicht möglich“. Ältere Versionen sind als zuletzt bekannter Stand gekennzeichnet. Ein fehlgeschlagener Start zeigt den Fehler, statt eine erfolgreiche Sicherung oder Installation vorzutäuschen.
+
+Optional kann der Betreiber in der geschützten Dienstkonfiguration `/etc/geschichtsarchiv/updater.json` das bereits unterstützte Feld `githubToken` setzen. Für einen auf dieses Repository beschränkten Fine-grained-Token genügen lesende Repository-Metadaten und **Contents: Read-only**. Token nicht im Chat, Repository oder Browser eintragen; Datei weiterhin mit `0600` schützen und den Dienst nur im Leerlauf neu starten. Ein Token hebt Sperren nicht pauschal auf und ersetzt keine Zugriffsprüfung. Die Änderung der Dienstkonfiguration sperrt die Rücknahme früherer App-Updates über die Oberfläche gemäß den bestehenden Schutzregeln.

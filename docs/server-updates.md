@@ -226,3 +226,8 @@ Für dieses Release sind historische SQL-Stände 0.20.0, 0.27.1, 0.32.0 und 0.34
 ### Versionierte Betas veröffentlichen
 
 Betas ausschließlich auf `development` pflegen, mit einer neuen Versionsnummer in `package.json` und `version.json`, `prerelease: true`, CHANGELOG und aktualisierter Kompatibilitätspolicy. Relevante Tests und Linux-Build vor dem Push ausführen. Der Workflow veröffentlicht diesen festen Stand als Beta-Release; gewöhnliche Development-Commits ohne passende Release-Version erzeugen kein neues Installationsangebot. Bestehende Tags/Releases werden nicht ersetzt. Stabile Releases werden auf `main` veröffentlicht. Eine Beta ist trotz Prüfung freiwillige Testsoftware.
+
+
+## GitHub-Prüfung bei HTTP 403/429 (ab 0.46.1)
+
+Den separaten Dienst auf 0.46.1 erneuern, damit erfolgreiche API-Antworten fünf Minuten wiederverwendet, identische parallele Anfragen zusammengeführt und bereits gespeicherte historische Notizen nicht erneut geladen werden. Das App-Update allein ersetzt den Dienst nicht. GitHub-Kanal-, Kompatibilitäts- und Commit-Prüfungen bleiben erhalten. Bei einem durch Antwortheader bestätigten Anfragelimit pausiert der Dienst bis zur angegebenen UTC-Zeit. Sonstige HTTP-403-Fehler werden als Zugriffsproblem ausgewiesen; der Status allein beweist kein Limit. Details und optionale Token-Einrichtung: [Betreiberanleitung](betreiber-anleitung.md#github-fehler-bei-update-suche-oder-start).

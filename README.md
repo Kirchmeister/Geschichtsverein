@@ -6,6 +6,8 @@ Ein konfigurierbares Archiv für Geschichtsvereine: Beiträge, Quellen, Medien, 
 
 Auch mit wenig Linux-Erfahrung können Sie sich die Einrichtung anhand dieses Repositorys von ChatGPT oder einer anderen KI Schritt für Schritt erklären lassen. Beginnen Sie mit einer getrennten Testinstanz und kleinen, überprüften Befehlen. **[Einsteigeranleitung mit kopierbarem KI-Prompt](docs/betreiber-anleitung.md)** erklärt SSH, Docker, App und separaten Update-Dienst sowie sichere Updates. Zugangsdaten und vollständige geheime Konfigurationsdateien bleiben auf Ihrem Server.
 
+Ab 0.46.1 reduzieren zwischengespeicherte GitHub-Abfragen das Risiko von Anfragelimits. Fehlgeschlagene Prüfungen werden ausdrücklich angezeigt. **Für den vollständigen Bugfix den separaten Update-Dienst auf 0.46.1 erneuern**; siehe [Betreiberanleitung](docs/betreiber-anleitung.md#github-fehler-bei-update-suche-oder-start).
+
 ## Stand und Installation
 
 Dieses Projekt befindet sich in der Entwicklung. **Eine Linux-Testinstallation mit SQLite, lokalen Dateien und echter Passkey-Anmeldung ist verfügbar.** Die Produktionsfreigabe steht weiterhin aus. Bitte zunächst mit einer getrennten Testinstanz arbeiten.

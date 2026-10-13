@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.46.1] - 2026-10-13
+
+- GitHub-Abfragen werden für fünf Minuten zwischengespeichert und gleichzeitige identische Anfragen zusammengeführt. Bereits gespeicherte historische Änderungsnotizen werden nicht erneut geladen. Prüfungen von Kanal, Kompatibilität, Branch und Release-Commit bleiben erhalten.
+- GitHub-Anfragelimits (403/429) werden anhand der Antwortheader erkannt; Wiederholungen pausieren bis zum angegebenen Zeitpunkt. Andere Zugriffs-, Token- und Verbindungsfehler erhalten konkrete Hinweise ohne vertrauliche Antwortinhalte.
+- Fehlgeschlagene manuelle Suchen und Installationsvorprüfungen werden gespeichert. Die Oberfläche zeigt „Update-Prüfung derzeit nicht möglich“ und kennzeichnet zuletzt bekannte Versionen, statt fehlende Updates zu behaupten.
+- Wichtig: Für die Abfragereduktion und Fehlerdiagnose den separaten Update-Dienst auf 0.46.1 erneuern. Ein reines App-Update korrigiert nur die Oberfläche.
+
 ## [0.46.0] - 2026-10-13
 
 - „Öffentliches Profil“ steht unten im Menü, direkt über Einstellungen, sofern diese verfügbar sind.
