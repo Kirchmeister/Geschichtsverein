@@ -27,7 +27,7 @@ try{
  const busy=m.EntryReaderToolbar({...props,busy:true});assert.equal(busy.props.children[0].props.disabled,true);assert.equal(busy.props.children[1].props.disabled,undefined);
  const page=await readFile('app/page.tsx','utf8'),css=await readFile('app/globals.css','utf8');
  assert.ok(page.includes('showCloseButton={false}><EntryReaderToolbar'));assert.ok(page.includes('onEdit={editDetail} onClose={()=>setDetail(null)}/><div className="entry-reader-scroll" tabIndex={0}'));
- assert.ok(page.includes('onClick={editDetail}>Eintrag bearbeiten</button>'));
+ assert.ok(!page.includes('onClick={editDetail}>Eintrag bearbeiten</button>'));assert.ok(page.includes('onEdit={editDetail}'));
  assert.match(css,/\.editor\.entry-reader\{display:flex;flex-direction:column;overflow:hidden!important/);assert.match(css,/\.entry-reader-toolbar\{[^}]*flex:0 0 auto/);assert.match(css,/\.entry-reader-scroll\{overflow-y:auto;min-height:0/);
  console.log('PASS: provider availability/default/fallback matrix, legacy/validated storage and history, reader close/edit actions, guest and busy guards, toolbar outside the scrolling body.');
 }finally{await rm(file,{force:true})}

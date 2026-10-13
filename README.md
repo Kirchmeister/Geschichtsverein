@@ -89,7 +89,7 @@ Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quell
 
 Einstellungen → Updates zeigt die App- und Dienstversion getrennt, die erforderliche Mindestversion und einen verständlichen Status. **Anleitung öffnen** führt zur passenden versionierten Betreiberanleitung; Ab 0.42.0 liegen Anleitung, SSH-Hilfe und KI-Prompt unter **Einstellungen → Hilfe**. **Status und Updates prüfen** aktualisiert Dienststatus und verfügbare Releases, ohne etwas zu installieren. Die Vorbereitung führt durch Sicherung, gegebenenfalls Dienstwechsel, App-Update und Abschlussprüfung. Im Bestätigungsdialog werden die Anforderungen des ausgewählten Releases geprüft. Unbekannte Versionen und nicht erreichbare Dienste werden nicht als bereit behandelt. Die SSH-Hilfe bietet gefilterte Diagnose und einen kopierbaren KI-Prompt; Container und Hostpfade werden nicht geraten. Der Updater erneuert sich weiterhin nicht selbst.
 
-Die App 0.42.0 lässt sich weiterhin mit Dienst **0.35.0** installieren. Für **manuelles Zurückrollen und den vollständigen Protokoll-Download** muss der separate Dienst auf **0.42.0** erneuert werden; die Oberfläche kennzeichnet fehlende Funktionen und verlinkt Hilfe. App-Updates erneuern ihn nicht automatisch.
+Die App 0.43.0 lässt sich weiterhin mit Dienst **0.35.0** installieren. Für **manuelles Zurückrollen und den vollständigen Protokoll-Download** muss der separate Dienst auf **0.42.0** erneuert werden; die Oberfläche kennzeichnet fehlende Funktionen und verlinkt Hilfe. App-Updates erneuern ihn nicht automatisch.
 
 ## Updatekanäle und Kompatibilität ab 0.35.0
 
@@ -309,6 +309,14 @@ Auf Touch-Geräten begrenzen öffentliche Profil-, Beitrags- und Kartenseiten de
 ### Mobile Web-App aktualisieren
 
 In der installierten Web-App auf iPhone oder Android lässt sich die Seite am oberen Rand mit einem Finger ausreichend weit nach unten ziehen. Sobald „Loslassen zum Aktualisieren“ erscheint, löst Loslassen einen vollständigen Refresh der aktuellen Adresse aus. Kurzes Ziehen aktualisiert nicht. Karten, Bedienelemente, offene Dialoge und die mobile Menüleiste sind ausgenommen. Im normalen Browser bleibt dessen eigene Aktualisierungsfunktion verfügbar. Vor dem Aktualisieren sollten Änderungen gespeichert werden.
+
+### Backup-Erinnerung ab 0.43.0
+
+Ohne einsatzbereite aktivierte automatische Sicherung erscheint für Administratoren ab 31 Kalendertagen seit dem letzten erfolgreichen Backup eine dauerhafte Erinnerung; ohne bisherige Sicherung sofort. Sie zeigt die Tageszahl nach Europe/Berlin, wird bei Anmeldung/Rückkehr, regelmäßig und nach Sicherungsaktionen aktualisiert und hat keinen Ausblenden-Button. Einmal aktiviert bleibt sie auch beim späteren Einschalten der Automatik bis zur nächsten erfolgreichen Sicherung bestehen. Laufende oder fehlgeschlagene Sicherungen reichen nicht. Erfolgreiche manuelle und WebDAV-Sicherungen zählen; interne Update-Rückfallsnapshots ersetzen diese Erinnerung nicht. Der Link „Jetzt Backup erstellen“ öffnet Einstellungen → Backups, klappt den Bereich auf und scrollt zu den Aktionen; er startet nichts automatisch. Serverseitiger Adminschutz verhindert Gast-/Nutzerzugriff auf Sicherungsmetadaten; Rollen-Vorschauen erhalten den Hinweis nicht. Zukünftige automatische Speicheranbieter können ihre Bereitschaft über dieselbe Provider-Schnittstelle melden.
+
+### Eintragsaktionen ab 0.43.0
+
+In der internen Leseansicht bleibt „Eintrag bearbeiten“ ausschließlich in der festen oberen Leiste. Unten stehen kompakte Versionshistorie- und Löschen-Buttons mit ausreichender Bedienfläche und Abstand. Das Öffnen der Historie ist unverändert rein lesend. Löschen sowie die Übernahme einzelner, ausgewählter oder sämtlicher früherer Werte benötigen einen Bestätigungsdialog mit Abbrechen als Anfangsfokus. Übernahmen ändern zunächst nur das Bearbeitungsformular; erst Speichern erstellt einen neuen Beitragsstand. Abbrechen und bloßes Öffnen lösen weder Speicherung noch Freigabeanfrage aus.
 
 ### Backup-Anzeige und Wiederherstellung über die Oberfläche
 

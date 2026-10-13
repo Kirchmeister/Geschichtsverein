@@ -1,5 +1,13 @@
 # Änderungen
 
+## [0.43.0] - 2026-10-13
+
+- Dauerhafte Admin-Erinnerung bei fehlender einsatzbereiter automatischer Sicherung und mindestens 31 Tagen seit dem letzten erfolgreichen Backup; bei fehlender Sicherung sofort. Tageszähler nach deutschem Kalender, Aktualisierung bei Anmeldung, Rückkehr und erfolgreicher Sicherung.
+- Aktive Erinnerung bleibt auch nach späterem Aktivieren einer automatischen Sicherung bis zum erfolgreichen Backup bestehen. Abgebrochene oder laufende Sicherungen löschen sie nicht. Direkter Link öffnet Einstellungen → Backups und scrollt zu den Sicherungsaktionen.
+- Doppelten unteren Bearbeiten-Button entfernt; Versionshistorie und Löschen kompakter mit sicheren Abständen und mindestens 44 px Bedienhöhe.
+- Eigene Bestätigungsdialoge für Löschen sowie einzelne/ausgewählte/gesamte frühere Werte. Abbrechen erhält den Anfangsfokus; bloßes Öffnen der Historie verändert nichts. Übernahmen werden erst nach anschließendem Speichern dauerhaft wirksam.
+- Admin-, Erinnerungs-, Kalender-, Bestätigungs- und Linux-Tests sowie Betreiberanleitung ergänzt. Schema 19 und Backupformat 2 unverändert; kein neuer Dienstwechsel gegenüber 0.42.0 nötig.
+
 ## [0.42.0] - 2026-10-13
 
 - Gästeeinstellungen als eigener Bereich; öffentliche Feldauswahl unter „Öffentliches Profil → Sichtbare Felder“. Vorhandene Feldfreigaben bleiben unverändert.

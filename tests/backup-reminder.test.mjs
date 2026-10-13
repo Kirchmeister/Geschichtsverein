@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import ts from 'typescript';
+const js=ts.transpileModule(fs.readFileSync('lib/backup-reminder.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText;
+const {backupReminder,automaticBackupConfigured}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+const now=Date.parse('2026-10-13T10:00:00Z'),providers=[{enabled:false,ready:true}],old='2026-09-12T10:00:00Z',backup={status:'complete',created:old,finished:old};
+assert.equal(backupReminder([],providers,now).show,true);assert.match(backupReminder([],providers,now).message,/noch keine/);
+assert.equal(backupReminder([backup],providers,now).daysWithoutBackup,31);assert.equal(backupReminder([backup],providers,now).show,true);
+assert.equal(backupReminder([backup],providers,now+86400000).daysWithoutBackup,32);assert.equal(backupReminder([backup],providers,now+2*86400000).daysWithoutBackup,33);
+assert.equal(backupReminder([{...backup,finished:'2026-09-13T10:00:00Z'}],providers,now).show,false);
+for(const status of ['error','copying','verifying','uploading'])assert.equal(backupReminder([{...backup,status,finished:new Date(now).toISOString()},backup],providers,now).daysWithoutBackup,31);
+const automatic=[{enabled:true,ready:true}];assert.equal(backupReminder([backup],automatic,now).show,false);assert.equal(backupReminder([],automatic,now).show,false);
+assert.equal(automaticBackupConfigured([{enabled:true,ready:false}]),false);assert.equal(automaticBackupConfigured([{enabled:false,ready:true},{enabled:true,ready:true}]),true);
+const previous={lastSuccessfulAt:old};assert.equal(backupReminder([backup],automatic,now,previous).show,true);assert.equal(backupReminder([backup],automatic,now,{lastSuccessfulAt:null}).show,false);
+assert.equal(backupReminder([{...backup,finished:new Date(now).toISOString()}],providers,now,previous).show,false);
+assert.equal(backupReminder([{...backup,finished:new Date(now).toISOString()}],automatic,now,previous).show,false);
+assert.equal(backupReminder([{...backup,status:'expired'}],providers,now).daysWithoutBackup,31);
+assert.equal(backupReminder([{...backup,finished:'invalid'}],providers,now).lastSuccessfulAt,null);assert.equal(backupReminder([{...backup,finished:'2099-01-01'}],providers,now).lastSuccessfulAt,null);
+// Calendar-day counts in Germany remain stable over the autumn clock change and update at local midnight.
+assert.equal(backupReminder([{...backup,finished:'2026-09-25T22:30:00Z'}],providers,Date.parse('2026-10-26T00:30:00Z')).daysWithoutBackup,30);
+assert.equal(backupReminder([{...backup,finished:'2026-10-12T21:59:00Z'}],providers,Date.parse('2026-10-12T22:01:00Z')).daysWithoutBackup,1);
+console.log('PASS: 31-day boundary, persistent 32/33-day reminder, successful/unfinished/failed/expired backups, provider readiness, newly activated automation cannot dismiss, success clears, never/future/invalid dates and Berlin calendar/DST.');

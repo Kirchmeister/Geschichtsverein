@@ -178,7 +178,7 @@ Für neue Bilder ist beim Hochladen jeweils eine eigene Beschriftung erforderlic
 
 Beim Bearbeiten eines Beitrags klappen Sie „Standort auf der Karte“ auf. Unter „Karte im öffentlichen Beitrag“ können Sie den Standard oder einen aktivierten Kartenanbieter wählen. Wenn nur OpenHistoricalMap aktiviert ist, zeigt auch die kleine Beitragskarte automatisch historische Karten. Bei beiden aktiven Karten bleibt OpenStreetMap der Standard. Wird die gewählte Karte später deaktiviert, erscheint die noch aktive Karte. Ohne aktive Karte bleibt die kleine Karte ausgeblendet. Der Text unter der kleinen Karte nennt ab 0.38.2 passend zur angezeigten Karte „Standort auf der heutigen Karte“ oder „Standort auf der historischen Karte“. Das öffentliche Standortfeld muss weiterhin freigegeben sein. Speichern Sie die Wahl im Beitrag und beantragen Sie bei Bedarf eine neue Veröffentlichung.
 
-In der internen Leseansicht stehen Schließen-X und „Eintrag bearbeiten“ oben in einer festen Leiste. Scrollen Sie im Beitrag; die Leiste bleibt erreichbar. Der bisherige Bearbeiten-Button unten bleibt ebenfalls erhalten.
+In der internen Leseansicht stehen Schließen-X und „Eintrag bearbeiten“ oben in einer festen Leiste. Scrollen Sie im Beitrag; die Leiste bleibt erreichbar. Ab 0.43.0 entfällt der doppelte Bearbeiten-Button unten. Dort stehen nur Versionshistorie und – für Administratoren – Eintrag löschen, kompakter und mit ausreichend Abstand.
 
 ### F. Einen Entwurf verwerfen ab 0.38.1
 
@@ -233,6 +233,24 @@ Voraussetzungen: App 0.42.0 und separater Update-Dienst 0.42.0, Administratorzug
 7. Warten Sie auf die Funktionsprüfung. Das Schließen des Fortschrittsfensters stoppt den Servervorgang nicht. Nach Abschluss neu anmelden und Beiträge sowie Dateien prüfen. Bei einem Fehler oder Dienstneustart versucht der Dienst, den zusätzlich gesicherten neueren Stand wieder zu aktivieren. Bei beschädigter Sicherung bleibt der Wartungsmodus bestehen; nicht manuell umgehen.
 
 Die zusätzliche Sicherung des neueren Stands bleibt lokal beim Updater in seiner `backups`-Ablage, einschließlich geprüftem Manifest, Daten, Konfiguration und Code. Sie wird nicht automatisch nach Nextcloud übertragen und ist kein portabler TAR-Download aus der normalen Backup-Liste. Behalten Sie sie und lassen Sie einen benötigten Rückweg zu diesem neueren Bestand anhand des Protokolls fachkundig über SSH planen. Ein erneutes App-Update allein übernimmt die neueren Daten nicht; es gibt keine automatische Zusammenführung und keinen automatischen „Rücknahme rückgängig“-Button. Geheime Konfiguration niemals in einen Chat kopieren.
+
+### L. Dauerhafte Backup-Erinnerung ab 0.43.0
+
+Wenn keine einsatzbereite automatische Sicherung aktiviert ist und mindestens 31 Kalendertage seit der letzten erfolgreichen Sicherung vergangen sind, sehen Administratoren beim Einloggen einen dauerhaften Hinweis. Er zeigt zum Beispiel „Seit 32 Tagen wurde keine erfolgreiche Sicherung erstellt“ und zählt am nächsten Tag weiter. Die Berechnung verwendet den deutschen Kalender. Ohne bisherige erfolgreiche Sicherung erscheint sofort ein entsprechender Hinweis. Gäste, Nutzer und Verwalter sehen ihn nicht; auch Rollen-Vorschauen sind ausgenommen.
+
+Der Hinweis lässt sich nicht wegklicken. Er bleibt auch nach bloßem Aktivieren der täglichen Nextcloud-Sicherung sichtbar, bis tatsächlich eine neue Sicherung erfolgreich abgeschlossen wurde. Ein laufendes oder fehlgeschlagenes Backup reicht nicht. Die Erinnerung wird bei Rückkehr zur Seite und regelmäßig aktualisiert. Sollte der Status nicht erreichbar sein, bleibt eine entsprechende Prüfmeldung sichtbar.
+
+Wählen Sie **Jetzt Backup erstellen**. Sie gelangen direkt zu **Einstellungen → Backups**; der Bereich ist aufgeklappt und die Sicherungsaktionen werden angezeigt. Erst dort starten Sie ein manuelles Backup oder eine Nextcloud-Sicherung. Der Link startet nichts ohne Ihre Auswahl. Nach erfolgreichem Abschluss verschwindet der Hinweis. Der Anzeigezeitraum im Backup-Dropdown beeinflusst weder diese Prüfung noch gespeicherte Sicherungen. Interne Rückfallsicherungen des Updaters sind ein zusätzlicher lokaler Schutz und zählen nicht als diese regulären Sicherungen.
+
+### M. Eintrag löschen oder frühere Werte übernehmen ab 0.43.0
+
+Zum Bearbeiten verwenden Sie den dauerhaft sichtbaren oberen Button. Der doppelte untere Button entfällt. **Versionshistorie** öffnet nur den Vergleich; es wird nichts verändert.
+
+**Eintrag löschen** zeigt zuerst einen Dialog mit dem Beitragstitel und einer Warnung. Anfangs ist **Abbrechen** ausgewählt. Erst die ausdrückliche Löschbestätigung entfernt den Eintrag aus dem aktiven Archiv. Administratoren können ihn weiterhin unter Gelöschte Einträge wiederherstellen; die Versionshistorie bleibt erhalten. Bei einem Fehler bleibt der Dialog geöffnet. Ein inzwischen veränderter Beitragsstand wird nicht blind gelöscht.
+
+Auch **Wert zurückholen**, **Ausgewählte Werte zurückholen** und **Gesamte Version übernehmen** zeigen eine Rückfrage mit dem früheren Zeitpunkt und den betroffenen Feldern. Bestätigen übernimmt die Werte zunächst ins Bearbeitungsformular. Kontrollieren Sie sie dort. Erst beim anschließenden Speichern wird eine neue Version erstellt; gegebenenfalls ist eine neue Veröffentlichungsfreigabe nötig. Abbrechen übernimmt nichts und beantragt keine Freigabe. Die übrigen Werte bleiben bei einer gezielten Übernahme erhalten, einschließlich der bestehenden Regeln für verknüpfte Datierungen und Beschreibungszuordnungen.
+
+Für diese Änderungen ist nach bereits installiertem Update-Dienst 0.42.0 kein weiterer Dienstwechsel nötig.
 
 ## 7. Häufige Situationen
 
