@@ -1,5 +1,13 @@
 # Änderungen
 
+## [0.46.0] - 2026-10-13
+
+- „Öffentliches Profil“ steht unten im Menü, direkt über Einstellungen, sofern diese verfügbar sind.
+- Verwalter verwalten Namen, Benutzer und Einladungen, Gästeeinstellungen, öffentliches Profil, Farben und Design sowie Karte. Andere Einstellungen und Schnittstellen bleiben Administratoren vorbehalten; systemkritische Konfiguration wird Verwaltern nicht ausgeliefert.
+- Verwalter dürfen anderen Konten Administratorrechte vergeben und Administratoren einladen. Bestätigung und dauerhaftes Vergabeprotokoll; vorhandene Administratorkonten sind für Verwalter geschützt. Der letzte aktive Administrator kann nicht gelöscht, deaktiviert oder herabgestuft werden.
+- Dokumentierter SSH-Wiederherstellungsweg erzeugt eine neue Administrator-Einladung, ohne bestehende Konten oder Inhalte zu löschen. Updates benötigen keinen neueren Update-Dienst als bisher.
+
+
 ## [0.45.0] - 2026-10-13
 
 - Bearbeitungsformular in vier dezent umrahmte, offene Abschnitte gegliedert; Speichern, Abbrechen und Entwurf verwerfen bleiben gemeinsam außerhalb der Abschnitte.

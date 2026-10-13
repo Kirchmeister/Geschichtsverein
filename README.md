@@ -339,3 +339,9 @@ Downloads verwenden den Versionsstand der jeweiligen Sicherung: `geschichtsarchi
 **Sicherung zurückspielen** erlaubt dem Admin den Upload einer TAR-Datei bis 2 GiB, auch aus einer anderen Instanz oder außerhalb des Anzeigezeitraums. Erst nach Prüfung und Vorschau sowie exakt eingegebenem Bestätigungstext wird der Bestand ersetzt. Der separate Serverdienst erstellt zuvor eine geprüfte vollständige Rückfallsicherung einschließlich Konfiguration und Programmstand mit Probe-Wiederherstellung. Fehler oder ein Dienstneustart lösen die Wiederherstellung des bisherigen Stands aus; bei beschädigter Rückfallsicherung bleibt der Wartungsmodus aktiv.
 
 App **und separater Update-Dienst benötigen mindestens 0.32.0**. Ein App-Update aktualisiert den Dienstcontainer nicht. Die Einrichtung steht in [Serverupdates](docs/server-updates.md), der Ablauf und seine Grenzen in [Installation und Wiederherstellung](docs/installation.md). Vor dem Produktiveinsatz eine getrennte Wiederherstellungsprobe durchführen.
+
+### Einstellungen und Notfallzugang ab 0.46.0
+
+„Öffentliches Profil“ steht am Ende der Menüeinträge, direkt über Einstellungen. Administratoren sehen alle Einstellungen. Verwalter sehen Namen, Benutzer und Einladungen, Gästeeinstellungen, öffentliches Profil, Farben und Design sowie Karte. Sie dürfen anderen Konten nach ausdrücklicher Bestätigung vollständige Administratorrechte vergeben; bestehende Administratorkonten können sie nicht verändern. Jede Vergabe wird protokolliert. Der letzte aktive Administrator bleibt vor Löschung, Sperrung und Herabstufung geschützt. Verwalterkonten deshalb nur vertrauenswürdigen Personen geben.
+
+Ohne erreichbaren Administrator- oder Verwalterzugang siehe [Notfallzugang über SSH](docs/betreiber-anleitung.md#notfallzugang-über-ssh). Bestehende Konto-Passkeys werden dabei nicht ersetzt.

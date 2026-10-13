@@ -7,8 +7,8 @@ import version from '@/version.json';
 export async function GET(){try{return Response.json({...await archiveDesign(),version:version.version},{headers:{'Cache-Control':'no-store'}})}catch{return Response.json({error:'Design konnte nicht geladen werden.'},{status:503})}}
 export async function POST(req:Request){try{
  if(!sameOrigin(req))return Response.json({error:'Bitte die Website direkt öffnen.'},{status:403});
- const access=await requireArchiveAction(req,'manageSettings');
- if(access.actualRole!=='admin')return Response.json({error:'Nur Administratoren dürfen das Design ändern.'},{status:403});
+ const access=await requireArchiveAction(req,'managePortalSettings');
+
  const d=await req.json() as any;if(!isArchiveTheme(d.theme)||!isArchiveTheme(d.expectedTheme))return Response.json({error:'Bitte eine gültige Farbvorlage wählen.'},{status:400});
  const db=archiveDb(),row=await db.prepare("SELECT data FROM archive_settings WHERE key='design'").first<{data:string}>();
  if((await archiveDesign()).theme!==d.expectedTheme)return Response.json({error:'Die Farbvorlage wurde inzwischen geändert. Bitte neu laden.'},{status:409});

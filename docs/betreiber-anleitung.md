@@ -283,3 +283,37 @@ Beim iPhone entfällt die bisherige Verschiebungs-/Zoom-Geometrie des Bearbeitun
 | Wiederherstellung zuerst abschließen | Fehler klären und den geprüften Rückweg abschließen. Wartungssperre nicht manuell umgehen. |
 
 Notieren Sie Ihre Installation an einem geschützten Ort: Repository, App- und Updater-Version, Containernamen, Ablagen, Ports und Sicherungsort. Geheimnisse gehören getrennt in die geschützte Konfiguration. Teilen Sie bei einer Hilfsanfrage nur die benötigten gefilterten Angaben.
+
+## Einstellungen für Verwalter ab 0.46.0
+
+Der Menüpunkt **Öffentliches Profil** befindet sich unten, oberhalb von **Einstellungen**. Ohne Einstellungsrechte ist er der letzte Menüpunkt vor dem eigenen Konto.
+
+Verwalter dürfen **Namen**, **Benutzer und Einladungen**, **Gästeeinstellungen**, **Öffentliches Profil**, **Farben und Design** und **Karte** verwalten. Backups, Updates, E-Mail/SMTP, Nextcloud/WebDAV, Serverdomain und Hilfe bleiben Administratoren vorbehalten. Diese Grenzen gelten auch bei direkten Schnittstellenaufrufen und in der Profilvorschau.
+
+### Administratorzugang über einen Verwalter ersetzen
+
+1. Als Verwalter **Einstellungen → Benutzer & Einladungen** öffnen.
+2. Beim Konto einer erreichbaren, vertrauenswürdigen Person die Rolle **Administrator** auswählen. Alternativ eine neue Person als Administrator einladen.
+3. Den Hinweis auf vollständigen Zugriff lesen und die Vergabe ausdrücklich bestätigen. Abbrechen ändert nichts.
+4. Die Person meldet sich erneut an beziehungsweise registriert über den privaten Einladungslink ihren Passkey.
+
+Der neue Administrator erhält vollständigen Zugriff einschließlich Updates und Sicherungen. Verwalter dürfen bestehende Administratorkonten nicht verändern, sperren, löschen oder herabstufen. Sie können das eigene Konto hier nicht hochstufen; wählen Sie eine andere Person. Die Anwendung schützt den letzten aktiven Administrator unabhängig davon, wer die Änderung versucht. Ein deaktivierter Administrator zählt nicht als Ersatz.
+
+Unter **Protokoll der Administratorvergaben** stehen die letzten 50 Vergaben und erstellten Administrator-Einladungen mit Zeitpunkt, ausführendem Konto und Empfänger. Ältere Protokolle bleiben gespeichert und werden mitgesichert. Eine protokollierte Einladung bedeutet noch nicht, dass sich die Person registriert hat. Der Widerruf einer Einladung entfernt den historischen Vergabeeintrag nicht. Dieses Protokoll ist keine manipulationssichere externe Aufzeichnung; Serverbetreiber mit Datenbankzugriff können Daten verändern.
+
+## Notfallzugang über SSH
+
+Nutzen Sie diesen Weg nur, wenn kein Administrator oder Verwalter mehr erreichbar ist. Er setzt berechtigten SSH-Zugriff auf Ihren eigenen Server voraus. Die Routine erstellt einen neuen einmaligen Administrator-Einladungslink und protokolliert den Vorgang als SSH-Wiederherstellung. Sie setzt keine Passkeys zurück und löscht keine Konten oder Archivdaten.
+
+1. Warten Sie, bis Updates und Wiederherstellungen vollständig abgeschlossen sind. Keine Wartungssperre umgehen.
+2. Mit SSH anmelden. Mit `sudo docker ps --format 'table {{.Names}}\t{{.Image}}'` den **Anwendungscontainer** ermitteln, nicht den Updater.
+3. Im folgenden Befehl `APP_CONTAINER` durch dessen Namen ersetzen. Verwenden Sie eine erreichbare E-Mail-Adresse, die noch keinem Konto dieser Instanz gehört. Name ebenfalls anpassen. Die Adresse muss nicht öffentlich geteilt werden.
+
+```bash
+sudo docker exec APP_CONTAINER node scripts/linux-start.mjs scripts/linux-recover-admin.mjs 'neuer-admin@example.org' 'Neuer Administrator' 'ADMINISTRATORRECHTE VERGEBEN'
+```
+
+4. Der Befehl zeigt einen vertraulichen Link. Öffnen Sie ihn auf der tatsächlichen HTTPS-Adresse der Instanz und registrieren Sie einen Passkey. Der Link gilt sieben Tage und ist nur einmal verwendbar. Nicht öffentlich oder in einen KI-Chat kopieren.
+5. Nach der Anmeldung einen zweiten Passkey einrichten, vorhandene Administratorzugänge prüfen und vertrauenswürdige Stellvertretungen bestimmen. Nicht mehr benötigte Einladungen widerrufen.
+
+Falls die Adresse bereits existiert, bricht die Routine ab. Verwenden Sie eine andere erreichbare Adresse; bearbeiten Sie nicht auf Verdacht die Datenbank. Ohne SSH-Zugriff muss der zuständige Serverbetreiber helfen. Diese Anleitung gilt ab App 0.46.0 und benötigt keinen Austausch des separaten Updaters.
