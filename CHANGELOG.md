@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.46.3] - 2026-10-13
+
+- Bildvorschau, Beschriftungsvorschau und Beschriftungsfeld im Beitragseditor über die verfügbare Breite angeordnet. Der kompakte Papierkorb-Button hat eine 44-px-Touchfläche und entfernt weiterhin nur die Beitragszuordnung. Während Speichern oder Audioverarbeitung sind die Aktionen gesperrt.
+- Titel verwendet ein automatisch wachsendes und schrumpfendes Textfeld, einschließlich vorhandener Texte, Einfügen und Diktat. Die 250-Zeichen-Grenze bleibt bestehen; Zeilenumbrüche werden als Leerzeichen übernommen. Keine Transformation und keine kurzzeitige Verkleinerung des aktiven Feldes zur Höhenmessung.
+- Kein erneuter Austausch des Update-Dienstes erforderlich.
+
 ## [0.46.2] - 2026-10-13
 
 - Bearbeitungsfenster und Neuanlage in einem eigenen Bildschirmrahmen ohne Transformation zentriert; keine Kombination der Standarddialog-Verschiebung mit abweichender Editorposition. Lange Formulare scrollen innerhalb des Fensters.

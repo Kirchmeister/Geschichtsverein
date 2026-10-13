@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import fs from 'node:fs/promises';
+import vm from 'node:vm';
+const require=createRequire(import.meta.url),esbuild=require(require.resolve('esbuild',{paths:[require.resolve('vite')]}));
+const mocks={react:'export const useRef=()=>globalThis.ref;export const useLayoutEffect=fn=>globalThis.layout.push(fn);export const useEffect=()=>{};', 'react/jsx-runtime':'export const jsx=(type,props)=>({type,props});export const jsxs=jsx;', 'lucide-react':'export const FileText="FileText",Trash2="Trash2";', './entry-image':'export const EntryImage="EntryImage";'};
+const out=await esbuild.build({stdin:{contents:"export {EntryAttachmentEditor} from './components/archive/entry-attachment-editor';export {AutoTextarea} from './components/archive/auto-textarea';export {growTextarea} from './lib/textarea-size';",resolveDir:process.cwd()},bundle:true,platform:'node',format:'cjs',write:false,jsx:'automatic',alias:{'@':process.cwd()},plugins:[{name:'mocks',setup(b){b.onResolve({filter:/.*/},a=>mocks[a.path]?{path:a.path,namespace:'mock'}:undefined);b.onLoad({filter:/.*/,namespace:'mock'},a=>({contents:mocks[a.path],loader:'js'}))}}]});
+const scope={module:{exports:{}},ref:{current:null},layout:[]};vm.runInNewContext(out.outputFiles[0].text,scope);const {EntryAttachmentEditor,AutoTextarea}=scope.module.exports;
+function nodes(n){if(Array.isArray(n))return n.flatMap(nodes);if(!n||typeof n!=='object')return [];return [n,...nodes(n.props?.children)]}
+let removed=0,caption='Original';const file={key:'image',name:'name.jpg',type:'image/jpeg',caption};
+const props={file,disabled:false,onRemove(){removed++},onCaptionChange(value){caption=value}};
+let all=nodes(EntryAttachmentEditor(props)),button=all.find(n=>n.type==='button'),input=all.find(n=>n.type==='input');
+assert.equal(button.props.type,'button');assert.equal(button.props['aria-label'],'Zuordnung zum Beitrag entfernen');assert.equal(button.props.children.type,'Trash2');assert.equal(button.props.disabled,false);button.props.onClick();assert.equal(removed,1);assert.equal(file.caption,'Original');input.props.onChange({target:{value:'Andere Beschriftung'}});assert.equal(caption,'Andere Beschriftung');assert.equal(input.props.maxLength,500);
+all=nodes(EntryAttachmentEditor({...props,disabled:true}));assert.equal(all.find(n=>n.type==='button').props.disabled,true);assert.equal(all.find(n=>n.type==='input').props.disabled,true);
+all=nodes(EntryAttachmentEditor({...props,file:{...file,caption:' '}}));assert.ok(all.some(n=>n.type==='small'));
+all=nodes(EntryAttachmentEditor({...props,file:{...file,type:'application/pdf'}}));assert.ok(!all.some(n=>n.type==='input'));assert.ok(all.some(n=>n.type==='FileText'));
+const node={value:'Short',style:{},getBoundingClientRect:()=>({width:250}),ownerDocument:{body:{appendChild(){}},defaultView:{getComputedStyle:()=>({minHeight:'48px',borderTopWidth:'1px',borderBottomWidth:'1px'})},createElement:()=>({style:{},setAttribute(){},remove(){},get scrollHeight(){return node.value.length>30?100:30}})}};
+let area=AutoTextarea({value:node.value,className:'entry-title-input',required:true,maxLength:250});scope.ref.current=node;scope.layout.pop()();assert.equal(node.style.height,'48px');assert.equal(area.props.rows,1);assert.equal(area.props.maxLength,250);assert.equal(area.props.className,'auto-growing-textarea entry-title-input');
+node.value='Long title '.repeat(10);area=AutoTextarea({value:node.value});scope.layout.pop()();assert.equal(node.style.height,'102px');node.value='Short';AutoTextarea({value:node.value});scope.layout.pop()();assert.equal(node.style.height,'48px');
+const css=await fs.readFile('app/globals.css','utf8'),page=await fs.readFile('app/page.tsx','utf8');assert.match(css,/entry-attachment-editor\{display:flex;flex-direction:column;align-items:stretch/);assert.match(css,/button\.entry-attachment-remove\{[^}]*width:44px;height:44px/);assert.ok(page.includes('onRemove={()=>field(\'files\',edit.files.filter((_,j)=>j!==i))}'));assert.ok(page.includes('<AutoTextarea className="entry-title-input" required maxLength={250}'));
+console.log('PASS: accessible icon action, local removal callback, caption update/validation, busy gates, document support, initial title sizing/growth/shrink and retained limits.');

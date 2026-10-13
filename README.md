@@ -354,3 +354,8 @@ Ohne erreichbaren Administrator- oder Verwalterzugang siehe [Notfallzugang über
 Innerhalb der geöffneten Bereiche „Öffentliches Profil“ und „Einstellungen für Gäste“ ist die Feldauswahl direkt sichtbar, ohne zusätzliches Aufklappen. „Sichtbare Felder“ und „Sichtbare Felder für Gäste“ verwenden dieselbe Zwischenüberschrift wie „Überschrift und Einführungstext“. Bestehende Freigaben, Speicheraktionen und Rollenrechte bleiben erhalten; der Direktlink zu den Gastfeldern öffnet weiterhin den äußeren Bereich.
 
 Das Bearbeitungsfenster wird horizontal und vertikal innerhalb des Bildschirms zentriert, ohne CSS-Verschiebung oder Zoom-Animation. Lange Formulare scrollen im Fenster; kleine Bildschirme behalten einen Rand und eine begrenzte Fensterhöhe. Dies gilt für Bearbeiten und Neuanlegen. App auf 0.46.2 aktualisieren; der bereits laufende Update-Dienst 0.46.1 genügt.
+
+
+### Mobile Beitragsbearbeitung ab 0.46.3
+
+Bilder, ihre Beschriftungsvorschau und das Beschriftungsfeld nutzen im Editor die verfügbare Breite. Der Papierkorb-Button mit ausreichend großer Touchfläche entfernt die Zuordnung zum Beitrag; er löscht die gespeicherte Datei nicht unmittelbar. Erst das Speichern des Beitrags übernimmt die geänderte Zuordnung. Der Beitragstitel wächst und schrumpft automatisch mit seinem Inhalt, wie die Beschreibung. Die Grenze von 250 Zeichen bleibt bestehen; eingefügte Zeilenumbrüche werden zu Leerzeichen. Bitte nach dem App-Update am iPhone Bildbeschriftung, Titelumbruch und Cursorposition prüfen. Update-Dienst 0.46.1 genügt weiterhin.

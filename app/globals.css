@@ -702,3 +702,15 @@ html { scroll-padding-top: calc(60px + env(safe-area-inset-top, 0px)); }
 .description-link-picker{border-radius:8px;background:var(--card);min-width:0}.description-link-picker legend{font-size:15px;font-weight:600}.description-link-results button{display:flex;flex-wrap:wrap;gap:5px;align-items:baseline;min-height:44px;font-size:15px}.description-link-results small{margin-left:0;overflow-wrap:anywhere}
 .description-existing-links{border-top:1px solid var(--border);padding-top:14px}.description-existing-links h4{font-size:15px;font-weight:600}.description-existing-links>div{padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--card)}.description-existing-links button{min-height:44px;padding:8px;font-size:14px}
 @media(max-width:650px){.editor.entry-form-dialog{max-height:calc(100dvh - 2rem)}.entry-form-section{padding:15px}.entry-form-section>h3{font-size:18px}.entry-form-sections{gap:16px}.description-link-toolbar>button{width:100%;justify-content:flex-start}.description-existing-links>div{gap:8px}.markdown-toolbar{gap:10px}.entry-form-dialog .form-actions{position:static;gap:12px;flex-wrap:wrap;background:var(--background)}}
+
+/* Keep media and captions full-width; the remove action occupies its own compact row. */
+.entry-form-dialog .entry-attachment-editor{display:flex;flex-direction:column;align-items:stretch;gap:12px;min-width:0;width:100%}
+.entry-form-dialog .entry-attachment-editor .image-caption-editor{flex:none;min-width:0;width:100%}
+.entry-attachment-editor .entry-image{width:100%;min-width:0}
+.entry-attachment-editor .entry-image figcaption{width:100%;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal}
+.entry-attachment-editor .image-caption-editor>label{width:100%;min-width:0}
+.entry-attachment-editor .image-caption-editor input{width:100%;min-width:0;font-size:max(16px,1rem)}
+.entry-form-dialog .entry-attachment-editor button.entry-attachment-remove{order:-1;align-self:flex-end;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;min-height:44px;flex:none;margin:0;padding:0;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--foreground);text-decoration:none}
+.entry-attachment-remove svg{width:20px;height:20px;flex:none}
+.entry-attachment-name{display:flex;align-items:flex-start;gap:8px;min-width:0;overflow-wrap:anywhere}.entry-attachment-name svg{flex:none;margin-top:5px}
+.entry-form-dialog .form-grid textarea.entry-title-input{min-height:48px;width:100%;min-width:0;white-space:pre-wrap;overflow-wrap:anywhere}
