@@ -10,11 +10,12 @@ const root=await fs.mkdtemp(path.resolve('.update-test-restore-http-')),key='c'.
 assert.ok(standalone,'Use tests/linux-package.test.mjs to exercise the real packaged server.');
 const storage=sqliteBinding(root+'/archive.sqlite',path.resolve('drizzle'));initializeAuth(storage.database);
 for(const role of ['admin','manager','user','guest']){storage.database.prepare('INSERT INTO linux_accounts VALUES(?,?,?,0)').run(role,role+'@example.invalid',role);storage.database.prepare('INSERT INTO archive_users(id,identity_provider,identity_subject,display_name,role,created) VALUES(?,?,?,?,?,?)').run(role,'linux',role,role,role,'2026-01-01')}
-storage.close();let reject=false,statusFailure=false;const commands=[],uploaded=Buffer.alloc(1536,65);
+storage.close();let reject=false,statusFailure=false,newFeatures=false;const commands=[],uploaded=Buffer.alloc(1536,65);
 const service=http.createServer(async(req,res)=>{let body='';for await(const chunk of req)body+=chunk;
  const expected=createHmac('sha256',key).update([req.headers['x-archive-time'],req.headers['x-archive-nonce'],req.method,req.url,body].join('\n')).digest('hex');assert.equal(req.headers['x-archive-signature'],expected);assert.equal(req.url,'/updates');
- if(req.method==='GET'){if(statusFailure){res.writeHead(503,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'Synthetic service unavailable'}));return}res.setHeader('Content-Type','application/json');res.end(JSON.stringify({enabled:true,currentVersion:'0.35.0',serviceVersion:'0.35.0',features:{restore:true,compatibility:true,betaChannels:true},busy:false}));return}
+ if(req.method==='GET'){if(statusFailure){res.writeHead(503,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'Synthetic service unavailable'}));return}res.setHeader('Content-Type','application/json');res.end(JSON.stringify({enabled:true,currentVersion:'0.35.0',serviceVersion:'0.35.0',features:{restore:true,compatibility:true,betaChannels:true,manualRollback:newFeatures,updateHistory:newFeatures},busy:false}));return}
  const command=JSON.parse(body);commands.push(command);
+ if(command.action==='history'){res.setHeader('Content-Type','application/json');res.end(JSON.stringify({enabled:true,history:Array.from({length:37},(_,n)=>({id:'job-'+n,status:'complete',tag:'v0.'+n+'.0'}))}));return}
  if(command.action==='restore-inspect'){
   assert.deepEqual(await fs.readFile(root+'/restore-inbox/'+command.id+'.tar'),uploaded);
   if(reject){res.writeHead(400,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'Prüfung abgelehnt'}));return}
@@ -29,6 +30,12 @@ const upload=(role='admin',extra={})=>fetch(origin+'/api/restores',{method:'POST
 try{
  let ready=false;for(let n=0;n<100;n++){try{if((await fetch(origin+'/api/health')).ok){ready=true;break}}catch{}await new Promise(r=>setTimeout(r,100))}assert.ok(ready,output);
  const updateStatus=()=>fetch(origin+'/api/updates',{headers:{Cookie:cookie('admin')}});let updateReply=await updateStatus();assert.equal(updateReply.status,200);let updateData=await updateReply.json();assert.equal(updateData.appVersion,JSON.parse(await fs.readFile('version.json','utf8')).version);assert.equal(updateData.serviceVersion,'0.35.0');assert.equal((await fetch(origin+'/api/updates',{headers:{Cookie:cookie('guest')}})).status,403);statusFailure=true;updateReply=await updateStatus();assert.equal(updateReply.status,200);updateData=await updateReply.json();assert.equal(updateData.enabled,false);assert.equal(updateData.connectionStatus,'unreachable');assert.ok(updateData.appVersion);statusFailure=false;
+ const updateAction=(data,role='admin',extra={})=>fetch(origin+'/api/updates',{method:'POST',headers:{Cookie:cookie(role),Origin:origin,'Content-Type':'application/json',...extra},body:JSON.stringify(data)});
+ for(const role of ['manager','user','guest'])for(const action of ['history','rollback-inspect','rollback-start'])assert.equal((await updateAction({action},role)).status,403);
+ assert.equal((await updateAction({action:'rollback-inspect'},'admin',{Origin:'https://attacker.invalid'})).status,403);assert.equal((await updateAction({action:'rollback-inspect'},'admin',{'x-archive-preview-role':'user'})).status,403);
+ for(const action of ['history','rollback-inspect'])assert.equal((await updateAction({action})).status,409);newFeatures=true;
+ assert.equal((await updateAction({action:'rollback-start',token:crypto.randomUUID(),confirmation:'wrong'})).status,400);assert.equal(commands.some(c=>c.action==='rollback-start'),false);
+ assert.equal((await updateAction({action:'rollback-inspect'})).status,202);const rollbackToken=crypto.randomUUID();assert.equal((await updateAction({action:'rollback-start',token:rollbackToken,confirmation:'UPDATE RÜCKGÄNGIG MACHEN'})).status,202);assert.equal(commands.at(-1).token,rollbackToken);assert.equal(commands.at(-1).confirmation,'UPDATE RÜCKGÄNGIG MACHEN');assert.equal((await (await updateAction({action:'history'})).json()).history.length,37);
  for(const role of ['manager','user','guest'])assert.equal((await upload(role)).status,403);
  assert.equal((await upload('admin',{Origin:'https://attacker.invalid'})).status,403);
  assert.equal((await upload('admin',{'x-archive-preview-role':'user'})).status,403);

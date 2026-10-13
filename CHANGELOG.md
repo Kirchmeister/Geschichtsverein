@@ -1,5 +1,14 @@
 # Änderungen
 
+## [0.42.0] - 2026-10-13
+
+- Gästeeinstellungen als eigener Bereich; öffentliche Feldauswahl unter „Öffentliches Profil → Sichtbare Felder“. Vorhandene Feldfreigaben bleiben unverändert.
+- Dezentes Backup-Dropdown für 1/3/7/14/31 Tage, Standard 3 Tage; gespeicherte Auswahl und laufende Sicherungen bleiben erhalten.
+- Update-Übersicht mit einheitlicher Typografie, klaren Aktionen, ausgerichteter Beta-Checkbox und bedarfsabhängigen Sicherheitsmeldungen. Anleitung, SSH-Hilfe und KI-Begleitung unter „Hilfe“.
+- Letzte fünf erfolgreiche Installationen als anklickbare Karten; commitbezogene GitHub-Änderungsnotizen werden gespeichert. Vollständiges gespeichertes Vorgangsprotokoll als Textdownload, ohne Zugangsdaten, Hostpfade oder rohe Treiberausgaben.
+- Admin kann das unmittelbar letzte erfolgreiche Update nach isolierter Rückfallprüfung und ausdrücklicher Warnung/Bestätigung rückgängig machen: alte Programmversion und damalige Daten/Konfiguration gemeinsam, vorher geprüfte Sicherung des neueren Stands. Keine Live-Down-Migrationen; Fehler und Neustarts führen kontrolliert zum neueren Stand zurück.
+- Für manuelle Rücknahme und vollständigen Protokoll-Export den separaten Update-Dienst auf 0.42.0 erneuern. Normale App-Updates bleiben mit Dienst 0.35.0 kompatibel; Schema 19 und Backupformat 2 unverändert.
+
 ## [0.41.0] - 2026-10-12
 
 - Startseite als Übersicht; neuer Menüpunkt „Archiv“ direkt darunter. Recherche-Unteransichten werden zu einer zentralen Archivseite mit Kachel-Voreinstellungen zusammengeführt.

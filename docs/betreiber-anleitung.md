@@ -44,7 +44,7 @@ Sicherung und Wiederherstellung auf einer Testinstanz zu prüfen. Dokumentiere m
 konkreten Pfade, Container, Ports und beide Versionsstände ohne Geheimnisse.
 ```
 
-Für eine bereits laufende Instanz ergänzen Sie: „Ich möchte keine Neuinstallation, sondern ein sicheres Update. Installiert sind App … und Update-Dienst … .“ Die Updateoberfläche bietet ebenfalls einen kopierbaren Prompt mit den ermittelten Versionsständen.
+Für eine bereits laufende Instanz ergänzen Sie: „Ich möchte keine Neuinstallation, sondern ein sicheres Update. Installiert sind App … und Update-Dienst … .“ Einstellungen → Hilfe bietet ebenfalls einen kopierbaren Prompt mit den ermittelten Versionsständen.
 
 ## 1. Die wichtigsten Begriffe
 
@@ -106,7 +106,7 @@ Wenn der Updater die App bereits verwaltet, **kein zusätzliches `docker compose
 
 ## 5. Jedes Update in derselben Reihenfolge durchführen
 
-Öffnen Sie als Administrator **Einstellungen → Updates**. Dort stehen App-Version, Updater-Version, Mindestanforderung und eine geführte Vorbereitung.
+Öffnen Sie als Administrator **Einstellungen → Updates**. Dort stehen App-Version, Updater-Version, verfügbare Releases und ein verständlicher Status. Anleitung und SSH-/KI-Begleitung befinden sich ab 0.42.0 unter Einstellungen → Hilfe.
 
 1. **Neue vollständige Sicherung vorbereiten.** Unter Backups herunterladen beziehungsweise extern ablegen. Die lokale Rückfallsicherung beim App-Update ist zusätzlich hilfreich, ersetzt aber keine externe Sicherung vor einem manuellen Dienstwechsel.
 2. **Updater prüfen.** Zeigt die Oberfläche „Bereit“, ist kein Dienstwechsel allein wegen einer anderen App-Versionsnummer nötig. Zeigt sie eine höhere erforderliche Dienstversion, zuerst den Updater erneuern. Bei einer unbekannten oder nicht erreichbaren Version zunächst diagnostizieren.
@@ -168,7 +168,7 @@ Es gibt absichtlich keinen universellen Austauschbefehl mit geratenen Hostpfaden
 
 ### C. Zur Oberfläche zurückkehren
 
-„Erneut prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Bei Updater 0.35.0 und App 0.41.0 kann der Status bereits „Bereit“ sein; Sie müssen den Updater nicht allein wegen der Appnummer auf 0.41.0 bringen.
+„Status und Updates prüfen“ aktualisiert die Anzeige. Erst wenn der Dienst erreichbar ist und seine Mindestanforderungen erfüllt, das App-Update vorbereiten. Für normale App-Updates genügt Dienst 0.35.0 weiterhin. Für die manuelle Rücknahme und den vollständigen Protokoll-Download ab App 0.42.0 benötigen Sie ausdrücklich Dienst 0.42.0. Erneuern Sie ihn nach Abschnitt 6 mit dem Release-Tag `v0.42.0`, sobald kein Vorgang läuft. Das App-Update allein schaltet diese Dienstfunktionen nicht frei.
 
 ### D. Bilder nach dem Update auf 0.37.0
 
@@ -206,13 +206,41 @@ Unten und oberhalb der Ergebnisse stehen Seitenzahlen und „Einträge … von �
 
 Ein Beitrag wird vollständig erst beim Öffnen geladen. Suche und Seitenabfragen benötigen keine vollständige Neuladung der Webseite. Falls keine Ergebnisse erscheinen, löschen Sie einzelne aktive Filter oder verwenden Sie „Filter zurücksetzen“.
 
+### J. Einstellungen und Updates ab 0.42.0
+
+Unter **Gästeeinstellungen → Sichtbare Felder für Gäste** finden Sie die bisherige Gast-Feldauswahl. Unter **Öffentliches Profil → Sichtbare Felder** liegen die öffentlichen Felder; Überschrift und Einführungstext können Sie darunter bearbeiten. Die Umordnung verändert keine gespeicherten Freigaben.
+
+Unter **Backups** wählen Sie den Anzeigezeitraum über ein Dropdown: 1, 3, 7, 14 oder 31 Tage. Ohne bisherige Auswahl sind 3 Tage eingestellt. Bereits gespeicherte 7/14/31 Tage werden nicht überschrieben. Laufende Sicherungen bleiben sichtbar. Der Filter löscht nichts und verändert die Nextcloud-Aufbewahrung nicht.
+
+**Hilfe** enthält die Betreiberanleitung, die Erklärung von App und Update-Dienst sowie die einklappbare SSH-Hilfe und den KI-Prompt. Bei einem Dienstproblem führt „Passende Hilfe öffnen“ direkt dorthin. Auf der Update-Seite bedeutet **Status und Updates prüfen**: Dienststatus erneut lesen und bei erreichbarem Dienst nach GitHub-Releases suchen. Der Button installiert nichts und erneuert keinen Dienst.
+
+**Zuletzt installierte Updates** zeigt maximal fünf erfolgreich abgeschlossene Installationen. Öffnen Sie eine Karte für Zeitpunkte, Version, Änderungsnotizen und Ablauf. Die GitHub-Notizen werden für den passenden Release-Commit gespeichert und sind danach ohne GitHub-Verbindung lesbar. Für ältere Vorgänge werden sie bei der Suche nach Möglichkeit nachgeladen. Ist ein Release oder sein Programmstand nicht mehr verfügbar, bleibt ein entsprechender Hinweis statt erfundener Notizen. Ein später zurückgenommenes Update bleibt als historische Installation dokumentiert.
+
+**Update-Protokoll herunterladen** speichert alle noch vorhandenen Vorgänge als lesbare Textdatei, auch ältere als die fünf Karten, fehlgeschlagene Versuche, Bestandswiederherstellungen und manuelle Rücknahmen. Es enthält Phasen und Ergebnisse, aber keine Hostpfade, Konfigurationsdateien, Zugangsdaten oder rohen Treiberausgaben. Bereits gelöschte historische Vorgänge können nicht rekonstruiert werden. Für den vollständigen Export benötigen Sie den separaten Dienst 0.42.0.
+
+### K. Ein problematisches Update bewusst rückgängig machen
+
+**Dies ist keine normale Aktualisierung. Programmversion UND Daten/Konfiguration werden gemeinsam zurückgesetzt.** Seit der Rückfallsicherung erstellte oder geänderte Beiträge, Dateien, Konten und Einstellungen sind anschließend im aktiven Archiv nicht mehr enthalten. Auch Ihr Passkey oder Ihre Adminberechtigung kann auf den damaligen Stand zurückgehen. Halten Sie einen funktionierenden SSH-Zugang bereit. Wählen Sie diesen Weg nur, wenn Sie genau diesen älteren Bestand wieder benötigen; bei Unsicherheit erst Hilfe einholen.
+
+Voraussetzungen: App 0.42.0 und separater Update-Dienst 0.42.0, Administratorzugang, kein laufender oder offener Vorgang und ein unmittelbar letztes erfolgreiches App-Update. Nach einer Bestandswiederherstellung oder einer bereits erfolgten Rücknahme wird keine weitere beliebige Kette älterer Versionen angeboten. Die alte Release-Ablage, ihr Docker-Image und die vollständige lokale Sicherung müssen noch vorhanden sein. Die Konfiguration des Update-Dienstes darf seit dem Update nicht verändert worden sein; sonst ist die Rücknahme gesperrt, damit Dienst und zurückgesetzte App weiterhin sicher zusammenarbeiten. Entfernen Sie diese nicht vorschnell. Eine Verbindung zu GitHub ist für die Rücknahme nicht erforderlich.
+
+1. Laden Sie nach Möglichkeit zusätzlich eine externe Sicherung und das Update-Protokoll herunter.
+2. Öffnen Sie **Updates → Letztes Update rückgängig machen** und lesen Sie die Warnung.
+3. Wählen Sie **Rückfallsicherung prüfen …**. Der Dienst prüft Prüfsummen, Programmstand und Metadaten und erprobt den alten Bestand auf einer isolierten Kopie. Die App bleibt während dieser Prüfung erreichbar. Bei einem Fehler nicht fortfahren.
+4. Kontrollieren Sie aktuelle Version, Rückkehrversion und den angezeigten Datenstand. Die Prüfung gilt 20 Minuten und nur für den unveränderten Update-Ausgangsstand.
+5. Geben Sie exakt **UPDATE RÜCKGÄNGIG MACHEN** ein und bestätigen Sie die verbindliche Rücknahme.
+6. Der Dienst aktiviert den Wartungsmodus und erstellt zuerst eine neue, vollständig geprüfte Sicherung des aktuellen neueren Stands. Scheitert das, wird der alte Bestand nicht eingespielt. Danach stellt er alte Daten, Konfiguration und Programmversion gemeinsam wieder her – ohne Rückwärtsmigration der aktuellen Datenbank.
+7. Warten Sie auf die Funktionsprüfung. Das Schließen des Fortschrittsfensters stoppt den Servervorgang nicht. Nach Abschluss neu anmelden und Beiträge sowie Dateien prüfen. Bei einem Fehler oder Dienstneustart versucht der Dienst, den zusätzlich gesicherten neueren Stand wieder zu aktivieren. Bei beschädigter Sicherung bleibt der Wartungsmodus bestehen; nicht manuell umgehen.
+
+Die zusätzliche Sicherung des neueren Stands bleibt lokal beim Updater in seiner `backups`-Ablage, einschließlich geprüftem Manifest, Daten, Konfiguration und Code. Sie wird nicht automatisch nach Nextcloud übertragen und ist kein portabler TAR-Download aus der normalen Backup-Liste. Behalten Sie sie und lassen Sie einen benötigten Rückweg zu diesem neueren Bestand anhand des Protokolls fachkundig über SSH planen. Ein erneutes App-Update allein übernimmt die neueren Daten nicht; es gibt keine automatische Zusammenführung und keinen automatischen „Rücknahme rückgängig“-Button. Geheime Konfiguration niemals in einen Chat kopieren.
+
 ## 7. Häufige Situationen
 
 | Anzeige / Situation | Nächster Schritt |
 | --- | --- |
 | Update-Dienst noch nicht eingerichtet | Einrichtung getrennt von der App planen; zuerst die Anleitung lesen. |
 | Dienstversion nicht ermittelbar | Über SSH die tatsächliche Version prüfen; nicht als „aktuell“ interpretieren. |
-| Update-Dienst nicht erreichbar | Container-/Dienststatus und Verbindung prüfen, dann „Erneut prüfen“. Keine Daten löschen. |
+| Update-Dienst nicht erreichbar | Container-/Dienststatus und Verbindung prüfen, dann „Status und Updates prüfen“. Keine Daten löschen. |
 | Update-Dienst zuerst erneuern | Mindestversion beachten, Leerlauf und Sicherung prüfen, passenden Dienstwechsel vorbereiten. |
 | Ein Vorgang läuft | Fortschritt abwarten. Der Dienst darf jetzt nicht ersetzt werden. |
 | Zwischenversionen erforderlich | Den angezeigten sicheren Pfad Schritt für Schritt ausführen; kein Sprung auf Verdacht. |

@@ -87,9 +87,9 @@ Personen- und Beitragsverknüpfungen bleiben an den Positionen im Markdown-Quell
 
 ## Geführte Update-Vorbereitung ab 0.36.0
 
-Einstellungen → Updates zeigt die App- und Dienstversion getrennt, die erforderliche Mindestversion und einen verständlichen Status. **Anleitung öffnen** führt zur passenden versionierten Betreiberanleitung; **Erneut prüfen** liest den Dienststatus erneut, ohne ein Update zu starten. Die Vorbereitung führt durch Sicherung, gegebenenfalls Dienstwechsel, App-Update und Abschlussprüfung. Im Bestätigungsdialog werden die Anforderungen des ausgewählten Releases geprüft. Unbekannte Versionen und nicht erreichbare Dienste werden nicht als bereit behandelt. Die SSH-Hilfe bietet gefilterte Diagnose und einen kopierbaren KI-Prompt; Container und Hostpfade werden nicht geraten. Der Updater erneuert sich weiterhin nicht selbst.
+Einstellungen → Updates zeigt die App- und Dienstversion getrennt, die erforderliche Mindestversion und einen verständlichen Status. **Anleitung öffnen** führt zur passenden versionierten Betreiberanleitung; Ab 0.42.0 liegen Anleitung, SSH-Hilfe und KI-Prompt unter **Einstellungen → Hilfe**. **Status und Updates prüfen** aktualisiert Dienststatus und verfügbare Releases, ohne etwas zu installieren. Die Vorbereitung führt durch Sicherung, gegebenenfalls Dienstwechsel, App-Update und Abschlussprüfung. Im Bestätigungsdialog werden die Anforderungen des ausgewählten Releases geprüft. Unbekannte Versionen und nicht erreichbare Dienste werden nicht als bereit behandelt. Die SSH-Hilfe bietet gefilterte Diagnose und einen kopierbaren KI-Prompt; Container und Hostpfade werden nicht geraten. Der Updater erneuert sich weiterhin nicht selbst.
 
-Für dieses Release genügt Update-Dienst **0.35.0**. Ein erneuter Dienstwechsel nur wegen der Appversion 0.41.0 ist nicht erforderlich.
+Die App 0.42.0 lässt sich weiterhin mit Dienst **0.35.0** installieren. Für **manuelles Zurückrollen und den vollständigen Protokoll-Download** muss der separate Dienst auf **0.42.0** erneuert werden; die Oberfläche kennzeichnet fehlende Funktionen und verlinkt Hilfe. App-Updates erneuern ihn nicht automatisch.
 
 ## Updatekanäle und Kompatibilität ab 0.35.0
 
@@ -300,7 +300,7 @@ Beim Speichern eines Beitrags wählen interne Bearbeiter ab 0.26.0 **Nur speiche
 
 In der Beitragsbearbeitung lässt sich „Standort auf der Karte“ aufklappen. Pro Beitrag ist ein optionaler Punkt möglich: über Klick auf die heutige Karte, Verschieben der Markierung oder direkte Eingabe von Breitengrad und Längengrad. Lagebeschreibung und „Lage ungefähr“ sind optional; der Standort ist vom Aufbewahrungsort unabhängig. Alle Bereiche können verortet werden. Die Kartenvorschau wird von externen Diensten geladen; Beitragstexte und Archivdaten werden nicht an den Kartenanbieter übertragen.
 
-Das Feld „Standort auf der Karte“ muss vom Administrator unter „Öffentliche Felder“ beziehungsweise „Sichtbare Felder für Gäste“ ausdrücklich aktiviert werden. Die öffentliche Karte zeigt nur genehmigte Beitragsversionen, unabhängig von deren Aufnahme in die öffentliche Zeitleiste. Nahe Markierungen werden zusammengefasst; Antippen vergrößert die Gruppe, einzelne Markierungen verlinken den Beitrag. Bei OpenHistoricalMap bleiben Archivmarkierungen über alle Jahre sichtbar.
+Das Feld „Standort auf der Karte“ muss vom Administrator unter „Öffentliches Profil → Sichtbare Felder“ beziehungsweise „Gästeeinstellungen → Sichtbare Felder für Gäste“ ausdrücklich aktiviert werden. Die öffentliche Karte zeigt nur genehmigte Beitragsversionen, unabhängig von deren Aufnahme in die öffentliche Zeitleiste. Nahe Markierungen werden zusammengefasst; Antippen vergrößert die Gruppe, einzelne Markierungen verlinken den Beitrag. Bei OpenHistoricalMap bleiben Archivmarkierungen über alle Jahre sichtbar.
 
 Ausgeschaltete Karten behalten Standortdaten, blenden aber Mini-Karten und öffentliche Standorte aus. Punkte außerhalb des konfigurierten Radius sind in der Mini-Karte sichtbar; die Hauptkarte bleibt auf ihre Umgebung begrenzt. Standort, Beschreibung und Genauigkeit sind Teil der normalen Beitragsversion und der Sicherung; die Versionshistorie erlaubt die gemeinsame Wiederherstellung dieser Werte. Es ist keine zusätzliche Datenbankmigration erforderlich.
 
@@ -312,7 +312,7 @@ In der installierten Web-App auf iPhone oder Android lässt sich die Seite am ob
 
 ### Backup-Anzeige und Wiederherstellung über die Oberfläche
 
-Unter **Einstellungen → Backups** sind 7, 14 oder 31 Tage auswählbar; Standard sind 7 Tage. Die Auswahl bleibt in diesem Browser gespeichert. **Alle vorhandenen Sicherungen anzeigen** hebt den Filter vorübergehend auf. Laufende Sicherungen bleiben sichtbar. Dies ändert weder Daten noch die separat konfigurierte Nextcloud-Aufbewahrung.
+Unter **Einstellungen → Backups** bietet ein Dropdown 1, 3, 7, 14 oder 31 Tage an; Standard ohne gespeicherte Auswahl sind 3 Tage. Bereits gespeicherte Zeiträume bleiben erhalten. Die Auswahl bleibt in diesem Browser gespeichert. **Alle vorhandenen Sicherungen anzeigen** hebt den Filter vorübergehend auf. Laufende Sicherungen bleiben sichtbar. Dies ändert weder Daten noch die separat konfigurierte Nextcloud-Aufbewahrung.
 
 Downloads verwenden den Versionsstand der jeweiligen Sicherung: `geschichtsarchiv-backup-<ID>_v0.32.0_schema19.tar`. Unbekannte Versionsstände älterer Exporte werden als unbekannt gekennzeichnet, nicht mit der aktuellen Softwareversion ersetzt.
 
