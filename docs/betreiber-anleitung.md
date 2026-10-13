@@ -208,7 +208,7 @@ Ein Beitrag wird vollständig erst beim Öffnen geladen. Suche und Seitenabfrage
 
 ### J. Einstellungen und Updates ab 0.42.0
 
-Unter **Gästeeinstellungen → Sichtbare Felder für Gäste** finden Sie die bisherige Gast-Feldauswahl. Unter **Öffentliches Profil → Sichtbare Felder** liegen die öffentlichen Felder; Überschrift und Einführungstext können Sie darunter bearbeiten. Die Umordnung verändert keine gespeicherten Freigaben.
+Unter **Einstellungen für Gäste → Sichtbare Felder für Gäste** finden Sie die bisherige Gast-Feldauswahl. Unter **Öffentliches Profil → Sichtbare Felder** liegen die öffentlichen Felder; Überschrift und Einführungstext können Sie darunter bearbeiten. Die Umordnung verändert keine gespeicherten Freigaben.
 
 Unter **Backups** wählen Sie den Anzeigezeitraum über ein Dropdown: 1, 3, 7, 14 oder 31 Tage. Ohne bisherige Auswahl sind 3 Tage eingestellt. Bereits gespeicherte 7/14/31 Tage werden nicht überschrieben. Laufende Sicherungen bleiben sichtbar. Der Filter löscht nichts und verändert die Nextcloud-Aufbewahrung nicht.
 
@@ -288,7 +288,7 @@ Notieren Sie Ihre Installation an einem geschützten Ort: Repository, App- und U
 
 Der Menüpunkt **Öffentliches Profil** befindet sich unten, oberhalb von **Einstellungen**. Ohne Einstellungsrechte ist er der letzte Menüpunkt vor dem eigenen Konto.
 
-Verwalter dürfen **Namen**, **Benutzer und Einladungen**, **Gästeeinstellungen**, **Öffentliches Profil**, **Farben und Design** und **Karte** verwalten. Backups, Updates, E-Mail/SMTP, Nextcloud/WebDAV, Serverdomain und Hilfe bleiben Administratoren vorbehalten. Diese Grenzen gelten auch bei direkten Schnittstellenaufrufen und in der Profilvorschau.
+Verwalter dürfen **Namen**, **Benutzer und Einladungen**, **Einstellungen für Gäste**, **Öffentliches Profil**, **Farben und Design** und **Karte** verwalten. Backups, Updates, E-Mail/SMTP, Nextcloud/WebDAV, Serverdomain und Hilfe bleiben Administratoren vorbehalten. Diese Grenzen gelten auch bei direkten Schnittstellenaufrufen und in der Profilvorschau.
 
 ### Administratorzugang über einen Verwalter ersetzen
 
@@ -330,3 +330,10 @@ Der Dienst speichert erfolgreiche GitHub-Antworten fünf Minuten im Arbeitsspeic
 Bei bestätigtem Anfragelimit enthält die Meldung den frühesten Wiederholungszeitpunkt in UTC (`Z`). Bis dahin keine erneuten Anfragen; der Dienst pausiert selbst. Bei HTTP 403 ohne Limitangaben Repositoryzugriff und gegebenenfalls Token-Berechtigungen prüfen; bei HTTP 401 den Token prüfen. Die Oberfläche zeigt bei fehlgeschlagener Suche „Update-Prüfung derzeit nicht möglich“. Ältere Versionen sind als zuletzt bekannter Stand gekennzeichnet. Ein fehlgeschlagener Start zeigt den Fehler, statt eine erfolgreiche Sicherung oder Installation vorzutäuschen.
 
 Optional kann der Betreiber in der geschützten Dienstkonfiguration `/etc/geschichtsarchiv/updater.json` das bereits unterstützte Feld `githubToken` setzen. Für einen auf dieses Repository beschränkten Fine-grained-Token genügen lesende Repository-Metadaten und **Contents: Read-only**. Token nicht im Chat, Repository oder Browser eintragen; Datei weiterhin mit `0600` schützen und den Dienst nur im Leerlauf neu starten. Ein Token hebt Sperren nicht pauschal auf und ersetzt keine Zugriffsprüfung. Die Änderung der Dienstkonfiguration sperrt die Rücknahme früherer App-Updates über die Oberfläche gemäß den bestehenden Schutzregeln.
+
+
+### Einstellungen und Bearbeitungsfenster ab 0.46.2
+
+Innerhalb der geöffneten Bereiche „Öffentliches Profil“ und „Einstellungen für Gäste“ ist die Feldauswahl direkt sichtbar, ohne zusätzliches Aufklappen. „Sichtbare Felder“ und „Sichtbare Felder für Gäste“ verwenden dieselbe Zwischenüberschrift wie „Überschrift und Einführungstext“. Bestehende Freigaben, Speicheraktionen und Rollenrechte bleiben erhalten; der Direktlink zu den Gastfeldern öffnet weiterhin den äußeren Bereich.
+
+Das Bearbeitungsfenster wird horizontal und vertikal innerhalb des Bildschirms zentriert, ohne CSS-Verschiebung oder Zoom-Animation. Lange Formulare scrollen im Fenster; kleine Bildschirme behalten einen Rand und eine begrenzte Fensterhöhe. Dies gilt für Bearbeiten und Neuanlegen. App auf 0.46.2 aktualisieren; der bereits laufende Update-Dienst 0.46.1 genügt.

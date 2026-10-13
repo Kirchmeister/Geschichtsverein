@@ -302,7 +302,7 @@ Beim Speichern eines Beitrags wählen interne Bearbeiter ab 0.26.0 **Nur speiche
 
 In der Beitragsbearbeitung lässt sich „Standort auf der Karte“ aufklappen. Pro Beitrag ist ein optionaler Punkt möglich: über Klick auf die heutige Karte, Verschieben der Markierung oder direkte Eingabe von Breitengrad und Längengrad. Lagebeschreibung und „Lage ungefähr“ sind optional; der Standort ist vom Aufbewahrungsort unabhängig. Alle Bereiche können verortet werden. Die Kartenvorschau wird von externen Diensten geladen; Beitragstexte und Archivdaten werden nicht an den Kartenanbieter übertragen.
 
-Das Feld „Standort auf der Karte“ muss vom Administrator unter „Öffentliches Profil → Sichtbare Felder“ beziehungsweise „Gästeeinstellungen → Sichtbare Felder für Gäste“ ausdrücklich aktiviert werden. Die öffentliche Karte zeigt nur genehmigte Beitragsversionen, unabhängig von deren Aufnahme in die öffentliche Zeitleiste. Nahe Markierungen werden zusammengefasst; Antippen vergrößert die Gruppe, einzelne Markierungen verlinken den Beitrag. Bei OpenHistoricalMap bleiben Archivmarkierungen über alle Jahre sichtbar.
+Das Feld „Standort auf der Karte“ muss vom Administrator unter „Öffentliches Profil → Sichtbare Felder“ beziehungsweise „Einstellungen für Gäste → Sichtbare Felder für Gäste“ ausdrücklich aktiviert werden. Die öffentliche Karte zeigt nur genehmigte Beitragsversionen, unabhängig von deren Aufnahme in die öffentliche Zeitleiste. Nahe Markierungen werden zusammengefasst; Antippen vergrößert die Gruppe, einzelne Markierungen verlinken den Beitrag. Bei OpenHistoricalMap bleiben Archivmarkierungen über alle Jahre sichtbar.
 
 Ausgeschaltete Karten behalten Standortdaten, blenden aber Mini-Karten und öffentliche Standorte aus. Punkte außerhalb des konfigurierten Radius sind in der Mini-Karte sichtbar; die Hauptkarte bleibt auf ihre Umgebung begrenzt. Standort, Beschreibung und Genauigkeit sind Teil der normalen Beitragsversion und der Sicherung; die Versionshistorie erlaubt die gemeinsame Wiederherstellung dieser Werte. Es ist keine zusätzliche Datenbankmigration erforderlich.
 
@@ -344,6 +344,13 @@ App **und separater Update-Dienst benötigen mindestens 0.32.0**. Ein App-Update
 
 ### Einstellungen und Notfallzugang ab 0.46.0
 
-„Öffentliches Profil“ steht am Ende der Menüeinträge, direkt über Einstellungen. Administratoren sehen alle Einstellungen. Verwalter sehen Namen, Benutzer und Einladungen, Gästeeinstellungen, öffentliches Profil, Farben und Design sowie Karte. Sie dürfen anderen Konten nach ausdrücklicher Bestätigung vollständige Administratorrechte vergeben; bestehende Administratorkonten können sie nicht verändern. Jede Vergabe wird protokolliert. Der letzte aktive Administrator bleibt vor Löschung, Sperrung und Herabstufung geschützt. Verwalterkonten deshalb nur vertrauenswürdigen Personen geben.
+„Öffentliches Profil“ steht am Ende der Menüeinträge, direkt über Einstellungen. Administratoren sehen alle Einstellungen. Verwalter sehen Namen, Benutzer und Einladungen, Einstellungen für Gäste, öffentliches Profil, Farben und Design sowie Karte. Sie dürfen anderen Konten nach ausdrücklicher Bestätigung vollständige Administratorrechte vergeben; bestehende Administratorkonten können sie nicht verändern. Jede Vergabe wird protokolliert. Der letzte aktive Administrator bleibt vor Löschung, Sperrung und Herabstufung geschützt. Verwalterkonten deshalb nur vertrauenswürdigen Personen geben.
 
 Ohne erreichbaren Administrator- oder Verwalterzugang siehe [Notfallzugang über SSH](docs/betreiber-anleitung.md#notfallzugang-über-ssh). Bestehende Konto-Passkeys werden dabei nicht ersetzt.
+
+
+### Einstellungen und Bearbeitungsfenster ab 0.46.2
+
+Innerhalb der geöffneten Bereiche „Öffentliches Profil“ und „Einstellungen für Gäste“ ist die Feldauswahl direkt sichtbar, ohne zusätzliches Aufklappen. „Sichtbare Felder“ und „Sichtbare Felder für Gäste“ verwenden dieselbe Zwischenüberschrift wie „Überschrift und Einführungstext“. Bestehende Freigaben, Speicheraktionen und Rollenrechte bleiben erhalten; der Direktlink zu den Gastfeldern öffnet weiterhin den äußeren Bereich.
+
+Das Bearbeitungsfenster wird horizontal und vertikal innerhalb des Bildschirms zentriert, ohne CSS-Verschiebung oder Zoom-Animation. Lange Formulare scrollen im Fenster; kleine Bildschirme behalten einen Rand und eine begrenzte Fensterhöhe. Dies gilt für Bearbeiten und Neuanlegen. App auf 0.46.2 aktualisieren; der bereits laufende Update-Dienst 0.46.1 genügt.

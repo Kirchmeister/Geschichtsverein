@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.46.2] - 2026-10-13
+
+- Bearbeitungsfenster und Neuanlage in einem eigenen Bildschirmrahmen ohne Transformation zentriert; keine Kombination der Standarddialog-Verschiebung mit abweichender Editorposition. Lange Formulare scrollen innerhalb des Fensters.
+- Feldauswahl im geöffneten öffentlichen Profil und in den Gasteinstellungen dauerhaft sichtbar, mit einheitlichen Zwischenüberschriften. Gast-Direktlink öffnet den äußeren Bereich weiterhin.
+- Bereich in „Einstellungen für Gäste“ umbenannt. Freigaben und Berechtigungen bleiben unverändert; kein erneuter Austausch des Update-Dienstes nötig.
+
 ## [0.46.1] - 2026-10-13
 
 - GitHub-Abfragen werden für fünf Minuten zwischengespeichert und gleichzeitige identische Anfragen zusammengeführt. Bereits gespeicherte historische Änderungsnotizen werden nicht erneut geladen. Prüfungen von Kanal, Kompatibilität, Branch und Release-Commit bleiben erhalten.
