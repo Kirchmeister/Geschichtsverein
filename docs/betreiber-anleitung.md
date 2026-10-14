@@ -357,3 +357,8 @@ Nur die Auswahl „Aufbewahrungsort“ im Beitragseditor und im Archivfilter ver
 ### Archiv-Dropdowns ab 0.46.6
 
 Im Archiv verwenden nun auch Kategorie, Forschungsstand, Sortierung, Darstellung und Einträge pro Seite Design-Dropdowns aus derselben Oberflächenbibliothek wie Aufbewahrungsort. „Alle Kategorien“ und „Alle Forschungsstände“ entfernen den jeweiligen Filter. Auswahlwerte, Filterrechte, gespeicherte Seitengröße sowie Browser-Zurück/Vorwärts bleiben erhalten. Auswahländerungen führen wie bisher zur ersten Ergebnisseite. Die Listen bleiben innerhalb des Bildschirms scrollbar, lange Texte dürfen umbrechen. Dropdowns außerhalb des Archivs bleiben unverändert. Der Update-Dienst 0.46.1 genügt weiterhin; bitte Darstellung und Touchbedienung nach dem App-Update am iPhone prüfen.
+
+
+### Seitenleisten-Cookie entfällt ab 0.46.7
+
+Die Seitenleiste speichert ihren Auf-/Zu-Zustand nur noch während der laufenden Nutzung im Arbeitsspeicher. Sie setzt dafür keinen Cookie mehr. Ein vorhandener `sidebar_state`-Cookie aus älteren Versionen wird beim nächsten Laden der internen Oberfläche gelöscht. Anmeldung, mobile Menübedienung und Tastaturkürzel bleiben erhalten; der Anmelde-Cookie wird nicht verändert. Der Update-Dienst 0.46.1 genügt.

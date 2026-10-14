@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.46.7] - 2026-10-14
+
+- Das Öffnen und Schließen der Seitenleiste setzt keinen Cookie mehr. Menüstatus und Bedienung bleiben im Arbeitsspeicher erhalten. Ein vorhandener `sidebar_state`-Cookie aus älteren Versionen wird beim nächsten Laden der internen Oberfläche entfernt.
+- Der erforderliche Anmelde-Cookie bleibt unverändert. Kein neuer Update-Dienst erforderlich.
+
 ## [0.46.6] - 2026-10-14
 
 - Ausschließlich die fünf weiteren Dropdowns im Archiv verwenden jetzt die Design-Komponente: Kategorie, Forschungsstand, Sortierung, Darstellung und Einträge pro Seite. Der bereits umgestellte Aufbewahrungsort bleibt erhalten; Auswahllisten außerhalb des Archivs bleiben unverändert.
