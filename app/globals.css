@@ -735,3 +735,9 @@ html { scroll-padding-top: calc(60px + env(safe-area-inset-top, 0px)); }
 .storage-place-select-content [data-slot=select-item]{min-height:3.25rem;height:auto;white-space:normal;overflow-wrap:anywhere;line-height:1.5}
 
 .central-archive-filters .storage-place-select-trigger{font-size:1rem}
+
+/* Only the five archive filter dropdowns use this variant. */
+.central-archive-filters .archive-filter-select-trigger{width:100%;min-width:0;min-height:3.25rem;height:auto;font-size:1rem;white-space:normal;text-align:left}
+.archive-filter-select-trigger [data-slot=select-value]{display:block;flex:1;min-width:0;white-space:normal;overflow-wrap:anywhere;-webkit-line-clamp:unset;overflow:visible}
+.archive-filter-select-content{width:var(--radix-select-trigger-width);max-width:calc(100vw - 2rem);max-height:min(320px,var(--radix-select-content-available-height));font-size:1rem}
+.archive-filter-select-content [data-slot=select-item]{min-height:3.25rem;height:auto;white-space:normal;overflow-wrap:anywhere;line-height:1.5}

@@ -352,3 +352,8 @@ Die Buttons „Entwurf verwerfen“, „Abbrechen“ und „Eintrag speichern“
 ### Aufbewahrungsort auswählen ab 0.46.5
 
 Nur die Auswahl „Aufbewahrungsort“ im Beitragseditor und im Archivfilter verwendet jetzt ein Design-Dropdown aus der vorhandenen Oberflächenbibliothek. „Nicht zugeordnet“ entfernt die Zuordnung im Formular; erst Speichern übernimmt die Änderung. „Alle Aufbewahrungsorte“ entfernt den Archivfilter. Bestehende Zuordnungen und Filter bleiben erhalten. Früher zugeordnete, nicht mehr verfügbare Orte werden weiterhin kenntlich gemacht. Lange Namen dürfen umbrechen; die Auswahl ist in ihrer Bildschirmhöhe begrenzt und scrollbar. Andere Dropdowns bleiben unverändert. Bitte nach dem App-Update am iPhone Hoch- und Querformat prüfen. Der Update-Dienst 0.46.1 genügt weiterhin.
+
+
+### Archiv-Dropdowns ab 0.46.6
+
+Im Archiv verwenden nun auch Kategorie, Forschungsstand, Sortierung, Darstellung und Einträge pro Seite Design-Dropdowns aus derselben Oberflächenbibliothek wie Aufbewahrungsort. „Alle Kategorien“ und „Alle Forschungsstände“ entfernen den jeweiligen Filter. Auswahlwerte, Filterrechte, gespeicherte Seitengröße sowie Browser-Zurück/Vorwärts bleiben erhalten. Auswahländerungen führen wie bisher zur ersten Ergebnisseite. Die Listen bleiben innerhalb des Bildschirms scrollbar, lange Texte dürfen umbrechen. Dropdowns außerhalb des Archivs bleiben unverändert. Der Update-Dienst 0.46.1 genügt weiterhin; bitte Darstellung und Touchbedienung nach dem App-Update am iPhone prüfen.

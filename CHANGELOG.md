@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.46.6] - 2026-10-14
+
+- Ausschließlich die fünf weiteren Dropdowns im Archiv verwenden jetzt die Design-Komponente: Kategorie, Forschungsstand, Sortierung, Darstellung und Einträge pro Seite. Der bereits umgestellte Aufbewahrungsort bleibt erhalten; Auswahllisten außerhalb des Archivs bleiben unverändert.
+- Filterwerte, Alle-Auswahl, rollenabhängige Sichtbarkeit, URL-Navigation, Seitenwechsel und gespeicherte Seitengröße bleiben erhalten. Die Listen sind in Breite und Höhe begrenzt; lange Texte dürfen umbrechen.
+- Kein neuer Update-Dienst erforderlich.
+
 ## [0.46.5] - 2026-10-14
 
 - Nur „Aufbewahrungsort“ im Beitragseditor und im Archivfilter verwendet jetzt die bestehende Design-Dropdown-Bibliothek. Alle anderen Auswahllisten bleiben unverändert.
