@@ -347,3 +347,8 @@ Bilder, ihre Beschriftungsvorschau und das Beschriftungsfeld nutzen im Editor di
 ### Dateiauswahl und Querformat ab 0.46.4
 
 Die Buttons „Entwurf verwerfen“, „Abbrechen“ und „Eintrag speichern“ scrollen immer am Formularende mit, auch im Querformat. Beitragsanhänge und „Sicherung zurückspielen“ verwenden eine gemeinsame Dateiauswahl: Auswahlbutton, separater Status und eine Liste mit umbrechenden Dateinamen, Dateigröße und Entfernen-Symbol. Das Entfernen verwirft nur die lokale Auswahl. Bei Bildern zuerst die individuelle Beschriftung ergänzen und anschließend „Ausgewählte Dateien hochladen“ anklicken. Die Auswahl selbst lädt nichts hoch. Bei einer Sicherung weiterhin „Datei prüfen“ ausführen und die Wiederherstellung danach ausdrücklich bestätigen. Dateitypen und Größenlimits bleiben bestehen. Der bereits laufende Update-Dienst 0.46.1 genügt.
+
+
+### Aufbewahrungsort auswählen ab 0.46.5
+
+Nur die Auswahl „Aufbewahrungsort“ im Beitragseditor und im Archivfilter verwendet jetzt ein Design-Dropdown aus der vorhandenen Oberflächenbibliothek. „Nicht zugeordnet“ entfernt die Zuordnung im Formular; erst Speichern übernimmt die Änderung. „Alle Aufbewahrungsorte“ entfernt den Archivfilter. Bestehende Zuordnungen und Filter bleiben erhalten. Früher zugeordnete, nicht mehr verfügbare Orte werden weiterhin kenntlich gemacht. Lange Namen dürfen umbrechen; die Auswahl ist in ihrer Bildschirmhöhe begrenzt und scrollbar. Andere Dropdowns bleiben unverändert. Bitte nach dem App-Update am iPhone Hoch- und Querformat prüfen. Der Update-Dienst 0.46.1 genügt weiterhin.

@@ -727,3 +727,11 @@ html { scroll-padding-top: calc(60px + env(safe-area-inset-top, 0px)); }
 .archive-selected-file button.archive-selected-file-remove{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-width:44px;padding:0;border:1px solid var(--border);border-radius:6px;background:var(--background);color:var(--foreground);margin:0}.archive-selected-file-remove svg{flex:none}
 .archive-selected-file>label{width:100%;min-width:0}.archive-selected-file input{width:100%;min-width:0}
 @media(max-width:650px){.archive-file-picker button.archive-file-picker-button{width:100%;justify-self:stretch}}
+
+/* Scoped to the two storage-place selectors; other dropdowns keep their existing rules. */
+.storage-place-select-trigger,.form-grid .storage-place-select-trigger{width:100%;min-width:0;min-height:3.25rem;height:auto;white-space:normal;text-align:left}
+.storage-place-select-trigger [data-slot=select-value]{display:block;flex:1;min-width:0;white-space:normal;overflow-wrap:anywhere;-webkit-line-clamp:unset;overflow:visible}
+.storage-place-select-content{width:var(--radix-select-trigger-width);max-width:calc(100vw - 2rem);max-height:min(320px,var(--radix-select-content-available-height));font-size:1rem}
+.storage-place-select-content [data-slot=select-item]{min-height:3.25rem;height:auto;white-space:normal;overflow-wrap:anywhere;line-height:1.5}
+
+.central-archive-filters .storage-place-select-trigger{font-size:1rem}

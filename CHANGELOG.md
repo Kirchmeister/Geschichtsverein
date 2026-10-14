@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.46.5] - 2026-10-14
+
+- Nur „Aufbewahrungsort“ im Beitragseditor und im Archivfilter verwendet jetzt die bestehende Design-Dropdown-Bibliothek. Alle anderen Auswahllisten bleiben unverändert.
+- „Nicht zugeordnet“, „Alle Aufbewahrungsorte“, gespeicherte Ortskennungen, bestehende Filter und der Hinweis auf einen früheren nicht mehr verfügbaren Ort bleiben erhalten.
+- Ortsnamen dürfen umbrechen; die Liste ist an der Feldbreite ausgerichtet, in ihrer Höhe begrenzt und scrollbar. Kein Austausch des Update-Dienstes nötig.
+
 ## [0.46.4] - 2026-10-14
 
 - Die Aktionsbuttons im Beitragseditor scrollen in Hoch- und Querformat normal am Formularende mit; keine an den unteren Rand geheftete Leiste mehr.
