@@ -1,5 +1,11 @@
 # Änderungen
 
+## [0.46.4] - 2026-10-14
+
+- Die Aktionsbuttons im Beitragseditor scrollen in Hoch- und Querformat normal am Formularende mit; keine an den unteren Rand geheftete Leiste mehr.
+- Einheitliche Dateiauswahl für Beitragsanhänge und Sicherungsimport: klarer Button, separater Auswahlstatus, umbrechende Dateinamen, Größenangabe und kompakter Entfernen-Button. Bildbeschriftungen bleiben vor dem Hochladen erforderlich. Auswahl startet weder Upload noch Wiederherstellung.
+- Dateiprüfung und Wiederherstellungsbestätigung bleiben separat; Dateiaktionen während laufender Verarbeitung gesperrt. Kein neuer Update-Dienst erforderlich.
+
 ## [0.46.3] - 2026-10-13
 
 - Bildvorschau, Beschriftungsvorschau und Beschriftungsfeld im Beitragseditor über die verfügbare Breite angeordnet. Der kompakte Papierkorb-Button hat eine 44-px-Touchfläche und entfernt weiterhin nur die Beitragszuordnung. Während Speichern oder Audioverarbeitung sind die Aktionen gesperrt.

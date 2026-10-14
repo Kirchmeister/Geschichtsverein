@@ -359,3 +359,8 @@ Das Bearbeitungsfenster wird horizontal und vertikal innerhalb des Bildschirms z
 ### Mobile Beitragsbearbeitung ab 0.46.3
 
 Bilder, ihre Beschriftungsvorschau und das Beschriftungsfeld nutzen im Editor die verfügbare Breite. Der Papierkorb-Button mit ausreichend großer Touchfläche entfernt die Zuordnung zum Beitrag; er löscht die gespeicherte Datei nicht unmittelbar. Erst das Speichern des Beitrags übernimmt die geänderte Zuordnung. Der Beitragstitel wächst und schrumpft automatisch mit seinem Inhalt, wie die Beschreibung. Die Grenze von 250 Zeichen bleibt bestehen; eingefügte Zeilenumbrüche werden zu Leerzeichen. Bitte nach dem App-Update am iPhone Bildbeschriftung, Titelumbruch und Cursorposition prüfen. Update-Dienst 0.46.1 genügt weiterhin.
+
+
+### Dateiauswahl und Querformat ab 0.46.4
+
+Die Buttons „Entwurf verwerfen“, „Abbrechen“ und „Eintrag speichern“ scrollen immer am Formularende mit, auch im Querformat. Beitragsanhänge und „Sicherung zurückspielen“ verwenden eine gemeinsame Dateiauswahl: Auswahlbutton, separater Status und eine Liste mit umbrechenden Dateinamen, Dateigröße und Entfernen-Symbol. Das Entfernen verwirft nur die lokale Auswahl. Bei Bildern zuerst die individuelle Beschriftung ergänzen und anschließend „Ausgewählte Dateien hochladen“ anklicken. Die Auswahl selbst lädt nichts hoch. Bei einer Sicherung weiterhin „Datei prüfen“ ausführen und die Wiederherstellung danach ausdrücklich bestätigen. Dateitypen und Größenlimits bleiben bestehen. Der bereits laufende Update-Dienst 0.46.1 genügt.
