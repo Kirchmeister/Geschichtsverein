@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.47.1] - 2026-10-14
+
+- Impressum und Datenschutz stehen in der vorhandenen Fußzeile rechts neben dem Vereinsnamen auf derselben Texthöhe. Der zusätzliche untere Bereich entfällt. Bei Platzmangel umbrechende Darstellung innerhalb derselben Fußzeile.
+- Links bleiben ohne Anmeldung erreichbar, einschließlich öffentlichem Profil, Beiträgen und Anmeldung. Kein neuer Update-Dienst erforderlich.
+
 ## [0.47.0] - 2026-10-14
 
 - Neuer Einstellungsbereich „Rechtliche Angaben“ direkt nach dem öffentlichen Profil für Administratoren und Verwalter, auch serverseitig abgesichert. Betreiber, Adresse, Kontakt, Vertretungsberechtigte, Vertretungsregel, Register und optionale Verantwortliche strukturiert erfassen; Hosting, Dienste und geprüften Datenschutztext ergänzen.

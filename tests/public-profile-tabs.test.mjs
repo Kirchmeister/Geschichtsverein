@@ -3,11 +3,12 @@ import {createRequire} from 'node:module';
 import vm from 'node:vm';
 const require=createRequire(import.meta.url),esbuild=require(require.resolve('esbuild',{paths:[require.resolve('vite')]}));
 const mocks={
+ '@/lib/archive-date':`export const formatDateField=value=>value;`,
  react:`export const useState=initial=>{const n=cursor++;if(!(n in states))states[n]=initial;return [states[n],v=>states[n]=v]};export const useEffect=f=>{effects.push(f)};export const useLayoutEffect=()=>{};export const useRef=initial=>({current:initial});`,
  'react/jsx-runtime':`export const jsx=(type,props)=>({type,props});export const jsxs=jsx;export const Fragment='Fragment';`,
  './public-zoom':`export const usePublicZoomLock=()=>{};`,
  './entry-location':`export const EntryLocationView='EntryLocationView';`,
- '@/components/archive/installation':`export const useBranding=()=>({title:'Testarchiv'});`,
+ '@/components/archive/installation':`export const useBranding=()=>({title:'Testarchiv',association:'Testverein'});`,
  '@/lib/archive-title':`export const archiveTitle=b=>b.title;`,
  '@/lib/archive-public-intro':`export const publicIntroDefaults=()=>({heading:'Historie',text:'Einführung'});export const introLinkParts=text=>[{text}];`,
  '@/lib/archive-api':`export const archiveRequest=path=>Promise.resolve(path==='/api/public-profile'?{entries:[]}:path==='/api/map'?{enabled:true,provider:'ohm'}:null);`,
@@ -20,7 +21,7 @@ const location={href:'https://archive.test/?ansicht=oeffentlich&tab=zeitkarte'},
 vm.runInNewContext(result.outputFiles[0].text,scope);
 function render(){scope.cursor=0;scope.effects=[];return scope.module.exports.PublicProfile({footer:{type:'LoginFooter',props:{}}})}
 function nodes(tree){if(!tree||typeof tree!=='object')return [];return [tree,...[tree.props?.children].flat(Infinity).flatMap(nodes)]}
-let tree=render();assert.ok(!nodes(tree).some(n=>n.type==='PageView'),'map deep link must not count a timeline view before URL initialization');for(const effect of scope.effects)effect();await new Promise(resolve=>setImmediate(resolve));tree=render();
+let tree=render();const footers=nodes(tree).filter(n=>typeof n.type==='function'&&n.type.name==='ArchiveFooter');assert.equal(footers.length,1);const footerTree=footers[0].type(footers[0].props);assert.equal(footerTree.type,'footer');assert.ok(nodes(footerTree).some(n=>n.type==='span'&&n.props.children==='Testverein'));assert.deepEqual(nodes(footerTree).filter(n=>n.type==='a').map(n=>n.props.href),['/impressum','/datenschutz']);assert.ok(!nodes(tree).some(n=>n.type==='PageView'),'map deep link must not count a timeline view before URL initialization');for(const effect of scope.effects)effect();await new Promise(resolve=>setImmediate(resolve));tree=render();
 assert.ok(nodes(tree).some(n=>typeof n.type==='function'&&n.type.name==='TimeMap'));
 const links=nodes(tree).filter(n=>n.type==='a');assert.equal(links.find(n=>n.props.children==='Historische Karte').props['aria-current'],'page');assert.ok(nodes(tree).some(n=>n.type==='LoginFooter'));assert.ok(links.some(n=>n.props.href==='https://github.com/Kirchmeister/Geschichtsverein'));assert.ok(!links.some(n=>n.props.href==='/experimente/bruchkoebel-zeitkarte.html'));
 links.find(n=>n.props.children==='Zeitleiste').props.onClick({button:0,preventDefault(){}});tree=render();assert.equal(new URL(location.href).searchParams.get('tab'),null);assert.ok(!nodes(tree).some(n=>typeof n.type==='function'&&n.type.name==='TimeMap'));assert.ok(nodes(tree).some(n=>n.type==='PageView'));assert.ok(nodes(tree).some(n=>n.type==='LoginFooter'));
