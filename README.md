@@ -344,7 +344,7 @@ App **und separater Update-Dienst benötigen mindestens 0.32.0**. Ein App-Update
 
 ### Einstellungen und Notfallzugang ab 0.46.0
 
-„Öffentliches Profil“ steht am Ende der Menüeinträge, direkt über Einstellungen. Administratoren sehen alle Einstellungen. Verwalter sehen Namen, Benutzer und Einladungen, Einstellungen für Gäste, öffentliches Profil, Farben und Design sowie Karte. Sie dürfen anderen Konten nach ausdrücklicher Bestätigung vollständige Administratorrechte vergeben; bestehende Administratorkonten können sie nicht verändern. Jede Vergabe wird protokolliert. Der letzte aktive Administrator bleibt vor Löschung, Sperrung und Herabstufung geschützt. Verwalterkonten deshalb nur vertrauenswürdigen Personen geben.
+„Öffentliches Profil“ steht am Ende der Menüeinträge, direkt über Einstellungen. Administratoren sehen alle Einstellungen. Verwalter sehen Namen, Benutzer und Einladungen, Einstellungen für Gäste, öffentliches Profil, rechtliche Angaben, Farben und Design sowie Karte. Sie dürfen anderen Konten nach ausdrücklicher Bestätigung vollständige Administratorrechte vergeben; bestehende Administratorkonten können sie nicht verändern. Jede Vergabe wird protokolliert. Der letzte aktive Administrator bleibt vor Löschung, Sperrung und Herabstufung geschützt. Verwalterkonten deshalb nur vertrauenswürdigen Personen geben.
 
 Ohne erreichbaren Administrator- oder Verwalterzugang siehe [Notfallzugang über SSH](docs/betreiber-anleitung.md#notfallzugang-über-ssh). Bestehende Konto-Passkeys werden dabei nicht ersetzt.
 
@@ -379,3 +379,12 @@ Im Archiv verwenden nun auch Kategorie, Forschungsstand, Sortierung, Darstellung
 ### Seitenleisten-Cookie entfällt ab 0.46.7
 
 Die Seitenleiste speichert ihren Auf-/Zu-Zustand nur noch während der laufenden Nutzung im Arbeitsspeicher. Sie setzt dafür keinen Cookie mehr. Ein vorhandener `sidebar_state`-Cookie aus älteren Versionen wird beim nächsten Laden der internen Oberfläche gelöscht. Anmeldung, mobile Menübedienung und Tastaturkürzel bleiben erhalten; der Anmelde-Cookie wird nicht verändert. Der Update-Dienst 0.46.1 genügt.
+
+
+### Rechtliche Angaben ab 0.47.0
+
+Administrator und Verwalter bearbeiten „Rechtliche Angaben“ direkt nach „Öffentliches Profil“. Betreibername, Rechtsform, zustellfähige Adresse, Kontakt, Vorstandsmitglieder/Vertretungsberechtigte mit Funktion, Vertretungsregel und Registerdaten eingeben. Redaktionell Verantwortliche und Datenschutzbeauftragte nur soweit erforderlich ergänzen. Geprüften Datenschutztext, Hosting-Anbieter, Standort und tatsächlich genutzte Dienste getrennt erfassen. Keine Passwörter, privaten Schlüssel oder internen Serveradressen eintragen.
+
+„Entwurf speichern“ veröffentlicht nichts. Die Vorschau zeigt den aktuellen Entwurf. „Impressum veröffentlichen“ und „Datenschutz veröffentlichen“ verlangen eine ausdrückliche Bestätigung und prüfen ausgefüllte Felder. Die Prüfung stellt keine Rechtssicherheit fest; Texte müssen zum tatsächlichen Betrieb passen und fachkundig geprüft werden. Veröffentlichungen sind getrennte Momentaufnahmen. Spätere Entwurfsänderungen verändern sie erst nach erneuter Veröffentlichung der jeweiligen Seite. Bei gleichzeitigen Änderungen neu laden, statt fremde Änderungen zu überschreiben.
+
+Die Links im Fußbereich führen ohne Anmeldung zu `/impressum` und `/datenschutz`. Bis zur ersten Veröffentlichung wird dort ehrlich auf fehlende Angaben hingewiesen. Deshalb Betreiberangaben und geprüfte Datenschutzerklärung zeitnah veröffentlichen. Öffentliche Antworten enthalten keine Entwürfe. Die Angaben sind in vollständigen Backups enthalten; nach einem Import von einer anderen Instanz die übernommenen rechtlichen Texte auf den neuen Betreiber prüfen und anpassen. Der Update-Dienst 0.46.1 genügt.

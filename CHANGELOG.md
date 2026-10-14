@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.47.0] - 2026-10-14
+
+- Neuer Einstellungsbereich „Rechtliche Angaben“ direkt nach dem öffentlichen Profil für Administratoren und Verwalter, auch serverseitig abgesichert. Betreiber, Adresse, Kontakt, Vertretungsberechtigte, Vertretungsregel, Register und optionale Verantwortliche strukturiert erfassen; Hosting, Dienste und geprüften Datenschutztext ergänzen.
+- Private Entwürfe, Vorschau und ausdrücklich bestätigte Veröffentlichung von Impressum und Datenschutz getrennt. Veröffentlichte Texte bleiben bei Entwurfsänderungen unverändert. Konfliktprüfung verhindert das Überschreiben zwischenzeitlicher Änderungen.
+- Öffentliche Seiten `/impressum` und `/datenschutz` sowie Links im Fußbereich einschließlich Anmeldung und öffentlicher Ansichten. Öffentliche Schnittstelle liefert ausschließlich veröffentlichte Texte, keine Entwürfe.
+- Ausfüllprüfung ist keine Rechtsprüfung; keine automatischen Rechtstexte für unbekannte Dienste. Angaben werden über die vorhandene Einstellungsablage gesichert. Kein neuer Update-Dienst erforderlich.
+
 ## [0.46.7] - 2026-10-14
 
 - Das Öffnen und Schließen der Seitenleiste setzt keinen Cookie mehr. Menüstatus und Bedienung bleiben im Arbeitsspeicher erhalten. Ein vorhandener `sidebar_state`-Cookie aus älteren Versionen wird beim nächsten Laden der internen Oberfläche entfernt.

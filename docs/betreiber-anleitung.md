@@ -288,7 +288,7 @@ Notieren Sie Ihre Installation an einem geschützten Ort: Repository, App- und U
 
 Der Menüpunkt **Öffentliches Profil** befindet sich unten, oberhalb von **Einstellungen**. Ohne Einstellungsrechte ist er der letzte Menüpunkt vor dem eigenen Konto.
 
-Verwalter dürfen **Namen**, **Benutzer und Einladungen**, **Einstellungen für Gäste**, **Öffentliches Profil**, **Farben und Design** und **Karte** verwalten. Backups, Updates, E-Mail/SMTP, Nextcloud/WebDAV, Serverdomain und Hilfe bleiben Administratoren vorbehalten. Diese Grenzen gelten auch bei direkten Schnittstellenaufrufen und in der Profilvorschau.
+Verwalter dürfen **Namen**, **Benutzer und Einladungen**, **Einstellungen für Gäste**, **Öffentliches Profil**, **Rechtliche Angaben**, **Farben und Design** und **Karte** verwalten. Backups, Updates, E-Mail/SMTP, Nextcloud/WebDAV, Serverdomain und Hilfe bleiben Administratoren vorbehalten. Diese Grenzen gelten auch bei direkten Schnittstellenaufrufen und in der Profilvorschau.
 
 ### Administratorzugang über einen Verwalter ersetzen
 
@@ -362,3 +362,12 @@ Im Archiv verwenden nun auch Kategorie, Forschungsstand, Sortierung, Darstellung
 ### Seitenleisten-Cookie entfällt ab 0.46.7
 
 Die Seitenleiste speichert ihren Auf-/Zu-Zustand nur noch während der laufenden Nutzung im Arbeitsspeicher. Sie setzt dafür keinen Cookie mehr. Ein vorhandener `sidebar_state`-Cookie aus älteren Versionen wird beim nächsten Laden der internen Oberfläche gelöscht. Anmeldung, mobile Menübedienung und Tastaturkürzel bleiben erhalten; der Anmelde-Cookie wird nicht verändert. Der Update-Dienst 0.46.1 genügt.
+
+
+### Rechtliche Angaben ab 0.47.0
+
+Administrator und Verwalter bearbeiten „Rechtliche Angaben“ direkt nach „Öffentliches Profil“. Betreibername, Rechtsform, zustellfähige Adresse, Kontakt, Vorstandsmitglieder/Vertretungsberechtigte mit Funktion, Vertretungsregel und Registerdaten eingeben. Redaktionell Verantwortliche und Datenschutzbeauftragte nur soweit erforderlich ergänzen. Geprüften Datenschutztext, Hosting-Anbieter, Standort und tatsächlich genutzte Dienste getrennt erfassen. Keine Passwörter, privaten Schlüssel oder internen Serveradressen eintragen.
+
+„Entwurf speichern“ veröffentlicht nichts. Die Vorschau zeigt den aktuellen Entwurf. „Impressum veröffentlichen“ und „Datenschutz veröffentlichen“ verlangen eine ausdrückliche Bestätigung und prüfen ausgefüllte Felder. Die Prüfung stellt keine Rechtssicherheit fest; Texte müssen zum tatsächlichen Betrieb passen und fachkundig geprüft werden. Veröffentlichungen sind getrennte Momentaufnahmen. Spätere Entwurfsänderungen verändern sie erst nach erneuter Veröffentlichung der jeweiligen Seite. Bei gleichzeitigen Änderungen neu laden, statt fremde Änderungen zu überschreiben.
+
+Die Links im Fußbereich führen ohne Anmeldung zu `/impressum` und `/datenschutz`. Bis zur ersten Veröffentlichung wird dort ehrlich auf fehlende Angaben hingewiesen. Deshalb Betreiberangaben und geprüfte Datenschutzerklärung zeitnah veröffentlichen. Öffentliche Antworten enthalten keine Entwürfe. Die Angaben sind in vollständigen Backups enthalten; nach einem Import von einer anderen Instanz die übernommenen rechtlichen Texte auf den neuen Betreiber prüfen und anpassen. Der Update-Dienst 0.46.1 genügt.
