@@ -1,5 +1,9 @@
 # Änderungen
 
+## [0.47.3] - 2026-10-15
+
+- Im geöffneten Beitrag steht „Eintrag bearbeiten“ links in der Kopfleiste, das Schließen-Kreuz weiterhin rechts. Farbe, Größe und Bedienung der Buttons bleiben erhalten; gilt auf Mobilgeräten und Desktop. Kein neuer Update-Dienst erforderlich.
+
 ## [0.47.2] - 2026-10-15
 
 - Neuer Design-Dropdown „Veröffentlichung“ im Archiv: alle Einträge, veröffentlicht, nicht veröffentlicht und Freigabe angefragt. Mit bestehenden Filtern kombinierbar; URL, Zurücknavigation, Trefferzahl, Seitennavigation und Zurücksetzen berücksichtigen die Auswahl.

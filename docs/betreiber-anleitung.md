@@ -377,3 +377,5 @@ Ab 0.47.1 stehen Impressum und Datenschutz mit dem Vereinsnamen in einer gemeins
 ### Veröffentlichte Beiträge im Archiv finden ab 0.47.2
 
 Im Archiv unter „Veröffentlichung“ zwischen „Alle Einträge“, „Veröffentlicht“, „Nicht veröffentlicht“ und „Freigabe angefragt“ wählen. Veröffentlicht bedeutet öffentlich freigegeben und erreichbar, unabhängig davon, ob der Beitrag in der öffentlichen Zeitleiste erscheint. Nicht veröffentlicht umfasst Entwürfe, offene Anfragen und abgelehnte Freigaben. Die Auswahl lässt sich mit Suche, Kategorie und weiteren Filtern kombinieren; Trefferzahl und Seiten berücksichtigen den gesamten Bestand. Filter werden in der URL erhalten und über „Filter zurücksetzen“ gelöscht. Der Filter steht Administratoren, Verwaltern und Benutzern zur Verfügung; Gastansichten bleiben auf ihre freigegebenen Angaben beschränkt. Das normale Webseitenupdate genügt.
+
+Ab 0.47.3 steht im geöffneten Beitrag der grüne Button „Eintrag bearbeiten“ links und das Schließen-Kreuz rechts in der Kopfleiste. Das normale Webseitenupdate genügt; kein Austausch des Update-Dienstes erforderlich.
