@@ -3,6 +3,7 @@ import {createRequire} from 'node:module';
 import vm from 'node:vm';
 const require=createRequire(import.meta.url),esbuild=require(require.resolve('esbuild',{paths:[require.resolve('vite')]}));
 const mocks={
+ './legal-links':`export const useLegalLinks=()=>({imprint:true,privacy:true});`,
  '@/lib/archive-date':`export const formatDateField=value=>value;`,
  react:`export const useState=initial=>{const n=cursor++;if(!(n in states))states[n]=initial;return [states[n],v=>states[n]=v]};export const useEffect=f=>{effects.push(f)};export const useLayoutEffect=()=>{};export const useRef=initial=>({current:initial});`,
  'react/jsx-runtime':`export const jsx=(type,props)=>({type,props});export const jsxs=jsx;export const Fragment='Fragment';`,
@@ -16,7 +17,7 @@ const mocks={
  './markdown-text':`export const MarkdownText='Markdown';`,
  './public-profile.module.css':`export default {};`
 };
-const result=await esbuild.build({entryPoints:['components/archive/public-profile.tsx'],bundle:true,platform:'node',format:'cjs',jsx:'automatic',write:false,plugins:[{name:'mock',setup(build){build.onResolve({filter:/^(react|lucide-react|@\/|\.\/public-zoom|\.\/entry-location|\.\/markdown-text|\.\/public-profile.module.css)/},args=>({path:args.path,namespace:'mock'}));build.onLoad({filter:/.*/,namespace:'mock'},args=>({contents:mocks[args.path]||'export const PublicPageView="PageView",LinkedDescription="Description",EntryComments="Comments",AudioPlayer="Audio",publicFieldLabels={},entryReferencePath=()=>"/",Image="Image",Volume2="Audio",FileText="File";',loader:'js'}))}}]});
+const result=await esbuild.build({entryPoints:['components/archive/public-profile.tsx'],bundle:true,platform:'node',format:'cjs',jsx:'automatic',write:false,plugins:[{name:'mock',setup(build){build.onResolve({filter:/^(react|lucide-react|@\/|\.\/legal-links|\.\/public-zoom|\.\/entry-location|\.\/markdown-text|\.\/public-profile.module.css)/},args=>({path:args.path,namespace:'mock'}));build.onLoad({filter:/.*/,namespace:'mock'},args=>({contents:mocks[args.path]||'export const PublicPageView="PageView",LinkedDescription="Description",EntryComments="Comments",AudioPlayer="Audio",publicFieldLabels={},entryReferencePath=()=>"/",Image="Image",Volume2="Audio",FileText="File";',loader:'js'}))}}]});
 const location={href:'https://archive.test/?ansicht=oeffentlich&tab=zeitkarte'},scope={module:{exports:{}},cursor:0,states:[],effects:[],URL,window:{location,addEventListener(){},removeEventListener(){},history:{state:null,replaceState(_,__,url){location.href=new URL(url,location.href).href},pushState(_,__,url){location.href=new URL(url,location.href).href}}}};
 vm.runInNewContext(result.outputFiles[0].text,scope);
 function render(){scope.cursor=0;scope.effects=[];return scope.module.exports.PublicProfile({footer:{type:'LoginFooter',props:{}}})}

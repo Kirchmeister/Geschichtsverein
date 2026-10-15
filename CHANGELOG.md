@@ -1,5 +1,14 @@
 # Änderungen
 
+## [0.49.0] - 2026-10-15
+
+- Administrator-Vertretung: Einstellungen verlangen eine frische Bestätigung mit einem vorhandenen eigenen Passkey. Der einmalige Nachweis ist zwei Minuten gültig und an Konto, aktive Sitzung, neue Werte und bisherigen Einstellungsstand gebunden. Unverändertes Speichern erzeugt keine Nachricht und verlängert keine Frist.
+- Erfolgreiche Notfallnachfolge startet die volle konfigurierte Wartezeit sofort neu. Eigener Nachfolgezeitpunkt statt fingierter Anmeldung; vorhandene Sitzungen des neuen Administrators bleiben nutzbar. Rollenänderung, Nachweisverbrauch, Frist, Entwertung älterer Notfall-Challenges/-Nachweise und Protokollierung erfolgen atomar. Konkurrierend kann nur eine Nachfolge erfolgreich sein; normale Administratorvergaben bleiben unverändert.
+- Bisherige aktive Administratoren erhalten interne Sicherheitsnachrichten und E-Mails über eine persistente transaktionale Outbox bei Regeländerungen und Nachfolge. Nachrichten enthalten Akteur, Zeitpunkt, alte/neue Werte bzw. Zielkonto und neue Frist. E-Mail-Versand läuft nachgelagert mit begrenzten Wiederholungen, Leasing gegen parallelen Versand und sichtbarem Status/manueller Wiederholung. Fehlendes SMTP wird angezeigt; Versandfehler rollen erfolgreiche Änderungen nicht zurück. Backup-Import versendet keine historischen Outbox-Aufträge erneut; erhaltene lokale Konten behalten ihre aktuelle Outbox.
+- Impressum und Datenschutz lassen sich getrennt mit ausdrücklicher Bestätigung zurücknehmen und erneut veröffentlichen. Gespeicherte Angaben und lokale Entwürfe bleiben erhalten; öffentliche Texte und zugehörige Fußzeilenlinks werden ausgeblendet. Neue Entwurfsänderungen bleiben bis zur Veröffentlichung privat.
+- Nur der Datenschutztext erhält den vorhandenen Markdown-Schalter, Formatierungswerkzeuge und Bearbeiten/Vorschau. Sichere Markdown-Darstellung auch auf der veröffentlichten Seite; bestehende Klartexte und das Impressum behalten ihr Format.
+- Speicherung in der vorhandenen Einstellungsablage, Schema bleibt 20. Normales Anwendungsupdate genügt, kein Austausch des Update-Dienstes und keine allgemeine Neuanmeldung erforderlich. SMTP und Kontaktadressen prüfen; Einzelheiten in der Betreiberanleitung.
+
 ## [0.48.1] - 2026-10-15
 
 - Administrator-Vertretung als standardmäßig ausgeschaltete Notfallregel: nur Administratoren konfigurieren 1 bis 52 Wochen (Vorgabe 4). Aktivierung und Änderung der Wochenzahl starten die volle Wartezeit neu. Erfolgreiche Anmeldungen aktiver Administratoren verschieben die Frist; bestehende Sitzungen, Seitenaufrufe und Passkey-Bestätigungen zählen nicht als neue Anmeldung.
@@ -465,6 +474,7 @@
 Versionsnummern folgen Major.Minor.Patch. Veröffentlichte Tags werden nicht verschoben. Versionen vor dem produktiven Serverbetrieb sind als Vorabversion gekennzeichnet.
 
 ## [Unreleased]
+
 
 ## [0.22.0] – 2026-10-10
 

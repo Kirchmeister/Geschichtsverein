@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {saveSuccession} from '../server/admin-succession.mjs';
+import {saveSuccession as savePolicy} from '../server/admin-succession.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import http from 'node:http';
@@ -10,6 +10,7 @@ import {authService,initializeAuth} from '../server/auth-service.mjs';
 import {issueSession,sessionIdentity,hashToken,cleanAuth,limitAuth} from '../server/auth-security.mjs';
 import {authSource} from '../server/auth-source.mjs';
 import {authenticator} from './webauthn-fixture.mjs';
+const saveSuccession=(db,actor,data,now)=>savePolicy(db,actor,data,now,()=>{});
 const root=await fs.mkdtemp(path.resolve('.auth-security-test-')),store=sqliteBinding(path.join(root,'archive.sqlite'),path.resolve('drizzle')),db=store.database,key='a'.repeat(64),origin='https://archive.example.test';let now=Math.floor(Date.now()/1000);
 try{
  initializeAuth(db);for(const [id,role] of [['admin','admin'],['admin2','admin'],['manager','manager'],['user','user'],['other','user']]){db.prepare('INSERT INTO linux_accounts VALUES(?,?,?,0)').run(id,id+'@example.test',id);db.prepare('INSERT INTO archive_users(id,identity_provider,identity_subject,display_name,created,role) VALUES(?,?,?,?,?,?)').run(id,'linux',id,id,'now',role)}

@@ -1,0 +1,3 @@
+import {env} from '@/lib/runtime-env';
+import {runSecurityMail} from '@/lib/archive-security-mail';
+export async function POST(req:Request){const e=env as any;if(e.ARCHIVE_HOSTING_RUNTIME!=='linux'||req.headers.has('origin')||!/^[a-f0-9]{64}$/.test(e.ARCHIVE_RUNNER_KEY||'')||req.headers.get('authorization')!=='Bearer '+e.ARCHIVE_RUNNER_KEY)return Response.json({error:'Servicezugang erforderlich.'},{status:403});try{return Response.json(await runSecurityMail(),{headers:{'Cache-Control':'no-store'}})}catch{return Response.json({error:'Sicherheitsbenachrichtigungen konnten nicht verarbeitet werden.'},{status:503})}}

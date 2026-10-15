@@ -27,7 +27,8 @@ export function preserveLocal(sourceFile,targetFile){
    for(const row of source.prepare('SELECT * FROM '+table.name).iterate())put(table.name,row);
   }
   for(const row of source.prepare("SELECT * FROM archive_users WHERE identity_provider='linux'").iterate())put('archive_users',row);
-  for(const row of source.prepare("SELECT * FROM archive_settings WHERE key LIKE 'deleted-account:%' OR key LIKE 'welcome:%' OR key LIKE 'profile-preview:%' OR key='admin-succession' OR key LIKE 'admin-login:%' OR key='installation' OR key='system_settings'").iterate()){
+  target.exec("DELETE FROM archive_settings WHERE key LIKE 'admin-security-mail:%' OR key LIKE 'admin-security-event:%'");
+  for(const row of source.prepare("SELECT * FROM archive_settings WHERE key LIKE 'deleted-account:%' OR key LIKE 'welcome:%' OR key LIKE 'profile-preview:%' OR key LIKE 'admin-security-mail:%' OR key LIKE 'admin-security-event:%' OR key='admin-succession' OR key LIKE 'admin-login:%' OR key='installation' OR key='system_settings'").iterate()){
    if(row.key==='installation'){
     const imported=JSON.parse(target.prepare("SELECT data FROM archive_settings WHERE key='installation'").get().data);imported.completed=true;row.data=JSON.stringify(imported);
    }else if(row.key==='system_settings'){

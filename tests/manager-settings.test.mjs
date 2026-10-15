@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {saveSuccession,successionPolicy,successionStatus} from '../server/admin-succession.mjs';
+import {saveSuccession as savePolicy,successionPolicy,successionStatus} from '../server/admin-succession.mjs';
 import {issueSession,hashToken} from '../server/auth-security.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -7,6 +7,7 @@ import {spawnSync} from 'node:child_process';
 import {sqliteBinding} from '../server/linux-storage.mjs';
 import {authService,initializeAuth} from '../server/auth-service.mjs';
 import {accountCode,adminGrantConfirmation,protectLastAdmin} from '../server/account-management.mjs';
+const saveSuccession=(db,actor,data,now)=>savePolicy(db,actor,data,now,()=>{});
 const root=await fs.mkdtemp(path.resolve('.manager-settings-test-')),store=sqliteBinding(path.join(root,'archive.sqlite'),path.resolve('drizzle')),db=store.database;
 try{
  initializeAuth(db);
@@ -20,7 +21,7 @@ try{
  assert.throws(()=>s.delete('admin','manager',accountCode(db,'admin')));assert.throws(()=>s.rename('admin','Changed','manager'));
  s.rename('user','New name','manager');s.edit('user','user',true,'manager');s.edit('user','user',false,'manager');
  assert.throws(()=>promote('user','manager'));saveSuccession(db,'admin',{enabled:true,weeks:1,expectedRevision:''},Math.floor(Date.now()/1000)-2*7*86400);
- promote('user','manager');assert.equal(s.grantLog()[0].actor.id,'manager');assert.equal(s.grantLog()[0].target.id,'user');assert.ok(s.grantLog()[0].at);assert.equal(s.grantLog()[0].kind,'promotion');
+ promote('user','manager');assert.equal(s.grantLog()[0].actor.id,'manager');assert.equal(s.grantLog()[0].target.id,'user');assert.ok(s.grantLog()[0].at);assert.equal(s.grantLog()[0].kind,'succession');
  for(const change of [()=>s.edit('user','user',false,'manager'),()=>s.edit('user','admin',true,'manager'),()=>s.rename('user','No','manager'),()=>s.delete('user','manager',accountCode(db,'user'))])assert.throws(change,/bestehende Administratorkonten/);
  const preview=authService(db,{...config,managementRole:'manager'});assert.throws(()=>preview.edit('user','user',false,'admin'));assert.throws(()=>preview.rename('user','No','admin'));assert.throws(()=>preview.delete('user','admin',accountCode(db,'user')));
  s.edit('user','user',false,'admin');assert.throws(()=>protectLastAdmin(db,{id:'admin',role:'admin',disabled:0}));
@@ -28,6 +29,7 @@ try{
  assert.throws(()=>s.invite({email:'pending@example.test',name:'Pending',role:'admin'},false,'manager'));assert.equal(s.pending().length,0);
  assert.throws(()=>s.invite({email:'pending@example.test',name:'Pending',role:'admin',confirmation:adminGrantConfirmation},false,'manager'));assert.equal(s.pending().length,0);
  // Audit write and role change must roll back together on failure.
+ saveSuccession(db,'admin',{enabled:true,weeks:2,expectedRevision:successionPolicy(db).revision},Math.floor(Date.now()/1000)-3*7*86400);
  db.exec("CREATE TRIGGER reject_grant BEFORE INSERT ON archive_settings WHEN NEW.key LIKE 'admin-grant:%' BEGIN SELECT RAISE(ABORT,'fixture'); END");assert.throws(()=>promote('user','manager'));assert.equal(s.accounts().find(a=>a.id==='user').role,'user');db.exec('DROP TRIGGER reject_grant');
  s.invite({email:'recover@example.test',name:'Recovery',role:'admin',confirmation:adminGrantConfirmation},false,'ssh-recovery');assert.equal(s.grantLog().find(g=>g.target.email==='recover@example.test').kind,'recovery');
  const maintenance=path.join(root,'maintenance'),configFile=path.join(root,'app.env');await fs.writeFile(configFile,`ARCHIVE_ORIGIN=${config.origin}\nARCHIVE_SESSION_KEY=${config.sessionKey}\nARCHIVE_DATA_DIR=${root}\nARCHIVE_MAINTENANCE_FILE=${maintenance}\n`);

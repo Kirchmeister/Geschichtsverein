@@ -748,3 +748,5 @@ html { scroll-padding-top: calc(60px + env(safe-area-inset-top, 0px)); }
 .legal-representative{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:12px;margin:16px 0;align-items:end}.legal-representative label{display:grid;gap:6px;min-width:0}.legal-representative input,.legal-representative button{min-height:44px;padding:10px;border:1px solid var(--border);border-radius:4px;background:var(--card);width:100%;min-width:0;font-size:16px}
 .legal-publication{padding:18px 0;border-top:1px solid var(--border);margin-top:18px}.legal-publication h4{font-size:18px;font-weight:600}.legal-publication p{margin:10px 0}.legal-preview{padding:16px;border:1px solid var(--border);background:var(--card);border-radius:6px;overflow-wrap:anywhere}.legal-preview .pre{white-space:pre-wrap}
 @media(max-width:650px){.legal-representative{grid-template-columns:1fr}.legal-public-page{padding:24px 16px}#settings-legal .comment-actions{flex-wrap:wrap}}
+
+.legal-public-page .markdown-content,.legal-preview .markdown-content{margin:16px 0;overflow-wrap:anywhere;min-width:0}.legal-public-page .markdown-table,.legal-preview .markdown-table{max-width:100%;overflow-x:auto}
