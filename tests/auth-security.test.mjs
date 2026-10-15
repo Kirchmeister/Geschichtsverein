@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {saveSuccession} from '../server/admin-succession.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import http from 'node:http';
@@ -28,8 +29,9 @@ try{
  const results=await Promise.allSettled([1,2].map(async()=>service.invite({...invite,proof:p},false,'admin',adminSession)));assert.equal(results.filter(x=>x.status==='fulfilled').length,1);assert.equal(service.grantLog().filter(g=>g.target.email===invite.email).length,1);
  const actionOnly={...invite,email:'action@example.test'},actionProof=await proof('admin',adminSession,'invite',actionOnly);assert.throws(()=>service.edit('manager','admin',false,'admin','ADMINISTRATORRECHTE VERGEBEN',actionProof,adminSession));service.invite({...actionOnly,proof:actionProof},false,'admin',adminSession);
  const expired=await proof('admin',adminSession,'invite',{...invite,email:'expired@example.test'});db.prepare('UPDATE linux_challenges SET expires=? WHERE hash=?').run(now-1,hashToken(expired));assert.throws(()=>service.invite({...invite,email:'expired@example.test',proof:expired},false,'admin',adminSession));
+ saveSuccession(db,'admin',{enabled:true,weeks:1,expectedRevision:''},now-2*7*86400);
  const promotion={id:'user',role:'admin',disabled:false},promotionProof=await proof('manager',managerSession,'edit',promotion);assert.throws(()=>service.edit('user','admin',false,'manager','ADMINISTRATORRECHTE VERGEBEN',p,managerSession));service.edit('user','admin',false,'manager','ADMINISTRATORRECHTE VERGEBEN',promotionProof,managerSession);assert.equal(service.accounts().find(a=>a.id==='user').role,'admin');assert.throws(()=>service.edit('user','user',false,'manager'));
- const denied={...invite,email:'revoked@example.test'},deniedProof=await proof('manager',managerSession,'invite',denied);db.prepare("UPDATE archive_users SET role='user' WHERE id='manager'").run();assert.throws(()=>service.invite({...denied,proof:deniedProof},false,'manager',managerSession));db.prepare("UPDATE archive_users SET role='manager' WHERE id='manager'").run();
+ const denied={...invite,email:'revoked@example.test'},deniedProof=await proof('admin',adminSession,'invite',denied);db.prepare("UPDATE archive_users SET role='user' WHERE id='admin'").run();assert.throws(()=>service.invite({...denied,proof:deniedProof},false,'admin',adminSession));db.prepare("UPDATE archive_users SET role='admin' WHERE id='admin'").run();
  const challenge=await service.grantAuthOptions('admin',adminSession,'invite',denied),response=keys.admin.assert(challenge.options);const verified=await Promise.allSettled([1,2].map(()=>service.grantAuthVerify('admin',adminSession,'invite',denied,challenge.challenge,response)));assert.equal(verified.filter(x=>x.status==='fulfilled').length,1);
  const inFlight=await service.grantAuthOptions('admin',adminSession,'invite',denied),verification=service.grantAuthVerify('admin',adminSession,'invite',denied,inFlight.challenge,keys.admin.assert(inFlight.options));service.revokeAll('admin');await assert.rejects(verification);
  console.log('PASS: real owned-passkey assertions, account/session/action/parameter binding, missing/expired/reused proofs, atomic concurrent consumption, manager grants, current rights and logout during verification.');

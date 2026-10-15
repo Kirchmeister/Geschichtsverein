@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.48.1] - 2026-10-15
+
+- Administrator-Vertretung als standardmäßig ausgeschaltete Notfallregel: nur Administratoren konfigurieren 1 bis 52 Wochen (Vorgabe 4). Aktivierung und Änderung der Wochenzahl starten die volle Wartezeit neu. Erfolgreiche Anmeldungen aktiver Administratoren verschieben die Frist; bestehende Sitzungen, Seitenaufrufe und Passkey-Bestätigungen zählen nicht als neue Anmeldung.
+- Verwalter dürfen keine Administrator-Einladungen mehr erstellen. Die Hochstufung eines bestehenden anderen Kontos ist nur nach Ablauf der Notfallfrist und mit frischem eigenen Passkey erlaubt. Die Regel wird bei Bestätigung und tatsächlicher Vergabe erneut geprüft; ein zwischenzeitlicher Administrator-Login sperrt auch bereits ausgestellte Nachweise. Administratoren selbst können weiterhin direkt einladen und hochstufen.
+- Neuer ausschließlich für Administratoren sichtbarer Einstellungsbereich im vorhandenen SettingsPanel-Design, mit vorhandenen Feldgrößen, Schriftarten und Hilfetexten. Verwalter sehen die Verfügbarkeit in der Kontenverwaltung. Einstellungen sind gegen konkurrierendes Überschreiben gesichert und bleiben bei unterstützter Wiederherstellung mit lokalen Konten erhalten.
+- Speicherung in der bestehenden Einstellungsablage, keine neue Schema-Migration. Normales Anwendungsupdate genügt; kein neuer Update-Dienst erforderlich.
+
 ## [0.48.0] - 2026-10-15
 
 - Sicherheitsupdate der Linux-Anmeldung, Schema 20: signierte Sitzungen werden zusätzlich serverseitig geprüft und sind einzeln bzw. über „Auf allen Geräten abmelden“ widerrufbar. Sperren und Löschen entziehen bestehende Sitzungen dauerhaft. Zwölf Stunden maximale Laufzeit, geschützte Cookies und aktuelle Rollenprüfung bleiben erhalten.
