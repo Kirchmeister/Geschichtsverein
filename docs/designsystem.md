@@ -110,9 +110,9 @@ Die neue Seite zeigt und erläutert typografische Rollen, verfügbare Farbschema
 
 **Zugriff:** Die Route prüft serverseitig, ob die tatsächliche Rolle `admin` oder `manager` ist. Die Seite dient ausschließlich der Anschauung. Musteraktionen schreiben nichts in die Archivdatenbank.
 
-**Navigationsgrenze dieses Auftrags:** Um wirklich *nur* eine neue Seite und die Dokumentation anzulegen, wurde kein bestehendes Einstellungsmenü geändert. Die Adresse muss deshalb zunächst direkt geöffnet werden: `https://<Archiv-Domain>/designsystem`. Der Rücklink führt zur Startseite des Archivs. Ein Menül ink wäre eine getrennte, später freizugebende Änderung.
+**Navigationsgrenze dieses Auftrags:** Um wirklich *nur* eine neue Seite und die Dokumentation anzulegen, wurde kein bestehendes Einstellungsmenü geändert. Die Adresse muss deshalb zunächst direkt geöffnet werden: `https://<Archiv-Domain>/designsystem`. Der Rücklink führt zur Startseite des Archivs. Ein Menülink wäre eine getrennte, später freizugebende Änderung.
 
-**Wichtig für Linux-Betreiber:** GitHub-Commits installieren sich nicht selbst auf dem Vereinsserver. Nach dem offiziellen, zum Betrieb passenden Deploy-/Build-Prozess wird die neue Route sichtbar. Wegen des begrenzten Auftrags bleiben Versionsnummer, Changelog und bestehende Dateien unverändert; es wird kein neues Versions-Release behauptet.
+**Wichtig für Linux-Betreiber:** GitHub-Commits installieren sich nicht selbst auf dem Vereinsserver. Ab Version **0.49.3** wird die Referenz über das normale Anwendungsupdate ausgeliefert, einschließlich direktem Update von 0.49.2. Anschließend als Administrator oder Verwalter anmelden und `/designsystem` direkt öffnen. Kein Austausch des Update-Dienstes und keine neue Datenbankmigration erforderlich. Die ursprüngliche Anlage der Seite und Dokumentation erfolgte ohne Versionsänderung; die Release-Einbindung ergänzt nun Version und Updatefreigabe.
 
 ## 5. Integrationsvertrag für zukünftige Änderungen
 

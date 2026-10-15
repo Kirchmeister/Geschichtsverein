@@ -449,3 +449,8 @@ Nur der Datenschutztext verwendet auf Wunsch den aus dem Beitragseditor bekannte
 ### Updatefreigabe ab 0.49.2
 
 Version 0.49.1 enthält eine zu eng begrenzte Updatefreigabe: Ein installiertes 0.49.0 wird als nicht unterstützter Ausgangsstand abgewiesen. Ab 0.49.2 sind direkte Updates aus 0.49.0 und 0.49.1 freigegeben und lokal mit dem Update-Dienststand 0.46.1 geprüft. Im Updatebereich erneut nach Updates suchen und direkt 0.49.2 installieren; 0.49.1 muss nicht vorher installiert werden. Der vorhandene Update-Dienst 0.46.1 genügt. Keine manuelle Datenbankänderung und kein Umgehen der Updateprüfung erforderlich.
+
+
+### Designreferenz im Anwendungsupdate ab 0.49.3
+
+Die interne GADS-Designreferenz ist ab **0.49.3** im normalen Webseitenupdate enthalten. Nach dem Update als Administrator oder Verwalter anmelden und **`https://<Archiv-Domain>/designsystem`** öffnen. Dokumentation und Vorgaben für weitere Oberflächen stehen in [`docs/designsystem.md`](docs/designsystem.md). Die Referenz speichert keine Archivdaten und verändert bestehende Oberflächen nicht. Ein zusätzlicher Menüeintrag ist noch nicht vorgesehen. Direkte Updates von 0.49.2 sind freigegeben; der Update-Dienst 0.46.1 genügt, Schema 20 bleibt erhalten.

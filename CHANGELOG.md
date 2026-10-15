@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.49.3] - 2026-10-15
+
+- Bereits auf main ergänzte GADS-Designreferenz und Dokumentation werden jetzt über das normale Linux-Anwendungsupdate ausgeliefert. Die interne Seite unter /designsystem ist für Administratoren und Verwalter zugänglich und verändert keine Archivdaten oder bestehenden Oberflächen.
+- Direkte Updates auch aus 0.49.2 freigegeben; bisherige freigegebene Ausgangsversionen bleiben erhalten. Keine neue Datenbankmigration und kein Austausch des Update-Dienstes erforderlich.
+
 ## [0.49.2] - 2026-10-15
 
 - Updatefreigabe korrigiert: Direkte Updates von 0.49.0 und 0.49.1 werden mit Schema 20 und Backupformat 2 unterstützt. Die in 0.49.1 versehentlich bei 0.48.1 endende Freigabe hatte das Update aus 0.49.0 gesperrt.
