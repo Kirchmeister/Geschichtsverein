@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
+import {compareVersions} from '../server/update-compatibility.mjs';
 const version=JSON.parse(fs.readFileSync('version.json','utf8')),pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
 assert.match(version.version,/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-beta\.[1-9]\d*)?$/);
 assert.equal(pkg.version,version.version,'package.json and version.json must match');
@@ -7,4 +8,7 @@ assert.equal(version.databaseSchemaVersion,fs.readdirSync('drizzle').filter(f=>f
 assert.equal(version.backupFormatVersion,2);
 assert.equal(typeof version.prerelease,'boolean');assert.equal(version.prerelease,version.version.includes('-beta.'));
 assert.ok(fs.readFileSync('CHANGELOG.md','utf8').includes('## ['+version.version+']'),'Add release notes to CHANGELOG.md');
+const policy=JSON.parse(fs.readFileSync('docs/update-compatibility.json','utf8'));
+const previousStable=[...fs.readFileSync('CHANGELOG.md','utf8').matchAll(/^## \[([0-9]+\.[0-9]+\.[0-9]+)\]/gm)].map(m=>m[1]).filter(v=>compareVersions(v,version.version)<0).sort(compareVersions).at(-1);
+if(!version.prerelease&&previousStable)assert.ok(policy.supportedSources?.some(s=>compareVersions(previousStable,s.minimumVersion)>=0&&compareVersions(previousStable,s.maximumVersion)<=0),'Update compatibility must explicitly support the previous stable release '+previousStable);
 console.log('Version '+version.version+' · schema '+version.databaseSchemaVersion+' · backup '+version.backupFormatVersion+' verified.');

@@ -430,3 +430,8 @@ Nur der Datenschutztext verwendet auf Wunsch den aus dem Beitragseditor bekannte
 ## Historische Beitragskarten ab 0.49.1
 
 Ab 0.49.1 zeigt eine historische Beitragskarte automatisch den Stand des hinterlegten Beginnjahres. „Auf der Karte ansehen“ übernimmt dieses Jahr ebenfalls und überschreibt dafür die zuvor gemerkte Zeiteinstellung. Die große Karte lässt sich anschließend wie bisher manuell zeitlich verstellen. Öffentlich und für Gäste gilt dies nur bei freigegebenem Beginnjahr; ohne Beginnjahr bleibt das bisherige Verhalten erhalten. OpenStreetMap ist unverändert. Die Datierung ist jahresgenau entsprechend dem Beitragsfeld „Beginn (Jahr)“. Das normale Anwendungsupdate genügt. Keine neue Schema-Migration, keine Neuanmeldung und kein Austausch des Update-Dienstes erforderlich.
+
+
+### Updatefreigabe ab 0.49.2
+
+Version 0.49.1 enthält eine zu eng begrenzte Updatefreigabe: Ein installiertes 0.49.0 wird als nicht unterstützter Ausgangsstand abgewiesen. Ab 0.49.2 sind direkte Updates aus 0.49.0 und 0.49.1 freigegeben und lokal mit dem Update-Dienststand 0.46.1 geprüft. Im Updatebereich erneut nach Updates suchen und direkt 0.49.2 installieren; 0.49.1 muss nicht vorher installiert werden. Der vorhandene Update-Dienst 0.46.1 genügt. Keine manuelle Datenbankänderung und kein Umgehen der Updateprüfung erforderlich.
