@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.47.4] - 2026-10-15
+
+- Push-Aktivierung wird pro Browser und Konto ohne neuen Cookie im lokalen Browserspeicher gemerkt. Beim Öffnen, erneuter Anmeldung, Rückkehr zur App und nach Wiederherstellung der Verbindung werden Registrierung und Server automatisch abgeglichen; fehlende Registrierungen bei vorhandener Browserfreigabe wiederhergestellt.
+- Bestehende, serverseitig diesem Konto zugeordnete Geräte werden übernommen. Neue Browser werden nicht allein aufgrund der Kontoeinstellung automatisch angemeldet. Keine automatischen Berechtigungsdialoge; nötige erneute Aktivierung wird erklärt.
+- Ausschalten und „Alle Geräte abmelden“ entwerten alte Wiederherstellungsmerker serverseitig. Logout entfernt weiterhin die aktuelle Zustellung; nach erneuter Anmeldung kann die gemerkte Browserauswahl wiederhergestellt werden. Explizite Geräteaktionen werden mit dem automatischen Abgleich koordiniert.
+- Keine garantierte Zustellung bei gelöschten Browserdaten oder entzogener Freigabe. Normales Anwendungsupdate genügt; kein neuer Update-Dienst erforderlich.
+
 ## [0.47.3] - 2026-10-15
 
 - Im geöffneten Beitrag steht „Eintrag bearbeiten“ links in der Kopfleiste, das Schließen-Kreuz weiterhin rechts. Farbe, Größe und Bedienung der Buttons bleiben erhalten; gilt auf Mobilgeräten und Desktop. Kein neuer Update-Dienst erforderlich.
