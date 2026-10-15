@@ -5,13 +5,13 @@ import {archiveDb} from '@/lib/archive-db';
  * Never accept identities from the request JSON or a name input. */
 export function authenticatedIdentity(req:Request){
  const runtime=env as unknown as {ARCHIVE_HOSTING_RUNTIME?:string,ARCHIVE_SESSION_KEY?:string};
- if(runtime.ARCHIVE_HOSTING_RUNTIME==='linux')return serverSessionIdentity(req,runtime.ARCHIVE_SESSION_KEY);
+ if(runtime.ARCHIVE_HOSTING_RUNTIME==='linux')return serverSessionIdentity(req,runtime.ARCHIVE_SESSION_KEY,(archiveDb() as any).database);
 
  const subject=req.headers.get('oai-authenticated-user-id'),email=req.headers.get('oai-authenticated-user-email');
  if(!subject||!email)return null;
  let name:string|null=null;
  if(req.headers.get('oai-authenticated-user-full-name-encoding')==='percent-encoded-utf-8')try{name=decodeURIComponent(req.headers.get('oai-authenticated-user-full-name')||'').trim()||null}catch{}
- return {provider:'chatgpt',subject,email,name:name||email};
+ return {provider:'chatgpt',subject,email,name:name||email,sessionId:undefined};
 }
 export async function resolveArchiveActor(req:Request){
  const identity=authenticatedIdentity(req);if(!identity)return null;const db=archiveDb();if((env as any).ARCHIVE_HOSTING_RUNTIME==='linux'){const a=await db.prepare('SELECT name FROM linux_accounts WHERE id=? AND disabled=0').bind(identity.subject).first<{name:string}>();if(!a)return null;identity.name=a.name;}

@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import {issueSession,hashToken} from '../server/auth-security.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import http from 'node:http';
@@ -25,7 +27,7 @@ const service=http.createServer(async(req,res)=>{let body='';for await(const chu
 });await new Promise(r=>service.listen(0,'127.0.0.1',r));const updater='http://127.0.0.1:'+service.address().port;
 await fs.writeFile(root+'/app.env',`ARCHIVE_ORIGIN=${origin}\nARCHIVE_SESSION_KEY=${key}\nARCHIVE_SETTINGS_KEY=${key}\nARCHIVE_RUNNER_KEY=${key}\nARCHIVE_UPDATER_URL=${updater}\nARCHIVE_UPDATER_SECRET=${key}\nARCHIVE_INITIAL_PLACE=Testort\nARCHIVE_INITIAL_ASSOCIATION=Testverein\n`);
 const app=spawn(process.execPath,['scripts/linux-start.mjs'],{cwd:standalone,env:{...process.env,PORT:String(port),ARCHIVE_CONFIG_FILE:root+'/app.env',ARCHIVE_BIND_HOST:'127.0.0.1',ARCHIVE_DATA_DIR:root,ARCHIVE_MAINTENANCE_FILE:root+'/maintenance'},stdio:['ignore','pipe','pipe']});let output='';app.stdout.on('data',b=>output+=b);app.stderr.on('data',b=>output+=b);
-function cookie(role){const now=Math.floor(Date.now()/1000),data=Buffer.from(JSON.stringify({issuer:'archive-linux-session-v1',subject:role,email:role+'@example.invalid',name:role,iat:now,exp:now+3600})).toString('base64url');return 'archive_session='+data+'.'+createHmac('sha256',key).update(data).digest('base64url')}
+function cookie(role){const db=new DatabaseSync(path.join(root,'archive.sqlite'));try{const account=db.prepare('SELECT * FROM linux_accounts WHERE id=? AND disabled=0').get(role);return 'archive_session='+(account?issueSession(db,key,account):'invalid')}finally{db.close()}}
 const upload=(role='admin',extra={})=>fetch(origin+'/api/restores',{method:'POST',headers:{Cookie:cookie(role),Origin:origin,'Content-Type':'application/x-tar',...extra},body:uploaded});
 try{
  let ready=false;for(let n=0;n<100;n++){try{if((await fetch(origin+'/api/health')).ok){ready=true;break}}catch{}await new Promise(r=>setTimeout(r,100))}assert.ok(ready,output);

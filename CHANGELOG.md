@@ -1,5 +1,14 @@
 # Änderungen
 
+## [0.48.0] - 2026-10-15
+
+- Sicherheitsupdate der Linux-Anmeldung, Schema 20: signierte Sitzungen werden zusätzlich serverseitig geprüft und sind einzeln bzw. über „Auf allen Geräten abmelden“ widerrufbar. Sperren und Löschen entziehen bestehende Sitzungen dauerhaft. Zwölf Stunden maximale Laufzeit, geschützte Cookies und aktuelle Rollenprüfung bleiben erhalten.
+- **Nach diesem Update müssen sich alle Benutzer erneut mit einem vorhandenen Passkey anmelden.** Passkeys und Inhalte bleiben erhalten. Die bisherige Sitzungsversion wird nicht übernommen. Normales Webseitenupdate genügt; kein Austausch des Update-Dienstes erforderlich.
+- Begrenzte, bereinigte Anmeldeversuche und Challenge-Kontingente mit reservierter Kapazität für angemeldete Nutzer; HTTP 429 und Retry-After. Netzwerkquelle wird am TCP-Eingang ermittelt, weitergeleitete Adressen nur bei ausdrücklich konfigurierten vertrauenswürdigen Proxy-IP-Adressen berücksichtigt. Keine zusätzliche Apache-Regel erforderlich.
+- Administrator-Einladungen und Hochstufungen verlangen einen vorhandenen Passkey des Handelnden. Nachweise sind an Konto, aktive Sitzung und genaue Aktion gebunden, zwei Minuten gültig und einmalig. Prüfung und Rechtevergabe sind gegen Wiederverwendung und parallele Ausführung abgesichert; Verwalterregeln, letzter Administrator, Protokollierung und SSH-Wiederherstellung bleiben erhalten.
+- Sitzungen und kurzlebige Bestätigungen werden bei der unterstützten Backup-Wiederherstellung verworfen. Die lokale Push-Auswahl bleibt erhalten; globale Sitzungsabmeldung unterbricht alle Push-Geräte bis zur erneuten Aktivierung bzw. Wiederherstellung nach Anmeldung. Benennung der separaten Push-Geräteabmeldung klargestellt.
+- Ungespeicherte Beitragsentwürfe bleiben beim Sitzungsablauf geöffnet und lokal gesichert; Anmeldung in einem weiteren Tab erlaubt anschließendes erneutes Speichern. Keine automatische Weiterleitung, die Eingaben verwerfen würde.
+
 ## [0.47.4] - 2026-10-15
 
 - Push-Aktivierung wird pro Browser und Konto ohne neuen Cookie im lokalen Browserspeicher gemerkt. Beim Öffnen, erneuter Anmeldung, Rückkehr zur App und nach Wiederherstellung der Verbindung werden Registrierung und Server automatisch abgeglichen; fehlende Registrierungen bei vorhandener Browserfreigabe wiederhergestellt.

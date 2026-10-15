@@ -23,7 +23,7 @@ export function preserveLocal(sourceFile,targetFile){
   // Source SQL is from the trusted current database, never from the uploaded TAR.
   for(const table of source.prepare("SELECT name,sql FROM sqlite_schema WHERE type='table' AND name GLOB 'linux_*' ORDER BY CASE name WHEN 'linux_accounts' THEN 0 WHEN 'linux_credentials' THEN 1 ELSE 2 END,name").all()){
    if(!target.prepare('SELECT 1 FROM sqlite_schema WHERE name=?').get(table.name))target.exec(table.sql);
-   if(['linux_challenges','linux_push_queue'].includes(table.name))continue;
+   if(['linux_challenges','linux_push_queue','linux_sessions','linux_auth_limits','linux_challenge_context'].includes(table.name))continue;
    for(const row of source.prepare('SELECT * FROM '+table.name).iterate())put(table.name,row);
   }
   for(const row of source.prepare("SELECT * FROM archive_users WHERE identity_provider='linux'").iterate())put('archive_users',row);
@@ -39,6 +39,7 @@ export function preserveLocal(sourceFile,targetFile){
   }
   if(!target.prepare("SELECT 1 FROM linux_accounts a JOIN archive_users u ON u.identity_provider='linux' AND u.identity_subject=a.id WHERE a.disabled=0 AND u.role='admin'").get())throw Error('Aktiver lokaler Administrator fehlt.');
   if(target.prepare('PRAGMA foreign_key_check').all().length||target.prepare('PRAGMA integrity_check').get().integrity_check!=='ok')throw Error('Zusammengeführte Konten sind nicht konsistent.');
+  for(const table of ['linux_challenges','linux_sessions','linux_auth_limits','linux_challenge_context'])target.exec('DELETE FROM '+table);
   target.exec('COMMIT');
  }catch(e){try{target.exec('ROLLBACK')}catch{}throw e}finally{source.close();target.close()}
 }
