@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.49.1] - 2026-10-15
+
+- Historische Beitragskarten verwenden automatisch das hinterlegte Beginnjahr, auch beim Öffnen der großen Karte. Das Jahr hat Vorrang vor gemerkten Zeiteinstellungen; die große Zeitleiste bleibt manuell bedienbar. Ohne freigegebenes Beginnjahr sowie bei OpenStreetMap bleibt das bisherige Verhalten erhalten.
+- Normales Linux-Anwendungsupdate genügt; keine Datenbankmigration und kein Austausch des Update-Dienstes erforderlich.
+
 ## [0.49.0] - 2026-10-15
 
 - Administrator-Vertretung: Einstellungen verlangen eine frische Bestätigung mit einem vorhandenen eigenen Passkey. Der einmalige Nachweis ist zwei Minuten gültig und an Konto, aktive Sitzung, neue Werte und bisherigen Einstellungsstand gebunden. Unverändertes Speichern erzeugt keine Nachricht und verlängert keine Frist.

@@ -13,6 +13,8 @@ try{
   assert.equal(m.entryMapProvider(preference,{enabled:true,provider:'ohm'}),'ohm');
   assert.equal(m.entryMapProvider(preference,{enabled:true,provider:'both'}),preference==='ohm'?'ohm':'osm');
  }
+ for(const year of ['1848','700','-500','0','9999'])assert.equal(m.entryMapYear(year),Number(year));
+ for(const value of [undefined,null,'',' ',1848,'1848.5','10000','bad'])assert.equal(m.entryMapYear(value),null);
  assert.equal(m.entryMapProvider('ohm',null),null);assert.equal(m.entryMapProvider('osm',{enabled:true,provider:'unknown'}),null);
  const location={lat:50,lon:8,label:'Fundort',approximate:false};
  assert.equal(m.normalizeEntryLocation(location).mapProvider,undefined);

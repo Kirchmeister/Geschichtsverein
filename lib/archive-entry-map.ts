@@ -8,3 +8,8 @@ export function entryMapProvider(preference:EntryMapProvider|undefined,config:Ma
  const available=availableEntryMaps(config);
  return available.find(provider=>provider===preference)||available[0]||null;
 }
+
+export function entryMapYear(start:unknown):number|null{
+ if(typeof start!=='string'||!/^-?\d{1,4}$/.test(start.trim()))return null;
+ const year=Number(start);return Number.isInteger(year)&&year>=-9999&&year<=9999?year:null;
+}

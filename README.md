@@ -300,6 +300,8 @@ Beim Speichern eines Beitrags wählen interne Bearbeiter ab 0.26.0 **Nur speiche
 
 ### Beiträge auf der Karte verorten
 
+Ab 0.49.1 zeigt eine historische Beitragskarte automatisch den Stand des hinterlegten Beginnjahres. „Auf der Karte ansehen“ übernimmt dieses Jahr ebenfalls und überschreibt dafür die zuvor gemerkte Zeiteinstellung. Die große Karte lässt sich anschließend wie bisher manuell zeitlich verstellen. Öffentlich und für Gäste gilt dies nur bei freigegebenem Beginnjahr; ohne Beginnjahr bleibt das bisherige Verhalten erhalten. OpenStreetMap ist unverändert. Die Datierung ist jahresgenau entsprechend dem Beitragsfeld „Beginn (Jahr)“.
+
 In der Beitragsbearbeitung lässt sich „Standort auf der Karte“ aufklappen. Pro Beitrag ist ein optionaler Punkt möglich: über Klick auf die heutige Karte, Verschieben der Markierung oder direkte Eingabe von Breitengrad und Längengrad. Lagebeschreibung und „Lage ungefähr“ sind optional; der Standort ist vom Aufbewahrungsort unabhängig. Alle Bereiche können verortet werden. Die Kartenvorschau wird von externen Diensten geladen; Beitragstexte und Archivdaten werden nicht an den Kartenanbieter übertragen.
 
 Das Feld „Standort auf der Karte“ muss vom Administrator unter „Öffentliches Profil → Sichtbare Felder“ beziehungsweise „Einstellungen für Gäste → Sichtbare Felder für Gäste“ ausdrücklich aktiviert werden. Die öffentliche Karte zeigt nur genehmigte Beitragsversionen, unabhängig von deren Aufnahme in die öffentliche Zeitleiste. Nahe Markierungen werden zusammengefasst; Antippen vergrößert die Gruppe, einzelne Markierungen verlinken den Beitrag. Bei OpenHistoricalMap bleiben Archivmarkierungen über alle Jahre sichtbar.
