@@ -1,5 +1,10 @@
 # Änderungen
 
+## [0.47.2] - 2026-10-15
+
+- Neuer Design-Dropdown „Veröffentlichung“ im Archiv: alle Einträge, veröffentlicht, nicht veröffentlicht und Freigabe angefragt. Mit bestehenden Filtern kombinierbar; URL, Zurücknavigation, Trefferzahl, Seitennavigation und Zurücksetzen berücksichtigen die Auswahl.
+- „Veröffentlicht“ prüft dieselbe gültige Freigabe wie der öffentliche Beitragszugriff, unabhängig von der Zeitleistensichtbarkeit. Gastansichten bieten den internen Filter nicht an und ignorieren ihn serverseitig. Keine Änderung an Freigaben oder Datenbankschema; kein neuer Update-Dienst erforderlich.
+
 ## [0.47.1] - 2026-10-14
 
 - Impressum und Datenschutz stehen in der vorhandenen Fußzeile rechts neben dem Vereinsnamen auf derselben Texthöhe. Der zusätzliche untere Bereich entfällt. Bei Platzmangel umbrechende Darstellung innerhalb derselben Fußzeile.

@@ -3,7 +3,7 @@ import {ArchiveFilterSelect} from './archive-filter-select';
 import {StoragePlaceSelect} from './storage-place-select';
 import {useEffect,useState} from 'react';
 import {archiveRequest,type PreviewRole} from '@/lib/archive-api';
-import {archiveCategories,archiveStatuses,archiveSortLabels,archiveLimits,archiveLimitKey,readArchiveQuery,archiveHref,archivePageNumbers,type ArchiveQuery} from '@/lib/archive-query';
+import {archiveCategories,archiveStatuses,archivePublicationLabels,archiveSortLabels,archiveLimits,archiveLimitKey,readArchiveQuery,archiveHref,archivePageNumbers,type ArchiveQuery} from '@/lib/archive-query';
 import {entryDateText} from '@/lib/archive-date';
 export function ArchiveBrowser({role,refresh,onOpen}:{role:PreviewRole,refresh:number,onOpen:(id:string)=>void}){
  const [query,setQuery]=useState<ArchiveQuery>(()=>readArchiveQuery('')),[ready,setReady]=useState(false),[data,setData]=useState<any>(null),[loading,setLoading]=useState(true),[error,setError]=useState(''),[retry,setRetry]=useState(0),[personSearch,setPersonSearch]=useState(''),[people,setPeople]=useState<any[]>([]);
@@ -17,6 +17,7 @@ export function ArchiveBrowser({role,refresh,onOpen}:{role:PreviewRole,refresh:n
  const reset=()=>{setPersonSearch('');setPeople([]);change({...readArchiveQuery('',query.limit),limit:query.limit})};
  const chips:{label:string,clear:()=>void}[]=[];
  if(query.q)chips.push({label:'Suche: '+query.q,clear:()=>change({q:''})});if(query.category)chips.push({label:archiveCategories[query.category as keyof typeof archiveCategories],clear:()=>change({category:''})});if(query.status)chips.push({label:query.status,clear:()=>change({status:''})});
+ if(role!=='guest'&&query.publication)chips.push({label:'Veröffentlichung: '+archivePublicationLabels[query.publication as keyof typeof archivePublicationLabels],clear:()=>change({publication:''})});
  if(query.from||query.to)chips.push({label:'Jahre '+(query.from||'offen')+' bis '+(query.to||'offen'),clear:()=>change({from:'',to:''})});
  if(query.storage)chips.push({label:'Aufbewahrungsort: '+(data?.storages?.find((p:any)=>p.id===query.storage)?.name||'ausgewählt'),clear:()=>change({storage:''})});
  for(const media of query.media)chips.push({label:media==='bilder'?'Bilder':media==='dokumente'?'Dokumente':'Audio',clear:()=>change({media:query.media.filter(v=>v!==media)})});
@@ -27,6 +28,7 @@ export function ArchiveBrowser({role,refresh,onOpen}:{role:PreviewRole,refresh:n
   <label className="archive-search-input">Suche<input type="search" maxLength={500} placeholder="Titel, Orte, Namen, Schlagwörter …" value={query.q} onChange={e=>change({q:e.target.value})}/></label>
   {allowed('category')&&<label>Kategorie<ArchiveFilterSelect label="Kategorie" value={query.category} onChange={value=>change({category:value})} options={[{value:'',label:'Alle Kategorien'},...Object.entries(archiveCategories).map(([value,label])=>({value,label}))]}/></label>}
   {allowed('status')&&<label>Forschungsstand<ArchiveFilterSelect label="Forschungsstand" value={query.status} onChange={value=>change({status:value})} options={[{value:'',label:'Alle Forschungsstände'},...archiveStatuses.map(value=>({value,label:value}))]}/></label>}
+  {role!=='guest'&&<label>Veröffentlichung<ArchiveFilterSelect label="Veröffentlichung" value={query.publication} onChange={value=>change({publication:value})} options={[{value:'',label:'Alle Einträge'},...Object.entries(archivePublicationLabels).map(([value,label])=>({value,label}))]}/></label>}
   <label>Sortierung<ArchiveFilterSelect label="Sortierung" value={query.sort} onChange={value=>change({sort:value})} options={Object.entries(archiveSortLabels).filter(([key])=>!data?.fields||key.startsWith('titel')||key.startsWith('datum')&&(allowed('start')||allowed('end'))||key==='forschungsstand'&&allowed('status')||key==='zuletzt'&&allowed('updated')).map(([value,label])=>({value,label}))}/></label>
   {(allowed('start')||allowed('end'))&&<><label>Von Jahr<input type="number" min={-9999} max={9999} value={query.from} onChange={e=>change({from:e.target.value})}/></label><label>Bis Jahr<input type="number" min={-9999} max={9999} value={query.to} onChange={e=>change({to:e.target.value})}/></label></>}
   {allowed('storagePlaceId')&&<label>Aufbewahrungsort<StoragePlaceSelect value={query.storage} places={data?.storages||[]} emptyLabel="Alle Aufbewahrungsorte" missingLabel="Ausgewählter Aufbewahrungsort" onChange={value=>change({storage:value})}/></label>}
