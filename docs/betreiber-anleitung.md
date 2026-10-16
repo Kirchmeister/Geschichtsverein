@@ -440,3 +440,16 @@ Version 0.49.1 enthält eine zu eng begrenzte Updatefreigabe: Ein installiertes 
 ### Designreferenz im Anwendungsupdate ab 0.49.3
 
 Die interne GADS-Designreferenz ist ab **0.49.3** im normalen Webseitenupdate enthalten. Nach dem Update als Administrator oder Verwalter anmelden und **`https://<Archiv-Domain>/designsystem`** öffnen. Dokumentation und Vorgaben für weitere Oberflächen stehen in [`docs/designsystem.md`](designsystem.md). Die Referenz speichert keine Archivdaten und verändert bestehende Oberflächen nicht. Ein zusätzlicher Menüeintrag ist noch nicht vorgesehen. Direkte Updates von 0.49.2 sind freigegeben; der Update-Dienst 0.46.1 genügt, Schema 20 bleibt erhalten.
+
+### Umgebungssuche auf Smartphones ab 0.50.0
+
+Das normale Anwendungsupdate genügt. Direkte Updates von 0.49.3 und den bisher unterstützten Versionen sind freigegeben; Schema 20, Backupformat 2 und der vorhandene Update-Dienst 0.46.1 bleiben ausreichend.
+
+Nach dem Update:
+
+1. Unter **Einstellungen → Karte** Ortsname, Mittelpunkt und Gebietsradius kontrollieren. Die Umgebungssuche verwendet einen Kreis um diesen Mittelpunkt, keinen fest hinterlegten Ortsnamen und nicht nur den rechteckigen Kartenausschnitt.
+2. Unter **Rechtliche Angaben** den veröffentlichten Datenschutztext und die tatsächlich eingesetzten Kartenanbieter prüfen. Der technische Abschnitt **„Optionale Umgebungssuche auf der Karte“** wird automatisch ergänzend angezeigt; weder Entwurf noch veröffentlichter Betreibertext werden überschrieben. Die Vorschau enthält diesen Abschnitt ebenfalls. Ohne veröffentlichte Datenschutzerklärung kann kein Standort angefragt werden. Die ergänzten technischen Informationen ersetzen nicht die Prüfung der übrigen Betreiberangaben und Rechtsgrundlagen.
+3. Die Website über HTTPS auf einem Smartphone öffnen, im öffentlichen Profil eine Karte wählen und **„Meine Umgebung entdecken“** testen. Erst nach dem Zustimmungsdialog wird die Browserfunktion aufgerufen. Für 50 Meter ist eine entsprechend genaue Ortung erforderlich; die App zeigt ungenaue Standorte und unsichere Gebietsgrenzen verständlich an.
+4. Auch Ablehnen, Abbrechen, Beenden, 50/100/250 Meter, leere Trefferlisten sowie den Wechsel zur anderen aktivierten Karte prüfen. Der heutige Standort bleibt nur während der offenen Kartenansicht im Speicher. Eine neue Ortung erfolgt ausschließlich nach erneutem ausdrücklichem Start; es gibt keine laufende Verfolgung. Auf erkannten Computern/Tablets gibt es keine Standortabfrage, sondern einen Smartphone-Hinweis. Die Erkennung kann insbesondere im Desktopmodus abweichen.
+
+Die Position wird nicht an den Archivserver gesendet und nicht in Datenbank, Cookies, URL, Protokollen oder Browser-Speichern abgelegt. Die öffentliche eingebettete Karte speichert deshalb auch den Kartenausschnitt nicht mehr im Sitzungsspeicher. Nachladen externer Kartenausschnitte kann deren Anbietern dennoch die betrachtete Gegend offenbaren; genau diese Einschränkung steht im Dialog und im Datenschutzabschnitt. Keine Live-Server- oder Apache-Änderung ist für die Funktion erforderlich. Ein vorhandener einschränkender `Permissions-Policy`-Header oder die Betriebssystemeinstellungen können die Ortung weiterhin verhindern.

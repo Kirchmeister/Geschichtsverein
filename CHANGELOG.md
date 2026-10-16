@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.50.0] - 2026-10-16
+
+- Öffentliche Kartenansicht: „Meine Umgebung entdecken“ für erkannte Smartphones, mit ausdrücklichem Zustimmungsdialog und anschließender einmaliger Standortabfrage. Konfigurierter Ort und kreisförmiger Kartenbereich statt festem Ortsnamen; außerhalb, am unsicheren Gebietsrand oder bei zu ungenauer Ortung verständliche Hinweise. Umkreise 50/100/250 Meter, Karte mit Standort und Suchkreis, nach Luftlinie sortierte öffentliche Beitragslinks. Keine laufende Verfolgung.
+- Nur im Arbeitsspeicher der geöffneten Kartenansicht: Standort bleibt beim Wechsel zwischen heutiger und historischer Karte erhalten, wird beim Beenden/Verlassen verworfen. Keine Koordinaten in URLs, Archivserver-Anfragen oder Browser-Speichern. Die öffentliche eingebettete Karte merkt auch den Kartenausschnitt nicht mehr im Sitzungsspeicher. Bestehende direkte Kartenaufrufe behalten ihr Verhalten.
+- GADS-konforme Bedienelemente mit vorhandenem Bestätigungsdialog, semantischen Farben und dokumentierten Schriftrollen. Datenschutzlink und automatisch ergänzter technischer Datenschutzabschnitt, ohne gespeicherte Betreibertexte zu ersetzen. Ohne veröffentlichte Datenschutzerklärung bleibt die Ortung gesperrt. Externe Kartenanfragen und mögliche Ableitung der betrachteten Gegend werden ausdrücklich erläutert.
+- Schema 20 bleibt erhalten. Normales Linux-Anwendungsupdate direkt auch von 0.49.3; vorhandener Update-Dienst 0.46.1 genügt. Betreiber sollten Datenschutzerklärung und Kartenanbieterangaben nach dem Update prüfen.
+
 ## [0.49.3] - 2026-10-15
 
 - Bereits auf main ergänzte GADS-Designreferenz und Dokumentation werden jetzt über das normale Linux-Anwendungsupdate ausgeliefert. Die interne Seite unter /designsystem ist für Administratoren und Verwalter zugänglich und verändert keine Archivdaten oder bestehenden Oberflächen.

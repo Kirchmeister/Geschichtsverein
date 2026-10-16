@@ -139,3 +139,11 @@ Eine automatische Lint- oder visuelle Regression-Prüfung ist noch **nicht** ein
 5. Später eine feste Navigation zur Designreferenz und automatisierte UI-Prüfungen ergänzen.
 
 **Abgrenzung:** Die aktuelle Lieferung erfasst, definiert und zeigt Standards, ohne vorhandene Seiten, Daten, Funktionen, globale CSS-Dateien oder Komponenten zu modifizieren.
+
+## 7. Umsetzung: Umgebungssuche ab 0.50.0
+
+`components/archive/nearby-explorer.tsx` verwendet den vorhandenen `ConfirmAction`-Dialog mit ausdrücklichem Aktionslabel und bestehenden Primär-/Sekundärschaltflächen. Die angrenzenden Suchfelder und die Ergebnisliste verwenden die GADS-Rollen UI 16 px, Sekundärtext 14 px und Unterabschnitt 20 px/600 in Arial. Semantische Farbtokens, 44-px-Bedienhöhen, 8-px-Flächenrundung, einspaltiges mobiles Umbrechen und sichtbarer Fokus sind in einem auf die Komponente begrenzten CSS-Modul umgesetzt. Es gibt keine neue Schriftart, keine globale CSS-Änderung und keine Übernahme der ausgeschlossenen Altansichten als Referenz.
+
+Beim längeren Standortdialog liegt der anfängliche Fokus auf dem Titel, damit mobile Ansichten am Anfang des Hinweises bleiben. Der vorhandene Standardfokus auf Abbrechen bleibt bei anderen Bestätigungen erhalten.
+
+Die Ergebnisse stehen außerhalb der eingebetteten Karte als normal lesbare Beitragslinks, zusätzlich zu Markierungen und Umkreis. Die eigene Standortermittlung ist für erkannte Smartphones vorgesehen; Computer und Tablets erhalten einen gewöhnlichen Hilfstext. Zustimmungsdialog und Ergebnisse bleiben per Tastatur bedienbar. Die ergänzende Datenschutzerklärung verwendet die bestehende `LegalContent`-Darstellung und einen direkt verlinkbaren Abschnitt.
