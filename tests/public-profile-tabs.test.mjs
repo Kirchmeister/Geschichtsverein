@@ -7,6 +7,7 @@ const mocks={
  '@/lib/archive-date':`export const formatDateField=value=>value;`,
  react:`export const useState=initial=>{const n=cursor++;if(!(n in states))states[n]=initial;return [states[n],v=>states[n]=v]};export const useEffect=f=>{effects.push(f)};export const useLayoutEffect=()=>{};export const useRef=initial=>({current:initial});`,
  'react/jsx-runtime':`export const jsx=(type,props)=>({type,props});export const jsxs=jsx;export const Fragment='Fragment';`,
+ './nearby-explorer':`export const useNearbyExplorer=()=>({point:null,radius:100,references:[],controls:null,results:null});`,
  './public-zoom':`export const usePublicZoomLock=()=>{};`,
  './entry-location':`export const EntryLocationView='EntryLocationView';`,
  '@/components/archive/installation':`export const useBranding=()=>({title:'Testarchiv',association:'Testverein'});`,
@@ -17,7 +18,7 @@ const mocks={
  './markdown-text':`export const MarkdownText='Markdown';`,
  './public-profile.module.css':`export default {};`
 };
-const result=await esbuild.build({entryPoints:['components/archive/public-profile.tsx'],bundle:true,platform:'node',format:'cjs',jsx:'automatic',write:false,plugins:[{name:'mock',setup(build){build.onResolve({filter:/^(react|lucide-react|@\/|\.\/legal-links|\.\/public-zoom|\.\/entry-location|\.\/markdown-text|\.\/public-profile.module.css)/},args=>({path:args.path,namespace:'mock'}));build.onLoad({filter:/.*/,namespace:'mock'},args=>({contents:mocks[args.path]||'export const PublicPageView="PageView",LinkedDescription="Description",EntryComments="Comments",AudioPlayer="Audio",publicFieldLabels={},entryReferencePath=()=>"/",Image="Image",Volume2="Audio",FileText="File";',loader:'js'}))}}]});
+const result=await esbuild.build({entryPoints:['components/archive/public-profile.tsx'],bundle:true,platform:'node',format:'cjs',jsx:'automatic',write:false,plugins:[{name:'mock',setup(build){build.onResolve({filter:/^(react|lucide-react|@\/|\.\/legal-links|\.\/nearby-explorer|\.\/public-zoom|\.\/entry-location|\.\/markdown-text|\.\/public-profile.module.css)/},args=>({path:args.path,namespace:'mock'}));build.onLoad({filter:/.*/,namespace:'mock'},args=>({contents:mocks[args.path]||'export const PublicPageView="PageView",LinkedDescription="Description",EntryComments="Comments",AudioPlayer="Audio",publicFieldLabels={},entryReferencePath=()=>"/",Image="Image",Volume2="Audio",FileText="File";',loader:'js'}))}}]});
 const location={href:'https://archive.test/?ansicht=oeffentlich&tab=zeitkarte'},scope={module:{exports:{}},cursor:0,states:[],effects:[],URL,window:{location,addEventListener(){},removeEventListener(){},history:{state:null,replaceState(_,__,url){location.href=new URL(url,location.href).href},pushState(_,__,url){location.href=new URL(url,location.href).href}}}};
 vm.runInNewContext(result.outputFiles[0].text,scope);
 function render(){scope.cursor=0;scope.effects=[];return scope.module.exports.PublicProfile({footer:{type:'LoginFooter',props:{}}})}
@@ -30,3 +31,5 @@ scope.states[6]={enabled:true,provider:'osm'};tree=render();assert.ok(nodes(tree
 console.log('PASS: directly linkable map/timeline tabs preserve login and GitHub footer; map view does not count as timeline view.');
 
 scope.states[6]={enabled:true,provider:'both',osmTitle:'Heute',ohmTitle:'Damals'};scope.states[0]='osm';tree=render();assert.equal(nodes(tree).filter(n=>n.type==='a'&&['Heutige Karte','Historische Karte','Zeitleiste'].includes(n.props.children)).length,3);let m=nodes(tree).find(n=>typeof n.type==='function'&&n.type.name==='TimeMap');assert.equal(m.props.provider,'osm');assert.equal(m.props.title,'Heute');nodes(tree).find(n=>n.type==='a'&&n.props.children==='Historische Karte').props.onClick({button:0,preventDefault(){}});tree=render();m=nodes(tree).find(n=>typeof n.type==='function'&&n.type.name==='TimeMap');assert.equal(m.props.provider,'ohm');assert.equal(m.props.title,'Damals');assert.equal(new URL(location.href).searchParams.get('tab'),'zeitkarte');
+
+const mapped=m.type(m.props);const iframe=nodes(mapped).find(n=>n.type==='iframe');assert.ok(iframe.props.src.includes('eingebettet=1&fluechtig=1'));assert.ok(!iframe.props.src.includes('lat='));assert.ok(!iframe.props.src.includes('lon='));

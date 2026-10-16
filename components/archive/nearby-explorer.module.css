@@ -1,0 +1,14 @@
+.tools{margin:0 0 16px;padding:16px;border:1px solid var(--border);border-radius:8px;background:var(--card);font:400 16px/1.6 Arial,Helvetica,sans-serif;overflow-wrap:anywhere}
+.actions{display:flex;align-items:end;flex-wrap:wrap;gap:12px;margin-top:12px}
+.actions button,.actions select{min-height:44px;font:inherit;border:1px solid var(--border);border-radius:6px;padding:8px 12px}
+.actions select{background:var(--card);color:var(--foreground);width:100%}
+.field{display:grid;gap:4px}
+.help{font:400 14px/1.6 Arial,Helvetica,sans-serif;color:var(--muted-foreground);margin:8px 0 0}
+.results{margin:16px 0 24px;font:400 16px/1.6 Arial,Helvetica,sans-serif;overflow-wrap:anywhere}
+.results h3{font:600 20px/1.4 Arial,Helvetica,sans-serif;margin:0 0 12px}
+.results ul{list-style:none;margin:0;padding:0}
+.results li{padding:12px 0;border-bottom:1px solid var(--border)}
+.results a{color:var(--primary);text-decoration:underline;text-underline-offset:3px}
+.results small{display:block;font:400 14px/1.6 Arial,Helvetica,sans-serif;color:var(--muted-foreground)}
+.actions :is(button,select):focus-visible,.results a:focus-visible{outline:2px solid var(--ring);outline-offset:3px}
+@media(max-width:650px){.actions{align-items:stretch}.actions button{flex:1 1 100%}.field{width:100%}}
