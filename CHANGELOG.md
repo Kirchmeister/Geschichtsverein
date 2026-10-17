@@ -1,5 +1,12 @@
 # Änderungen
 
+## [0.51.1] - 2026-10-17
+
+- PDF-Exportsteuerung im Archiv als zunächst eingeklappter Abschnitt nach dem Einstellungs-Muster; Auswahlkästchen auf Höhe der Datierung zentriert, auf schmalen Bildschirmen an deren erster Zeile.
+- Bilder im Beitrags-PDF zeigen nur noch Bild und Beschriftung, keine Bilddateinamen. Fehlende Bilder werden anhand ihrer Beschriftung bezeichnet.
+- PDF-Dateien heißen nach dem Beitragstitel. Für sichere Dateinamen werden Sonderzeichen bereinigt und lange Namen auf 160 UTF-8-Bytes gekürzt; gleichnamige Beiträge erhalten einen Zähler. Titel im Archiv und PDF bleiben vollständig erhalten. Unicode-Downloadnamen werden browsergerecht übermittelt.
+- Regulärer direkter Linux-Updatepfad von 0.51.0 mit Schema 21 freigegeben.
+
 ## [0.51.0] - 2026-10-17
 
 - Optionales öffentliches Kontaktformular mit privatem Empfänger, selbst gehostetem ALTCHA, begrenzten Anfragen und persistenter SMTP-Warteschlange. Rechtliche Kontaktadresse bleibt getrennt; technischer Datenschutzhinweis ergänzt.

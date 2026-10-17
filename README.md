@@ -103,6 +103,10 @@ Jedes neue Release enthält `docs/update-compatibility.json` mit unterstützten 
 
 Die aktuelle Policy unterstützt Linux-Stände ab 0.20.0 mit Schema 18/19, Backupformat 2 und gültigem Migrationsjournal. Repräsentative historische Schema-Prüfungen erfolgen für 0.20.0, 0.27.1, 0.32.0 und 0.34.0. Das ist keine Garantie für beliebige alte Installationen: unbekannte Ausgangsstände, fehlende Metadaten, geänderte Migrationsdateien oder fehlende Medien blockieren den Vorgang. Ein älterer Stand benötigt zunächst eine gesonderte Prüfung und einen ausdrücklich freigegebenen Migrationsweg.
 
+## Verbesserungen am PDF-Export ab 0.51.1
+
+Die Exportsteuerung im Archiv lässt sich wie die Einstellungen aufklappen und ist zunächst geschlossen. Auswahlkästchen stehen auf Höhe der Datierung. PDF-Bilder zeigen ihre Beschriftung ohne technischen Bilddateinamen. Einzel-PDFs und PDFs im ZIP werden nach dem Beitragstitel benannt; lange Dateinamen werden sicher gekürzt und gleiche Namen mit `(2)`, `(3)` usw. unterschieden. Der vollständige Beitragstitel bleibt erhalten; die bestehende Titelgrenze von 250 Zeichen muss dafür nicht geändert werden.
+
 ## Kontaktformular und PDF-Export ab 0.51.0
 
 - Unter **Einstellungen → Rechtliche Angaben** kann der Administrator das Kontaktformular aktivieren und eine getrennte interne Empfängeradresse festlegen. Voraussetzung sind SMTP und eine veröffentlichte Datenschutzerklärung. Das Formular ist über Impressum und Datenschutz erreichbar; die öffentliche rechtliche E-Mail-Adresse bleibt erhalten.

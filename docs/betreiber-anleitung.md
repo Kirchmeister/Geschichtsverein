@@ -20,6 +20,10 @@ Kontaktprüfungen, Begrenzungen und Versandwarteschlange gehören nicht in porta
 
 ### Beiträge als PDF exportieren
 
+Ab 0.51.1 ist „Beiträge als PDF exportieren“ im Archiv zunächst eingeklappt und wird über Titel und Pfeil geöffnet. Das Einklappen bewahrt Auswahl und Fortschritt. Auswahlkästchen stehen auf Höhe der Datierung. Im geöffneten Einzelbeitrag bleiben die Exportoptionen unmittelbar sichtbar.
+
+Einzel-PDFs und Beitrags-PDFs im ZIP erhalten den Beitragstitel als Dateinamen. Unzulässige Dateisystemzeichen werden ersetzt; der Namensstamm wird auf 160 UTF-8-Bytes gekürzt, bei gleichem Namen folgt `(2)`, `(3)` usw. Die Länge wird in Bytes begrenzt, damit auch Umlaute und andere Unicode-Zeichen auf üblichen Dateisystemen Platz haben. Der Titel im Archiv und im PDF wird nicht gekürzt; die bestehende Eingabegrenze von 250 Zeichen bleibt unverändert. Bilder im PDF zeigen nur Bild und Beschriftung, keinen technischen Bilddateinamen.
+
 Archivansicht öffnen, Filter setzen und Beiträge neben den Ergebniszeilen markieren. „Diese Ergebnisseite“ ersetzt die Auswahl durch die aktuelle Seite; „Alle Filtertreffer“ umfasst auch nicht sichtbare Seiten. „Alle zugänglichen Beiträge“ ignoriert Filter. Einzelne Treffer können danach wieder abgewählt werden. Beim Blättern bleibt die Auswahl bestehen; bei geändertem Filter wird sie aufgehoben. Ein Export ist auch aus der geöffneten Beitragsansicht möglich.
 
 „PDF-Vorschau“ zeigt einen Beispielbeitrag. Vor dem Start werden Anzahl und Stand bestätigt. Aktueller Bearbeitungsstand und veröffentlichte Fassung sind getrennte Optionen; bei letzterer werden nur freigegebene gespeicherte Fassungen verwendet. Nicht freigegebene Einzelmarkierungen werden nicht stillschweigend ersetzt. Textstand wird beim Vorbereiten eingefroren; Medien müssen beim Erstellen weiterhin verfügbar sein. Gastfelder gelten auch für Suche und PDF. Konto, Rolle, Feldfreigaben, Löschung und bei veröffentlichten Fassungen die Freigabe werden vor Verarbeitung/Download erneut geprüft. Bereits heruntergeladene Dateien können nicht zurückgerufen werden.

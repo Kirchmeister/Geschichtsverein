@@ -1,5 +1,9 @@
 .panel{font:16px/1.6 Arial,Helvetica,sans-serif;max-width:760px;overflow-wrap:anywhere}.form{display:grid;gap:16px;margin-top:24px}.form label{display:grid;gap:6px}.form :is(input,select,textarea,button){font:inherit;min-height:44px;border:1px solid var(--border);border-radius:6px;padding:10px 12px}.form :is(input,select,textarea){background:var(--card);color:var(--foreground);width:100%}.form textarea{min-height:180px;resize:vertical}.help{font-size:14px;color:var(--muted-foreground)}.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.trap{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}.form :focus-visible{outline:2px solid var(--ring);outline-offset:3px}.status{padding:16px;border:1px solid var(--border);border-radius:8px;background:var(--muted)}
 
-.selectionRow{display:flex;gap:8px;align-items:flex-start;min-width:0}.selectionRow>button{flex:1;min-width:0}.selectionCheck{display:flex;align-items:center;justify-content:center;min-height:44px;min-width:44px}.selectionCheck input{width:20px;height:20px;accent-color:var(--primary)}
+.selectionRow{display:flex;gap:8px;align-items:center;min-width:0}.selectionRow>button{flex:1;min-width:0}.selectionCheck{display:flex;align-items:center;justify-content:center;min-height:44px;min-width:44px}.selectionCheck input{width:20px;height:20px;accent-color:var(--primary)}
+/* At the record's stacked breakpoint the date is the first line after 22px padding.
+   Its 1.125rem/1.6 line box and the 44px touch target share the same centre. */
+@media(max-width:1150px){.selectionCheck{align-self:flex-start;margin-top:calc(1.125rem * 1.6 / 2)}}
+.exportPanel{margin-top:24px}.exportPanel .form{margin-top:0}
 
 .form input[type=checkbox]{width:20px;min-height:20px;padding:0;accent-color:var(--primary)}

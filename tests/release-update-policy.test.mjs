@@ -6,13 +6,13 @@ import {directCompatibility,updatePath} from '../server/update-compatibility.mjs
 const version=JSON.parse(await fs.readFile('version.json','utf8'));
 const policy=JSON.parse(await fs.readFile('docs/update-compatibility.json','utf8'));
 const target={tag:'v'+version.version,prerelease:version.prerelease,draft:false,commit:'a'.repeat(40),branchVerified:true,version,compatibility:policy};
-for(const source of ['0.50.0','0.49.0','0.49.1','0.49.2','0.49.3']){
- const current={version:source,databaseSchemaVersion:20,backupFormatVersion:2,prerelease:false};
+for(const source of ['0.51.0','0.50.0','0.49.0','0.49.1','0.49.2','0.49.3']){
+ const current={version:source,databaseSchemaVersion:source==='0.51.0'?21:20,backupFormatVersion:2,prerelease:false};
  assert.equal(directCompatibility(current,target,'0.46.1').ok,true);
  assert.deepEqual(updatePath(current,target,[target],{serviceVersion:'0.46.1'}).path,[target.tag]);
  const broken={...target,compatibility:{...policy,supportedSources:policy.supportedSources.map(s=>({...s,maximumVersion:'0.48.1'}))}};
  assert.equal(directCompatibility(current,broken,'0.46.1').ok,false);
- for(const bad of [{...current,databaseSchemaVersion:21},{...current,backupFormatVersion:3},{...current,version:'0.19.0'}])assert.equal(directCompatibility(bad,target,'0.46.1').ok,false);
+ for(const bad of [{...current,databaseSchemaVersion:22},{...current,backupFormatVersion:3},{...current,version:'0.19.0'}])assert.equal(directCompatibility(bad,target,'0.46.1').ok,false);
  assert.equal(directCompatibility(current,target,'0.34.0').ok,false);
 }
 // The release check must fail before publication when source coverage regresses.
