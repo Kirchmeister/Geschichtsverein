@@ -1,3 +1,6 @@
+import {solveChallenge} from 'altcha-lib';
+import {deriveKey} from 'altcha-lib/algorithms/sha';
+import {exportRoot} from '../server/export-jobs.mjs';
 import {authenticator} from './webauthn-fixture.mjs';
 import {welcomeNotice} from '../server/welcome-notices.mjs';
 import assert from 'node:assert/strict';
@@ -283,6 +286,68 @@ console.log('PASS: authenticated Linux publication request creates no system mes
  for(const target of ['imprint','privacy'])legalState=await (await request('/api/legal','admin',{action:'publish-'+target,expectedRevision:legalState.revision,draft:legalState.draft,confirmation:'RECHTLICHE ANGABEN VERÖFFENTLICHEN'})).json();
  for(const url of ['/impressum','/datenschutz','/anmelden']){const page=await request(url);assert.equal(page.status,200);const html=await page.text();assert.ok(html.includes('href="/impressum"'));assert.ok(html.includes('href="/datenschutz"'))}
  console.log('PASS: legal manager/admin settings, private drafts, public projection, confirmation/completeness/stale/origin/preview guards, independent snapshots and anonymous legal/login pages.');
+
+
+ // Contact is opt-in, destination stays private, and the browser widget's real v2 payload is accepted once.
+ assert.deepEqual(await (await request('/api/contact')).json(),{enabled:false});
+ for(const role of ['manager','user','guest',null])assert.equal((await request('/api/contact?settings=1',role)).status,403);
+ const contactBefore=await (await request('/api/contact?settings=1','admin')).json();
+ assert.equal((await request('/api/contact','manager',{action:'settings',enabled:true,recipient:'private@example.test',expected:'{}'})).status,403);
+ assert.equal((await request('/api/contact','admin',{action:'settings',enabled:true,recipient:'private@example.test',expected:JSON.stringify({enabled:contactBefore.enabled,recipient:contactBefore.recipient})})).status,200);
+ const contactDb=new DatabaseSync(path.join(root,'archive.sqlite')),savedSystem=contactDb.prepare("SELECT data FROM archive_settings WHERE key='system_settings'").get().data;
+ const contactSystem=JSON.parse(savedSystem);contactSystem.smtp={...contactSystem.smtp,host:'127.0.0.1',from:'archive@example.test',username:'',password:''};
+ contactDb.prepare("UPDATE archive_settings SET data=? WHERE key='system_settings'").run(JSON.stringify(contactSystem));
+ assert.deepEqual(await (await request('/api/contact')).json(),{enabled:true});
+ const challenge=await (await request('/api/contact/challenge')).json(),solution=await solveChallenge({challenge,deriveKey}),altcha=Buffer.from(JSON.stringify({challenge:{parameters:challenge.parameters,signature:challenge.signature},solution})).toString('base64');
+ const contactMessage={action:'send',name:'Test',email:'reply@example.test',topic:'Datenschutz',message:'HTTP Kontaktprüfung',website:'',altcha,to:'attacker@example.test'};
+ assert.equal((await request('/api/contact',null,contactMessage)).status,202);
+ assert.equal((await request('/api/contact',null,contactMessage)).status,400);
+ const queued=JSON.parse(contactDb.prepare("SELECT data FROM archive_contact_outbox WHERE state='pending'").get().data);
+ assert.equal(queued.to,'private@example.test');assert.equal(queued.replyTo,'reply@example.test');
+ assert.doesNotMatch(JSON.stringify(await (await request('/api/contact')).json()),/private@example/);
+ assert.match((await (await request('/api/legal?public=1')).json()).privacy.contactNotice,/ALTCHA/);
+ assert.equal((await request('/kontakt')).status,200);assert.equal((await request('/api/contact/run',null,{})).status,403);
+ contactDb.prepare("UPDATE archive_settings SET data=? WHERE key='system_settings'").run(savedSystem);
+ contactDb.prepare('DELETE FROM archive_contact_outbox').run();contactDb.close();
+ console.log('PASS: public contact opt-in, private admin-only recipient, real widget proof accepted once, private fixed delivery, privacy supplement, guarded runner.');
+
+ // Snapshot selection, filtering across pages, guest projection and download revalidation.
+ const exportIds=[crypto.randomUUID(),crypto.randomUUID()];
+ for(const [i,id] of exportIds.entries()){const saved=await request('/api/entries','user',{id,title:'PDF-EXPORT-FIXTURE '+i,category:'Ereignis',period:'1900',start:'1899',end:'1901',place:'Testort',description:'PRIVATE-EXPORT-TEXT',sources:'Private Quelle',uncertainty:'',rights:'Vereinsarchiv',tags:'Export',status:'Offen',files:[]});assert.equal(saved.status,200,await saved.clone().text())}
+ assert.equal((await request('/api/exports',null,{action:'create',scope:'selected',ids:[exportIds[0]]})).status,401);
+ let exported=await request('/api/exports','user',{action:'create',scope:'filtered',query:'suche=PDF-EXPORT-FIXTURE&limit=1&seite=2',mode:'current'});assert.equal(exported.status,201,await exported.clone().text());let exportStatus=await exported.json();assert.equal(exportStatus.total,2);
+ assert.equal((await request('/api/exports?id='+exportStatus.id,'admin')).status,400);
+ for(let i=0;i<2;i++){exported=await request('/api/exports','user',{action:'advance',id:exportStatus.id});assert.equal(exported.status,200,await exported.clone().text());exportStatus=await exported.json()}
+ assert.equal(exportStatus.state,'complete');const zip=await request('/api/exports?id='+exportStatus.id+'&download=1','user');assert.equal(zip.headers.get('content-type'),'application/zip');assert.equal(Buffer.from(await zip.arrayBuffer()).subarray(0,2).toString(),'PK');
+ assert.equal((await request('/api/exports','user',{action:'cancel',id:exportStatus.id})).status,200);
+ exported=await request('/api/exports','user',{action:'create',scope:'filtered',query:'suche=PDF-EXPORT-FIXTURE',excluded:[exportIds[1]]});exportStatus=await exported.json();assert.equal(exportStatus.total,1);
+ exportStatus=await (await request('/api/exports','user',{action:'advance',id:exportStatus.id})).json();assert.equal(exportStatus.state,'complete');
+ const single=await request('/api/exports?id='+exportStatus.id+'&download=1','user');assert.equal(single.headers.get('content-type'),'application/pdf');assert.equal(Buffer.from(await single.arrayBuffer()).subarray(0,4).toString(),'%PDF');
+ const revokeDb=new DatabaseSync(path.join(root,'archive.sqlite'));revokeDb.prepare('UPDATE entries SET deleted=1 WHERE id=?').run(exportIds[0]);assert.equal((await request('/api/exports?id='+exportStatus.id+'&download=1','user')).status,400);revokeDb.prepare('UPDATE entries SET deleted=0 WHERE id=?').run(exportIds[0]);
+ await request('/api/exports','user',{action:'cancel',id:exportStatus.id});
+ const guestBefore=revokeDb.prepare("SELECT data FROM archive_settings WHERE key='guest_fields'").get().data;revokeDb.prepare("UPDATE archive_settings SET data=? WHERE key='guest_fields'").run(JSON.stringify(['title']));
+ exported=await request('/api/exports','guest',{action:'create',scope:'selected',ids:[exportIds[0]]});assert.equal(exported.status,201,await exported.clone().text());exportStatus=await exported.json();
+ const projected=JSON.parse(await fs.readFile(path.join(exportRoot(),exportStatus.id,'entries.json'),'utf8'))[0];assert.equal(projected.title,'PDF-EXPORT-FIXTURE 0');assert.equal(projected.description,'');assert.equal(projected.sources,'');assert.equal(projected.start,'');
+ revokeDb.prepare("UPDATE archive_settings SET data=? WHERE key='guest_fields'").run(JSON.stringify(['title','description']));assert.equal((await request('/api/exports?id='+exportStatus.id,'guest')).status,400);
+ revokeDb.prepare("UPDATE archive_settings SET data=? WHERE key='guest_fields'").run(JSON.stringify(['title']));await request('/api/exports','guest',{action:'cancel',id:exportStatus.id});
+ revokeDb.prepare("UPDATE archive_settings SET data=? WHERE key='guest_fields'").run(guestBefore);revokeDb.close();
+ assert.equal((await request('/api/exports','user',{action:'create',scope:'selected',ids:[exportIds[0]],mode:'published'})).status,400);
+
+ // Freeze the approved historical snapshot, not later unpublished editing changes.
+ let exportEntry=await (await request('/api/entries?id='+exportIds[0],'user')).json();
+ // The list endpoint returns an array; obtain the matching record without assuming a detail shape.
+ if(Array.isArray(exportEntry))exportEntry=exportEntry.find(e=>e.id===exportIds[0]);
+ const requestedExport=await (await request('/api/entries','user',{...exportEntry,description:'APPROVED-EXPORT-TEXT',requestPublication:true})).json();
+ const exportPublication=(await (await request('/api/publication?id='+exportIds[0],'manager')).json())[0];
+ assert.equal((await request('/api/publication','manager',{action:'approve',id:exportIds[0],updated:requestedExport.updated,version:exportPublication.requestedVersion})).status,200);
+ const approvedExport=await (await request('/api/entries','user')).json();
+ exported=await request('/api/exports','user',{action:'create',scope:'selected',ids:[exportIds[0]],mode:'published'});assert.equal(exported.status,201,await exported.clone().text());exportStatus=await exported.json();
+ const frozenExport=JSON.parse(await fs.readFile(path.join(exportRoot(),exportStatus.id,'entries.json'),'utf8'))[0];assert.equal(frozenExport.description,'APPROVED-EXPORT-TEXT');
+ const updatedExport=await request('/api/entries','user',{...approvedExport.find(e=>e.id===exportIds[0]),description:'LATER-PRIVATE-EDIT'});assert.equal(updatedExport.status,200);
+ assert.equal((await request('/api/exports','user',{action:'advance',id:exportStatus.id})).status,400,'editing withdraws approval and must stop the frozen published job');
+ await request('/api/exports','user',{action:'cancel',id:exportStatus.id});
+ exported=await request('/api/exports','user',{action:'create',scope:'all',query:'suche=NO-MATCH-PLEASE'});assert.equal(exported.status,201,await exported.clone().text());exportStatus=await exported.json();assert.ok(exportStatus.total>=2);await request('/api/exports','user',{action:'cancel',id:exportStatus.id});
+ console.log('PASS: real packaged PDF/ZIP, filter-wide selection independent of page, exclusions, owner isolation, guest projection/revocation, unpublished snapshot rejection and deleted-entry download guard.');
 
  const rawGet=session=>fetch(origin+'/api/session',{headers:{Cookie:session}}),rawAuth=(session,body,extra={})=>fetch(origin+'/api/auth',{method:'POST',headers:{Cookie:session,Origin:origin,'Content-Type':'application/json',...extra},body:JSON.stringify(body)});
  const copiedSession=cookie('user'),otherSession=cookie('user'),independentAdmin=cookie('admin');assert.equal((await (await rawGet(copiedSession)).json()).canLogout,true);assert.equal((await rawAuth(copiedSession,{action:'logout'})).status,200);assert.equal((await (await rawGet(copiedSession)).json()).canLogout,false);assert.equal((await (await rawGet(otherSession)).json()).canLogout,true);

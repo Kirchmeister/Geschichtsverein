@@ -2,6 +2,36 @@
 
 **Tipp für den Einstieg: Lassen Sie sich die Einrichtung anhand dieses Repositorys von ChatGPT oder einer anderen KI begleiten.** Sie müssen nicht alle Linux- und Docker-Befehle bereits kennen. Mit SSH-Zugriff, einer passenden Serverumgebung und kleinen, überprüften Schritten können Sie die Einrichtung nachvollziehen. Eine KI kann Ausgaben erklären und Befehle an Ihren Server anpassen; ihre Vorschläge müssen dennoch geprüft werden. Das Projekt befindet sich weiterhin in Entwicklung. Beginnen Sie mit einer getrennten Testinstallation.
 
+## Kontaktformular und PDF-Export ab 0.51.0
+
+### Kontaktformular einrichten
+
+Das Formular ist nach dem Update ausgeschaltet. Administratoren finden es unter Einstellungen → Rechtliche Angaben im eigenen Abschnitt „Kontaktformular“. Zuerst SMTP mit gültigem Absender einrichten und testen, dann eine interne Empfängeradresse eintragen und aktivieren. Eine veröffentlichte Datenschutzerklärung ist Pflicht. Bei fehlender Voraussetzung erscheint die öffentliche Kontaktadresse als Alternative. Verwalter können den internen Empfänger nicht lesen oder ändern.
+
+Impressum und Datenschutz verlinken auf `/kontakt`. Name ist optional; Antwortadresse, Anliegen und Nachricht sind erforderlich. Keine Dateianhänge, keine Bestätigungsmails an frei eingegebene Adressen. Der interne Empfänger wird ausschließlich auf dem Server verwendet. Das ersetzt nicht die weiterhin getrennte öffentliche rechtliche Kontaktadresse: Das Formular wird ergänzend angeboten, die Pflichtangaben nicht automatisch entfernt.
+
+Der technische Datenschutzabschnitt „Kontaktformular“ wird zusätzlich zum unveränderten gespeicherten Text angezeigt und ist in der Vorschau sichtbar. Prüfen Sie den gesamten Text für Ihren Betrieb, besonders Rechtsgrundlage, Hosting-/Mail-Empfänger und Aufbewahrung im tatsächlichen Postfach. Der technische Hinweis ist keine rechtliche Freigabe. Betreiber können die Ergänzung vor Aktivierung prüfen.
+
+ALTCHA wird vollständig mitgeliefert und ohne fremden CAPTCHA-Dienst ausgeführt. Es ist ein Rechennachweis, kein sicherer Menschennachweis. Hinzu kommen Honeypot, einmalige fünf Minuten gültige Nachweise und Mengenbegrenzungen (pro Quelle 20 Prüfungen und acht Sendeversuche je 15 Minuten; globale Grenzen schützen Speicher und Warteschlange). Geteilte Netze können dieselbe Begrenzung teilen. Die Quelladresse wird für diese Begrenzungen nur als täglich wechselnder, geheimnisgebundener Hash abgelegt; vorhandene Webserver-/Proxyprotokolle sind separat zu betrachten. Kein absoluter Bot-Schutz.
+
+Angenommene Nachrichten landen in einer persistenten Versandwarteschlange. Der vorhandene Linux-Hintergrundlauf prüft sie etwa minütlich, mit höchstens fünf Versuchen und steigenden Wartezeiten. Die Administratoransicht zeigt Status ohne Nachrichtentext; endgültig fehlgeschlagene Sendungen können erneut angestoßen werden. Eine Annahme ist noch keine Zustellbestätigung. Nach erfolgreichem SMTP-Versand werden die Inhalte sofort entfernt, der Status nach einem Tag. Alle anderen Warteschlangeneinträge spätestens nach sieben Tagen beim nächsten Hintergrundlauf. Bei unterbrochenem Betrieb erfolgt die Bereinigung nach Neustart. Inhalte sind in der normalen geschützten SQLite-Ablage gespeichert, nicht separat verschlüsselt. Das Empfängerpostfach hat seine eigene Löschregelung. Unklare SMTP-Bestätigungen können bei Wiederholung zu Doppelzustellungen führen.
+
+Kontaktprüfungen, Begrenzungen und Versandwarteschlange gehören nicht in portable Archivsicherungen. Beim portablen Import wird die Kontaktkonfiguration deaktiviert und der interne Empfänger geleert; danach bewusst neu einrichten. Eine rohe vollständige Datenträger-/Rollback-Sicherung kann ausstehende Sendungen wiederherstellen und damit erneut versenden. In Sicherungen bereits enthaltene Daten werden durch die laufende Bereinigung nicht nachträglich entfernt.
+
+### Beiträge als PDF exportieren
+
+Archivansicht öffnen, Filter setzen und Beiträge neben den Ergebniszeilen markieren. „Diese Ergebnisseite“ ersetzt die Auswahl durch die aktuelle Seite; „Alle Filtertreffer“ umfasst auch nicht sichtbare Seiten. „Alle zugänglichen Beiträge“ ignoriert Filter. Einzelne Treffer können danach wieder abgewählt werden. Beim Blättern bleibt die Auswahl bestehen; bei geändertem Filter wird sie aufgehoben. Ein Export ist auch aus der geöffneten Beitragsansicht möglich.
+
+„PDF-Vorschau“ zeigt einen Beispielbeitrag. Vor dem Start werden Anzahl und Stand bestätigt. Aktueller Bearbeitungsstand und veröffentlichte Fassung sind getrennte Optionen; bei letzterer werden nur freigegebene gespeicherte Fassungen verwendet. Nicht freigegebene Einzelmarkierungen werden nicht stillschweigend ersetzt. Textstand wird beim Vorbereiten eingefroren; Medien müssen beim Erstellen weiterhin verfügbar sein. Gastfelder gelten auch für Suche und PDF. Konto, Rolle, Feldfreigaben, Löschung und bei veröffentlichten Fassungen die Freigabe werden vor Verarbeitung/Download erneut geprüft. Bereits heruntergeladene Dateien können nicht zurückgerufen werden.
+
+Ein Beitrag liefert PDF. Mehrere liefern ZIP mit einem PDF je erfolgreich verarbeitetem Beitrag sowie Inhaltsverzeichnis als PDF und TXT. Enthalten sind Titel, Referenz, verfügbare Metadaten, Texte, Quellen, Rechte, Bilder/Bildbeschriftungen, Seitenzahlen und Exportdatum. Markdown wird druckgerecht vereinfacht; Tabellen werden als Textzeilen gesetzt. Externe Markdown-Bilder werden nicht aus dem Internet geladen. Audio, Dokumente und Original-PDFs werden nur mit Name/Typ aufgeführt, nicht eingebettet oder beigelegt. Fehlende Bilder erscheinen als Hinweis; fehlgeschlagene Beiträge stehen in der Fehlerübersicht. Originalrechte gelten weiter. Der Export ist ausdrücklich kein vollständiges Backup.
+
+Den Tab bis zum Abschluss geöffnet lassen. Fortschritt, Abbrechen und Download werden angezeigt; Abbruch/Schließen löscht den Auftrag. Nach Neuladen gibt es keine automatische Wiederaufnahme. Temporäre Aufträge liegen geschützt im temporären Verzeichnis des Anwendungscontainers, nicht in einer öffentlichen URL, und verfallen nach einer Stunde ohne Verarbeitung. Der bestehende Hintergrundlauf bereinigt sie; Container-Neustart kann sie vorher verlieren. Heruntergeladene Dateien bleiben in Verantwortung des Nutzers.
+
+Grenzen: 5000 Beiträge und 32 MB gespeicherte Textdaten pro Auftrag, maximal zwei Aufträge pro Konto/zehn insgesamt, 200 PDF-Seiten und 40 MB pro Beitrag, 512 MB erzeugte Beitragsdateien pro Auftrag (ZIP benötigt zusätzlich Platz). Bilder werden aus Dateien bis 10 MB und maximal 40 Millionen Pixeln druckgerecht reduziert. Große Archive in Teilmengen exportieren und freien temporären Speicher überwachen. Abgestürzte Aufträge gegebenenfalls abbrechen und neu starten. Für wirklich vollständige Sicherungen weiter die Archiv-Backupfunktion verwenden.
+
+Schema 21 wird durch die normale Linux-Migration eingerichtet. Kein separater CAPTCHA-Dienst und keine Änderung anderer Serverdienste notwendig. Vor Update Sicherung erstellen; nach Update SMTP, Datenschutzhinweis und Testnachricht sowie einen kleinen PDF-/ZIP-Export prüfen.
+
 ## Ein Prompt zum Kopieren
 
 Kopieren Sie diesen Text in ChatGPT oder eine andere KI. Wenn die KI das Repository nicht lesen kann, geben Sie ihr die relevanten öffentlichen Anleitungsabschnitte – keine vollständigen Serverkonfigurationen.

@@ -7,6 +7,12 @@
 
 > **Wichtig:** Dieses Dokument beschreibt den gemeinsamen Zielstandard. Bestehende Abweichungen werden hier erfasst, aber durch die Einführung der Designreferenz **nicht** geändert. Die Referenzseite ist eine Sichtprobe; sie ersetzt keine Prüfung sämtlicher Bildschirmgrößen im tatsächlich betriebenen Archiv.
 
+## Ergänzung 0.51.0: Kontakt und Export
+
+Kontaktformular und Exportsteuerung verwenden bestehende Dialoge/Bestätigungen und SettingsPanel, semantische Farbtokens, 16-px-Formularschrift, 14-px-Hilfetexte, mindestens 44-px-Bedienelemente und sichtbaren Fokus. Die Auswahl steht neben statt innerhalb des Beitragsbuttons. Keine globalen CSS-Overrides. Das selbst gehostete ALTCHA-Widget erhält Schrift und semantische Farbtokens der Anwendung.
+
+Begründete Druckausnahme: PDFs verwenden lokal eingebettete, mit Lizenz mitgelieferte DejaVu Serif/Sans statt Georgia/Arial, damit Linux-Installationen unabhängig von proprietären Systemschriften Umlaute reproduzierbar ausgeben. A4-Druckgrößen (24 pt Titel, 13 pt Abschnitte, 10 pt Text, 9 pt Metadaten, 8 pt Fußzeile) sind bewusst keine Bildschirmgrößen. Ruhige grüne/dunkle Druckfarben sind fest und unabhängig vom Bildschirm-Farbschema; Hierarchie und großzügiger Satzspiegel folgen dem redaktionellen GADS-Prinzip.
+
 ## 1. Ziel und Grundsatz
 
 Das ruhige, historisch-editoriale Erscheinungsbild des Archivs bleibt erhalten: großzügige Flächen, Serifenschrift für große redaktionelle Überschriften, sachliche serifenlose Schrift in Formularen und Bedienelementen, feine Trennlinien und dezente Farben. Die vorhandene Farbwahl bleibt erhalten.

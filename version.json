@@ -1,6 +1,6 @@
 {
-  "version": "0.50.0",
-  "databaseSchemaVersion": 20,
+  "version": "0.51.0",
+  "databaseSchemaVersion": 21,
   "backupFormatVersion": 2,
   "prerelease": false,
   "codeCommit": null

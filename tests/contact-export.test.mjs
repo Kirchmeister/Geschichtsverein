@@ -1,0 +1,34 @@
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import fs from 'node:fs/promises';
+import {randomUUID} from 'node:crypto';
+import {solveChallenge} from 'altcha-lib';
+import {deriveKey} from 'altcha-lib/algorithms/sha';
+import sharp from 'sharp';
+import {contactService,deliverContact,cleanContact} from '../server/contact-service.mjs';
+import {entryPdf} from '../server/entry-pdf.mjs';
+import {createExport,exportJob,advanceExport,cancelExport,exportFilename} from '../server/export-jobs.mjs';
+const db=new DatabaseSync(':memory:');db.exec(await fs.readFile('drizzle/0021_contact.sql','utf8'));
+const secret='a'.repeat(64);let time=Math.floor(Date.now()/1000);const service=contactService(db,{secret,source:'127.0.0.1',now:()=>time});
+async function proof(s=service){const challenge=await s.challenge(),solution=await solveChallenge({challenge,deriveKey});return Buffer.from(JSON.stringify({challenge,solution})).toString('base64')}
+const input={name:'Besucher',email:'reply@example.test',topic:'Datenschutz',message:'Eine Frage zum Archiv.',website:''};
+const token=await proof();assert.deepEqual(await service.submit({...input,altcha:token,to:'attacker@example.test'},'private@example.test'),{accepted:true});await assert.rejects(()=>service.submit({...input,altcha:token},'private@example.test'),/Spamschutz/);
+const tampered=JSON.parse(Buffer.from(await proof(),'base64'));tampered.challenge.parameters.cost=999999999;await assert.rejects(()=>service.submit({...input,altcha:Buffer.from(JSON.stringify(tampered)).toString('base64')},'private@example.test'),/ungültig/);
+await assert.rejects(async()=>service.submit({...input,email:'bad\r\nBcc:evil@example.test',altcha:await proof()},'private@example.test'));await assert.rejects(()=>service.submit({...input,website:'spam',altcha:'x'},'private@example.test'));
+const sent=[];let release;const waiting=new Promise(resolve=>release=resolve);const one=deliverContact(db,{ready:true,now:()=>time,send:async(...args)=>{sent.push(args);await waiting}});await new Promise(resolve=>setImmediate(resolve));await deliverContact(db,{ready:true,now:()=>time,send:async()=>{throw Error('parallel send forbidden')}});assert.equal(sent.length,1);release();await one;assert.equal(sent[0][0],'private@example.test');assert.equal(sent[0][3],'reply@example.test');assert.equal(db.prepare('SELECT data FROM archive_contact_outbox').get().data,'{}');
+await service.submit({...input,altcha:await proof()},'private@example.test');await deliverContact(db,{ready:true,now:()=>time,send:async()=>{throw Error('SMTP fail')}});assert.equal(db.prepare("SELECT count(*) n FROM archive_contact_outbox WHERE state='retry'").get().n,1);time+=1800;await deliverContact(db,{ready:true,now:()=>time,send:async()=>{}});assert.equal(db.prepare("SELECT count(*) n FROM archive_contact_outbox WHERE state='sent'").get().n,2);
+const expiring=await proof();time+=400;await assert.rejects(()=>service.submit({...input,altcha:expiring},'private@example.test'),/abgelaufen/);cleanContact(db,time);assert.equal(db.prepare('SELECT count(*) n FROM archive_contact_challenges').get().n,0);
+const limited=contactService(db,{secret,source:'different',now:()=>time});for(let i=0;i<20;i++)await limited.challenge();await assert.rejects(()=>limited.challenge(),e=>e.status===429&&e.retryAfter>0);time+=901;await limited.challenge();assert.ok(db.prepare('SELECT count(*) n FROM archive_contact_limits').get().n<10);db.close();
+const png=await sharp({create:{width:1200,height:500,channels:3,background:'#dae1d2'}}).png().toBuffer();
+const example={id:randomUUID(),reference:'BK-2345-6789-ABCD',title:'Kirche und Ortsgeschichte – Äöü ß',period:'Um 1850',start:'1849',end:'1851',place:'Testort',description:'## Geschichte\n\nEin **historischer** Beitrag mit [Quelle](https://example.test).\n\n| Jahr | Ereignis |\n|---|---|\n| 1850 | Umbau |',fieldFormats:{description:'markdown'},sources:'Vereinsarchiv, Mappe 3',rights:'Nur zur Vereinsarbeit',files:[{key:randomUUID(),name:'Kirche.png',type:'image/png',caption:'Blick auf die Kirche'},{key:randomUUID(),name:'Interview.mp3',type:'audio/mpeg'},{key:randomUUID(),name:'Quelle.pdf',type:'application/pdf'}]};
+const pdf=await entryPdf(example,{loadImage:async()=>png,exportedAt:'2026-10-17T10:00:00Z'});assert.equal(pdf.buffer.subarray(0,4).toString(),'%PDF');assert.equal(pdf.warnings.length,0);await fs.mkdir('../tmp/pdfs',{recursive:true});await fs.writeFile('../tmp/pdfs/export-layout.pdf',pdf.buffer);
+const missing=await entryPdf(example);assert.equal(missing.warnings.length,1);
+const owner=randomUUID(),contexts=[];try{
+ const job=await createExport(owner,'user',null,[example],{brand:'Testverein',mode:'current'});let ctx=await exportJob(job.id,owner,'user',null);contexts.push(ctx);await assert.rejects(()=>exportJob(job.id,'other','user',null));await assert.rejects(()=>exportJob(job.id,owner,'guest',['title']));
+ let status=await advanceExport(ctx,{loadImage:async()=>png});assert.equal(status.state,'complete');assert.ok(exportFilename(ctx.job).endsWith('.pdf'));assert.equal((await fs.readFile(ctx.dir+'/'+exportFilename(ctx.job))).subarray(0,4).toString(),'%PDF');
+ const multi=await createExport(owner,'user',null,[example,{...example,id:randomUUID(),reference:'BK-2345-6789-ABCE',title:'Zweiter Beitrag'}],{brand:'Testverein'});ctx=await exportJob(multi.id,owner,'user',null);contexts.push(ctx);status=await advanceExport(ctx,{loadImage:async()=>png});assert.equal(status.done,1);ctx=await exportJob(multi.id,owner,'user',null);status=await advanceExport(ctx,{loadImage:async()=>null});assert.equal(status.state,'complete');assert.equal(status.files,2);assert.ok(status.warnings.length>0);assert.equal((await fs.readFile(ctx.dir+'/Archivexport.zip')).subarray(0,2).toString(),'PK');assert.ok((await fs.readFile(ctx.dir+'/Inhaltsverzeichnis.txt','utf8')).includes('Zweiter Beitrag'));
+ await cancelExport(contexts.shift());await cancelExport(contexts.shift());
+ const failed=await createExport(owner,'guest',['title'],[example],{brand:'Testverein'});ctx=await exportJob(failed.id,owner,'guest',['title']);contexts.push(ctx);status=await advanceExport(ctx,{validate:()=>{throw Error('revoked')},loadImage:async()=>png});assert.equal(status.state,'failed');assert.equal(status.errors.length,1);
+ await assert.rejects(()=>exportJob('../unsafe',owner,'user',null));await fs.utimes(ctx.dir,new Date(0),new Date(0));await assert.rejects(()=>exportJob(ctx.job.id,owner,'guest',['title']),/abgelaufen/);
+}finally{for(const ctx of contexts)await cancelExport(ctx).catch(()=>{})}
+console.log('PASS: real ALTCHA solve/replay/expiry/tamper checks, bounded rate limits, fixed private recipient, SMTP leases/retries and content deletion; rendered PDFs with images/Markdown/media refs, private scoped jobs, per-item progress, partial warnings, PDF/ZIP/index, cancellation and expiry.');

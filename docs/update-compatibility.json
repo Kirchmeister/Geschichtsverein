@@ -5,7 +5,7 @@
   "supportedSources": [
     {
       "minimumVersion": "0.20.0",
-      "maximumVersion": "0.49.3",
+      "maximumVersion": "0.50.0",
       "minimumSchema": 18,
       "maximumSchema": 20,
       "backupFormatVersion": 2
@@ -20,7 +20,8 @@
     "0.49.0",
     "0.49.1",
     "0.49.2",
-    "0.49.3"
+    "0.49.3",
+    "0.50.0"
   ],
   "note": "Linux mit gültigem Migrationsjournal. Unbekannte ältere Ausgangsstände sind gesperrt. Vor jedem Update wird die konkrete Datenablage isoliert migriert und geprüft."
 }

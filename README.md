@@ -103,6 +103,14 @@ Jedes neue Release enthält `docs/update-compatibility.json` mit unterstützten 
 
 Die aktuelle Policy unterstützt Linux-Stände ab 0.20.0 mit Schema 18/19, Backupformat 2 und gültigem Migrationsjournal. Repräsentative historische Schema-Prüfungen erfolgen für 0.20.0, 0.27.1, 0.32.0 und 0.34.0. Das ist keine Garantie für beliebige alte Installationen: unbekannte Ausgangsstände, fehlende Metadaten, geänderte Migrationsdateien oder fehlende Medien blockieren den Vorgang. Ein älterer Stand benötigt zunächst eine gesonderte Prüfung und einen ausdrücklich freigegebenen Migrationsweg.
 
+## Kontaktformular und PDF-Export ab 0.51.0
+
+- Unter **Einstellungen → Rechtliche Angaben** kann der Administrator das Kontaktformular aktivieren und eine getrennte interne Empfängeradresse festlegen. Voraussetzung sind SMTP und eine veröffentlichte Datenschutzerklärung. Das Formular ist über Impressum und Datenschutz erreichbar; die öffentliche rechtliche E-Mail-Adresse bleibt erhalten.
+- Selbst gehostetes ALTCHA, Einmalnachweise, Honeypot und Mengenbegrenzungen erschweren Spam ohne externe CAPTCHA-Anbieter. SMTP-Warteschlange mit Wiederholungen und administrativer Statusanzeige; keine Besucher-Anhänge oder automatischen Bestätigungsmails.
+- Im Archiv Beiträge mit Häkchen auswählen: einzelne Ergebnisse, alle Filtertreffer oder alle zugänglichen Beiträge. Auswahl bleibt beim Blättern erhalten und wird bei Filterwechsel aufgehoben. Ein Beitrag ergibt PDF, mehrere ergeben ZIP mit Einzel-PDFs und Inhaltsverzeichnis (PDF/TXT). Auch direkt aus einem geöffneten Beitrag verfügbar.
+- Vorschau sowie Wahl zwischen aktuellem Bearbeitungsstand und veröffentlichter Fassung. Bilder und Beschriftungen sind eingebettet; Audio und Originalanhänge werden aufgelistet, nicht mitgeliefert. Export ist keine Sicherung. Rechte und Gastfelder werden berücksichtigt.
+- Details zu Einrichtung, Datenschutz, Grenzen und Aufbewahrung: [Betriebsanleitung](docs/betreiber-anleitung.md#kontaktformular-und-pdf-export-ab-0510).
+
 ## Funktionen
 
 - Admin, Verwalter, Nutzer und Gäste sowie öffentliche Ansicht

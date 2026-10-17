@@ -6,7 +6,7 @@ import {directCompatibility,updatePath} from '../server/update-compatibility.mjs
 const version=JSON.parse(await fs.readFile('version.json','utf8'));
 const policy=JSON.parse(await fs.readFile('docs/update-compatibility.json','utf8'));
 const target={tag:'v'+version.version,prerelease:version.prerelease,draft:false,commit:'a'.repeat(40),branchVerified:true,version,compatibility:policy};
-for(const source of ['0.49.0','0.49.1','0.49.2','0.49.3']){
+for(const source of ['0.50.0','0.49.0','0.49.1','0.49.2','0.49.3']){
  const current={version:source,databaseSchemaVersion:20,backupFormatVersion:2,prerelease:false};
  assert.equal(directCompatibility(current,target,'0.46.1').ok,true);
  assert.deepEqual(updatePath(current,target,[target],{serviceVersion:'0.46.1'}).path,[target.tag]);

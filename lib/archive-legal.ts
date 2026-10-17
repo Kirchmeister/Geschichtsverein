@@ -1,5 +1,5 @@
 export type LegalData={operator:string,form:string,street:string,postcode:string,city:string,country:string,email:string,phone:string,representatives:{name:string,role:string}[],representation:string,court:string,register:string,vat:string,editorialName:string,editorialAddress:string,dpoName:string,dpoContact:string,host:string,hostCountry:string,services:string,privacyText:string,privacyFormat:string};
-export type LegalPublication={text:string,publishedAt:string,nearbyNotice?:string,privacy?:{before:string,body:string,after:string,markdown:boolean}};
+export type LegalPublication={text:string,publishedAt:string,nearbyNotice?:string,contactNotice?:string,privacy?:{before:string,body:string,after:string,markdown:boolean}};
 export type LegalSettings={revision:string,draft:LegalData,published:{imprint:LegalPublication|null,privacy:LegalPublication|null}};
 export const emptyLegalData:LegalData={operator:'',form:'',street:'',postcode:'',city:'',country:'Deutschland',email:'',phone:'',representatives:[],representation:'',court:'',register:'',vat:'',editorialName:'',editorialAddress:'',dpoName:'',dpoContact:'',host:'',hostCountry:'',services:'',privacyText:'',privacyFormat:'plain'};
 export function emptyLegalSettings():LegalSettings{return {revision:'',draft:structuredClone(emptyLegalData),published:{imprint:null,privacy:null}}}

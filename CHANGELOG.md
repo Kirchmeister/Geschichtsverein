@@ -1,5 +1,13 @@
 # Änderungen
 
+## [0.51.0] - 2026-10-17
+
+- Optionales öffentliches Kontaktformular mit privatem Empfänger, selbst gehostetem ALTCHA, begrenzten Anfragen und persistenter SMTP-Warteschlange. Rechtliche Kontaktadresse bleibt getrennt; technischer Datenschutzhinweis ergänzt.
+- PDF-Export direkt im Beitrag oder für eine seitenübergreifende Archiv-Auswahl, Filtertreffer und den gesamten zugänglichen Bestand. Mehrfachauswahl liefert ZIP mit einzelnen PDFs und Inhaltsverzeichnis als PDF/TXT.
+- Bilder mit Beschriftung, Markdown, Metadaten, Referenz, Rechte und Exportzeitpunkt; Audio und Originalanhänge werden referenziert. Vorschau, Fortschritt, Abbruch sowie Fehler-/Hinweisübersicht.
+- Exportzugriff ist an Konto, Rolle und Gastfelder gebunden; aktuelle Bearbeitung und veröffentlichte Fassung bleiben getrennt. Zeitlich begrenzte temporäre Dateien, keine vollständige Sicherung.
+- Schema 21 ergänzt Kontakt-Spamschutz und Versandwarteschlange; Standard bleibt ausgeschaltet. Linux-Updatepfad bis einschließlich 0.50.0 erweitert.
+
 ## [0.50.0] - 2026-10-16
 
 - Öffentliche Kartenansicht: „Meine Umgebung entdecken“ für erkannte Smartphones, mit ausdrücklichem Zustimmungsdialog und anschließender einmaliger Standortabfrage. Konfigurierter Ort und kreisförmiger Kartenbereich statt festem Ortsnamen; außerhalb, am unsicheren Gebietsrand oder bei zu ungenauer Ortung verständliche Hinweise. Umkreise 50/100/250 Meter, Karte mit Standort und Suchkreis, nach Luftlinie sortierte öffentliche Beitragslinks. Keine laufende Verfolgung.
